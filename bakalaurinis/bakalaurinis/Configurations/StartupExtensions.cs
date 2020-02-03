@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
@@ -10,7 +11,7 @@ namespace bakalaurinis.Configurations
         {
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("holidays", new OpenApiInfo { Title = "Bakalaurinis", Version = "v1" });
+                options.SwaggerDoc("Bakalaurinis", new OpenApiInfo { Title = "Bakalaurinis", Version = "v1" });
             });
 
             return services;
@@ -25,8 +26,15 @@ namespace bakalaurinis.Configurations
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint("/swagger/holidays/swagger.json", "??");
+                options.SwaggerEndpoint("/swagger/Bakalaurinis/swagger.json", "??");
                 options.RoutePrefix = "swagger";
+            });
+
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "UI";
+               // spa.UseProxyToSpaDevelopmentServer("http://localhost:4200/swagger");
+                spa.UseAngularCliServer(npmScript: "start");
             });
         }
 
