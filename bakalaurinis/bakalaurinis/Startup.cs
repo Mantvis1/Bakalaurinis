@@ -43,6 +43,8 @@ namespace bakalaurinis
             {
                 endpoints.MapControllers();
             });
+
+            app.UseSPA();
         }
     }
 }

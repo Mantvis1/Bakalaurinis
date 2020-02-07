@@ -29,12 +29,15 @@ namespace bakalaurinis.Configurations
                 options.SwaggerEndpoint("/swagger/Bakalaurinis/swagger.json", "??");
                 options.RoutePrefix = "swagger";
             });
+        }
 
+        public static void UseSPA(this IApplicationBuilder app)
+        {
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "UI";
-               // spa.UseProxyToSpaDevelopmentServer("http://localhost:4200/swagger");
-                spa.UseAngularCliServer(npmScript: "start");
+                spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+                // spa.UseAngularCliServer(npmScript: "start");
             });
         }
 

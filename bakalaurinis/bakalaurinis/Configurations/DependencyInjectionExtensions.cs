@@ -13,12 +13,12 @@ namespace bakalaurinis.Configurations
 
         public static IServiceCollection AddInfrastructureDependencies(this IServiceCollection service)
         {
-            return null;
+            return service;
         }
 
         public static IServiceCollection AddApplicationDependencies(this IServiceCollection service)
         {
-            return null;
+            return service;
         }
     }
 }
