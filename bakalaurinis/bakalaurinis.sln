@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bakalaurinis", "bakalaurinis\bakalaurinis.csproj", "{D906EB61-EB17-42D3-8E36-8BC6850C1346}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bakalaurinis", "bakalaurinis\bakalaurinis.csproj", "{D906EB61-EB17-42D3-8E36-8BC6850C1346}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test\test.csproj", "{8EAF2C54-3FB6-4563-A654-A32D32B21C5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "test", "test\test.csproj", "{8EAF2C54-3FB6-4563-A654-A32D32B21C5F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OtherFiles", "OtherFiles", "{841A0583-9DD7-431C-9E67-68CE64AC468D}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\BakalaurinisDoc\Bakalaurinis.mdzip = ..\..\BakalaurinisDoc\Bakalaurinis.mdzip
+		..\..\BakalaurinisDoc\Bakalaurinis.mdzip.bak = ..\..\BakalaurinisDoc\Bakalaurinis.mdzip.bak
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
