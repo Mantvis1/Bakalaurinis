@@ -12,7 +12,11 @@ import { ToolbarAfterLogInComponent } from "./components/toolbars/toolbar-after-
 import { MatMenuModule } from "@angular/material/menu";
 import { MatCardModule } from "@angular/material/card";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatDialogModule } from "@angular/material";
+import {
+  MatDialogModule,
+  MatInputModule,
+  MatButtonModule
+} from "@angular/material";
 
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 
@@ -33,7 +37,10 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
     MatFormFieldModule,
     ReactiveFormsModule,
     FormsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCardModule
   ],
   entryComponents: [LoginComponent, RegistrationComponent],
   providers: [],

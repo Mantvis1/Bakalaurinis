@@ -1,1 +1,51 @@
-<p>registration works!</p>
+<form #registrationForm="ngForm">
+  <h1 mat-dialog-title>Prisijugimas</h1>
+  <mat-card>
+    <div>
+      <mat-form-field>
+        <input matInput name="username" placeholder="username" required />
+        <mat-error *ngIf="nameInput.invalid" class="error">
+          Username name cannot be empty.
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </mat-card>
+
+  <!--<mat-form-field class="example-full-width">
+    <input matInput placeholder="Username" #nameInput="ngModel" />
+    <mat-error *ngIf="nameInput.invalid" class="error">
+      Username cannot be empty.
+    </mat-error>
+  </mat-form-field>
+
+   <mat-form-field class="example-full-width">
+    <input matInput type="email" placeholder="Email" #nameInput="ngModel" />
+    <mat-error *ngIf="nameInput.invalid" class="error">
+      Email cannot be empty.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <input
+      matInput
+      type="password"
+      placeholder="Password"
+      #nameInput="ngModel"
+    />
+    <mat-error *ngIf="nameInput.invalid" class="error">
+      Password cannot be empty.
+    </mat-error>
+  </mat-form-field>-->
+
+  <mat-dialog-actions align="end">
+    <button mat-flat-button mat-button-base [mat-dialog-close]>Cancel</button>
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="closeModal(data.clientFormData)"
+      [disabled]="registrationForm.form.invalid"
+    >
+      Registruotis
+    </button>
+  </mat-dialog-actions>
+</form>
