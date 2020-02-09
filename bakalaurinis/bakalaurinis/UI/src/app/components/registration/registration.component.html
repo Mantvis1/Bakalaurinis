@@ -1,12 +1,33 @@
 <form #registrationForm="ngForm">
-  <h1 mat-dialog-title>Prisijugimas</h1>
+  <h1 mat-dialog-title>Registracija</h1>
   <mat-card>
     <div>
       <mat-form-field>
         <input matInput name="username" placeholder="username" required />
-        <mat-error *ngIf="nameInput.invalid" class="error">
-          Username name cannot be empty.
-        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <input
+          matInput
+          type="password"
+          name="password"
+          placeholder="password"
+          required
+        />
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <input
+          matInput
+          type="email"
+          name="email"
+          placeholder="email"
+          required
+        />
       </mat-form-field>
     </div>
   </mat-card>
@@ -38,13 +59,8 @@
   </mat-form-field>-->
 
   <mat-dialog-actions align="end">
-    <button mat-flat-button mat-button-base [mat-dialog-close]>Cancel</button>
-    <button
-      mat-flat-button
-      color="primary"
-      (click)="closeModal(data.clientFormData)"
-      [disabled]="registrationForm.form.invalid"
-    >
+    <button mat-flat-button mat-button-base [mat-dialog-close]>Close</button>
+    <button mat-flat-button color="primary">
       Registruotis
     </button>
   </mat-dialog-actions>

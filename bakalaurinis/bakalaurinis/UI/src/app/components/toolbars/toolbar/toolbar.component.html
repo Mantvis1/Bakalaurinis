@@ -1,2 +1,7 @@
-<button mat-menu-item (click)="openRegistrationForm()">Register</button>
-<button mat-menu-item (click)="openLoginForm()">Login</button>
+<mat-toolbar color="primary">
+  <span>Pavadinimas</span>
+  <span class="example-spacer"></span>
+  <button mat-button (click)="openRegistrationForm()">Register</button>
+
+  <button mat-button (click)="openLoginForm()">Login</button>
+</mat-toolbar>

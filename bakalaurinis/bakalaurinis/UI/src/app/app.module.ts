@@ -15,7 +15,8 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import {
   MatDialogModule,
   MatInputModule,
-  MatButtonModule
+  MatButtonModule,
+  MatToolbarModule
 } from "@angular/material";
 
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
@@ -40,7 +41,8 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
     MatDialogModule,
     MatInputModule,
     MatButtonModule,
-    MatCardModule
+    MatCardModule,
+    MatToolbarModule
   ],
   entryComponents: [LoginComponent, RegistrationComponent],
   providers: [],
