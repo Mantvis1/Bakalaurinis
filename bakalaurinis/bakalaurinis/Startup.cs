@@ -2,7 +2,6 @@ using bakalaurinis.Configurations;
 using bakalaurinis.Infrastructure.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,7 +22,8 @@ namespace bakalaurinis
         {
             services.AddControllers();
             services.AddSwagger();
-            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Data Source=localhost\\SQLEXPRESS;Initial Catalog=Database;Integrated Security=True"));
+            services.UseDatabase();
+            services.UseIdentify();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

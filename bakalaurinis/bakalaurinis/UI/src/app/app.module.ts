@@ -20,6 +20,7 @@ import {
 } from "@angular/material";
 
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { ActivitiesTableComponent } from "./components/activities-table/activities-table.component";
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
     ToolbarComponent,
     ToolbarAfterLogInComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    ActivitiesTableComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +44,8 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
     MatInputModule,
     MatButtonModule,
     MatCardModule,
-    MatToolbarModule
+    MatToolbarModule,
+    AppRoutingModule
   ],
   entryComponents: [LoginComponent, RegistrationComponent],
   providers: [],

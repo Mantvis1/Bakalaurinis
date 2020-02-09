@@ -25,7 +25,12 @@
 
   <mat-dialog-actions align="end">
     <button mat-flat-button mat-button-base [mat-dialog-close]>Close</button>
-    <button mat-flat-button color="primary">
+    <button
+      mat-flat-button
+      (click)="login()"
+      [mat-dialog-close]
+      color="primary"
+    >
       Prisijungti
     </button>
   </mat-dialog-actions>
