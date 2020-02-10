@@ -1,6 +1,5 @@
-import { Component, ViewChild, OnInit } from "@angular/core";
-import { MatMenuTrigger } from "@angular/material/menu";
-import { ToolbarComponent } from "./components/toolbars/toolbar/toolbar.component";
+import { Component, OnInit } from "@angular/core";
+import { AuthServiceService } from './services/auth-service.service';
 
 @Component({
   selector: "app-root",
@@ -10,9 +9,12 @@ import { ToolbarComponent } from "./components/toolbars/toolbar/toolbar.componen
 export class AppComponent {
   title = "UI";
 
-  /*@ViewChild(ToolbarComponent, null) trigger: MatMenuTrigger;
+  constructor(private auth: AuthServiceService) { }
 
-  ngOnInit() {
-    this.trigger.menuOpen();
-  }*/
+  isAuthentificated() {
+    if (!this.auth.isAuthenticated())
+      return true;
+
+    return false;
+  }
 }

@@ -20,4 +20,12 @@ export class AuthServiceService {
     this.currentUserId = JSON.parse(localStorage.getItem("userId"));
     return this.currentUserId;
   }
+
+  isAuthenticated(): boolean {
+    if (localStorage.getItem("userId") != null) {
+      return true;
+    }
+
+    return false;
+  }
 }

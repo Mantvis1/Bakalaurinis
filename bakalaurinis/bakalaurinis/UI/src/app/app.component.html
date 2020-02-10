@@ -1,2 +1,4 @@
-<app-toolbar></app-toolbar>
+<div *ngIf="isAuthentificated(); then guestBlock else userBlock"></div>
+<ng-template #guestBlock><app-toolbar></app-toolbar></ng-template>
+<ng-template #userBlock><app-toolbar-after-log-in></app-toolbar-after-log-in></ng-template>
 <router-outlet></router-outlet>
