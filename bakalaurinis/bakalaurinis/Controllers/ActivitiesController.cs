@@ -65,5 +65,13 @@ namespace bakalaurinis.Controllers
 
             return Ok(activities);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _activitiesService.Delete(id);
+
+            return NoContent();
+        }
     }
 }

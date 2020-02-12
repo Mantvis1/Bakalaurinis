@@ -16,11 +16,13 @@ import {
   MatDialogModule,
   MatInputModule,
   MatButtonModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatTableModule
 } from "@angular/material";
-
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { ActivitiesTableComponent } from "./components/activities-table/activities-table.component";
+import { HttpClientModule } from '@angular/common/http';
+import { ActivityFormComponent } from './components/activity-form/activity-form.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { ActivitiesTableComponent } from "./components/activities-table/activiti
     ToolbarAfterLogInComponent,
     LoginComponent,
     RegistrationComponent,
-    ActivitiesTableComponent
+    ActivitiesTableComponent,
+    ActivityFormComponent
   ],
   imports: [
     BrowserModule,
@@ -45,9 +48,15 @@ import { ActivitiesTableComponent } from "./components/activities-table/activiti
     MatButtonModule,
     MatCardModule,
     MatToolbarModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatTableModule,
+    HttpClientModule
   ],
-  entryComponents: [LoginComponent, RegistrationComponent],
+  entryComponents: [
+    LoginComponent,
+    RegistrationComponent,
+    ActivityFormComponent
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
