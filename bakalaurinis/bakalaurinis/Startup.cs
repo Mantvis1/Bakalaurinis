@@ -24,6 +24,8 @@ namespace bakalaurinis
             services.AddSwagger();
             services.UseDatabase();
             services.UseIdentify();
+            services.AddAllDependencies();
+            services.SetUpAutoMapper();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

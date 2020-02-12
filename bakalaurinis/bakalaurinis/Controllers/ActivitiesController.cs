@@ -25,7 +25,7 @@ namespace bakalaurinis.Controllers
         }
 
         [HttpGet]
-        [Produces(typeof(GetActivityDto[]))]
+        [Produces(typeof(ActivityDto[]))]
         public async Task<IActionResult> Get()
         {
             var activities = await _activitiesService.GetAll();
@@ -39,7 +39,7 @@ namespace bakalaurinis.Controllers
         }
 
         [HttpGet("{id}")]
-        [Produces(typeof(GetActivityDto))]
+        [Produces(typeof(ActivityDto))]
         public async Task<IActionResult> Get(int id)
         {
             var activity = await _activitiesService.GetById(id);

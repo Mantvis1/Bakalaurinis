@@ -6,10 +6,10 @@ namespace bakalaurinis.Services.Interfaces
 {
     public interface IActivitiesService
     {
-        Task<GetActivityDto> GetById(int id);
-        Task<ICollection<GetActivityDto>> GetAll();
+        Task<ActivityDto> GetById(int id);
+        Task<ICollection<ActivityDto>> GetAll();
         Task<int> Create(NewActivityDto newActivityDto);
         Task<bool> Delete(int id);
-        Task Update(UpdateActivityDto updateActivityDto);
+        Task Update(ActivityDto activityDto);
     }
 }

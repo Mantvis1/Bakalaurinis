@@ -13,11 +13,8 @@ namespace bakalaurinis.Configurations
             CreateMap<NewActivityDto, Activity>(MemberList.None);
             CreateMap<Activity, NewActivityDto>(MemberList.None);
 
-            CreateMap<GetActivityDto, Activity>(MemberList.None);
-            CreateMap<Activity, GetActivityDto>(MemberList.None);
-
-            CreateMap<UpdateActivityDto, Activity>(MemberList.None);
-            CreateMap<Activity, UpdateActivityDto>(MemberList.None);
+            CreateMap<ActivityDto, Activity>(MemberList.None);
+            CreateMap<Activity, ActivityDto>(MemberList.None);
         }
     }
 }

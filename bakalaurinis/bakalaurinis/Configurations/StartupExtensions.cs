@@ -86,7 +86,18 @@ namespace bakalaurinis.Configurations
         {
             services
                 .AddDbContext<DatabaseContext>(options => options.UseSqlServer("Data Source=localhost\\SQLEXPRESS;Initial Catalog=Database;Integrated Security=True"));
+        }
 
+        public static void SetUpAutoMapper(this IServiceCollection services)
+        {
+            var config = new AutoMapper.MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new AutoMapperConfiguration());
+            });
+
+            var mapper = config.CreateMapper();
+
+            services.AddSingleton(mapper);
         }
     }
 }

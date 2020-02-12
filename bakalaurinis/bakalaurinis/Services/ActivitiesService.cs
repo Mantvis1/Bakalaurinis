@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using bakalaurinis.Dtos.Activity;
 using bakalaurinis.Infrastructure.Database.Models;
-using bakalaurinis.Infrastructure.Repositories;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Services.Interfaces;
 using System.Collections.Generic;
@@ -39,20 +38,20 @@ namespace bakalaurinis.Services
             return await _repository.Delete(activity);
         }
 
-        public async Task<ICollection<GetActivityDto>> GetAll()
+        public async Task<ICollection<ActivityDto>> GetAll()
         {
             var activities = await _repository.GetAll();
-            var activitiesDto = _mapper.Map<GetActivityDto[]>(activities);
+            var activitiesDto = _mapper.Map<ActivityDto[]>(activities);
 
             return activitiesDto;
         }
 
-        public Task<GetActivityDto> GetById(int id)
+        public Task<ActivityDto> GetById(int id)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task Update(UpdateActivityDto updateActivityDto)
+        public Task Update(ActivityDto activityDto)
         {
             throw new System.NotImplementedException();
         }
