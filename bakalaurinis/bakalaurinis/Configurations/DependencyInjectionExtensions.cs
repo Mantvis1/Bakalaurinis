@@ -1,4 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using bakalaurinis.Infrastructure.Database.Models;
+using bakalaurinis.Infrastructure.Repositories;
+using bakalaurinis.Infrastructure.Repositories.Interfaces;
+using bakalaurinis.Services;
+using bakalaurinis.Services.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace bakalaurinis.Configurations
 {
@@ -13,12 +18,13 @@ namespace bakalaurinis.Configurations
 
         public static IServiceCollection AddInfrastructureDependencies(this IServiceCollection service)
         {
-            return service;
+            return service
+                .AddScoped<IRepository<Activity>, ActivitiesRepository>();
         }
 
         public static IServiceCollection AddApplicationDependencies(this IServiceCollection service)
         {
-            return service;
+            return service.AddScoped<IActivitiesService, ActivitiesService>();
         }
     }
 }
