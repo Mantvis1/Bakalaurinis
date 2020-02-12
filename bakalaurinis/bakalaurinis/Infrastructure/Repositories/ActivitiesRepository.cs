@@ -1,13 +1,15 @@
-﻿using bakalaurinis.Infrastructure.Database;
+﻿using bakalaurinis.Dtos.Activity;
+using bakalaurinis.Infrastructure.Database;
 using bakalaurinis.Infrastructure.Database.Models;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace bakalaurinis.Infrastructure.Repositories
 {
-    public class ActivitiesRepository : IRepository<Activity>
+    public class ActivitiesRepository : IActivitiesRepository
     {
         protected readonly DatabaseContext _context;
 
@@ -31,6 +33,13 @@ namespace bakalaurinis.Infrastructure.Repositories
             return changes > 0;
         }
 
+        public async Task<ICollection<Activity>> FindAllByUserId(int id)
+        {
+            var activities = await _context.Activities.Where(x => x.UserId == id).ToArrayAsync();
+
+            return activities;
+        }
+
         public async Task<ICollection<Activity>> GetAll()
         {
             var activities = await _context.Activities.ToArrayAsync();
@@ -42,7 +51,7 @@ namespace bakalaurinis.Infrastructure.Repositories
         {
             var activity = await _context.Activities.FindAsync(id);
 
-            return activity; 
+            return activity;
         }
 
         public async Task<bool> Update(Activity entity)

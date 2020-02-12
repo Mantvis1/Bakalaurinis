@@ -51,5 +51,19 @@ namespace bakalaurinis.Controllers
 
             return Ok(activity);
         }
+
+        [HttpGet("user/{userId}")]
+        [Produces(typeof(ActivityDto[]))]
+        public async Task<IActionResult> GetByUserId(int userId)
+        {
+            var activities = await _activitiesService.GetByUserId(userId);
+
+            if (activities == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(activities);
+        }
     }
 }

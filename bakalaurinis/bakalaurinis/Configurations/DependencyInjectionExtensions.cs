@@ -19,7 +19,7 @@ namespace bakalaurinis.Configurations
         public static IServiceCollection AddInfrastructureDependencies(this IServiceCollection service)
         {
             return service
-                .AddScoped<IRepository<Activity>, ActivitiesRepository>();
+                .AddScoped<IActivitiesRepository, ActivitiesRepository>();
         }
 
         public static IServiceCollection AddApplicationDependencies(this IServiceCollection service)

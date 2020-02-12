@@ -7,6 +7,7 @@ namespace bakalaurinis.Services.Interfaces
     public interface IActivitiesService
     {
         Task<ActivityDto> GetById(int id);
+        Task<ICollection<ActivityDto>> GetByUserId(int id);
         Task<ICollection<ActivityDto>> GetAll();
         Task<int> Create(NewActivityDto newActivityDto);
         Task<bool> Delete(int id);

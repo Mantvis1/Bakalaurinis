@@ -10,10 +10,10 @@ namespace bakalaurinis.Services
 {
     public class ActivitiesService : IActivitiesService
     {
-        private readonly IRepository<Activity> _repository;
+        private readonly IActivitiesRepository _repository;
         private readonly IMapper _mapper;
 
-        public ActivitiesService(IRepository<Activity> repository, IMapper mapper)
+        public ActivitiesService(IActivitiesRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
@@ -46,9 +46,20 @@ namespace bakalaurinis.Services
             return activitiesDto;
         }
 
-        public Task<ActivityDto> GetById(int id)
+        public async Task<ActivityDto> GetById(int id)
         {
-            throw new System.NotImplementedException();
+            var activity = await _repository.GetById(id);
+            var activityDto = _mapper.Map<ActivityDto>(activity);
+
+            return activityDto;
+        }
+
+        public async Task<ICollection<ActivityDto>> GetByUserId(int id)
+        {
+            var activities = await _repository.FindAllByUserId(id);
+            var activitiesDto = _mapper.Map<ActivityDto[]>(activities);
+
+            return activitiesDto;
         }
 
         public Task Update(ActivityDto activityDto)
