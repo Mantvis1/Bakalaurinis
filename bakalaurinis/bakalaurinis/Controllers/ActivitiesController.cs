@@ -38,7 +38,7 @@ namespace bakalaurinis.Controllers
             return Ok(activities);
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [Produces(typeof(GetActivityDto))]
         public async Task<IActionResult> Get(int id)
         {

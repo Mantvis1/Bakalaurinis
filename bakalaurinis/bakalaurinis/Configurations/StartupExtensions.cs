@@ -33,6 +33,8 @@ namespace bakalaurinis.Configurations
                 options.SwaggerEndpoint("/swagger/Bakalaurinis/swagger.json", "??");
                 options.RoutePrefix = "swagger";
             });
+
+            app.UseDeveloperExceptionPage();
         }
 
         public static void UseSPA(this IApplicationBuilder app)
