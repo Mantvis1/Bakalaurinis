@@ -21,6 +21,8 @@ export class ActivitiesTableComponent implements OnInit {
 
   activities: GetActivities[] = [];
   displayedColumns: string[] = ['Title', 'Description', 'Delete', 'Edit'];
+  activityToEdit: NewActivity = new NewActivity();
+  newActivity: NewActivity = new NewActivity();
 
   ngOnInit() {
     this.refreshTable();
@@ -29,9 +31,8 @@ export class ActivitiesTableComponent implements OnInit {
   deleteById(id: number) {
     this.activityService.deleteActivity(id).subscribe(error => {
       console.log(error);
+      this.refreshTable();
     });
-
-    this.refreshTable();
   }
 
   refreshTable() {
@@ -46,21 +47,36 @@ export class ActivitiesTableComponent implements OnInit {
       width: '50%',
       data: {
         formTitle: 'New activity',
-        activityFormData: null,
+        activityFormData: this.newActivity,
         formConfirmationButtonName: 'Create'
       }
+    });
+
+    dialogRef.afterClosed().subscribe(newActivity => {
+      console.log(newActivity);
     });
   }
 
   editFrom(element: NewActivity) {
+    this.activityToEdit = Object.assign({}, element);
     const dialogRef = this.dialog.open(ActivityFormComponent, {
       minWidth: '200px',
       width: '50%',
       data: {
         formTitle: 'Edit activity',
-        activityFormData: null,
+        activityFormData: this.activityToEdit,
         formConfirmationButtonName: 'Edit'
       }
+    });
+
+    dialogRef.afterClosed().subscribe(editActivity => {
+      if (editActivity)
+        this.activityService.editActivity(editActivity, editActivity.id).subscribe(editActivity => {
+          if (editActivity)
+            this.refreshTable();
+        }, error => {
+            console.log(error);
+        });
     });
   }
 }

@@ -11,6 +11,6 @@ namespace bakalaurinis.Services.Interfaces
         Task<ICollection<ActivityDto>> GetAll();
         Task<int> Create(NewActivityDto newActivityDto);
         Task<bool> Delete(int id);
-        Task Update(ActivityDto activityDto);
+        Task<bool> Update(int id, NewActivityDto activityDto);
     }
 }

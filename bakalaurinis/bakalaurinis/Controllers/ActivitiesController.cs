@@ -73,5 +73,14 @@ namespace bakalaurinis.Controllers
 
             return NoContent();
         }
+
+        [HttpPut("{id}")]
+        [Produces(typeof(int))]
+        public async Task<IActionResult> Update(int id,[FromBody] NewActivityDto newActivityDto)
+        {
+            var ok = await _activitiesService.Update(id, newActivityDto);
+
+            return Ok(ok);
+        }
     }
 }

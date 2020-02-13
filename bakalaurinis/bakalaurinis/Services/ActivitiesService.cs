@@ -3,6 +3,7 @@ using bakalaurinis.Dtos.Activity;
 using bakalaurinis.Infrastructure.Database.Models;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Services.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -30,7 +31,7 @@ namespace bakalaurinis.Services
         {
             var activity = await _repository.GetById(id);
 
-            if(activity == null)
+            if (activity == null)
             {
                 return false;
             }
@@ -62,9 +63,23 @@ namespace bakalaurinis.Services
             return activitiesDto;
         }
 
-        public Task Update(ActivityDto activityDto)
+        public async Task<bool> Update(int id, NewActivityDto activityDto)
         {
-            throw new System.NotImplementedException();
+            if (activityDto == null)
+            {
+                throw new ArgumentNullException(nameof(activityDto));
+            }
+
+            var activity = await _repository.GetById(id);
+
+            if (activity == null)
+            {
+                throw new InvalidOperationException();
+            }
+
+            _mapper.Map(activityDto, activity);
+
+            return await _repository.Update(activity);
         }
     }
 }

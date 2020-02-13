@@ -24,4 +24,8 @@ export class ActivityService {
   createNewActivity(newActivity: NewActivity) {
     return this.http.post(this.Api, newActivity);
   }
+
+  editActivity(newActivity: NewActivity, id : number) {
+    return this.http.put(this.Api + id, newActivity);
+  }
 }
