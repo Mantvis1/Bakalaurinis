@@ -5,6 +5,7 @@ import { GetActivities } from '../../models/get-activities';
 import { MatDialog } from '@angular/material';
 import { ActivityFormComponent } from '../activity-form/activity-form.component';
 import { NewActivity } from '../../models/new-activity';
+import { ActivityPriority } from './activity-priority.enum';
 
 @Component({
   selector: "app-activities-table",
@@ -20,7 +21,7 @@ export class ActivitiesTableComponent implements OnInit {
   ) { }
 
   activities: GetActivities[] = [];
-  displayedColumns: string[] = ['Title', 'Description', 'Delete', 'Edit'];
+  displayedColumns: string[] = ['Title', 'Description', 'StartDate', 'EndDate', 'FinishUntil','Priority', 'Delete', 'Edit'];
   activityToEdit: NewActivity = new NewActivity();
   newActivity: NewActivity = new NewActivity();
 
@@ -29,8 +30,7 @@ export class ActivitiesTableComponent implements OnInit {
   }
 
   deleteById(id: number) {
-    this.activityService.deleteActivity(id).subscribe(error => {
-      console.log(error);
+    this.activityService.deleteActivity(id).subscribe(() => {
       this.refreshTable();
     });
   }
@@ -43,8 +43,8 @@ export class ActivitiesTableComponent implements OnInit {
 
   openCreateModal() {
     const dialogRef = this.dialog.open(ActivityFormComponent, {
-      minWidth: '200px',
-      width: '50%',
+      minWidth: '250px',
+      width: '35%',
       data: {
         formTitle: 'New activity',
         activityFormData: this.newActivity,
@@ -53,15 +53,23 @@ export class ActivitiesTableComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(newActivity => {
-      console.log(newActivity);
+      if (newActivity)
+        newActivity.userId = this.authService.getUserId();
+      this.activityService.createNewActivity(newActivity).subscribe(() => {
+        this.refreshTable();
+        this.newActivity = new NewActivity();
+      },
+        error => {
+          console.log(error);
+        });
     });
   }
 
   editFrom(element: NewActivity) {
     this.activityToEdit = Object.assign({}, element);
     const dialogRef = this.dialog.open(ActivityFormComponent, {
-      minWidth: '200px',
-      width: '50%',
+      minWidth: '250px',
+      width: '35%',
       data: {
         formTitle: 'Edit activity',
         activityFormData: this.activityToEdit,
@@ -75,8 +83,12 @@ export class ActivitiesTableComponent implements OnInit {
           if (editActivity)
             this.refreshTable();
         }, error => {
-            console.log(error);
+          console.log(error);
         });
     });
+  }
+
+  getActivityPriority(priorityId: number) {
+    return ActivityPriority[priorityId];
   }
 }
