@@ -15,17 +15,17 @@
 
     <ng-container matColumnDef="StartDate">
       <th mat-header-cell *matHeaderCellDef> Start Date </th>
-      <td mat-cell *matCellDef="let element"> {{element.startDate}} </td>
+      <td mat-cell *matCellDef="let element"> {{isValueExists(element.startDate)}} </td>
     </ng-container>
 
     <ng-container matColumnDef="EndDate">
       <th mat-header-cell *matHeaderCellDef> End Date </th>
-      <td mat-cell *matCellDef="let element"> {{element.endDate}} </td>
+      <td mat-cell *matCellDef="let element"> {{isValueExists(element.endDate)}} </td>
     </ng-container>
 
     <ng-container matColumnDef="FinishUntil">
       <th mat-header-cell *matHeaderCellDef> Finish Until </th>
-      <td mat-cell *matCellDef="let element"> {{element.finishUntil}} </td>
+      <td mat-cell *matCellDef="let element"> {{isValueExists(element.finishUntil)}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Priority">

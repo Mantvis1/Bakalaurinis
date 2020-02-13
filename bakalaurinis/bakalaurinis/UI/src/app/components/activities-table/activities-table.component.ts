@@ -38,6 +38,7 @@ export class ActivitiesTableComponent implements OnInit {
   refreshTable() {
     this.activityService.getUserActivities(this.authService.getUserId()).subscribe(data => {
       this.activities = data;
+      console.log(data);
     });
   }
 
@@ -53,8 +54,10 @@ export class ActivitiesTableComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(newActivity => {
-      if (newActivity)
+      if (newActivity) {
         newActivity.userId = this.authService.getUserId();
+        console.log(newActivity);
+      }
       this.activityService.createNewActivity(newActivity).subscribe(() => {
         this.refreshTable();
         this.newActivity = new NewActivity();
@@ -90,5 +93,11 @@ export class ActivitiesTableComponent implements OnInit {
 
   getActivityPriority(priorityId: number) {
     return ActivityPriority[priorityId];
+  }
+
+  isValueExists(value: any) {
+    if (value === null)
+      return "Not exist";
+    return value;
   }
 }

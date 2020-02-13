@@ -17,7 +17,12 @@ import {
   MatInputModule,
   MatButtonModule,
   MatToolbarModule,
-  MatTableModule
+  MatTableModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MAT_DATE_LOCALE,
+  MatOptionModule,
+  MatSelectModule
 } from "@angular/material";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { ActivitiesTableComponent } from "./components/activities-table/activities-table.component";
@@ -50,14 +55,18 @@ import { ActivityFormComponent } from './components/activity-form/activity-form.
     MatToolbarModule,
     AppRoutingModule,
     MatTableModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatOptionModule,
+    MatSelectModule
   ],
   entryComponents: [
     LoginComponent,
     RegistrationComponent,
     ActivityFormComponent
   ],
-  providers: [],
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-gb' }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

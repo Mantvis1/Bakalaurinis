@@ -12,6 +12,7 @@
           </mat-error>
         </mat-form-field>
       </div>
+
       <div>
         <mat-form-field>
           <input matInput [(ngModel)]="data.activityFormData.description" name="description"
@@ -21,6 +22,43 @@
           </mat-error>
         </mat-form-field>
       </div>
+
+      <div>
+        <mat-form-field>
+          <mat-label>Activity start date</mat-label>
+          <input matInput [(ngModel)]="data.activityFormData.startDate" name="startDate" [matDatepicker]="picker" placeholder="Enter activity starting date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field>
+          <mat-label>Activity finish date</mat-label>
+          <input matInput [(ngModel)]="data.activityFormData.endDate" name="endDate" [matDatepicker]="picker1" placeholder="Enter activity finish date">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field>
+          <mat-label>Finish until</mat-label>
+          <input matInput [(ngModel)]="data.activityFormData.finishUntil" name="finishUntil" [matDatepicker]="picker2" placeholder="date...">
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field>
+          <mat-label>Select priority</mat-label>
+          <mat-select placeholder="Priority">
+            <mat-option *ngFor="let p of data.activityFormData.priority" [value]="p">{{data.activityFormData.priority}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
     </mat-card>
   </mat-dialog-content>
 
