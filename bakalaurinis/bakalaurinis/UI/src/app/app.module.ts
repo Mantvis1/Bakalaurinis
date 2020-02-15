@@ -28,6 +28,9 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { ActivitiesTableComponent } from "./components/activities-table/activities-table.component";
 import { HttpClientModule } from '@angular/common/http';
 import { ActivityFormComponent } from './components/activity-form/activity-form.component';
+import { ScheduleComponent } from './components/schedule/schedule.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { SettingsComponent } from './components/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,10 @@ import { ActivityFormComponent } from './components/activity-form/activity-form.
     LoginComponent,
     RegistrationComponent,
     ActivitiesTableComponent,
-    ActivityFormComponent
+    ActivityFormComponent,
+    ScheduleComponent,
+    ProfileComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

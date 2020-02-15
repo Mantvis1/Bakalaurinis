@@ -1,5 +1,22 @@
 <mat-toolbar color="primary">
-  <button mat-button>Tvarkaraštis</button>
+  <a mat-button routerLink="/schedule" routerLinkActive="active">
+    <i class="material-icons"> schedule </i>Tvarkaraštis</a
+  >
+
+  <a mat-button routerLink="/activities" routerLinkActive="active">
+    <i class="material-icons"> schedule </i>
+    Veiklos</a
+  >
+
   <span class="fill-empty-space-in-toolbar"></span>
-  <button mat-button (click)="logout()">Log out</button>
+
+  <a mat-button routerLink="/profile" routerLinkActive="active">
+    <i class="material-icons"> account_circle </i>
+    Username
+  </a>
+
+  <button mat-button (click)="logout()">
+    <i class="material-icons"> power_settings_new</i>
+    Log out
+  </button>
 </mat-toolbar>

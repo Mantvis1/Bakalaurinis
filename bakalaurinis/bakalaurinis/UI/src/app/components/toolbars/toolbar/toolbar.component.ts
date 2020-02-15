@@ -10,9 +10,9 @@ import { Router } from "@angular/router";
   styleUrls: ["./toolbar.component.css"]
 })
 export class ToolbarComponent implements OnInit {
-  constructor(public dialog: MatDialog, private router: Router) { }
+  constructor(public dialog: MatDialog, private router: Router) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   openRegistrationForm() {
     const dialogRef = this.dialog.open(RegistrationComponent, {
@@ -23,14 +23,13 @@ export class ToolbarComponent implements OnInit {
   openLoginForm() {
     const dialogRef = this.dialog.open(LoginComponent, { width: "500px" });
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.router.navigateByUrl("/activities");
-    },
+    dialogRef.afterClosed().subscribe(
+      () => {
+        this.router.navigateByUrl("/schedule");
+      },
       error => {
         console.log("Error");
       }
     );
-
-
   }
 }
