@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using bakalaurinis.Dtos.User;
+using bakalaurinis.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace bakalaurinis.Controllers
 {
@@ -7,49 +9,48 @@ namespace bakalaurinis.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly IAuthenticationService _authenticationService;
-        public AuthController(IAuthenticationService authenticationService)
-        {
-            _authenticationService = authenticationService;
-        }
+        //private readonly IAuthenticationService _authenticationService;
+        //public AuthController(IAuthenticationService authenticationService)
+        //{
+        //    _authenticationService = authenticationService;
+        //}
 
-        [Route("login")]
-        [HttpPost]
-        public IActionResult Login()
-        {
-            //if (request.Email != null && request.Password != null)
-            //{
-            //    var result = await _authenticationService.Authenticate(request.Email, request.Password);
+        //[Route("login")]
+        //[HttpPost]
+        //public async Task<IActionResult> LoginAsync(AuthenticateDto authenticateDto)
+        //{
+        //    if (authenticateDto.Email != null && authenticateDto.Password != null)
+        //    {
+        //        var result = await _authenticationService.Authenticate(authenticateDto.Email, authenticateDto.Password);
 
-            //    if (result != null)
-            //    {
-            //        return Ok(new
-            //        {
-            //            result.EmployeeId,
-            //            result.Employee.Token
-            //        });
-            //    }
+        //        if (result != null)
+        //        {
+        //            return Ok(new
+        //            {
+        //                result.ClientId,
+        //                result.Client.Token
+        //            });
+        //        }
 
-            //    return Unauthorized();
-            //}
-            //return BadRequest();
-            return Ok();
-        }
+        //        return Unauthorized();
+        //    }
+        //    return BadRequest();
+        //}
 
-        [HttpGet]
-        [Route("roles")]
-        public IActionResult GetRoles()
-        {
-            //  var roles = await _authenticationService.GetAllRoles();
-            //  return Ok(roles);
-            return NotFound();
-        }
+        //[HttpGet]
+        //[Route("roles")]
+        //public IActionResult GetRoles()
+        //{
+        //    //  var roles = await _authenticationService.GetAllRoles();
+        //    //  return Ok(roles);
+        //    return NotFound();
+        //}
 
-        [HttpPost]
-        [Route("register")]
-        public IActionResult Register()
-        {
-            return NotFound();
-        }
+        //[HttpPost]
+        //[Route("register")]
+        //public IActionResult Register()
+        //{
+        //    return NotFound();
+        //}
     }
 }

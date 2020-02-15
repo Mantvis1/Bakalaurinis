@@ -1,5 +1,4 @@
-﻿using bakalaurinis.Infrastructure.Database.Models;
-using bakalaurinis.Infrastructure.Repositories;
+﻿using bakalaurinis.Infrastructure.Repositories;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Services;
 using bakalaurinis.Services.Interfaces;
@@ -25,6 +24,7 @@ namespace bakalaurinis.Configurations
         public static IServiceCollection AddApplicationDependencies(this IServiceCollection service)
         {
             return service.AddScoped<IActivitiesService, ActivitiesService>();
+                 //.AddScoped<IAuthenticationService, AuthenticationService>();
         }
     }
 }

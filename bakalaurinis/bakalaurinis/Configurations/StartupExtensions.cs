@@ -1,16 +1,29 @@
 ﻿using bakalaurinis.Infrastructure.Database;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
+using System.Text;
 
 namespace bakalaurinis.Configurations
 {
     public static class StartupExtensions
     {
+        public static void UseSPA(this IApplicationBuilder app)
+        {
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "UI";
+                 spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+               // spa.UseAngularCliServer(npmScript: "start");
+            });
+        }
+
         public static IServiceCollection AddSwagger(this IServiceCollection services)
         {
             services.AddSwaggerGen(options =>
@@ -37,15 +50,7 @@ namespace bakalaurinis.Configurations
             app.UseDeveloperExceptionPage();
         }
 
-        public static void UseSPA(this IApplicationBuilder app)
-        {
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "UI";
-              // spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
-               spa.UseAngularCliServer(npmScript: "start");
-            });
-        }
+       
 
         public static void UseIdentify(this IServiceCollection services)
         {
@@ -98,6 +103,37 @@ namespace bakalaurinis.Configurations
             var mapper = config.CreateMapper();
 
             services.AddSingleton(mapper);
+        }
+
+        public static IServiceCollection SetupJtwAuthentication(this IServiceCollection services, IConfiguration configuration)
+        {
+            var appSettingsSection = configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+
+            // configure jwt authentication
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+
+            services
+                .AddAuthentication(auth =>
+                {
+                    auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(bearer =>
+                {
+                    bearer.RequireHttpsMetadata = false;
+                    bearer.SaveToken = true;
+                    bearer.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
+
+            return services;
         }
     }
 }
