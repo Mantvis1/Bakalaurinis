@@ -6,10 +6,11 @@ using Activity = bakalaurinis.Infrastructure.Database.Models.Activity;
 
 namespace bakalaurinis.Infrastructure.Database
 {
-    public class DatabaseContext : IdentityDbContext<User>
+    public class DatabaseContext : DbContext
     {
         private readonly IConfiguration _configuration;
         public DbSet<Activity> Activities { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public DatabaseContext(DbContextOptions options, IConfiguration configuration) : base(options) 
         {

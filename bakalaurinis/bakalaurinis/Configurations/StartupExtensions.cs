@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,7 +21,7 @@ namespace bakalaurinis.Configurations
             {
                 spa.Options.SourcePath = "UI";
                  spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
-               // spa.UseAngularCliServer(npmScript: "start");
+              //  spa.UseAngularCliServer(npmScript: "start");
             });
         }
 

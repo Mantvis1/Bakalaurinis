@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using bakalaurinis.Dtos.Activity;
+using bakalaurinis.Dtos.User;
 using bakalaurinis.Infrastructure.Database.Models;
 
 namespace bakalaurinis.Configurations
@@ -15,6 +16,9 @@ namespace bakalaurinis.Configurations
 
             CreateMap<ActivityDto, Activity>(MemberList.None);
             CreateMap<Activity, ActivityDto>(MemberList.None);
+            
+            CreateMap<AfterAutentificationDto, User>(MemberList.None);
+            CreateMap<User, AfterAutentificationDto>(MemberList.None);
         }
     }
 }

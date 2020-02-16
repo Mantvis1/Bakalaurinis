@@ -44,6 +44,7 @@ namespace bakalaurinis
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
@@ -51,6 +52,8 @@ namespace bakalaurinis
             });
 
             app.UseSPA();
+
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
         }
     }
 }
