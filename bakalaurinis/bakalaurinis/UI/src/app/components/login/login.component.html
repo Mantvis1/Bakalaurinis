@@ -11,26 +11,20 @@
 
       <div>
         <mat-form-field>
-          <input
-            matInput
-            type="password"
-            name="password"
-            placeholder="password"
-            required
-          />
+          <input matInput
+                 type="password"
+                 name="password"
+                 placeholder="password"
+                 required />
         </mat-form-field>
       </div>
     </mat-card>
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
-    <button mat-flat-button mat-button-base [mat-dialog-close]>Close</button>
-    <button
-      mat-flat-button
-      (click)="login()"
-      [mat-dialog-close]
-      color="primary"
-    >
+    <button mat-flat-button
+            (click)="login()"
+            color="primary">
       Prisijungti
     </button>
   </mat-dialog-actions>

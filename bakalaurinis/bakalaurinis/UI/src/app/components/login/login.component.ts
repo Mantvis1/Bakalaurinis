@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import {MatSnackBar } from "@angular/material";
 import { AuthServiceService } from "src/app/services/auth-service.service";
 import { Router } from '@angular/router';
 
@@ -10,17 +10,29 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   constructor(
-    public dialogRef: MatDialogRef<any>,
-    @Inject(MAT_DIALOG_DATA) public matData: any,
     private authService: AuthServiceService,
-    private router: Router
+    private router: Router,
+    private matSnackBar: MatSnackBar
   ) {
     if (this.authService.isAuthenticated()) {
       this.router.navigateByUrl("/schedule");
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  
+  login() {
+    this.authService.login('tests', 'test').subscribe(data => {
+      this.router.navigateByUrl("/schedule");
+    }, error => {
+        this.showWanrningMessage();
+    });
+  }
+
+  showWanrningMessage() {
+    this.matSnackBar.open('Prisijungimo vardas arba slaptažodis yra neteisingi', 'Uždaryti', {
+      duration: 2000,
+    });
+  }
+
 }

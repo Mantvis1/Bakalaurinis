@@ -1,5 +1,4 @@
 ﻿using bakalaurinis.Infrastructure.Enums;
-using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
 namespace bakalaurinis.Infrastructure.Database.Models
