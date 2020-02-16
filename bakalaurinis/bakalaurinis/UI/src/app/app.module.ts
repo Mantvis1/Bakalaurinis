@@ -26,11 +26,19 @@ import {
 } from "@angular/material";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { ActivitiesTableComponent } from "./components/activities-table/activities-table.component";
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ActivityFormComponent } from './components/activity-form/activity-form.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { SettingsComponent } from './components/settings/settings.component';
+
+import { JwtModule } from '@auth0/angular-jwt';
+import { JwtInterceptor } from './helpers/jwt-iterceptor';
+import { ErrorInterceptor } from './helpers/error-interceptor';
+
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 
 @NgModule({
   declarations: [
@@ -65,14 +73,25 @@ import { SettingsComponent } from './components/settings/settings.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatOptionModule,
-    MatSelectModule
+    MatSelectModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['http://localhost:4200'],
+        blacklistedRoutes: ['example.com/examplebadroute/']
+      }
+    })
   ],
   entryComponents: [
     LoginComponent,
     RegistrationComponent,
     ActivityFormComponent
   ],
-  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-gb' }],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'en-gb' },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

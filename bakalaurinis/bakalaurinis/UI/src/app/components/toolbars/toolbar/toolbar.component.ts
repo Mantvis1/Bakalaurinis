@@ -3,6 +3,7 @@ import { MatDialog } from "@angular/material";
 import { LoginComponent } from "../../login/login.component";
 import { RegistrationComponent } from "../../registration/registration.component";
 import { Router } from "@angular/router";
+import { AuthServiceService } from '../../../services/auth-service.service';
 
 @Component({
   selector: "app-toolbar",
@@ -10,7 +11,7 @@ import { Router } from "@angular/router";
   styleUrls: ["./toolbar.component.css"]
 })
 export class ToolbarComponent implements OnInit {
-  constructor(public dialog: MatDialog, private router: Router) {}
+  constructor(public dialog: MatDialog, private router: Router, private authService: AuthServiceService) {}
 
   ngOnInit() {}
 
@@ -31,5 +32,13 @@ export class ToolbarComponent implements OnInit {
         console.log("Error");
       }
     );
+  }
+
+  login() {
+    this.authService.login('test', 'test').subscribe(data => {
+      this.router.navigateByUrl("/schedule");
+    }, error => {
+      console.log("Error");
+    });
   }
 }
