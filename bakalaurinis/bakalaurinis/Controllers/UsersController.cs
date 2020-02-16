@@ -1,17 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
+﻿using bakalaurinis.Dtos.User;
 using bakalaurinis.Services.Interfaces;
-using bakalaurinis.Dtos.User;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace WebApi.Controllers
+namespace bakalaurinis.Controllers
 {
-    [Authorize]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
-        private IUserService _userService;
+        private readonly IUserService _userService;
 
         public UsersController(IUserService userService)
         {
@@ -29,6 +28,19 @@ namespace WebApi.Controllers
                 return BadRequest(new { message = "Username or password is incorrect" });
 
             return Ok(user);
+        }
+
+        // [Authorize]
+        [HttpGet("self/{id}")]
+        [Produces(typeof(UserNameDto))]
+        public async Task<IActionResult> GetUsername(int id)
+        {
+            var username = _userService.GetNameById(id);
+
+            if (username == null)
+                return NotFound();
+
+            return Ok(username);
         }
     }
 }

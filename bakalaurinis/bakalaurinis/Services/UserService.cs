@@ -54,11 +54,18 @@ namespace bakalaurinis.Services
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-
             afterAuthDto.Token = tokenHandler.WriteToken(token);
             afterAuthDto.Id = user.Id;
 
             return afterAuthDto;
+        }
+
+        public async Task<UserNameDto> GetNameById(int id)
+        {
+          //  var user = _users.SingleOrDefault(x => x.Id == id);
+            var userNameDto = _mapper.Map<UserNameDto>(new User { Id = 1, Username = "test", Password = "test" });
+
+            return userNameDto;
         }
     }
 }

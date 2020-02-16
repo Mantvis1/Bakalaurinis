@@ -19,6 +19,9 @@ namespace bakalaurinis.Configurations
             
             CreateMap<AfterAutentificationDto, User>(MemberList.None);
             CreateMap<User, AfterAutentificationDto>(MemberList.None);
+
+            CreateMap<UserNameDto, User>(MemberList.None);
+            CreateMap<User, UserNameDto>(MemberList.None);
         }
     }
 }

@@ -25,8 +25,9 @@ namespace bakalaurinis
             services.UseDatabase();
             services.UseIdentify();
             services.AddAllDependencies();
-            services.SetUpAutoMapper();
             services.SetupJtwAuthentication(Configuration);
+            services.SetUpJsonOptions();
+            services.SetUpAutoMapper();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

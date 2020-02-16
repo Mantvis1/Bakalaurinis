@@ -3,29 +3,29 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { GetActivities } from '../models/get-activities';
 import { NewActivity } from '../models/new-activity';
+import { UrlService } from './url.service';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class ActivityService {
 
-  private readonly Api = 'https://localhost:44314/api/Activities/';
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private urlService: UrlService) { }
 
   getUserActivities(id: number): Observable<GetActivities[]> {
-    return this.http.get<GetActivities[]>(this.Api + 'user/' + id);
+    return this.http.get<GetActivities[]>(this.urlService.getAbsolutePath('Activities/user/') + id);
   }
 
   deleteActivity(id: number): Observable<any> {
-    return this.http.delete<any>(this.Api + id);
+    return this.http.delete<any>(this.urlService.getAbsolutePath('Activities') + id);
   }
 
   createNewActivity(newActivity: NewActivity) {
-    return this.http.post(this.Api, newActivity);
+    return this.http.post(this.urlService.getAbsolutePath('Activities'), newActivity);
   }
 
   editActivity(newActivity: NewActivity, id : number) {
-    return this.http.put(this.Api + id, newActivity);
+    return this.http.put(this.urlService.getAbsolutePath('Activities') + id, newActivity);
   }
 }

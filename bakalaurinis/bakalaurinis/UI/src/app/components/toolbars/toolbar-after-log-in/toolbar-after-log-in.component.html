@@ -4,7 +4,9 @@
   >
 
   <a mat-button routerLink="/activities" routerLinkActive="active">
-    <i class="material-icons"> schedule </i>
+    <i class="material-icons">
+      list
+    </i>
     Veiklos</a
   >
 
@@ -12,7 +14,7 @@
 
   <a mat-button routerLink="/profile" routerLinkActive="active">
     <i class="material-icons"> account_circle </i>
-    Username
+    {{currentUserName}}
   </a>
 
   <button mat-button (click)="logout()">
