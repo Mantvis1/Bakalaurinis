@@ -18,14 +18,14 @@ export class ActivityService {
   }
 
   deleteActivity(id: number): Observable<any> {
-    return this.http.delete<any>(this.urlService.getAbsolutePath('Activities') + id);
+    return this.http.delete<any>(this.urlService.getAbsolutePath('Activities/') + id);
   }
 
   createNewActivity(newActivity: NewActivity) {
     return this.http.post(this.urlService.getAbsolutePath('Activities'), newActivity);
   }
 
-  editActivity(newActivity: NewActivity, id : number) {
-    return this.http.put(this.urlService.getAbsolutePath('Activities') + id, newActivity);
+  editActivity(newActivity: NewActivity, id: number) {
+    return this.http.put(this.urlService.getAbsolutePath('Activities/') + id, newActivity);
   }
 }
