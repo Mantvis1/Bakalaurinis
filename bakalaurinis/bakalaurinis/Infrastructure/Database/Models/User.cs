@@ -1,5 +1,6 @@
 ﻿using bakalaurinis.Infrastructure.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace bakalaurinis.Infrastructure.Database.Models
 {
@@ -13,6 +14,7 @@ namespace bakalaurinis.Infrastructure.Database.Models
         public string Password { get; set; }
         [Required]
         public ScheduleStatusEnum ScheduleStatus { get; set; }
+        [NotMapped]
         public string Token { get; set; }
     }
 }

@@ -7,9 +7,7 @@ using bakalaurinis.Services.Interfaces;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,12 +18,6 @@ namespace bakalaurinis.Services
     {
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
-
-        private List<User> _users = new List<User>
-        {
-            new User { Id = 1, Username = "test", Password = "test" }
-        };
-
         private readonly AppSettings _appSettings;
 
         public UserService(IOptions<AppSettings> appSettings, IMapper mapper, IUserRepository userRepository)
@@ -35,10 +27,9 @@ namespace bakalaurinis.Services
             _userRepository = userRepository;
         }
 
-        public async Task<AfterAutentificationDto> Authenticate(string username, string password)
+        public async Task<AfterAutentificationDto> Authenticate(AuthenticateDto authenticateDto)
         {
-            var user = _users.SingleOrDefault(x => x.Username == username && x.Password == password);
-
+            var user = await _userRepository.GetUserByNameAndPassword(authenticateDto);
             var afterAuthDto = _mapper.Map<AfterAutentificationDto>(user);
 
             if (user == null)
@@ -77,8 +68,8 @@ namespace bakalaurinis.Services
 
         public async Task<UserNameDto> GetNameById(int id)
         {
-            //  var user = _users.SingleOrDefault(x => x.Id == id);
-            var userNameDto = _mapper.Map<UserNameDto>(new User { Id = 1, Username = "test", Password = "test" });
+            var user = await _userRepository.GetById(id);
+            var userNameDto = _mapper.Map<UserNameDto>(user);
 
             return userNameDto;
         }

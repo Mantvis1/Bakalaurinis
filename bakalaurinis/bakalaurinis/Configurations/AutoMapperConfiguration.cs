@@ -22,6 +22,9 @@ namespace bakalaurinis.Configurations
 
             CreateMap<UserNameDto, User>(MemberList.None);
             CreateMap<User, UserNameDto>(MemberList.None);
+
+            CreateMap<RegistrationDto, User>(MemberList.None);
+            CreateMap<User, RegistrationDto>(MemberList.None);
         }
     }
 }

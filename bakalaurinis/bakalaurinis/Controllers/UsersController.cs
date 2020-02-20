@@ -22,7 +22,7 @@ namespace bakalaurinis.Controllers
         [Produces(typeof(AfterAutentificationDto))]
         public async Task<IActionResult> Authenticate([FromBody]AuthenticateDto authenticateDto)
         {
-            var user = _userService.Authenticate(authenticateDto.Username, authenticateDto.Password);
+            var user = await _userService.Authenticate(authenticateDto);
 
             if (user == null)
                 return BadRequest(new { message = "Username or password is incorrect" });

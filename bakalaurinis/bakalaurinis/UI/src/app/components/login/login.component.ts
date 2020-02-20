@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from "@angular/core";
-import {MatSnackBar } from "@angular/material";
+import { MatSnackBar } from "@angular/material";
 import { AuthServiceService } from "src/app/services/auth-service.service";
 import { Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -11,10 +11,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
-  loginForm = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl('')
-  });
+  loginForm: FormGroup;
 
   constructor(
     private authService: AuthServiceService,
@@ -26,13 +23,25 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.loginForm = new FormGroup({
+      username: new FormControl(''),
+      password: new FormControl('')
+    });
+  }
 
   login() {
-    this.authService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(() => {
+    console.log(this.loginForm.value);
+
+    if (this.loginForm.invalid)
+      return;
+
+    this.authService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(data => {
+      console.log(data);
       this.router.navigateByUrl("/schedule");
     }, error => {
-        this.showWanrningMessage();
+        console.log(error);
+      this.showWanrningMessage();
     });
   }
 

@@ -19,8 +19,9 @@ export class AuthServiceService {
   login(username: string, password: string) {
     return this.http.post<any>(this.urlService.getAbsolutePath('Users/authenticate'), { username, password })
       .pipe(map(it => {
-        localStorage.setItem('userId', JSON.stringify(it.result.id));
-        localStorage.setItem('token', it.result.token);
+        console.log(it);
+        localStorage.setItem('userId', JSON.stringify(it.id));
+        localStorage.setItem('token', it.token);
       }));
   }
 
