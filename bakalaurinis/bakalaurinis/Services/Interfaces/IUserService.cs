@@ -7,5 +7,6 @@ namespace bakalaurinis.Services.Interfaces
     {
         Task<AfterAutentificationDto> Authenticate(string username, string password);
         Task<UserNameDto> GetNameById(int id);
+        Task<int> Register(RegistrationDto registrationDto);
     }
 }

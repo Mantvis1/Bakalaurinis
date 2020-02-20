@@ -1,66 +1,58 @@
-<form #registrationForm="ngForm">
-  <h1 mat-dialog-title>Registracija</h1>
-  <mat-card>
-    <div>
+<mat-card class="login-card login-card-position">
+  <form [formGroup]="registrationForm" (ngSubmit)="register()">
+    <h1 class="center" mat-dialog-title>Registracija</h1>
+
+    <div class="center">
       <mat-form-field>
-        <input matInput name="username" placeholder="username" required />
+        <input matInput
+               name="username"
+               placeholder="Vartotojo vardas"
+               formControlName="username"
+               class="form-control"
+               required />
       </mat-form-field>
     </div>
 
-    <div>
+    <div class="center">
       <mat-form-field>
-        <input
-          matInput
-          type="password"
-          name="password"
-          placeholder="password"
-          required
-        />
+        <input matInput
+               type="password"
+               name="password"
+               placeholder="password"
+               formControlName="password"
+               required />
       </mat-form-field>
     </div>
 
-    <div>
+    <div class="center">
       <mat-form-field>
-        <input
-          matInput
-          type="email"
-          name="email"
-          placeholder="email"
-          required
-        />
+        <input matInput
+               type="password"
+               name="reapeatPassword"
+               placeholder="reapeatPassword"
+               formControlName="reapeatPassword"
+               required />
       </mat-form-field>
     </div>
-  </mat-card>
 
-  <!--<mat-form-field class="example-full-width">
-    <input matInput placeholder="Username" #nameInput="ngModel" />
-    <mat-error *ngIf="nameInput.invalid" class="error">
-      Username cannot be empty.
-    </mat-error>
-  </mat-form-field>
+    <div class="center">
+      <mat-form-field>
+        <input matInput
+               type="email"
+               name="email"
+               placeholder="email"
+               formControlName="email"
+               required />
+      </mat-form-field>
+    </div>
 
-   <mat-form-field class="example-full-width">
-    <input matInput type="email" placeholder="Email" #nameInput="ngModel" />
-    <mat-error *ngIf="nameInput.invalid" class="error">
-      Email cannot be empty.
-    </mat-error>
-  </mat-form-field>
+    <div class="center">
+      <mat-dialog-actions align="end">
+        <button mat-flat-button color="primary">
+          Registruotis
+        </button>
+      </mat-dialog-actions>
+    </div>
 
-  <mat-form-field class="example-full-width">
-    <input
-      matInput
-      type="password"
-      placeholder="Password"
-      #nameInput="ngModel"
-    />
-    <mat-error *ngIf="nameInput.invalid" class="error">
-      Password cannot be empty.
-    </mat-error>
-  </mat-form-field>-->
-
-  <mat-dialog-actions align="end">
-    <button mat-flat-button color="primary">
-      Registruotis
-    </button>
-  </mat-dialog-actions>
-</form>
+  </form>
+</mat-card>

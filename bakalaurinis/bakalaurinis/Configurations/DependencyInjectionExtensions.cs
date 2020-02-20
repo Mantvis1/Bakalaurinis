@@ -19,13 +19,13 @@ namespace bakalaurinis.Configurations
         {
             return service
                 .AddScoped<IActivitiesRepository, ActivitiesRepository>().
-                AddScoped<IUserService, UserService>();
+                AddScoped<IUserRepository, UsersRepository>();
         }
 
         public static IServiceCollection AddApplicationDependencies(this IServiceCollection service)
         {
-            return service.AddScoped<IActivitiesService, ActivitiesService>();
-                 //.AddScoped<IAuthenticationService, AuthenticationService>();
+            return service.AddScoped<IActivitiesService, ActivitiesService>()
+                 .AddScoped<IUserService, UserService>();
         }
     }
 }

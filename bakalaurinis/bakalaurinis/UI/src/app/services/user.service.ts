@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UrlService } from './url.service';
 import { HttpClient } from '@angular/common/http';
+import { UserRegister } from '../models/user-register';
 
 @Injectable({
   providedIn: 'root'
@@ -11,5 +12,9 @@ export class UserService {
 
   getUsername(id: number): any {
     return this.http.get<any>(this.urlService.getAbsolutePath('Users/self/' + id));
+  }
+
+  register(userRegister: UserRegister) {
+    return this.http.post<any>(this.urlService.getAbsolutePath('Users/register'), userRegister);
   }
 }

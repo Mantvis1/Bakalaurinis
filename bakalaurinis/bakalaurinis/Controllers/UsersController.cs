@@ -30,7 +30,16 @@ namespace bakalaurinis.Controllers
             return Ok(user);
         }
 
-        // [Authorize]
+        [AllowAnonymous]
+        [HttpPost("register")]
+        [Produces(typeof(bool))]
+        public async Task<IActionResult> Register([FromBody]RegistrationDto registrationDto)
+        {
+            await _userService.Register(registrationDto);
+
+            return Ok(true);
+        }
+
         [HttpGet("self/{id}")]
         [Produces(typeof(UserNameDto))]
         public async Task<IActionResult> GetUsername(int id)

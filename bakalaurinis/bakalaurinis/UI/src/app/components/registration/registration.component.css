@@ -1,0 +1,16 @@
+.login-card {
+  position: relative;
+  min-width: 250px;
+  width: 30%;
+}
+
+.login-card-position {
+  position: absolute;
+  left: 35%;
+  top: 30%;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
