@@ -10,6 +10,9 @@
                formControlName="username"
                class="form-control"
                required />
+        <mat-error *ngIf="this.registrationForm.controls.username.invalid" class="error">
+          Įveskite vartotojo vardą
+        </mat-error>
       </mat-form-field>
     </div>
 
@@ -18,9 +21,12 @@
         <input matInput
                type="password"
                name="password"
-               placeholder="password"
+               placeholder="Slaptažodis"
                formControlName="password"
                required />
+        <mat-error *ngIf="this.registrationForm.controls.username.invalid" class="error">
+          Įveskite slaptažodį
+        </mat-error>
       </mat-form-field>
     </div>
 
@@ -29,9 +35,12 @@
         <input matInput
                type="password"
                name="reapeatPassword"
-               placeholder="reapeatPassword"
+               placeholder="Pakartoti slaptažodį"
                formControlName="reapeatPassword"
                required />
+        <mat-error *ngIf="this.registrationForm.controls.reapeatPassword.invalid" class="error">
+          Pakartokite slaptažodį
+        </mat-error>
       </mat-form-field>
     </div>
 
@@ -40,9 +49,12 @@
         <input matInput
                type="email"
                name="email"
-               placeholder="email"
+               placeholder="El.paštas"
                formControlName="email"
                required />
+        <mat-error *ngIf="this.registrationForm.controls.email.invalid" class="error">
+          Įveskite el.paštą
+        </mat-error>
       </mat-form-field>
     </div>
 

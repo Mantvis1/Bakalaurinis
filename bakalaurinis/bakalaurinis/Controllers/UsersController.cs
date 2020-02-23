@@ -44,7 +44,7 @@ namespace bakalaurinis.Controllers
         [Produces(typeof(UserNameDto))]
         public async Task<IActionResult> GetUsername(int id)
         {
-            var username = _userService.GetNameById(id);
+            var username = await _userService.GetNameById(id);
 
             if (username == null)
                 return NotFound();

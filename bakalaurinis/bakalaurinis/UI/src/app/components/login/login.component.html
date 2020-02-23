@@ -9,7 +9,10 @@
                placeholder="Vartotojo vardas"
                formControlName="username"
                class="form-control"
-               required />
+               required/>
+        <mat-error *ngIf="this.loginForm.controls.username.invalid" class="error">
+          Įveskite vartotojo vardą
+        </mat-error>
       </mat-form-field>
     </div>
 
@@ -21,11 +24,14 @@
                placeholder="Slaptažodis"
                formControlName="password"
                required />
+        <mat-error *ngIf="this.loginForm.controls.password.invalid" class="error">
+          Įveskite slaptažodį
+        </mat-error>
       </mat-form-field>
     </div>
 
     <div class="center">
-      <button mat-flat-button color="primary">
+      <button [disabled]="isDisabled" mat-flat-button color="primary">
         Prisijungti
       </button>
     </div>
