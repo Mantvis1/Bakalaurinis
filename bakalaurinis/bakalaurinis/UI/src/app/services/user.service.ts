@@ -17,4 +17,8 @@ export class UserService {
   register(userRegister: UserRegister) {
     return this.http.post<any>(this.urlService.getAbsolutePath('Users/register'), userRegister);
   }
+
+  deleteUser(id: number) {
+    return this.http.delete(this.urlService.getAbsolutePath('Users/' + id));
+  }
 }

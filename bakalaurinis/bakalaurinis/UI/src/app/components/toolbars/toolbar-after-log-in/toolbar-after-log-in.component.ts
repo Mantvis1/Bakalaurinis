@@ -15,7 +15,7 @@ export class ToolbarAfterLogInComponent implements OnInit {
 
   ngOnInit() {
     this.userService.getUsername(this.auth.getUserId()).subscribe(name => {
-      this.currentUserName = name.result.username;
+      this.currentUserName = name.username;
     });
   }
 

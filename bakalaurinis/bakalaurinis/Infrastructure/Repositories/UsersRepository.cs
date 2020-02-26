@@ -27,9 +27,12 @@ namespace bakalaurinis.Infrastructure.Repositories
             return entity.Id;
         }
 
-        public Task<bool> Delete(User entity)
+        public async Task<bool> Delete(User entity)
         {
-            throw new NotImplementedException();
+            _context.Users.Remove(entity);
+           var changes = await _context.SaveChangesAsync();
+
+            return changes > 0;
         }
 
         public Task<ICollection<User>> GetAll()

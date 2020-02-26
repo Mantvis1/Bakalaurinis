@@ -36,6 +36,9 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { JwtInterceptor } from './helpers/jwt-iterceptor';
 import { ErrorInterceptor } from './helpers/error-interceptor';
+import { DeleteAccountComponent } from './components/delete-account/delete-account.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { ScheduleSettingsComponent } from './components/schedule-settings/schedule-settings.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -52,7 +55,10 @@ export function tokenGetter() {
     ActivityFormComponent,
     ScheduleComponent,
     ProfileComponent,
-    SettingsComponent
+    SettingsComponent,
+    DeleteAccountComponent,
+    ChangePasswordComponent,
+    ScheduleSettingsComponent
   ],
   imports: [
     BrowserModule,

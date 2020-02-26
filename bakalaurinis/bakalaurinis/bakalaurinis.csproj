@@ -10,6 +10,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200226093044_UserSettings.cs" />
+    <Compile Remove="Migrations\20200226093044_UserSettings.Designer.cs" />
+    <Compile Remove="Migrations\20200226093221_UserSettings.cs" />
+    <Compile Remove="Migrations\20200226093221_UserSettings.Designer.cs" />
+    <Compile Remove="Migrations\20200226094057_UserSettings.cs" />
+    <Compile Remove="Migrations\20200226094057_UserSettings.Designer.cs" />
+    <Compile Remove="Migrations\20200226094235_UserSettings.cs" />
+    <Compile Remove="Migrations\20200226094235_UserSettings.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.0" />

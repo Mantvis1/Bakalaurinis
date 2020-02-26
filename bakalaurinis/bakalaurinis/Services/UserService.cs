@@ -73,5 +73,17 @@ namespace bakalaurinis.Services
 
             return userNameDto;
         }
+
+        public async Task<bool> Delete(int id)
+        {
+            var user = await _userRepository.GetById(id);
+
+            if(user == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            return await _userRepository.Delete(user);
+ ;        }
     }
 }

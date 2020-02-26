@@ -51,5 +51,14 @@ namespace bakalaurinis.Controllers
 
             return Ok(username);
         }
+
+        [HttpDelete("{id}")]
+        [Produces(typeof(bool))]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var isDeleted = await _userService.Delete(id);
+
+            return Ok(isDeleted);
+        }
     }
 }
