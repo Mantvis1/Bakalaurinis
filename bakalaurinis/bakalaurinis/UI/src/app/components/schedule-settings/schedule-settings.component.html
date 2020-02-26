@@ -1,2 +1,190 @@
-<mat-card><p>schedule-settings works!</p></mat-card>
+<mat-card>
+  <div [formGroup]="userSettingsForm">
+    <table>
+      <caption>Laikų ribų pasirinkimas</caption>
 
+      <thead>
+        <tr>
+          <th>
+            Savaitės diena
+          </th>
+          <th>
+            Pradžia
+          </th>
+          <th>
+            Pabaiga
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td>
+            <label>Pirmadienis</label>
+          </td>
+          <td>
+            <mat-form-field>
+              <mat-select formControlName="startMonday">
+                <mat-option *ngFor="let hour of hours" value={{hour}}>
+                  {{hour}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <mat-select formControlName="endMonday">
+                <mat-option *ngFor="let hour of hours" value={{hour}}>
+                  {{hour}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label>Antradienis</label>
+          </td>
+          <td>
+            <mat-form-field>
+              <mat-select formControlName="startTuesday">
+                <mat-option *ngFor="let hour of hours" value={{hour}}>
+                  {{hour}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <mat-select formControlName="endTuesday">
+                <mat-option *ngFor="let hour of hours" value={{hour}}>
+                  {{hour}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label>Trečiadienis</label>
+          </td>
+          <td>
+            <mat-form-field>
+              <mat-select formControlName="startWensday">
+                <mat-option *ngFor="let hour of hours" value={{hour}}>
+                  {{hour}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <mat-select formControlName="endWensday">
+                <mat-option *ngFor="let hour of hours" value={{hour}}>
+                  {{hour}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label>Ketviratadienis</label>
+          </td>
+          <td>
+            <mat-form-field>
+              <mat-select formControlName="startThursday">
+                <mat-option *ngFor="let hour of hours" value={{hour}}>
+                  {{hour}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <mat-select formControlName="endThursday">
+                <mat-option *ngFor="let hour of hours" value={{hour}}>
+                  {{hour}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label>Penktadienis</label>
+          </td>
+          <td>
+            <mat-form-field>
+              <mat-select formControlName="startFriday">
+                <mat-option *ngFor="let hour of hours" value={{hour}}>
+                  {{hour}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <mat-form-field>
+            <mat-select formControlName="endFriday">
+              <mat-option *ngFor="let hour of hours" value={{hour}}>
+                {{hour}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </tr>
+
+        <tr>
+          <td>
+            <label>Šeštadienis</label>
+          </td>
+          <td>
+            <mat-form-field>
+              <mat-select formControlName="startSaturday">
+                <mat-option *ngFor="let hour of hours" value={{hour}}>
+                  {{hour}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <mat-form-field>
+            <mat-select formControlName="endSaturday">
+              <mat-option *ngFor="let hour of hours" value={{hour}}>
+                {{hour}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </tr>
+
+        <tr>
+          <td>
+            <label>Sekmadienis</label>
+          </td>
+          <td>
+            <mat-form-field>
+              <mat-select formControlName="startSunday">
+                <mat-option *ngFor="let hour of hours" value={{hour}}>
+                  {{hour}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <mat-form-field>
+            <mat-select formControlName="endSunday">
+              <mat-option *ngFor="let hour of hours" value={{hour}}>
+                {{hour}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+  <button (click)="update()">Keisti</button>
+</mat-card>

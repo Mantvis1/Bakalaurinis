@@ -23,7 +23,8 @@ import {
   MAT_DATE_LOCALE,
   MatOptionModule,
   MatSelectModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatIconModule
 } from "@angular/material";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { ActivitiesTableComponent } from "./components/activities-table/activities-table.component";
@@ -82,6 +83,7 @@ export function tokenGetter() {
     MatOptionModule,
     MatSelectModule,
     MatSnackBarModule,
+    MatIconModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
