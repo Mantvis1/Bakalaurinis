@@ -21,4 +21,8 @@ export class UserService {
   deleteUser(id: number) {
     return this.http.delete(this.urlService.getAbsolutePath('Users/' + id));
   }
+
+  getStatusById(id: number): any {
+    return this.http.get<any>(this.urlService.getAbsolutePath('Users/status/' + id));
+  }
 }

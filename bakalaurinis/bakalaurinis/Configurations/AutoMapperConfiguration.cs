@@ -25,6 +25,9 @@ namespace bakalaurinis.Configurations
 
             CreateMap<RegistrationDto, User>(MemberList.None);
             CreateMap<User, RegistrationDto>(MemberList.None);
+
+            CreateMap<GetScheduleStatus, User>(MemberList.None);
+            CreateMap<User, GetScheduleStatus>(MemberList.None);
         }
     }
 }

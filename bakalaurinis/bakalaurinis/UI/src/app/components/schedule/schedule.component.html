@@ -1,1 +1,3 @@
-<p>schedule works!</p>
+<div *ngIf="isLoadSchedule; then scheduleExist else scheduleNotExist"></div>
+<ng-template #scheduleExist>Tvarkaraštis yra paruoštas</ng-template>
+<ng-template #scheduleNotExist>Tvarkaraštis dar neparuoštas</ng-template>

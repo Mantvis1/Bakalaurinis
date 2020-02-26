@@ -84,6 +84,14 @@ namespace bakalaurinis.Services
             }
 
             return await _userRepository.Delete(user);
- ;        }
+       }
+
+        public async Task<GetScheduleStatus> GetStatusById(int id)
+        {
+            var user = await _userRepository.GetById(id);
+            var userSheduleStatus = _mapper.Map<GetScheduleStatus>(user);
+
+            return userSheduleStatus;
+        }
     }
 }

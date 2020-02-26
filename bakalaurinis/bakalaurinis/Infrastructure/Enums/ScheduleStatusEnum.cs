@@ -3,7 +3,6 @@
     public enum ScheduleStatusEnum
     {
         DoesNotExist,
-        InProgress,
         Ready
     }
 }

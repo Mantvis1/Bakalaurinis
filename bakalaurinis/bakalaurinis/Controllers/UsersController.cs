@@ -60,5 +60,17 @@ namespace bakalaurinis.Controllers
 
             return Ok(isDeleted);
         }
+
+        [HttpGet("status/{id}")]
+        [Produces(typeof(GetScheduleStatus))]
+        public async Task<IActionResult> GetStatus(int id)
+        {
+            var userStatus = await _userService.GetStatusById(id);
+
+            if (userStatus == null)
+                return NotFound();
+
+            return Ok(userStatus);
+        }
     }
 }

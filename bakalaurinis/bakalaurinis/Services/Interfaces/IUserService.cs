@@ -9,5 +9,6 @@ namespace bakalaurinis.Services.Interfaces
         Task<UserNameDto> GetNameById(int id);
         Task<int> Register(RegistrationDto registrationDto);
         Task<bool> Delete(int id);
+        Task<GetScheduleStatus> GetStatusById(int id);
     }
 }
