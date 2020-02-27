@@ -40,6 +40,7 @@ import { ErrorInterceptor } from './helpers/error-interceptor';
 import { DeleteAccountComponent } from './components/delete-account/delete-account.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { ScheduleSettingsComponent } from './components/schedule-settings/schedule-settings.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -84,6 +85,7 @@ export function tokenGetter() {
     MatSelectModule,
     MatSnackBarModule,
     MatIconModule,
+    DragDropModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

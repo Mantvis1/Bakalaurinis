@@ -1,8 +1,8 @@
-﻿using bakalaurinis.Dtos.Activity;
-using bakalaurinis.Infrastructure.Database;
+﻿using bakalaurinis.Infrastructure.Database;
 using bakalaurinis.Infrastructure.Database.Models;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,6 +31,13 @@ namespace bakalaurinis.Infrastructure.Repositories
             var changes = await _context.SaveChangesAsync();
 
             return changes > 0;
+        }
+
+        public async Task<ICollection<Activity>> FilterByUserIdAndTime(int id, DateTime today)
+        {
+            var activities = await _context.Activities.Where(x => x.UserId == id && x.StartDate != null  && x.StartDate == today).ToArrayAsync();
+
+            return activities;
         }
 
         public async Task<ICollection<Activity>> FindAllByUserId(int id)

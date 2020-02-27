@@ -1,5 +1,5 @@
 export enum ActivityPriority {
-  Low,
-  Medium,
-  High
+  Žemas,
+  Vidutinis,
+  Aukštas
 }

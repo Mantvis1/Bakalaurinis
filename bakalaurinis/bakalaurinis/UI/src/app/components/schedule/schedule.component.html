@@ -1,3 +1,13 @@
 <div *ngIf="isLoadSchedule; then scheduleExist else scheduleNotExist"></div>
-<ng-template #scheduleExist>Tvarkaraštis yra paruoštas</ng-template>
-<ng-template #scheduleNotExist>Tvarkaraštis dar neparuoštas</ng-template>
+<ng-template #scheduleExist>
+  <h1>Šiandienos veiklų sąrašas</h1>
+  <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+    <div class="example-box" *ngFor="let activity of activities" cdkDrag>
+      <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+      {{activity.title}}
+    </div>
+  </div>
+</ng-template>
+<ng-template #scheduleNotExist>
+  Tvarkaraštis dar neparuoštas
+</ng-template>

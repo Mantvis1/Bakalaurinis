@@ -9,17 +9,23 @@ namespace bakalaurinis.Controllers
     [Route("api/[controller]")]
     public class ScheduleController : ControllerBase
     {
-      
-        public ScheduleController()
+        private readonly IScheduleService _scheduleService;
+        public ScheduleController(IScheduleService scheduleService)
         {
+            _scheduleService = scheduleService;
         }
 
 
-        [HttpGet("{id}")]
-        [Produces(typeof(ActivityDto))]
-        public async Task<IActionResult> Get(int id)
+        [HttpGet("{userId}")]
+        [Produces(typeof(ActivityDto[]))]
+        public async Task<IActionResult> Get(int userId)
         {
-            return Ok();
+            var activities = await _scheduleService.GetAllByUserIdFilterByDate(userId);
+
+            if (activities == null)
+                return NotFound();
+
+            return Ok(activities);
         }
 
     }

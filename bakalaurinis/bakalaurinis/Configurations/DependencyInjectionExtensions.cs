@@ -1,5 +1,7 @@
 ﻿using bakalaurinis.Infrastructure.Repositories;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
+using bakalaurinis.Infrastructure.Utils;
+using bakalaurinis.Infrastructure.Utils.Interfaces;
 using bakalaurinis.Services;
 using bakalaurinis.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,14 +20,16 @@ namespace bakalaurinis.Configurations
         public static IServiceCollection AddInfrastructureDependencies(this IServiceCollection service)
         {
             return service
-                .AddScoped<IActivitiesRepository, ActivitiesRepository>().
-                AddScoped<IUserRepository, UsersRepository>();
+                .AddScoped<IActivitiesRepository, ActivitiesRepository>()
+                .AddScoped<IUserRepository, UsersRepository>()
+                .AddSingleton<ITimeService, TimeService>();
         }
 
         public static IServiceCollection AddApplicationDependencies(this IServiceCollection service)
         {
             return service.AddScoped<IActivitiesService, ActivitiesService>()
-                 .AddScoped<IUserService, UserService>();
+                 .AddScoped<IUserService, UserService>()
+                 .AddScoped<IScheduleService, ScheduleService>();
         }
     }
 }

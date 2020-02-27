@@ -10,5 +10,6 @@ namespace bakalaurinis.Infrastructure.Repositories.Interfaces
     public interface IActivitiesRepository : IRepository<Activity>
     {
         Task<ICollection<Activity>> FindAllByUserId(int id);
+        Task<ICollection<Activity>> FilterByUserIdAndTime(int id, DateTime today);
     }
 }
