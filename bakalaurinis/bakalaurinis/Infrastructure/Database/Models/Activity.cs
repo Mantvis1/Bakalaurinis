@@ -13,8 +13,8 @@ namespace bakalaurinis.Infrastructure.Database.Models
         public string Description { get; set; }
         [Required]
         public int UserId { get; set; }
-        public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+        [Required]
+        public int DurationInMinutes { get; set; }
         public DateTime? FinishUntil { get; set; }
         public ActivityPriorityEnum ActivityPriority { get; set; }
     }

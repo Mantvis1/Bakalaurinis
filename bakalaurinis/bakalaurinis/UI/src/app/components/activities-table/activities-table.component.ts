@@ -23,8 +23,7 @@ export class ActivitiesTableComponent implements OnInit {
   displayedColumns: string[] = [
     "Title",
     "Description",
-    "StartDate",
-    "EndDate",
+    "Duration",
     "FinishUntil",
     "Priority",
     "Delete",
@@ -110,7 +109,7 @@ export class ActivitiesTableComponent implements OnInit {
   }
 
   isValueExists(value: any) {
-    if (value === null) return "Not exist";
+    if (value === null) return "Nenustatyta";
     return value;
   }
 }

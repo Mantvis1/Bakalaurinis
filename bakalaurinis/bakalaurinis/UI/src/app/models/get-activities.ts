@@ -1,12 +1,5 @@
-import { ActivityPriority } from '../components/activities-table/activity-priority.enum';
+import { NewActivity } from './new-activity';
 
-export class GetActivities {
-  Id: number;
-  Title: string;
-  Description: string;
-  UserId: number;
-  StartDate: Date
-  EndDate: Date
-  FinishUntil: Date
-  ActivityPriority: ActivityPriority
+export class GetActivities extends NewActivity {
+  id: number;
 }

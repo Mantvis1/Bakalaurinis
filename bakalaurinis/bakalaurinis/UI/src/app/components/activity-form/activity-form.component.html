@@ -25,19 +25,11 @@
 
       <div>
         <mat-form-field>
-          <mat-label>Activity start date</mat-label>
-          <input matInput [(ngModel)]="data.activityFormData.startDate" name="startDate" [matDatepicker]="picker" placeholder="Enter activity starting date">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-      </div>
-
-      <div>
-        <mat-form-field>
-          <mat-label>Activity finish date</mat-label>
-          <input matInput [(ngModel)]="data.activityFormData.endDate" name="endDate" [matDatepicker]="picker1" placeholder="Enter activity finish date">
-          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-          <mat-datepicker #picker1></mat-datepicker>
+          <input matInput [(ngModel)]="data.activityFormData.durationInMinutes" name="duration"
+                 placeholder="Trukmė" required #nameInput="ngModel" />
+          <mat-error *ngIf="nameInput.invalid" class="error">
+            Duration cannot be empty.
+          </mat-error>
         </mat-form-field>
       </div>
 

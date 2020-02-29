@@ -35,7 +35,7 @@ namespace bakalaurinis.Infrastructure.Repositories
 
         public async Task<ICollection<Activity>> FilterByUserIdAndTime(int id, DateTime today)
         {
-            var activities = await _context.Activities.Where(x => x.UserId == id && x.StartDate != null  && x.StartDate == today).ToArrayAsync();
+            var activities = await _context.Activities.Where(x => x.UserId == id).ToArrayAsync();
 
             return activities;
         }
