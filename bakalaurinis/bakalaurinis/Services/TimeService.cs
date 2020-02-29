@@ -9,5 +9,12 @@ namespace bakalaurinis.Infrastructure.Utils
         {
             return DateTime.Today;
         }
+
+        public DateTime GetDateTime(int? minutes)
+        {
+            var date = new DateTime(GetCurrentDay().Year, GetCurrentDay().Month, GetCurrentDay().Day).AddMinutes(minutes.Value);
+
+            return date;
+        }
     }
 }
