@@ -37,7 +37,19 @@ namespace bakalaurinis.Migrations
                     b.Property<int>("DurationInMinutes")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("EndTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime?>("FinishUntil")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsExtended")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsFinished")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("StartTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Title")

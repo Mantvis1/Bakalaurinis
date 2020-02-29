@@ -14,18 +14,32 @@ namespace bakalaurinis.Services
             _activitiesRepository = activitiesRepository;
             _userRepository = userRepository;
         }
-        public async Task Generate(int userId)
+        public async Task<bool> Generate(int userId)
         {
             var isScheduleCreated = (await _userRepository.GetById(userId)).ScheduleStatus;
 
-            if(isScheduleCreated == ScheduleStatusEnum.DoesNotExist)
+            if (isScheduleCreated == ScheduleStatusEnum.DoesNotExist)
             {
-                await CreateUserSchedule();
+                return await CreateUserSchedule(userId);
             }
+
+            return false;
         }
 
-        private async Task CreateUserSchedule()
+        private async Task<bool> CreateUserSchedule(int userId)
         {
+            var userActivities = await _activitiesRepository.FindAllByUserId(userId);
+
+            return await UpdateUserScheduleStatus(userId);
+        }
+
+        private async Task<bool> UpdateUserScheduleStatus(int userId)
+        {
+            var currentUser = await _userRepository.GetById(userId);
+
+            currentUser.ScheduleStatus = ScheduleStatusEnum.Ready;
+
+            return await _userRepository.Update(currentUser);
 
         }
     }

@@ -29,7 +29,8 @@ namespace bakalaurinis.Configurations
         {
             return service.AddScoped<IActivitiesService, ActivitiesService>()
                  .AddScoped<IUserService, UserService>()
-                 .AddScoped<IScheduleService, ScheduleService>();
+                 .AddScoped<IScheduleService, ScheduleService>()
+                 .AddScoped<IScheduleGenerationService, ScheduleGenerationService>();
         }
     }
 }

@@ -4,6 +4,6 @@ namespace bakalaurinis.Services.Interfaces
 {
     public interface IScheduleGenerationService
     {
-        Task Generate(int userId);
+        Task<bool> Generate(int userId);
     }
 }

@@ -10,7 +10,7 @@ using bakalaurinis.Infrastructure.Database;
 namespace bakalaurinis.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20200229084012_UpdateActivitiesEntity")]
+    [Migration("20200229183056_UpdateActivitiesEntity")]
     partial class UpdateActivitiesEntity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,7 +39,19 @@ namespace bakalaurinis.Migrations
                     b.Property<int>("DurationInMinutes")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("EndTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime?>("FinishUntil")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsExtended")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsFinished")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("StartTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Title")

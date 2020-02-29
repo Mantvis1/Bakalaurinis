@@ -54,9 +54,12 @@ namespace bakalaurinis.Infrastructure.Repositories
             return user;
         }
 
-        public Task<bool> Update(User entity)
+        public async Task<bool> Update(User entity)
         {
-            throw new NotImplementedException();
+            _context.Users.Attach(entity);
+            var changes = await _context.SaveChangesAsync();
+
+            return changes > 0;
         }
     }
 }

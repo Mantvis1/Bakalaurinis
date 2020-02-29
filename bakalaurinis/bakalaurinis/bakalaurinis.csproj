@@ -18,6 +18,12 @@
     <Compile Remove="Migrations\20200226094057_UserSettings.Designer.cs" />
     <Compile Remove="Migrations\20200226094235_UserSettings.cs" />
     <Compile Remove="Migrations\20200226094235_UserSettings.Designer.cs" />
+    <Compile Remove="Migrations\20200229084012_UpdateActivitiesEntity.cs" />
+    <Compile Remove="Migrations\20200229084012_UpdateActivitiesEntity.Designer.cs" />
+    <Compile Remove="Migrations\20200229182602_AddStartAndEndTimeInActivitiesModel.cs" />
+    <Compile Remove="Migrations\20200229182602_AddStartAndEndTimeInActivitiesModel.Designer.cs" />
+    <Compile Remove="Migrations\20200229182743_AddStartAndEndTimeInActivitiesModel.cs" />
+    <Compile Remove="Migrations\20200229182743_AddStartAndEndTimeInActivitiesModel.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

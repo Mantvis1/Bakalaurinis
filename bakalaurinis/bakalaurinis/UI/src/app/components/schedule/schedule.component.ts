@@ -3,8 +3,8 @@ import { UserService } from '../../services/user.service';
 import { AuthServiceService } from '../../services/auth-service.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { GetActivities } from '../../models/get-activities';
-import { ActivityService } from '../../services/activity.service';
 import { ScheduleService } from '../../services/schedule.service';
+import { ScheduleGenerationService } from '../../services/schedule-generation.service';
 
 @Component({
   selector: 'app-schedule',
@@ -15,23 +15,25 @@ export class ScheduleComponent implements OnInit {
 
   isLoadSchedule = 1;
   activities: GetActivities[] = [];
+  currentUserId: number = 0;
 
   constructor(
     private userService: UserService,
     private authService: AuthServiceService,
-    private activityService: ActivityService,
-    private scheduleService: ScheduleService
+    private scheduleService: ScheduleService,
+    private scheduleGenerationService: ScheduleGenerationService
   ) { }
 
   ngOnInit() {
+    this.currentUserId = this.authService.getUserId();
+
+    this.genereteScheduleIfNotExsits();
     this.isScheduleExists();
     this.getAllUserActivities();
   }
 
   isScheduleExists() {
-    let currentUserId = this.authService.getUserId();
-
-    this.userService.getStatusById(currentUserId).subscribe(data => {
+    this.userService.getStatusById(this.currentUserId).subscribe(data => {
       this.isLoadSchedule = data.scheduleStatus;
     });
   }
@@ -45,4 +47,18 @@ export class ScheduleComponent implements OnInit {
       this.activities = data;
     });
   }
+
+  genereteScheduleIfNotExsits(): void {
+    console.log(this.currentUserId);
+
+    this.scheduleGenerationService.generateScheduleForUser(this.currentUserId).subscribe(
+      data => {
+        console.log(data);
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
 }

@@ -20,12 +20,50 @@ namespace bakalaurinis.Migrations
                 table: "Activities",
                 nullable: false,
                 defaultValue: 0);
+
+            migrationBuilder.AddColumn<DateTime>(
+                name: "EndTime",
+                table: "Activities",
+                nullable: true);
+
+            migrationBuilder.AddColumn<bool>(
+                name: "IsExtended",
+                table: "Activities",
+                nullable: false,
+                defaultValue: false);
+
+            migrationBuilder.AddColumn<bool>(
+                name: "IsFinished",
+                table: "Activities",
+                nullable: false,
+                defaultValue: false);
+
+            migrationBuilder.AddColumn<DateTime>(
+                name: "StartTime",
+                table: "Activities",
+                nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
                 name: "DurationInMinutes",
+                table: "Activities");
+
+            migrationBuilder.DropColumn(
+                name: "EndTime",
+                table: "Activities");
+
+            migrationBuilder.DropColumn(
+                name: "IsExtended",
+                table: "Activities");
+
+            migrationBuilder.DropColumn(
+                name: "IsFinished",
+                table: "Activities");
+
+            migrationBuilder.DropColumn(
+                name: "StartTime",
                 table: "Activities");
 
             migrationBuilder.AddColumn<DateTime>(
