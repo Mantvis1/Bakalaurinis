@@ -109,7 +109,7 @@ namespace bakalaurinis.Services
             var activity = await _repository.GetById(activityId);
 
             activity.IsFinished = true;
-            activity.EndTime = _timeService.AddMinutesToTime(DateTime.Now, null);
+            activity.EndTime = _timeService.AddMinutesToTime(DateTime.Now, 0);
 
             await _scheduleGenerationService.Update(userId);
 

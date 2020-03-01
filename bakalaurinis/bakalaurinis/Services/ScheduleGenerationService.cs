@@ -73,9 +73,9 @@ namespace bakalaurinis.Services
             return await _userRepository.Update(currentUser);
         }
 
-        public Task Update(int userId)
+        public async Task Update(int userId)
         {
-            throw new NotImplementedException();
+            var i = userId;
         }
     }
 }

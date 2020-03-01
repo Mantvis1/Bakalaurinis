@@ -7,7 +7,7 @@ namespace bakalaurinis.Services
     {
         public DateTime AddMinutesToTime(DateTime dateTime, int? minutes)
         {
-            var date = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day).AddMinutes(minutes.Value);
+            var date = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, 0).AddMinutes(minutes.Value);
 
             return date;
         }
