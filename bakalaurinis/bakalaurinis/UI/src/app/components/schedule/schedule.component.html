@@ -4,7 +4,7 @@
   <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
     <div class="example-box" *ngFor="let activity of activities" cdkDrag>
       <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-      {{activity.title}} Vykdymas: {{activity.startTime}} - {{activity.endTime}}
+      {{activity.title}} Nuo {{activity.startTime| date:'shortTime'}} iki {{activity.endTime| date:'shortTime'}}
     </div>
   </div>
 </ng-template>

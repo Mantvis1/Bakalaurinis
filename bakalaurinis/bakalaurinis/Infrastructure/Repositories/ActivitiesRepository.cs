@@ -33,9 +33,21 @@ namespace bakalaurinis.Infrastructure.Repositories
             return changes > 0;
         }
 
+        public async Task<ICollection<Activity>> FilterByUserIdAndStartTime(int id)
+        {
+            var activities = await _context.Activities.Where(x => x.UserId == id && x.StartTime == null).ToArrayAsync();
+
+            return activities;
+        }
+
         public async Task<ICollection<Activity>> FilterByUserIdAndTime(int id, DateTime today)
         {
-            var activities = await _context.Activities.Where(x => x.UserId == id).ToArrayAsync();
+            var activities = await _context.Activities.Where(
+                x => x.UserId == id &&
+                x.StartTime.Value.Year == today.Year &&
+                x.StartTime.Value.Month == today.Month &&
+                x.StartTime.Value.Day == today.Day
+                ).ToArrayAsync();
 
             return activities;
         }

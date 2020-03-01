@@ -2,7 +2,6 @@
 using bakalaurinis.Infrastructure.Database.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace bakalaurinis.Infrastructure.Repositories.Interfaces
@@ -11,5 +10,6 @@ namespace bakalaurinis.Infrastructure.Repositories.Interfaces
     {
         Task<ICollection<Activity>> FindAllByUserId(int id);
         Task<ICollection<Activity>> FilterByUserIdAndTime(int id, DateTime today);
+        Task<ICollection<Activity>> FilterByUserIdAndStartTime(int id);
     }
 }

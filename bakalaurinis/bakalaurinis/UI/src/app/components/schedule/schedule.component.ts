@@ -49,8 +49,6 @@ export class ScheduleComponent implements OnInit {
   }
 
   genereteScheduleIfNotExsits(): void {
-    console.log(this.currentUserId);
-
     this.scheduleGenerationService.generateScheduleForUser(this.currentUserId).subscribe(
       data => {
         console.log(data);

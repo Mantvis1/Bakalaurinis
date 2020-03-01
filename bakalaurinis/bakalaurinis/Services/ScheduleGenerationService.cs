@@ -3,6 +3,7 @@ using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Infrastructure.Utils.Interfaces;
 using bakalaurinis.Services.Interfaces;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace bakalaurinis.Services
@@ -35,20 +36,33 @@ namespace bakalaurinis.Services
 
         private async Task<bool> CreateUserSchedule(int userId)
         {
-            var userActivities = await _activitiesRepository.FindAllByUserId(userId);
+            var userActivities = (await _activitiesRepository.FilterByUserIdAndStartTime(userId)).OrderBy(x => x.ActivityPriority);
 
             foreach (var userActivity in userActivities)
             {
-                while ((startTime + userActivity.DurationInMinutes) <= endTime)
+                int finishTime = startTime + userActivity.DurationInMinutes;
+
+                if(finishTime > endTime)
+                {
+                    MoveToNextDay();
+                }
+
+                if (finishTime <= endTime)
                 {
                     userActivity.StartTime = _timeService.GetDateTime(startTime);
                     startTime += userActivity.DurationInMinutes;
                     userActivity.EndTime = _timeService.GetDateTime(startTime);
                 }
-                
+               
             }
 
             return await UpdateUserScheduleStatus(userId);
+        }
+
+        private void MoveToNextDay()
+        {
+            startTime = 8 * 60 + 24 * 60;
+            endTime =  10 * 60 + 24 * 60;
         }
 
         private async Task<bool> UpdateUserScheduleStatus(int userId)
