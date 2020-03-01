@@ -11,10 +11,10 @@
         iki {{activity.endTime| date:'shortTime'}}
       </div>
       <div>
-        <button (click)="extend(activity.id)">Pratęsti</button>
+        <button (click)="extend(activity.id)" mat-flat-button color="primary" [disabled]="activity.isFinished">Pratęsti</button>
       </div>
       <div>
-        <button (click)="finish(activity.id)">Baigti</button>
+        <button (click)="finish(activity.id)" mat-flat-button color="primary" [disabled]="activity.isFinished">Baigti</button>
       </div>
     </div>
   </div>

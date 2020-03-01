@@ -73,10 +73,11 @@ namespace bakalaurinis.Services
             return await _userRepository.Update(currentUser);
         }
 
-        public async Task UpdateWhenExtemdActivity(int userId, int activityId)
+        public async Task UpdateWhenExtendActivity(int userId, int activityId)
         {
             var isFound = false;
-            var userActivities = await _activitiesRepository.FilterByUserIdAndTime(userId, _timeService.GetCurrentDay());
+            var userActivities = (await _activitiesRepository.FilterByUserIdAndTime(userId, _timeService.GetCurrentDay()))
+                .OrderBy(x => x.ActivityPriority);
 
             foreach (var userActivity in userActivities)
             {
@@ -92,6 +93,11 @@ namespace bakalaurinis.Services
                     await _activitiesRepository.Update(userActivity);
                 }
             }
+        }
+
+        public Task UpdateWhenFinishActivity(int userId, int activityId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

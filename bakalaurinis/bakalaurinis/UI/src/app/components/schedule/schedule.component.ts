@@ -47,6 +47,7 @@ export class ScheduleComponent implements OnInit {
   getAllUserActivities() {
     this.scheduleService.getUserTodaysActivities(this.authService.getUserId()).subscribe(data => {
       this.activities = data;
+      console.log(data);
     });
   }
 

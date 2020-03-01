@@ -14,5 +14,6 @@ namespace bakalaurinis.Dtos.Activity
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
         public ActivityPriorityEnum ActivityPriority { get; set; }
+        public bool IsFinished { get; set; }
     }
 }

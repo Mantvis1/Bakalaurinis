@@ -98,10 +98,9 @@ namespace bakalaurinis.Services
             activity.EndTime = _timeService.AddMinutesToTime(activity.EndTime.Value, 10);
             activity.IsExtended = true;
 
-            await _scheduleGenerationService.UpdateWhenExtemdActivity(userId, activityId);
+            await _scheduleGenerationService.UpdateWhenExtendActivity(userId, activityId);
 
             return await _repository.Update(activity);
-
         }
 
         public async Task<bool> Finish(int userId, int activityId)
@@ -111,7 +110,7 @@ namespace bakalaurinis.Services
             activity.IsFinished = true;
             activity.EndTime = _timeService.AddMinutesToTime(DateTime.Now, 0);
 
-         //   await _scheduleGenerationService.Update(userId, activityId);
+            await _scheduleGenerationService.UpdateWhenFinishActivity(userId, activityId);
 
             return await _repository.Update(activity);
         }
