@@ -28,4 +28,12 @@ export class ActivityService {
   editActivity(newActivity: NewActivity, id: number) {
     return this.http.put(this.urlService.getAbsolutePath('Activities/') + id, newActivity);
   }
+
+  extendActivity(userId: number, activityId: number) {
+    return this.http.put(this.urlService.getAbsolutePath('Activities/extend/' + userId + '/' + activityId),null);
+  }
+
+  finishActivity(userId: number, activityId: number) {
+    return this.http.put(this.urlService.getAbsolutePath('Activities/finish/' + userId + '/' + activityId), null);
+  }
 }

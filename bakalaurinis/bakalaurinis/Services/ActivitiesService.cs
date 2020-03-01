@@ -13,11 +13,20 @@ namespace bakalaurinis.Services
     {
         private readonly IActivitiesRepository _repository;
         private readonly IMapper _mapper;
+        private readonly ITimeService _timeService;
+        private readonly IScheduleGenerationService _scheduleGenerationService;
 
-        public ActivitiesService(IActivitiesRepository repository, IMapper mapper)
+        public ActivitiesService(
+            IActivitiesRepository repository,
+            IMapper mapper,
+            ITimeService timeService,
+            IScheduleGenerationService scheduleGenerationService
+            )
         {
             _repository = repository;
             _mapper = mapper;
+            _timeService = timeService;
+            _scheduleGenerationService = scheduleGenerationService;
         }
 
         public async Task<int> Create(NewActivityDto newActivityDto)
@@ -78,6 +87,31 @@ namespace bakalaurinis.Services
             }
 
             _mapper.Map(activityDto, activity);
+
+            return await _repository.Update(activity);
+        }
+
+        public async Task<bool> Extend(int userId, int activityId)
+        {
+            var activity = await _repository.GetById(activityId);
+
+            activity.EndTime = _timeService.AddMinutesToTime(activity.EndTime.Value, 10);
+            activity.IsExtended = true;
+
+            await _scheduleGenerationService.Update(userId);
+
+            return await _repository.Update(activity);
+
+        }
+
+        public async Task<bool> Finish(int userId, int activityId)
+        {
+            var activity = await _repository.GetById(activityId);
+
+            activity.IsFinished = true;
+            activity.EndTime = _timeService.AddMinutesToTime(DateTime.Now, null);
+
+            await _scheduleGenerationService.Update(userId);
 
             return await _repository.Update(activity);
         }

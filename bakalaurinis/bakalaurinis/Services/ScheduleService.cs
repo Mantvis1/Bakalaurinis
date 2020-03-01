@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using bakalaurinis.Dtos.Activity;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
-using bakalaurinis.Infrastructure.Utils.Interfaces;
 using bakalaurinis.Services.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;

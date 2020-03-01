@@ -22,13 +22,13 @@ namespace bakalaurinis.Controllers
         [Produces(typeof(ActivityDto))]
         public async Task<IActionResult> Get(int id)
         {
-            return Ok();
+            return Ok(id);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id)
         {
-            return Ok();
+            return Ok(id);
         }
     }
 }

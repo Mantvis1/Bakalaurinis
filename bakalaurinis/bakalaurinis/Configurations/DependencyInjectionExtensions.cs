@@ -1,7 +1,5 @@
 ﻿using bakalaurinis.Infrastructure.Repositories;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
-using bakalaurinis.Infrastructure.Utils;
-using bakalaurinis.Infrastructure.Utils.Interfaces;
 using bakalaurinis.Services;
 using bakalaurinis.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;

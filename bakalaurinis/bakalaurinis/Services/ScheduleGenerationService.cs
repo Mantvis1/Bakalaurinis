@@ -1,6 +1,5 @@
 ﻿using bakalaurinis.Infrastructure.Enums;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
-using bakalaurinis.Infrastructure.Utils.Interfaces;
 using bakalaurinis.Services.Interfaces;
 using System;
 using System.Linq;
@@ -72,7 +71,11 @@ namespace bakalaurinis.Services
             currentUser.ScheduleStatus = ScheduleStatusEnum.Ready;
 
             return await _userRepository.Update(currentUser);
+        }
 
+        public Task Update(int userId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

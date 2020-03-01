@@ -12,5 +12,7 @@ namespace bakalaurinis.Services.Interfaces
         Task<int> Create(NewActivityDto newActivityDto);
         Task<bool> Delete(int id);
         Task<bool> Update(int id, NewActivityDto activityDto);
+        Task<bool> Extend(int userId, int activityId);
+        Task<bool> Finish(int userId, int activityId);
     }
 }

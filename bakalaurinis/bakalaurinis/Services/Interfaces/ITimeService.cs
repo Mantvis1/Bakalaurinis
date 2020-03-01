@@ -1,10 +1,12 @@
 ﻿using System;
 
-namespace bakalaurinis.Infrastructure.Utils.Interfaces
+namespace bakalaurinis.Services.Interfaces
 {
     public interface ITimeService
     {
         DateTime GetCurrentDay();
         DateTime GetDateTime(int? minutes);
+        DateTime AddMinutesToTime(DateTime dateTime, int? minutes);
+
     }
 }

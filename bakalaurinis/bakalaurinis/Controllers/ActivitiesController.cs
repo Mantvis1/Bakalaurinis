@@ -78,9 +78,25 @@ namespace bakalaurinis.Controllers
         [Produces(typeof(int))]
         public async Task<IActionResult> Update(int id,[FromBody] NewActivityDto newActivityDto)
         {
-            var ok = await _activitiesService.Update(id, newActivityDto);
+            await _activitiesService.Update(id, newActivityDto);
 
-            return Ok(ok);
+            return NoContent();
+        }
+
+        [HttpPut("extend/{userId}/{activityId}")]
+        public async Task<IActionResult> Extend(int userId, int activityId)
+        {
+            await _activitiesService.Extend(userId, activityId);
+
+            return NoContent();
+        }
+
+        [HttpPut("finish/{userId}/{activityId}")]
+        public async Task<IActionResult> Finish(int userId, int activityId)
+        {
+            await _activitiesService.Finish(userId, activityId);
+
+            return NoContent();
         }
     }
 }

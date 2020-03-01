@@ -5,6 +5,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { GetActivities } from '../../models/get-activities';
 import { ScheduleService } from '../../services/schedule.service';
 import { ScheduleGenerationService } from '../../services/schedule-generation.service';
+import { ActivityService } from '../../services/activity.service';
 
 @Component({
   selector: 'app-schedule',
@@ -21,7 +22,8 @@ export class ScheduleComponent implements OnInit {
     private userService: UserService,
     private authService: AuthServiceService,
     private scheduleService: ScheduleService,
-    private scheduleGenerationService: ScheduleGenerationService
+    private scheduleGenerationService: ScheduleGenerationService,
+    private activityService: ActivityService
   ) { }
 
   ngOnInit() {
@@ -49,14 +51,19 @@ export class ScheduleComponent implements OnInit {
   }
 
   genereteScheduleIfNotExsits(): void {
-    this.scheduleGenerationService.generateScheduleForUser(this.currentUserId).subscribe(
-      data => {
-        console.log(data);
-      },
-      error => {
-        console.log(error);
-      }
-    );
+    this.scheduleGenerationService.generateScheduleForUser(this.currentUserId).subscribe();
+  }
+
+  extend(id: number) {
+    this.activityService.extendActivity(this.currentUserId, id).subscribe(() => {
+      this.getAllUserActivities();
+    });
+  }
+
+  finish(id: number) {
+    this.activityService.finishActivity(this.currentUserId, id).subscribe(() => {
+      this.getAllUserActivities();
+    });
   }
 
 }
