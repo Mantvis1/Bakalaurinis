@@ -13,8 +13,8 @@ namespace bakalaurinis.Services
         private readonly IUserRepository _userRepository;
         private readonly ITimeService _timeService;
 
-        private int startTime = 8*60;
-        private int endTime = 10*60;
+        private int startTime = 8 * 60;
+        private int endTime = 10 * 60;
         public ScheduleGenerationService(IActivitiesRepository activitiesRepository, IUserRepository userRepository, ITimeService timeService)
         {
             _activitiesRepository = activitiesRepository;
@@ -41,7 +41,7 @@ namespace bakalaurinis.Services
             {
                 int finishTime = startTime + userActivity.DurationInMinutes;
 
-                if(finishTime > endTime)
+                if (finishTime > endTime)
                 {
                     MoveToNextDay();
                 }
@@ -52,7 +52,7 @@ namespace bakalaurinis.Services
                     startTime += userActivity.DurationInMinutes;
                     userActivity.EndTime = _timeService.GetDateTime(startTime);
                 }
-               
+
             }
 
             return await UpdateUserScheduleStatus(userId);
@@ -61,7 +61,7 @@ namespace bakalaurinis.Services
         private void MoveToNextDay()
         {
             startTime = 8 * 60 + 24 * 60;
-            endTime =  10 * 60 + 24 * 60;
+            endTime = 10 * 60 + 24 * 60;
         }
 
         private async Task<bool> UpdateUserScheduleStatus(int userId)
@@ -73,9 +73,25 @@ namespace bakalaurinis.Services
             return await _userRepository.Update(currentUser);
         }
 
-        public async Task Update(int userId)
+        public async Task UpdateWhenExtemdActivity(int userId, int activityId)
         {
-            var i = userId;
+            var isFound = false;
+            var userActivities = await _activitiesRepository.FilterByUserIdAndTime(userId, _timeService.GetCurrentDay());
+
+            foreach (var userActivity in userActivities)
+            {
+                if (userActivity.Id == activityId)
+                {
+                    isFound = true;
+                }
+                else if (isFound)
+                {
+                    userActivity.StartTime = _timeService.AddMinutesToTime(userActivity.StartTime.Value, 10);
+                    userActivity.EndTime = _timeService.AddMinutesToTime(userActivity.EndTime.Value, 10);
+
+                    await _activitiesRepository.Update(userActivity);
+                }
+            }
         }
     }
 }

@@ -98,7 +98,7 @@ namespace bakalaurinis.Services
             activity.EndTime = _timeService.AddMinutesToTime(activity.EndTime.Value, 10);
             activity.IsExtended = true;
 
-            await _scheduleGenerationService.Update(userId);
+            await _scheduleGenerationService.UpdateWhenExtemdActivity(userId, activityId);
 
             return await _repository.Update(activity);
 
@@ -111,7 +111,7 @@ namespace bakalaurinis.Services
             activity.IsFinished = true;
             activity.EndTime = _timeService.AddMinutesToTime(DateTime.Now, 0);
 
-            await _scheduleGenerationService.Update(userId);
+         //   await _scheduleGenerationService.Update(userId, activityId);
 
             return await _repository.Update(activity);
         }

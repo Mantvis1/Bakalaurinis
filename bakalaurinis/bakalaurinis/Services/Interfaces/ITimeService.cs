@@ -6,7 +6,7 @@ namespace bakalaurinis.Services.Interfaces
     {
         DateTime GetCurrentDay();
         DateTime GetDateTime(int? minutes);
-        DateTime AddMinutesToTime(DateTime dateTime, int? minutes);
+        DateTime AddMinutesToTime(DateTime dateTime, int minutes);
 
     }
 }
