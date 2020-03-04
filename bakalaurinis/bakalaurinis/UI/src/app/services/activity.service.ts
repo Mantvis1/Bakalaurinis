@@ -22,6 +22,7 @@ export class ActivityService {
   }
 
   createNewActivity(newActivity: NewActivity) {
+    console.log(newActivity);
     return this.http.post(this.urlService.getAbsolutePath('Activities'), newActivity);
   }
 

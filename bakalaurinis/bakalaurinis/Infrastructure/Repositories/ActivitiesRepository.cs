@@ -47,7 +47,9 @@ namespace bakalaurinis.Infrastructure.Repositories
                 x.StartTime.Value.Year == today.Year &&
                 x.StartTime.Value.Month == today.Month &&
                 x.StartTime.Value.Day == today.Day
-                ).ToArrayAsync();
+                )
+                .OrderBy(x => x.StartTime)
+                .ToArrayAsync();
 
             return activities;
         }

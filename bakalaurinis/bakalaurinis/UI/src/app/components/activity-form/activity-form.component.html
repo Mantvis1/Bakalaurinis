@@ -46,7 +46,9 @@
         <mat-form-field>
           <mat-label>Select priority</mat-label>
           <mat-select placeholder="Priority">
-            <mat-option *ngFor="let p of data.activityFormData.priority" [value]="p">{{data.activityFormData.priority}}</mat-option>
+            <mat-option [value]="0">Žemas</mat-option>
+            <mat-option [value]="1">Vidutinis</mat-option>
+            <mat-option [value]="2">Aukštas</mat-option>
           </mat-select>
         </mat-form-field>
       </div>

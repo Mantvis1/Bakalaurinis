@@ -5,10 +5,10 @@
     <div class="example-box" *ngFor="let activity of activities" cdkDrag>
       <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
       {{activity.title}} <div>
-        Nuo {{activity.startTime| date:'shortTime'}}
+        Nuo {{activity.startTime| date:'hh:mm'}}
       </div>
       <div>
-        iki {{activity.endTime| date:'shortTime'}}
+        iki {{activity.endTime| date:'hh:mm'}}
       </div>
       <div>
         <button (click)="extend(activity.id)" mat-flat-button color="primary" [disabled]="activity.isFinished">Pratęsti</button>

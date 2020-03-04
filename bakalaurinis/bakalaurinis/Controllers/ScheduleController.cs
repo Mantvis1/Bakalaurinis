@@ -10,9 +10,11 @@ namespace bakalaurinis.Controllers
     public class ScheduleController : ControllerBase
     {
         private readonly IScheduleService _scheduleService;
-        public ScheduleController(IScheduleService scheduleService)
+        private readonly IScheduleGenerationService _scheduleGenerationService;
+        public ScheduleController(IScheduleService scheduleService ,IScheduleGenerationService scheduleGenerationService)
         {
             _scheduleService = scheduleService;
+            _scheduleGenerationService = scheduleGenerationService;
         }
 
 
@@ -28,5 +30,12 @@ namespace bakalaurinis.Controllers
             return Ok(activities);
         }
 
+        [HttpPut("{userId}")]
+        public async Task<IActionResult> Post(UpdateActivitiesDto updateActivitiesDto)
+        {
+            await _scheduleGenerationService.CalculateActivitiesTime(updateActivitiesDto);
+
+            return Ok();
+        }
     }
 }

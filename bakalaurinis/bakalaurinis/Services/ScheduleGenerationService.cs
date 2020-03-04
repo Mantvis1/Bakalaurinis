@@ -1,4 +1,6 @@
-﻿using bakalaurinis.Infrastructure.Enums;
+﻿using AutoMapper;
+using bakalaurinis.Dtos.Activity;
+using bakalaurinis.Infrastructure.Enums;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Services.Interfaces;
 using System;
@@ -12,14 +14,16 @@ namespace bakalaurinis.Services
         private readonly IActivitiesRepository _activitiesRepository;
         private readonly IUserRepository _userRepository;
         private readonly ITimeService _timeService;
+        private readonly IMapper _mapper;
 
         private int startTime = 8 * 60;
         private int endTime = 10 * 60;
-        public ScheduleGenerationService(IActivitiesRepository activitiesRepository, IUserRepository userRepository, ITimeService timeService)
+        public ScheduleGenerationService(IActivitiesRepository activitiesRepository, IUserRepository userRepository, ITimeService timeService, IMapper mapper)
         {
             _activitiesRepository = activitiesRepository;
             _userRepository = userRepository;
             _timeService = timeService;
+            _mapper = mapper;
         }
         public async Task<bool> Generate(int userId)
         {
@@ -95,9 +99,37 @@ namespace bakalaurinis.Services
             }
         }
 
-        public Task UpdateWhenFinishActivity(int userId, int activityId)
+        public async Task UpdateWhenFinishActivity(int userId, int activityId)
         {
-            throw new NotImplementedException();
+            var userActivities = (await _activitiesRepository.FilterByUserIdAndTime(userId, _timeService.GetCurrentDay()))
+                .OrderBy(x => x.ActivityPriority);
+
+            foreach (var userActivity in userActivities)
+            {
+                if (userActivity.Id == activityId)
+                {
+                    userActivity.IsFinished = true;
+                }
+
+                await _activitiesRepository.Update(userActivity);
+            }
+        }
+
+        public async Task CalculateActivitiesTime(UpdateActivitiesDto updateActivitiesDto)
+        {
+            var currentTime = startTime;
+
+            foreach (var activityDto in updateActivitiesDto.Activities)
+            {
+                activityDto.StartTime = _timeService.GetDateTime(currentTime);
+                currentTime += activityDto.DurationInMinutes;
+                activityDto.EndTime = _timeService.GetDateTime(currentTime);
+
+                var activity = await _activitiesRepository.GetById(activityDto.Id);
+                _mapper.Map(activityDto, activity);
+
+                await _activitiesRepository.Update(activity);
+            }
         }
     }
 }
