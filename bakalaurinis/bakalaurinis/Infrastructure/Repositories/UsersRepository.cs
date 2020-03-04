@@ -35,9 +35,11 @@ namespace bakalaurinis.Infrastructure.Repositories
             return changes > 0;
         }
 
-        public Task<ICollection<User>> GetAll()
+        public async Task<ICollection<User>> GetAll()
         {
-            throw new NotImplementedException();
+            var users = await _context.Users.ToArrayAsync();
+
+            return users;
         }
 
         public async Task<User> GetById(int id)

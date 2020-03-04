@@ -1,33 +1,35 @@
-﻿using bakalaurinis.Infrastructure.Enums;
+﻿using bakalaurinis.Infrastructure.Database.Models;
+using bakalaurinis.Infrastructure.Enums;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Services.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace bakalaurinis.Services
 {
-    public class BackgroundService : IHostedService, IDisposable
+    public class BackgroundService : IHostedService
     {
-       // private readonly IUserService _userService;
-       // private readonly IUserRepository _userRepository;
-
-        public BackgroundService(/*IUserService userService, IUserRepository userRepository*/)
+        private readonly IServiceScopeFactory _scopeFactory;
+        public BackgroundService(IServiceScopeFactory scopeFactory)
         {
-       //     _userService = userService;
-        //    _userRepository = userRepository;
-        }
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
+            _scopeFactory = scopeFactory;
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            GenerateSchedule();
+            using (var scope = _scopeFactory.CreateScope())
+            {
 
+                var users = await (scope.ServiceProvider.GetService<IUserService>()).GetAll();
+                var _userRepository = scope.ServiceProvider.GetService<IUserRepository>();
+
+                await GenerateSchedule(users, _userRepository);
+
+            }
             await Task.CompletedTask;
         }
 
@@ -36,22 +38,15 @@ namespace bakalaurinis.Services
             await Task.CompletedTask;
         }
 
-        private void GenerateSchedule()
+        private async Task GenerateSchedule(ICollection<User> users, IUserRepository _userRepository)
         {
-            var o = 111;
-            var b = o + 7;
-
-           /* var users = await _userService.GetAll();
-
-            foreach(var user in users)
+            foreach (var user in users)
             {
                 user.ScheduleStatus = ScheduleStatusEnum.DoesNotExist;
 
                 await _userRepository.Update(user);
             }
-            */
-        }
 
-        
+        }
     }
 }
