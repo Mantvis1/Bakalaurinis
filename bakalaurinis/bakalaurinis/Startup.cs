@@ -1,5 +1,4 @@
 using bakalaurinis.Configurations;
-using bakalaurinis.Infrastructure.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -44,7 +43,6 @@ namespace bakalaurinis
 
             app.UseRouting();
 
-            app.UseAuthorization();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

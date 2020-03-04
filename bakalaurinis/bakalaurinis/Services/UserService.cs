@@ -7,6 +7,7 @@ using bakalaurinis.Services.Interfaces;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -92,6 +93,13 @@ namespace bakalaurinis.Services
             var userSheduleStatus = _mapper.Map<GetScheduleStatus>(user);
 
             return userSheduleStatus;
+        }
+
+        public async Task<ICollection<User>> GetAll()
+        {
+            var users = await _userRepository.GetAll();
+
+            return users;
         }
     }
 }

@@ -1,0 +1,20 @@
+<h1>Jūs esate kviečiamas prisijungti prie renginių</h1>
+<button>Pakviesti</button>
+<div *ngFor="let hero of heroes">
+  <mat-card>
+    <mat-card-title>{{ hero }}</mat-card-title>
+
+    <mat-card-actions>
+      <button class="">
+        <i class="material-icons">
+          done
+        </i>
+      </button>
+      <button class="">
+        <i class="material-icons">
+          clear
+        </i>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

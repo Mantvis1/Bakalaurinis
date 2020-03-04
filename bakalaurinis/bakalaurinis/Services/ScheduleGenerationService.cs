@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using bakalaurinis.Constants;
 using bakalaurinis.Dtos.Activity;
 using bakalaurinis.Infrastructure.Enums;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
@@ -91,8 +92,8 @@ namespace bakalaurinis.Services
                 }
                 else if (isFound)
                 {
-                    userActivity.StartTime = _timeService.AddMinutesToTime(userActivity.StartTime.Value, 10);
-                    userActivity.EndTime = _timeService.AddMinutesToTime(userActivity.EndTime.Value, 10);
+                    userActivity.StartTime = _timeService.AddMinutesToTime(userActivity.StartTime.Value, ActivityConstatns.ActivityExtensionTime);
+                    userActivity.EndTime = _timeService.AddMinutesToTime(userActivity.EndTime.Value, ActivityConstatns.ActivityExtensionTime);
 
                     await _activitiesRepository.Update(userActivity);
                 }

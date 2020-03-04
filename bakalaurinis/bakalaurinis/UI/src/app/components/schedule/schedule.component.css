@@ -1,6 +1,7 @@
 .example-list {
-  width: 500px;
+  width: 100%;
   max-width: 100%;
+  min-width: 200px;
   border: solid 1px #ccc;
   min-height: 60px;
   display: block;

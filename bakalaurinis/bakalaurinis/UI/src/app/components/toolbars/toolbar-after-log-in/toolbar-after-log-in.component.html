@@ -7,14 +7,26 @@
     <i class="material-icons">
       list
     </i>
-    Veiklos</a
-  >
+    Veiklos
+  </a>
+
+  <button mat-button [matMenuTriggerFor]="menu">
+    <i class="material-icons">
+      mail_outline
+    </i>
+    Pakvietimai
+  </button>
+
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item class="primary">Išsiūsti pakvietimai</button>
+    <button mat-menu-item class="primary">Gauti pakvietimai</button>
+  </mat-menu>
 
   <span class="fill-empty-space-in-toolbar"></span>
 
   <a mat-button routerLink="/profile" routerLinkActive="active">
     <i class="material-icons"> account_circle </i>
-    {{currentUserName}}
+    {{ currentUserName }}
   </a>
 
   <button mat-button (click)="logout()">

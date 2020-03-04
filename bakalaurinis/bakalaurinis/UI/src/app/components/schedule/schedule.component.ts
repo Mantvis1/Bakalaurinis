@@ -46,7 +46,7 @@ export class ScheduleComponent implements OnInit {
     moveItemInArray(this.activities, event.previousIndex, event.currentIndex);
     this.activitiesAfterUpdate.activities = Object.assign([], this.activities);
 
-    this.updateActivitiesTime()
+    this.updateActivitiesTime();
   }
 
   updateActivitiesTime() {
