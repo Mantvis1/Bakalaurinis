@@ -27,7 +27,9 @@ namespace bakalaurinis.Services
                 var users = await (scope.ServiceProvider.GetService<IUserService>()).GetAll();
                 var _userRepository = scope.ServiceProvider.GetService<IUserRepository>();
 
-                await GenerateSchedule(users, _userRepository);
+                var _scheduleGenerationService = scope.ServiceProvider.GetService<IScheduleGenerationService>();
+
+                await GenerateSchedule(users, _scheduleGenerationService);
 
             }
             await Task.CompletedTask;
@@ -38,13 +40,11 @@ namespace bakalaurinis.Services
             await Task.CompletedTask;
         }
 
-        private async Task GenerateSchedule(ICollection<User> users, IUserRepository _userRepository)
+        private async Task GenerateSchedule(ICollection<User> users, IScheduleGenerationService _scheduleGenerationService)
         {
             foreach (var user in users)
             {
-                user.ScheduleStatus = ScheduleStatusEnum.DoesNotExist;
-
-                await _userRepository.Update(user);
+                await _scheduleGenerationService.Generate(user.Id);
             }
 
         }

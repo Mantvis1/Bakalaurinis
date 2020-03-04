@@ -17,8 +17,7 @@ namespace bakalaurinis.Services
         private readonly ITimeService _timeService;
         private readonly IMapper _mapper;
 
-        private int startTime = 8 * 60;
-        private int endTime = 10 * 60;
+
         public ScheduleGenerationService(IActivitiesRepository activitiesRepository, IUserRepository userRepository, ITimeService timeService, IMapper mapper)
         {
             _activitiesRepository = activitiesRepository;
@@ -28,17 +27,19 @@ namespace bakalaurinis.Services
         }
         public async Task<bool> Generate(int userId)
         {
-            var isScheduleCreated = (await _userRepository.GetById(userId)).ScheduleStatus;
+            int startTime = 8 * 60;
+            int endTime = 10 * 60;
+            int userActivitiesCount = (await _activitiesRepository.FilterByUserIdAndStartTime(userId)).Count;
 
-            if (isScheduleCreated == ScheduleStatusEnum.DoesNotExist)
+            if (userActivitiesCount > 0)
             {
-                return await CreateUserSchedule(userId);
+                return await CreateUserSchedule(startTime, endTime, userId);
             }
 
             return false;
         }
 
-        private async Task<bool> CreateUserSchedule(int userId)
+        private async Task<bool> CreateUserSchedule(int startTime, int endTime, int userId)
         {
             var userActivities = (await _activitiesRepository.FilterByUserIdAndStartTime(userId)).OrderBy(x => x.ActivityPriority);
 
@@ -48,7 +49,7 @@ namespace bakalaurinis.Services
 
                 if (finishTime > endTime)
                 {
-                    MoveToNextDay();
+                    MoveToNextDay(out startTime, out endTime);
                 }
 
                 if (finishTime <= endTime)
@@ -60,22 +61,13 @@ namespace bakalaurinis.Services
 
             }
 
-            return await UpdateUserScheduleStatus(userId);
+            return true;
         }
 
-        private void MoveToNextDay()
+        private void MoveToNextDay(out int  startTime, out int endTime)
         {
             startTime = 8 * 60 + 24 * 60;
             endTime = 10 * 60 + 24 * 60;
-        }
-
-        private async Task<bool> UpdateUserScheduleStatus(int userId)
-        {
-            var currentUser = await _userRepository.GetById(userId);
-
-            currentUser.ScheduleStatus = ScheduleStatusEnum.Ready;
-
-            return await _userRepository.Update(currentUser);
         }
 
         public async Task UpdateWhenExtendActivity(int userId, int activityId)
@@ -118,7 +110,7 @@ namespace bakalaurinis.Services
 
         public async Task CalculateActivitiesTime(UpdateActivitiesDto updateActivitiesDto)
         {
-            var currentTime = startTime;
+            var currentTime = 8*60;
 
             foreach (var activityDto in updateActivitiesDto.Activities)
             {

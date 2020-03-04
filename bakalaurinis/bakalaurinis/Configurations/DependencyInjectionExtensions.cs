@@ -20,7 +20,8 @@ namespace bakalaurinis.Configurations
             return service
                 .AddScoped<IActivitiesRepository, ActivitiesRepository>()
                 .AddScoped<IUserRepository, UsersRepository>()
-                .AddSingleton<ITimeService, TimeService>();
+                .AddSingleton<ITimeService, TimeService>()
+                .AddScoped<IUserSettingsRepository, UserSettingsRepository>();
         }
 
         public static IServiceCollection AddApplicationDependencies(this IServiceCollection service)
@@ -28,7 +29,8 @@ namespace bakalaurinis.Configurations
             return service.AddScoped<IActivitiesService, ActivitiesService>()
                  .AddScoped<IUserService, UserService>()
                  .AddScoped<IScheduleService, ScheduleService>()
-                 .AddScoped<IScheduleGenerationService, ScheduleGenerationService>();
+                 .AddScoped<IScheduleGenerationService, ScheduleGenerationService>()
+                 .AddScoped<IUserSettingsService, UserSettingsService>();
         }
     }
 }
