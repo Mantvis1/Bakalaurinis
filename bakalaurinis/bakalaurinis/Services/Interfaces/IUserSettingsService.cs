@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using bakalaurinis.Dtos.UserSettings;
 using System.Threading.Tasks;
 
 namespace bakalaurinis.Services.Interfaces
 {
-    interface IUserSettingsService
+    public interface IUserSettingsService
     {
+        Task<UserSettingsDto> GetByUserId(int userId);
+        Task<bool> Update(UserSettingsDto userSettingsDto);
     }
 }

@@ -1,12 +1,21 @@
-﻿using bakalaurinis.Infrastructure.Database.Models;
+﻿using bakalaurinis.Infrastructure.Database;
+using bakalaurinis.Infrastructure.Database.Models;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace bakalaurinis.Infrastructure.Repositories
 {
     public class UserSettingsRepository : IUserSettingsRepository
     {
+        protected readonly DatabaseContext _context;
+
+        public UserSettingsRepository(DatabaseContext context)
+        {
+            _context = context;
+        }
         public Task<int> Create(UserSettings entity)
         {
             throw new System.NotImplementedException();
@@ -27,9 +36,19 @@ namespace bakalaurinis.Infrastructure.Repositories
             throw new System.NotImplementedException();
         }
 
-        public Task<bool> Update(UserSettings entity)
+        public async Task<UserSettings> GetByUserId(int userId)
         {
-            throw new System.NotImplementedException();
+            var settings = await _context.UserSettings.Where(x => x.UserId == userId).FirstOrDefaultAsync();
+
+            return settings;
+        }
+
+        public async Task<bool> Update(UserSettings entity)
+        {
+            _context.UserSettings.Attach(entity);
+            var changes = await _context.SaveChangesAsync();
+
+            return changes > 0;
         }
     }
 }
