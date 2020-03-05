@@ -37,7 +37,7 @@
       <div>
         <mat-form-field>
           <mat-label>Select priority</mat-label>
-          <mat-select placeholder="Priority">
+          <mat-select placeholder="Priority" [(ngModel)]="data.activityFormData.activityPriority" name="priority">
             <mat-option [value]="0">Žemas</mat-option>
             <mat-option [value]="1">Vidutinis</mat-option>
             <mat-option [value]="2">Aukštas</mat-option>

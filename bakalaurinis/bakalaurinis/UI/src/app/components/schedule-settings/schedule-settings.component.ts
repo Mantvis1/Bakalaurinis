@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { Settings } from 'src/app/models/settings';
+import { AuthServiceService } from 'src/app/services/auth-service.service';
+import { SettingsService } from 'src/app/services/settings.service';
 
 @Component({
   selector: 'app-schedule-settings',
@@ -9,8 +12,13 @@ import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 export class ScheduleSettingsComponent implements OnInit {
   userSettingsForm: FormGroup;
   hours: number[] = [];
+  settings: Settings = new Settings();
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthServiceService,
+    private settingsService: SettingsService
+  ) { }
 
   ngOnInit() {
     this.initializeFormGroup();
@@ -24,25 +32,21 @@ export class ScheduleSettingsComponent implements OnInit {
 
   initializeFormGroup() {
     this.userSettingsForm = this.formBuilder.group({
-      startMonday: new FormControl(''),
-      startTuesday: new FormControl(''),
-      startWensday: new FormControl(''),
-      startThursday: new FormControl(''),
-      startFriday: new FormControl(''),
-      startSaturday: new FormControl(''),
-      startSunday: new FormControl(''),
-      endMonday: new FormControl(''),
-      endTuesday: new FormControl(''),
-      endWensday: new FormControl(''),
-      endThursday: new FormControl(''),
-      endFriday: new FormControl(''),
-      endSaturday: new FormControl(''),
-      endSunday: new FormControl('')
+      startTime: new FormControl(''),
+      endTime: new FormControl('')
     })
   };
 
-  update() {
-    console.log(this.userSettingsForm);
+  update(): void {
+    this.settings.userId = this.authService.getUserId();
+    this.settings.endTime = Number(this.userSettingsForm.controls.endTime.value);
+    this.settings.startTime = Number(this.userSettingsForm.controls.startTime.value);
+
+    this.settingsService.updateSettings(this.settings.userId, this.settings).subscribe(
+      error => {
+        console.log(error);
+      }
+    )
   }
 
 }

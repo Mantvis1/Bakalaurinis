@@ -1,1 +1,7 @@
-<p>messages works!</p>
+<button mat-raised-button color="warn" (click)="deleteAll()">Išvalyti</button>
+
+<div *ngFor="let message of messages">
+  <mat-card>
+    <mat-card-title>{{message.text}}</mat-card-title>
+  </mat-card>
+</div>

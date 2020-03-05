@@ -24,10 +24,9 @@ export class ActivitiesTableComponent implements OnInit {
     "Title",
     "Description",
     "Duration",
-    "FinishUntil",
     "Priority",
-    "Delete",
-    "Edit"
+    "Edit",
+    "Delete"
   ];
   activityToEdit: NewActivity = new NewActivity();
   newActivity: NewActivity = new NewActivity();
@@ -94,8 +93,8 @@ export class ActivitiesTableComponent implements OnInit {
         this.activityService
           .editActivity(editActivity, editActivity.id)
           .subscribe(
-            editActivity => {
-              if (editActivity) this.refreshTable();
+            () => {
+              this.refreshTable();
             },
             error => {
               console.log(error);

@@ -1,4 +1,4 @@
-import { Component, Inject, NgZone, ViewChild } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ActivityModal } from './activity-modal';
 
@@ -7,12 +7,11 @@ import { ActivityModal } from './activity-modal';
   templateUrl: './activity-form.component.html',
   styleUrls: ['./activity-form.component.css']
 })
-export class ActivityFormComponent{
+export class ActivityFormComponent {
 
   constructor(
     public dialogRef: MatDialogRef<ActivityModal>,
-    @Inject(MAT_DIALOG_DATA) public data: ActivityModal,
-    private _ngZone: NgZone
+    @Inject(MAT_DIALOG_DATA) public data: ActivityModal
   ) { }
 
   closeModal(returnValue: any) {
