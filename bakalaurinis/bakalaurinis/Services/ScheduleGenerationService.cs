@@ -42,6 +42,16 @@ namespace bakalaurinis.Services
         private async Task<bool> CreateUserSchedule(int startTime, int endTime, int userId)
         {
             var userActivities = (await _activitiesRepository.FilterByUserIdAndStartTime(userId)).OrderBy(x => x.ActivityPriority);
+            var lastActivity = await _activitiesRepository.FindLastByUserIdAndStartTime(userId);
+            int dayCount = 1;
+
+            if (lastActivity != null)
+            {
+                int diffentBetweenNowAndLastActivityDay = lastActivity.StartTime.Value.Day - _timeService.GetCurrentDay().Day;
+                dayCount += diffentBetweenNowAndLastActivityDay;
+
+                MoveToNextDay(out startTime, out endTime, dayCount);
+            }
 
             foreach (var userActivity in userActivities)
             {
@@ -49,7 +59,8 @@ namespace bakalaurinis.Services
 
                 if (finishTime > endTime)
                 {
-                    MoveToNextDay(out startTime, out endTime);
+                    MoveToNextDay(out startTime, out endTime, dayCount);
+                    dayCount++;
                 }
 
                 if (finishTime <= endTime)
@@ -59,15 +70,17 @@ namespace bakalaurinis.Services
                     userActivity.EndTime = _timeService.GetDateTime(startTime);
                 }
 
+                await _activitiesRepository.Update(userActivity);
+
             }
 
             return true;
         }
 
-        private void MoveToNextDay(out int  startTime, out int endTime)
+        private void MoveToNextDay(out int startTime, out int endTime, int dayCount)
         {
-            startTime = 8 * 60 + 24 * 60;
-            endTime = 10 * 60 + 24 * 60;
+            startTime = 8 * 60 + dayCount * 24 * 60;
+            endTime = 10 * 60 + dayCount * 24 * 60;
         }
 
         public async Task UpdateWhenExtendActivity(int userId, int activityId)
@@ -110,7 +123,7 @@ namespace bakalaurinis.Services
 
         public async Task CalculateActivitiesTime(UpdateActivitiesDto updateActivitiesDto)
         {
-            var currentTime = 8*60;
+            var currentTime = 8 * 60;
 
             foreach (var activityDto in updateActivitiesDto.Activities)
             {

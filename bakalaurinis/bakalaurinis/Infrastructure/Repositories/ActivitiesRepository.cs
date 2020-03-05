@@ -61,6 +61,15 @@ namespace bakalaurinis.Infrastructure.Repositories
             return activities;
         }
 
+        public async Task<Activity> FindLastByUserIdAndStartTime(int userId)
+        {
+            var activity = (await _context.Activities.Where(x => x.UserId == userId && x.StartTime != null).ToArrayAsync())
+                .OrderBy(x => x.StartTime)
+                .LastOrDefault();
+
+            return activity;
+        }
+
         public async Task<ICollection<Activity>> GetAll()
         {
             var activities = await _context.Activities.ToArrayAsync();

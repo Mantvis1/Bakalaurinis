@@ -24,6 +24,14 @@
     <Compile Remove="Migrations\20200229182602_AddStartAndEndTimeInActivitiesModel.Designer.cs" />
     <Compile Remove="Migrations\20200229182743_AddStartAndEndTimeInActivitiesModel.cs" />
     <Compile Remove="Migrations\20200229182743_AddStartAndEndTimeInActivitiesModel.Designer.cs" />
+    <Compile Remove="Migrations\20200305084649_Invitations.cs" />
+    <Compile Remove="Migrations\20200305084649_Invitations.Designer.cs" />
+    <Compile Remove="Migrations\20200305084940_Invitations.cs" />
+    <Compile Remove="Migrations\20200305084940_Invitations.Designer.cs" />
+    <Compile Remove="Migrations\20200305085922_Invitations.cs" />
+    <Compile Remove="Migrations\20200305085922_Invitations.Designer.cs" />
+    <Compile Remove="Migrations\20200305090620_Invitations.cs" />
+    <Compile Remove="Migrations\20200305090620_Invitations.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

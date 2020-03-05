@@ -1,5 +1,6 @@
 ﻿using bakalaurinis.Infrastructure.Enums;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -24,5 +25,6 @@ namespace bakalaurinis.Infrastructure.Database.Models
         public bool IsFinished { get; set; }
         [DefaultValue(false)]
         public bool IsExtended { get; set; }
+        public ICollection<Invitations> Invitations { get; set; }
     }
 }

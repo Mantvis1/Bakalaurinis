@@ -31,7 +31,7 @@ namespace bakalaurinis.Services
 
             _mapper.Map(userSettingsDto, settings);
 
-            await _userSettingsRepository.Update(settings);
+           return await _userSettingsRepository.Update(settings);
         }
     }
 }
