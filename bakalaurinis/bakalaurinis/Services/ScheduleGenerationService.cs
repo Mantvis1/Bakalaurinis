@@ -93,13 +93,13 @@ namespace bakalaurinis.Services
                 {
                     int differentBetweenActivities = _timeService.GetDiferrentBetweenTwoDatesInMinutes(currentActivity.EndTime.Value, nextActivity.StartTime.Value);
 
-                    if (differentBetweenActivities > 0 && nextActivity.StartTime.Value.Day == currentActivity.EndTime.Value.Day)
+                    if (differentBetweenActivities > 0)
                     {
                         await UpdateSchedule(currentActivity, differentBetweenActivities, userId);
                     }
 
                     currentActivity = scheduleArray[i];
-                    nextActivity = scheduleArray[i++];
+                    nextActivity = scheduleArray[i+1];
                 }
 
             }
@@ -118,7 +118,7 @@ namespace bakalaurinis.Services
 
         private async Task UpdateSchedule(Activity current, int differentInMinutes, int userId)
         {
-            var userActivities = (await _activitiesRepository.FilterByUserIdAndStartTime(userId)).OrderBy(x => x.ActivityPriority);
+            var userActivities = await _activitiesRepository.FilterByUserIdAndStartTime(userId);
 
             foreach (var activity in userActivities)
             {
