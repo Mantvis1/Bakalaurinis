@@ -1,12 +1,12 @@
 <form>
-  <h1 mat-dialog-title>{{data.formTitle}}</h1>
+  <h1 mat-dialog-title>{{ data.formTitle }}</h1>
 
   <mat-dialog-content>
     <mat-card>
       <div>
         <mat-form-field>
-          <input matInput [(ngModel)]="data.activityFormData.title" name="title"
-                 placeholder="Title" required #nameInput="ngModel">
+          <input matInput [(ngModel)]="data.activityFormData.title" name="title" placeholder="Title" required
+            #nameInput="ngModel" />
           <mat-error *ngIf="nameInput.invalid" class="error">
             Title cannot be empty.
           </mat-error>
@@ -15,8 +15,9 @@
 
       <div>
         <mat-form-field>
-          <input matInput [(ngModel)]="data.activityFormData.description" name="description"
-                 placeholder="Description" required #nameInput="ngModel" />
+          <input matInput [(ngModel)]="data.activityFormData.description" name="description" placeholder="Description"
+            required #nameInput="ngModel" />
+
           <mat-error *ngIf="nameInput.invalid" class="error">
             Description cannot be empty.
           </mat-error>
@@ -25,20 +26,11 @@
 
       <div>
         <mat-form-field>
-          <input matInput [(ngModel)]="data.activityFormData.durationInMinutes" name="duration"
-                 placeholder="Trukmė" required #nameInput="ngModel" />
+          <input matInput [(ngModel)]="data.activityFormData.durationInMinutes" name="duration" placeholder="Trukmė"
+            required #nameInput="ngModel" />
           <mat-error *ngIf="nameInput.invalid" class="error">
             Duration cannot be empty.
           </mat-error>
-        </mat-form-field>
-      </div>
-
-      <div>
-        <mat-form-field>
-          <mat-label>Finish until</mat-label>
-          <input matInput [(ngModel)]="data.activityFormData.finishUntil" name="finishUntil" [matDatepicker]="picker2" placeholder="date...">
-          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-          <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
       </div>
 
@@ -52,14 +44,13 @@
           </mat-select>
         </mat-form-field>
       </div>
-
     </mat-card>
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
     <button mat-flat-button mat-button-base [mat-dialog-close]>Close</button>
     <button mat-flat-button color="primary" (click)="closeModal(data.activityFormData)">
-      {{data.formConfirmationButtonName}}
+      {{ data.formConfirmationButtonName }}
     </button>
   </mat-dialog-actions>
 </form>

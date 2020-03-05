@@ -41,7 +41,10 @@ import { DeleteAccountComponent } from './components/delete-account/delete-accou
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { ScheduleSettingsComponent } from './components/schedule-settings/schedule-settings.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { InvitationsComponent } from './components/invitations/invitations.component';
+import { MessagesComponent } from './components/messages/messages.component';
+import { RecieveInvitationsComponent } from './components/Invitations/recieve-invitations/recieve-invitations.component';
+import { SentInvitationsComponent } from './components/Invitations/sent-invitations/sent-invitations.component';
+import { BaseInvitationComponent } from './components/Invitations/base-invitation/base-invitation.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -62,7 +65,10 @@ export function tokenGetter() {
     DeleteAccountComponent,
     ChangePasswordComponent,
     ScheduleSettingsComponent,
-    InvitationsComponent
+    MessagesComponent,
+    RecieveInvitationsComponent,
+    SentInvitationsComponent,
+    BaseInvitationComponent
   ],
   imports: [
     BrowserModule,

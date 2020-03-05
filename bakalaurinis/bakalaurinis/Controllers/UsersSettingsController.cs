@@ -1,7 +1,5 @@
-﻿using bakalaurinis.Dtos.User;
-using bakalaurinis.Dtos.UserSettings;
+﻿using bakalaurinis.Dtos.UserSettings;
 using bakalaurinis.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -18,10 +16,13 @@ namespace bakalaurinis.Controllers
             _userSettingsService = userSettingsService;
         }
 
-        public async Task<IActionResult> Update([FromBody]UserSettingsDto suerSettingsDto)
+        [HttpPut("{userId}")]
+        [Produces(typeof(bool))]
+        public async Task<IActionResult> Update([FromBody]UserSettingsDto userSettingsDto)
         {
+            var isUpdated = await _userSettingsService.Update(userSettingsDto);
 
-            return Ok(true);
+            return Ok(isUpdated);
         }
 
 
@@ -29,7 +30,9 @@ namespace bakalaurinis.Controllers
         [Produces(typeof(UserSettingsDto))]
         public async Task<IActionResult> Get(int userId)
         {
-            return Ok(true);
+            var settings = await _userSettingsService.GetByUserId(userId);
+
+            return Ok(settings);
         }
     }
 }

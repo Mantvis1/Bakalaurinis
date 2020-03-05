@@ -2,7 +2,6 @@
 using bakalaurinis.Constants;
 using bakalaurinis.Dtos.Activity;
 using bakalaurinis.Infrastructure.Database.Models;
-using bakalaurinis.Infrastructure.Enums;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Services.Interfaces;
 using System;
@@ -14,15 +13,13 @@ namespace bakalaurinis.Services
     public class ScheduleGenerationService : IScheduleGenerationService
     {
         private readonly IActivitiesRepository _activitiesRepository;
-        private readonly IUserRepository _userRepository;
         private readonly ITimeService _timeService;
         private readonly IMapper _mapper;
 
 
-        public ScheduleGenerationService(IActivitiesRepository activitiesRepository, IUserRepository userRepository, ITimeService timeService, IMapper mapper)
+        public ScheduleGenerationService(IActivitiesRepository activitiesRepository, ITimeService timeService, IMapper mapper)
         {
             _activitiesRepository = activitiesRepository;
-            _userRepository = userRepository;
             _timeService = timeService;
             _mapper = mapper;
         }
@@ -30,12 +27,13 @@ namespace bakalaurinis.Services
         {
             int startTime = 8 * TimeConstants.MinutesInHour;
             int endTime = 10 * TimeConstants.MinutesInHour;
-            int userActivitiesCount = (await _activitiesRepository.FilterByUserIdAndStartTime(userId)).Count;
 
-            if (userActivitiesCount > 0)
+            if ((await _activitiesRepository.FilterByUserIdAndStartTime(userId)).Any())
             {
                 if (await IsPossibleToUpdateExistingSchedule(userId))
+                {
                     return await CreateUserSchedule(startTime, endTime, userId);
+                }
             }
 
             return false;
@@ -81,15 +79,14 @@ namespace bakalaurinis.Services
 
         private async Task<bool> IsPossibleToUpdateExistingSchedule(int userId)
         {
-            var userSchedule = await _activitiesRepository.FilterByUserIdAndStartTimeIsNotNull(userId);
-            var scheduleArray = userSchedule.ToArray();
+            var userSchedule = (await _activitiesRepository.FilterByUserIdAndStartTimeIsNotNull(userId)).ToArray();
 
-            if (scheduleArray.Length > 1)
+            if (userSchedule.Length > 1)
             {
-                var currentActivity = scheduleArray[0];
-                var nextActivity = scheduleArray[1];
+                var currentActivity = userSchedule[0];
+                var nextActivity = userSchedule[1];
 
-                for (int i = 1; i < scheduleArray.Length - 1; i++)
+                for (int i = 1; i < userSchedule.Length - 1; i++)
                 {
                     int differentBetweenActivities = _timeService.GetDiferrentBetweenTwoDatesInMinutes(currentActivity.EndTime.Value, nextActivity.StartTime.Value);
 
@@ -98,15 +95,17 @@ namespace bakalaurinis.Services
                         await UpdateSchedule(currentActivity, differentBetweenActivities, userId);
                     }
 
-                    currentActivity = scheduleArray[i];
-                    nextActivity = scheduleArray[i+1];
-                }
+                    userSchedule = (await _activitiesRepository.FilterByUserIdAndStartTimeIsNotNull(userId)).ToArray();
 
+                    currentActivity = userSchedule[i];
+                    nextActivity = userSchedule[i+1];
+
+                }
             }
-            return await IsActivitiesWithoutDataExsists(userId);
+            return await IsActivitiesWithoutDateExsists(userId);
         }
 
-        private async Task<bool> IsActivitiesWithoutDataExsists(int userId)
+        private async Task<bool> IsActivitiesWithoutDateExsists(int userId)
         {
             if ((await _activitiesRepository.FilterByUserIdAndStartTime(userId)).Any())
             {
@@ -122,7 +121,9 @@ namespace bakalaurinis.Services
 
             foreach (var activity in userActivities)
             {
-                if (activity.DurationInMinutes <= differentInMinutes)
+                int finishTime = _timeService.GetDiferrentBetweenTwoDatesInMinutes(_timeService.GetCurrentDay(), current.EndTime.Value) + activity.DurationInMinutes;
+
+                if (activity.DurationInMinutes <= differentInMinutes && finishTime <= 600)
                 {
                     activity.StartTime = current.EndTime.Value;
                     activity.EndTime = _timeService.AddMinutesToTime(activity.StartTime.Value, activity.DurationInMinutes);

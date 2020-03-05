@@ -97,7 +97,6 @@ namespace bakalaurinis.Services
             var activity = await _repository.GetById(activityId);
 
             activity.EndTime = _timeService.AddMinutesToTime(activity.EndTime.Value, ActivityConstatns.ActivityExtensionTime);
-            activity.IsExtended = true;
             activity.DurationInMinutes += ActivityConstatns.ActivityExtensionTime;
 
             await _scheduleGenerationService.UpdateWhenExtendActivity(userId, activityId);

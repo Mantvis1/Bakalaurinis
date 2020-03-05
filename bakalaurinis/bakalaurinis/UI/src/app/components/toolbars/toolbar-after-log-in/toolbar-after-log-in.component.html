@@ -1,7 +1,6 @@
 <mat-toolbar color="primary">
   <a mat-button routerLink="/schedule" routerLinkActive="active">
-    <i class="material-icons"> schedule </i>Tvarkaraštis</a
-  >
+    <i class="material-icons"> schedule </i>Tvarkaraštis</a>
 
   <a mat-button routerLink="/activities" routerLinkActive="active">
     <i class="material-icons">
@@ -10,17 +9,19 @@
     Veiklos
   </a>
 
-  <button mat-button [matMenuTriggerFor]="menu">
+  <a mat-button routerLink="/invitations" routerLinkActive="active">
+    <i class="material-icons">
+      insert_invitation
+    </i>
+    Pakvietimai
+  </a>
+
+  <a mat-button routerLink="/messages" routerLinkActive="active">
     <i class="material-icons">
       mail_outline
     </i>
-    Pakvietimai
-  </button>
-
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item class="primary">Išsiūsti pakvietimai</button>
-    <button mat-menu-item class="primary">Gauti pakvietimai</button>
-  </mat-menu>
+    Pranešimai
+  </a>
 
   <span class="fill-empty-space-in-toolbar"></span>
 

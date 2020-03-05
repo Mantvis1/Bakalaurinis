@@ -19,12 +19,9 @@ namespace bakalaurinis.Infrastructure.Database.Models
         public int DurationInMinutes { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
-        public DateTime? FinishUntil { get; set; }
         public ActivityPriorityEnum ActivityPriority { get; set; }
         [DefaultValue(false)]
         public bool IsFinished { get; set; }
-        [DefaultValue(false)]
-        public bool IsExtended { get; set; }
-        public ICollection<Invitations> Invitations { get; set; }
+     //   public ICollection<Invitations> Invitations { get; set; }
     }
 }

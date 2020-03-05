@@ -5,6 +5,5 @@ export class NewActivity {
   description: string;
   userId: number;
   durationInMinutes: number;
-  finishUntil: Date;
   activityPriority: ActivityPriority;
 }

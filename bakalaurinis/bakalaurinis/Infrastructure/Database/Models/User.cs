@@ -17,7 +17,7 @@ namespace bakalaurinis.Infrastructure.Database.Models
         public ScheduleStatusEnum ScheduleStatus { get; set; }
         [NotMapped]
         public string Token { get; set; }
-        public ICollection<Invitations> RecieveInvitations { get; set; }
-        public ICollection<Invitations> SentInvitations { get; set; }
+       // public ICollection<Invitations> RecieveInvitations { get; set; }
+      //  public ICollection<Invitations> SentInvitations { get; set; }
     }
 }
