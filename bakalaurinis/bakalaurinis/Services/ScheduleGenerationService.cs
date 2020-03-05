@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using bakalaurinis.Constants;
 using bakalaurinis.Dtos.Activity;
+using bakalaurinis.Infrastructure.Database.Models;
 using bakalaurinis.Infrastructure.Enums;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Services.Interfaces;
@@ -27,13 +28,14 @@ namespace bakalaurinis.Services
         }
         public async Task<bool> Generate(int userId)
         {
-            int startTime = 8 * 60;
-            int endTime = 10 * 60;
+            int startTime = 8 * TimeConstants.MinutesInHour;
+            int endTime = 10 * TimeConstants.MinutesInHour;
             int userActivitiesCount = (await _activitiesRepository.FilterByUserIdAndStartTime(userId)).Count;
 
             if (userActivitiesCount > 0)
             {
-                return await CreateUserSchedule(startTime, endTime, userId);
+                if (await IsPossibleToUpdateExistingSchedule(userId))
+                    return await CreateUserSchedule(startTime, endTime, userId);
             }
 
             return false;
@@ -77,10 +79,65 @@ namespace bakalaurinis.Services
             return true;
         }
 
+        private async Task<bool> IsPossibleToUpdateExistingSchedule(int userId)
+        {
+            var userSchedule = await _activitiesRepository.FilterByUserIdAndStartTimeIsNotNull(userId);
+            var scheduleArray = userSchedule.ToArray();
+
+            if (scheduleArray.Length > 1)
+            {
+                var currentActivity = scheduleArray[0];
+                var nextActivity = scheduleArray[1];
+
+                for (int i = 1; i < scheduleArray.Length - 1; i++)
+                {
+                    int differentBetweenActivities = _timeService.GetDiferrentBetweenTwoDatesInMinutes(currentActivity.EndTime.Value, nextActivity.StartTime.Value);
+
+                    if (differentBetweenActivities > 0 && nextActivity.StartTime.Value.Day == currentActivity.EndTime.Value.Day)
+                    {
+                        await UpdateSchedule(currentActivity, differentBetweenActivities, userId);
+                    }
+
+                    currentActivity = scheduleArray[i];
+                    nextActivity = scheduleArray[i++];
+                }
+
+            }
+            return await IsActivitiesWithoutDataExsists(userId);
+        }
+
+        private async Task<bool> IsActivitiesWithoutDataExsists(int userId)
+        {
+            if ((await _activitiesRepository.FilterByUserIdAndStartTime(userId)).Any())
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private async Task UpdateSchedule(Activity current, int differentInMinutes, int userId)
+        {
+            var userActivities = (await _activitiesRepository.FilterByUserIdAndStartTime(userId)).OrderBy(x => x.ActivityPriority);
+
+            foreach (var activity in userActivities)
+            {
+                if (activity.DurationInMinutes <= differentInMinutes)
+                {
+                    activity.StartTime = current.EndTime.Value;
+                    activity.EndTime = _timeService.AddMinutesToTime(activity.StartTime.Value, activity.DurationInMinutes);
+
+                    differentInMinutes -= activity.DurationInMinutes;
+
+                    await _activitiesRepository.Update(activity);
+                }
+            }
+        }
+
         private void MoveToNextDay(out int startTime, out int endTime, int dayCount)
         {
-            startTime = 8 * 60 + dayCount * 24 * 60;
-            endTime = 10 * 60 + dayCount * 24 * 60;
+            startTime = 8 * TimeConstants.MinutesInHour + dayCount * 24 * TimeConstants.MinutesInHour;
+            endTime = 10 * TimeConstants.MinutesInHour + dayCount * 24 * TimeConstants.MinutesInHour;
         }
 
         public async Task UpdateWhenExtendActivity(int userId, int activityId)
@@ -123,7 +180,7 @@ namespace bakalaurinis.Services
 
         public async Task CalculateActivitiesTime(UpdateActivitiesDto updateActivitiesDto)
         {
-            var currentTime = 8 * 60;
+            var currentTime = 8 * TimeConstants.MinutesInHour;
 
             foreach (var activityDto in updateActivitiesDto.Activities)
             {

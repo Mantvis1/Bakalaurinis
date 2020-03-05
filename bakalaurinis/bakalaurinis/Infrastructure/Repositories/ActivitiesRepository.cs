@@ -40,6 +40,13 @@ namespace bakalaurinis.Infrastructure.Repositories
             return activities;
         }
 
+        public async Task<ICollection<Activity>> FilterByUserIdAndStartTimeIsNotNull(int id)
+        {
+            var activities = await _context.Activities.Where(x => x.UserId == id && x.StartTime != null).ToArrayAsync();
+
+            return activities;
+        }
+
         public async Task<ICollection<Activity>> FilterByUserIdAndTime(int id, DateTime today)
         {
             var activities = await _context.Activities.Where(

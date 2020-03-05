@@ -23,5 +23,12 @@ namespace bakalaurinis.Services
 
             return date;
         }
+
+        public int GetDiferrentBetweenTwoDatesInMinutes(DateTime firstDate, DateTime secondDate)
+        {
+            var timeSpan = secondDate - firstDate;
+
+            return (int)timeSpan.TotalMinutes;
+        }
     }
 }

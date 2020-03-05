@@ -7,6 +7,7 @@ namespace bakalaurinis.Services.Interfaces
         DateTime GetCurrentDay();
         DateTime GetDateTime(int? minutes);
         DateTime AddMinutesToTime(DateTime dateTime, int minutes);
+        int GetDiferrentBetweenTwoDatesInMinutes(DateTime firstDate, DateTime secondDate);
 
     }
 }

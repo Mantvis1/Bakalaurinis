@@ -12,5 +12,6 @@ namespace bakalaurinis.Infrastructure.Repositories.Interfaces
         Task<ICollection<Activity>> FilterByUserIdAndTime(int id, DateTime today);
         Task<ICollection<Activity>> FilterByUserIdAndStartTime(int id);
         Task<Activity> FindLastByUserIdAndStartTime(int userId);
+        Task<ICollection<Activity>> FilterByUserIdAndStartTimeIsNotNull(int id);
     }
 }
