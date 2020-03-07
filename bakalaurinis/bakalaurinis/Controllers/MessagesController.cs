@@ -43,16 +43,16 @@ namespace bakalaurinis.Controllers
             return Ok(message);
         }
 
-        [HttpDelete("{userId}/{messageId}")]
-        public async Task<IActionResult> Delete(int userId, int messageId)
+        [HttpDelete("{messageId}")]
+        public async Task<IActionResult> Delete(int messageId)
         {
-            await _messageService.Delete(userId, messageId);
+            await _messageService.DeleteById(messageId);
 
             return NoContent();
         }
 
-        [HttpDelete("{userId}")]
-        public async Task<IActionResult> Delete(int userId)
+        [HttpDelete("all/{userId}")]
+        public async Task<IActionResult> DeleteAll(int userId)
         {
             await _messageService.Delete(userId);
 

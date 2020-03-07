@@ -2,6 +2,14 @@
 
 <div *ngFor="let message of messages">
   <mat-card>
-    <mat-card-title>{{message.text}}</mat-card-title>
+    <mat-card-title></mat-card-title>
+    <mat-card-content>
+      {{message.text}} Sukurta : {{message.createdAt | date:'fullDate'}}
+    </mat-card-content>
+    <mat-card-footer>
+      <button mat-raised-button color="warn" (click)="deleteById(message.id)"> <i class="material-icons">
+          clear
+        </i> </button>
+    </mat-card-footer>
   </mat-card>
 </div>

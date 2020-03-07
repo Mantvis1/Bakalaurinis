@@ -8,8 +8,8 @@ namespace bakalaurinis.Services.Interfaces
     {
         Task<ICollection<MessageDto>> GetAll(int userId);
         Task<MessageDto> GetById(int userId);
-        Task Delete(int userId, int messageId);
-        Task Delete(int userId);
+        Task Delete(int messageId);
+        Task DeleteById(int userId);
         Task<int> Create(int userId, int messageType);
     }
 }

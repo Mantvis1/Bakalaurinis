@@ -28,7 +28,19 @@ export class MessagesComponent implements OnInit {
   }
 
   deleteAll() {
-    console.log("Not implemented");
+    this.messageService.deleteUserAllMessagesById(this.authService.getUserId()).subscribe(
+      () => {
+        this.getUserMessages();
+      }
+    );
+  }
+
+  deleteById(messageId: number) {
+    this.messageService.deleteUserMessagesById(this.authService.getUserId(), messageId).subscribe(
+      () => {
+        this.getUserMessages();
+      }
+    );
   }
 
 }

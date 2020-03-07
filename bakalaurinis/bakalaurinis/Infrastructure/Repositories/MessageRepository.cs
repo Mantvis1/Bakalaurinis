@@ -24,9 +24,12 @@ namespace bakalaurinis.Infrastructure.Repositories
             return entity.Id;
         }
 
-        public Task<bool> Delete(Message entity)
+        public async Task<bool> Delete(Message entity)
         {
-            throw new System.NotImplementedException();
+            _context.Messages.Remove(entity);
+            var changes = await _context.SaveChangesAsync();
+
+            return changes > 0;
         }
 
         public Task<ICollection<Message>> GetAll()
@@ -41,9 +44,11 @@ namespace bakalaurinis.Infrastructure.Repositories
             return messages;
         }
 
-        public Task<Message> GetById(int id)
+        public async Task<Message> GetById(int id)
         {
-            throw new System.NotImplementedException();
+            var message = await _context.Messages.FindAsync(id);
+
+            return message;
         }
 
         public Task<bool> Update(Message entity)

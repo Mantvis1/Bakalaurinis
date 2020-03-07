@@ -45,12 +45,19 @@ namespace bakalaurinis.Services
 
         public async Task Delete(int userId)
         {
-            throw new System.NotImplementedException();
+            var messages = await _messageRepository.GetAllByUserId(userId);
+
+            foreach(var message in messages)
+            {
+                await _messageRepository.Delete(message);
+            }
         }
 
-        public async Task Delete(int userId, int messageId)
+        public async Task DeleteById(int messageId)
         {
-            throw new System.NotImplementedException();
+            var message = await _messageRepository.GetById(messageId);
+
+            await _messageRepository.Delete(message);
         }
 
         public async Task<ICollection<MessageDto>> GetAll(int userId)
