@@ -1,8 +1,8 @@
 ﻿using bakalaurinis.Infrastructure.Enums;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace bakalaurinis.Infrastructure.Database.Models
 {
@@ -22,6 +22,6 @@ namespace bakalaurinis.Infrastructure.Database.Models
         public ActivityPriorityEnum ActivityPriority { get; set; }
         [DefaultValue(false)]
         public bool IsFinished { get; set; }
-     //   public ICollection<Invitations> Invitations { get; set; }
+        
     }
 }
