@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace bakalaurinis.Infrastructure.Database.Models
 {
@@ -11,5 +12,7 @@ namespace bakalaurinis.Infrastructure.Database.Models
         [Required]
         public int UserId { get; set; }
         public User User { get; set; }
+        [Required]
+        public DateTime CreatedAt { get; set; } 
     }
 }

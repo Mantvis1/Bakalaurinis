@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using bakalaurinis.Dtos.Activity;
+using bakalaurinis.Dtos.Message;
 using bakalaurinis.Dtos.User;
 using bakalaurinis.Infrastructure.Database.Models;
 
@@ -28,6 +29,9 @@ namespace bakalaurinis.Configurations
 
             CreateMap<GetScheduleStatus, User>(MemberList.None);
             CreateMap<User, GetScheduleStatus>(MemberList.None);
+
+            CreateMap<MessageDto, Message>(MemberList.None);
+            CreateMap<Message, MessageDto>(MemberList.None);
         }
     }
 }

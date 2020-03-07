@@ -11,6 +11,7 @@ namespace bakalaurinis.Infrastructure.Database
         public DbSet<UserSettings> UserSettings { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Invitation> Invitations { get; set; }
+        public DbSet<MessageTemplate> MessageTemplates { get; set; }
 
         public DatabaseContext(DbContextOptions options) : base(options) 
         {
@@ -22,6 +23,8 @@ namespace bakalaurinis.Infrastructure.Database
             modelBuilder.Entity<UserSettings>().Property(x => x.EndTime).HasDefaultValue(22);
 
             base.OnModelCreating(modelBuilder);
+
+            InitialDataSeeder.CreateMessageTemplates(modelBuilder);
         }
 
     }

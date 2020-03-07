@@ -1,4 +1,5 @@
-﻿using bakalaurinis.Infrastructure.Repositories;
+﻿using bakalaurinis.Infrastructure.Database.Models;
+using bakalaurinis.Infrastructure.Repositories;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Services;
 using bakalaurinis.Services.Interfaces;
@@ -21,7 +22,9 @@ namespace bakalaurinis.Configurations
                 .AddScoped<IActivitiesRepository, ActivitiesRepository>()
                 .AddScoped<IUserRepository, UsersRepository>()
                 .AddSingleton<ITimeService, TimeService>()
-                .AddScoped<IUserSettingsRepository, UserSettingsRepository>();
+                .AddScoped<IUserSettingsRepository, UserSettingsRepository>()
+                .AddScoped<IMessageRepository, MessageRepository>()
+                .AddScoped<IRepository<MessageTemplate>, MessageTemplateRepository>();
         }
 
         public static IServiceCollection AddApplicationDependencies(this IServiceCollection service)
@@ -30,7 +33,8 @@ namespace bakalaurinis.Configurations
                  .AddScoped<IUserService, UserService>()
                  .AddScoped<IScheduleService, ScheduleService>()
                  .AddScoped<IScheduleGenerationService, ScheduleGenerationService>()
-                 .AddScoped<IUserSettingsService, UserSettingsService>();
+                 .AddScoped<IUserSettingsService, UserSettingsService>()
+                 .AddScoped<IMessageService, MessageService>();
         }
     }
 }

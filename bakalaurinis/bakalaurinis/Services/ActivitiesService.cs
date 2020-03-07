@@ -16,25 +16,31 @@ namespace bakalaurinis.Services
         private readonly IMapper _mapper;
         private readonly ITimeService _timeService;
         private readonly IScheduleGenerationService _scheduleGenerationService;
+        private readonly IMessageService _messageService;
 
         public ActivitiesService(
             IActivitiesRepository repository,
             IMapper mapper,
             ITimeService timeService,
-            IScheduleGenerationService scheduleGenerationService
+            IScheduleGenerationService scheduleGenerationService,
+            IMessageService messageService
             )
         {
             _repository = repository;
             _mapper = mapper;
             _timeService = timeService;
             _scheduleGenerationService = scheduleGenerationService;
+            _messageService = messageService;
         }
 
         public async Task<int> Create(NewActivityDto newActivityDto)
         {
             var activity = _mapper.Map<Activity>(newActivityDto);
+            var activityId = await _repository.Create(activity);
 
-            return await _repository.Create(activity);
+            await _messageService.Create(activity.UserId, MessageTypeConstats.NewActivity);
+
+            return activityId;
         }
 
         public async Task<bool> Delete(int id)
