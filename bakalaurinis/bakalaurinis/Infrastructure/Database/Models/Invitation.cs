@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using bakalaurinis.Infrastructure.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace bakalaurinis.Infrastructure.Database.Models
 {
@@ -12,5 +13,6 @@ namespace bakalaurinis.Infrastructure.Database.Models
         [Required]
         public int ActivityId { get; set; }
         public Activity Activity { get; set; }
+        public InvitationStatusEnum InvitationStatus { get; set; }
     }
 }

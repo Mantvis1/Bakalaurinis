@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using bakalaurinis.Dtos.Activity;
+using bakalaurinis.Dtos.Invitation;
 using bakalaurinis.Dtos.Message;
 using bakalaurinis.Dtos.User;
 using bakalaurinis.Dtos.UserSettings;
@@ -36,6 +37,15 @@ namespace bakalaurinis.Configurations
 
             CreateMap<UserSettingsDto, UserSettings>(MemberList.None);
             CreateMap<UserSettings, UserSettingsDto>(MemberList.None);
+
+            CreateMap<UserSettingsDto, UserSettings>(MemberList.None);
+            CreateMap<UserSettings, UserSettingsDto>(MemberList.None);
+
+            CreateMap<NewInvitationDto, Invitation>(MemberList.None);
+            CreateMap<Invitation, NewInvitationDto>(MemberList.None);
+
+            CreateMap<UpdateInvitationDto, Invitation>(MemberList.None);
+            CreateMap<Invitation, UpdateInvitationDto>(MemberList.None);
         }
     }
 }
