@@ -1,9 +1,12 @@
 <mat-card>
-  <div [formGroup]="userSettingsForm">
+  <form>
+    <h1>Jūsų pasirnktas laikas</h1>
+    <div> Nuo {{currentTime.startTime}}</div>
+    <div> Nuo {{currentTime.endTime}}</div>
+    <div></div>
     <label>Laikų ribų pasirinkimas</label>
-
     <mat-form-field>
-      <mat-select formControlName="startTime">
+      <mat-select [(ngModel)]="settings.startTime" name="startTime">
         <mat-option *ngFor="let hour of hours" value={{hour}}>
           {{hour}}
         </mat-option>
@@ -11,13 +14,13 @@
     </mat-form-field>
 
     <mat-form-field>
-      <mat-select formControlName="endTime">
+      <mat-select [(ngModel)]="settings.endTime" name="endTime">
         <mat-option *ngFor="let hour of hours" value={{hour}}>
           {{hour}}
         </mat-option>
       </mat-select>
     </mat-form-field>
+    <button (click)="update()">Keisti</button>
+  </form>
 
-  </div>
-  <button (click)="update()">Keisti</button>
 </mat-card>

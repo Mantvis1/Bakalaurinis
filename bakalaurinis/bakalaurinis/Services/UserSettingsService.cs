@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using bakalaurinis.Dtos.UserSettings;
+using bakalaurinis.Infrastructure.Database.Models;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Services.Interfaces;
 using System.Threading.Tasks;
@@ -15,6 +16,16 @@ namespace bakalaurinis.Services
         {
             _mapper = mapper;
             _userSettingsRepository = userSettingsRepository;
+        }
+
+        public async Task<int> Create(int userId)
+        {
+            var userSettings = new UserSettings
+            {
+                UserId = userId
+            };
+
+            return await _userSettingsRepository.Create(userSettings);
         }
 
         public async Task<UserSettingsDto> GetByUserId(int userId)

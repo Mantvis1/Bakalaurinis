@@ -20,12 +20,19 @@ namespace bakalaurinis.Services
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
         private readonly AppSettings _appSettings;
+        private readonly IUserSettingsService _userSettingsService;
 
-        public UserService(IOptions<AppSettings> appSettings, IMapper mapper, IUserRepository userRepository)
+        public UserService(
+            IOptions<AppSettings> appSettings,
+            IMapper mapper,
+            IUserRepository userRepository,
+            IUserSettingsService userSettingsService
+            )
         {
             _appSettings = appSettings.Value;
             _mapper = mapper;
             _userRepository = userRepository;
+            _userSettingsService = userSettingsService;
         }
 
         public async Task<AfterAutentificationDto> Authenticate(AuthenticateDto authenticateDto)
@@ -64,7 +71,10 @@ namespace bakalaurinis.Services
 
             var user = _mapper.Map<User>(registrationDto);
 
-            return await _userRepository.Create(user);
+            var userId = await _userRepository.Create(user);
+            await _userSettingsService.Create(userId);
+
+            return userId;
         }
 
         public async Task<UserNameDto> GetNameById(int id)

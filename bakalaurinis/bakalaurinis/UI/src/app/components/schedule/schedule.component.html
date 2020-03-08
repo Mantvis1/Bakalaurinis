@@ -1,24 +1,20 @@
-<div *ngIf="isLoadSchedule; then scheduleExist else scheduleNotExist"></div>
-<ng-template #scheduleExist>
-  <h1>Šiandienos veiklų sąrašas</h1>
-  <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-    <div class="example-box" *ngFor="let activity of activities" cdkDrag>
-      <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-      {{activity.title}} <div>
-        Nuo {{activity.startTime| date:'hh:mm'}}
-      </div>
-      <div>
-        iki {{activity.endTime| date:'hh:mm'}}
-      </div>
-      <div>
-        <button (click)="extend(activity.id)" mat-flat-button color="primary" [disabled]="activity.isFinished">Pratęsti</button>
-      </div>
-      <div>
-        <button (click)="finish(activity.id)" mat-flat-button color="primary" [disabled]="activity.isFinished">Baigti</button>
-      </div>
+<h1>Šiandienos veiklų sąrašas</h1>
+<div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+  <div class="example-box" *ngFor="let activity of activities" cdkDrag>
+    <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+    {{activity.title}} <div>
+      Nuo {{activity.startTime| date:'hh:mm'}}
+    </div>
+    <div>
+      iki {{activity.endTime| date:'hh:mm'}}
+    </div>
+    <div>
+      <button (click)="extend(activity.id)" mat-flat-button color="primary"
+        [disabled]="activity.isFinished">Pratęsti</button>
+    </div>
+    <div>
+      <button (click)="finish(activity.id)" mat-flat-button color="primary"
+        [disabled]="activity.isFinished">Baigti</button>
     </div>
   </div>
-</ng-template>
-<ng-template #scheduleNotExist>
-  Tvarkaraštis dar neparuoštas
-</ng-template>
+</div>

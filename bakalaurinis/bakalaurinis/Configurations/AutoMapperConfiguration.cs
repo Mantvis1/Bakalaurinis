@@ -2,6 +2,7 @@
 using bakalaurinis.Dtos.Activity;
 using bakalaurinis.Dtos.Message;
 using bakalaurinis.Dtos.User;
+using bakalaurinis.Dtos.UserSettings;
 using bakalaurinis.Infrastructure.Database.Models;
 
 namespace bakalaurinis.Configurations
@@ -32,6 +33,9 @@ namespace bakalaurinis.Configurations
 
             CreateMap<MessageDto, Message>(MemberList.None);
             CreateMap<Message, MessageDto>(MemberList.None);
+
+            CreateMap<UserSettingsDto, UserSettings>(MemberList.None);
+            CreateMap<UserSettings, UserSettingsDto>(MemberList.None);
         }
     }
 }

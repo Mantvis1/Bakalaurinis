@@ -16,9 +16,12 @@ namespace bakalaurinis.Infrastructure.Repositories
         {
             _context = context;
         }
-        public Task<int> Create(UserSettings entity)
+        public async Task<int> Create(UserSettings entity)
         {
-            throw new System.NotImplementedException();
+            _context.UserSettings.Add(entity);
+            await _context.SaveChangesAsync();
+
+            return entity.Id;
         }
 
         public Task<bool> Delete(UserSettings entity)
