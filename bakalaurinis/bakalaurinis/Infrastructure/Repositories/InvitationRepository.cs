@@ -1,8 +1,10 @@
 ﻿using bakalaurinis.Infrastructure.Database;
 using bakalaurinis.Infrastructure.Database.Models;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace bakalaurinis.Infrastructure.Repositories
@@ -16,9 +18,12 @@ namespace bakalaurinis.Infrastructure.Repositories
             _context = context;
         }
 
-        public Task<int> Create(Invitation entity)
+        public async Task<int> Create(Invitation entity)
         {
-            throw new NotImplementedException();
+            _context.Invitations.Add(entity);
+            await _context.SaveChangesAsync();
+
+            return entity.Id;
         }
 
         public Task<bool> Delete(Invitation entity)
@@ -31,14 +36,33 @@ namespace bakalaurinis.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<Invitation> GetById(int id)
+        public async Task<ICollection<Invitation>> GetAllByRecieverId(int recieverId)
         {
-            throw new NotImplementedException();
+            var invitations = await _context.Invitations.Where(x => x.ReceiverId == recieverId).ToArrayAsync();
+
+            return invitations;
         }
 
-        public Task<bool> Update(Invitation entity)
+        public async Task<ICollection<Invitation>> GetAllBySenderId(int senderId)
         {
-            throw new NotImplementedException();
+            var invitations = await _context.Invitations.Where(x => x.SenderId == senderId).ToArrayAsync();
+
+            return invitations;
+        }
+
+        public async Task<Invitation> GetById(int id)
+        {
+            var invitation = await _context.Invitations.FindAsync(id);
+
+            return invitation;
+        }
+
+        public async Task<bool> Update(Invitation entity)
+        {
+            _context.Invitations.Attach(entity);
+            var changes = await _context.SaveChangesAsync();
+
+            return changes;
         }
     }
 }
