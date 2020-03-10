@@ -1,1 +1,19 @@
-<p>sent-invitations works!</p>
+<h1>Jūs išsiuntėte pakvietimus</h1>
+<div *ngFor="let invitation of invitations">
+  <mat-card>
+    <mat-card-title>{{ invitation.id }}</mat-card-title>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary">
+        <i class="material-icons">
+          done
+        </i>
+      </button>
+      <button mat-raised-button color="warn">
+        <i class="material-icons">
+          clear
+        </i>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

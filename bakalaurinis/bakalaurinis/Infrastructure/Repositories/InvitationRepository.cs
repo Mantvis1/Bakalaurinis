@@ -62,7 +62,7 @@ namespace bakalaurinis.Infrastructure.Repositories
             _context.Invitations.Attach(entity);
             var changes = await _context.SaveChangesAsync();
 
-            return changes;
+            return changes > 0;
         }
     }
 }

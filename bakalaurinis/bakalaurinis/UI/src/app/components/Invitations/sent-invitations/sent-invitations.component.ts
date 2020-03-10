@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { InvitationsService } from 'src/app/services/invitations.service';
+import { AuthServiceService } from 'src/app/services/auth-service.service';
+import { Invitation } from 'src/app/models/invitation';
 
 @Component({
   selector: 'app-sent-invitations',
@@ -7,9 +10,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SentInvitationsComponent implements OnInit {
 
-  constructor() { }
+  invitations: Invitation[] = [];
+
+  constructor(
+    private authService: AuthServiceService,
+    private invitationService: InvitationsService
+  ) { }
 
   ngOnInit() {
+    this.loadInvitations();
+  }
+
+  loadInvitations() {
+    this.invitationService.getInvitationsId(this.authService.getUserId(), 'sender').subscribe(
+      data => {
+        this.invitations = Object.assign([], data);
+      }
+    )
   }
 
 }

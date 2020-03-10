@@ -6,6 +6,8 @@ import { MatDialog } from "@angular/material";
 import { ActivityFormComponent } from "../activity-form/activity-form.component";
 import { NewActivity } from "../../models/new-activity";
 import { ActivityPriority } from "./activity-priority.enum";
+import { InvitationsService } from 'src/app/services/invitations.service';
+import { NewInvitation } from 'src/app/models/new-invitation';
 
 @Component({
   selector: "app-activities-table",
@@ -16,7 +18,8 @@ export class ActivitiesTableComponent implements OnInit {
   constructor(
     private activityService: ActivityService,
     private authService: AuthServiceService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private invitationService: InvitationsService
   ) { }
 
   activities: GetActivities[] = [];
@@ -26,7 +29,8 @@ export class ActivitiesTableComponent implements OnInit {
     "Duration",
     "Priority",
     "Edit",
-    "Delete"
+    "Delete",
+    "Invite"
   ];
   activityToEdit: NewActivity = new NewActivity();
   newActivity: NewActivity = new NewActivity();
@@ -110,5 +114,19 @@ export class ActivitiesTableComponent implements OnInit {
   isValueExists(value: any) {
     if (value === null) return "Nenustatyta";
     return value;
+  }
+
+  invite(activityId: number) {
+    let newInvitation = new NewInvitation();
+    newInvitation.activityId = activityId;
+    newInvitation.senderId = this.authService.getUserId();
+    newInvitation.receiverId = 1;
+
+
+    this.invitationService.createInvitation(newInvitation).subscribe(
+      error => {
+        console.log(error);
+      }
+    );
   }
 }

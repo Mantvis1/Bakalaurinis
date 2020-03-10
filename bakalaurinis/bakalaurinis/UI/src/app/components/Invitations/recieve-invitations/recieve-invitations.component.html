@@ -1,8 +1,7 @@
 <h1>Jūs esate kviečiamas prisijungti prie renginių</h1>
-<button>Pakviesti</button>
-<div *ngFor="let hero of heroes">
+<div *ngFor="let invitation of invitations">
   <mat-card>
-    <mat-card-title>{{ hero }}</mat-card-title>
+    <mat-card-title>{{ invitation.id }}</mat-card-title>
 
     <mat-card-actions>
       <button mat-raised-button color="primary">

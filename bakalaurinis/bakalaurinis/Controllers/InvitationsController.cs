@@ -59,13 +59,5 @@ namespace bakalaurinis.Controllers
 
             return Ok(invitations);
         }
-
-
-        [HttpDelete]
-        public async Task<IActionResult> Delete()
-        {
-
-            return Ok(false);
-        }
     }
 }

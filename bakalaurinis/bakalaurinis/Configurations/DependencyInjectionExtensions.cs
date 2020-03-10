@@ -24,7 +24,8 @@ namespace bakalaurinis.Configurations
                 .AddSingleton<ITimeService, TimeService>()
                 .AddScoped<IUserSettingsRepository, UserSettingsRepository>()
                 .AddScoped<IMessageRepository, MessageRepository>()
-                .AddScoped<IRepository<MessageTemplate>, MessageTemplateRepository>();
+                .AddScoped<IRepository<MessageTemplate>, MessageTemplateRepository>()
+                .AddScoped<IInvitationRepository, InvitationRepository>();
         }
 
         public static IServiceCollection AddApplicationDependencies(this IServiceCollection service)
