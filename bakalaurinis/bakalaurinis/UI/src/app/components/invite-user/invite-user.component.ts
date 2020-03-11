@@ -94,4 +94,8 @@ export class InviteUserComponent implements OnInit {
     });
   }
 
+  closeModal() {
+    this.dialogRef.close();
+  }
+
 }
