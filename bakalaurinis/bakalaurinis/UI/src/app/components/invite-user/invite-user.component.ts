@@ -7,6 +7,7 @@ import { UserInvitation } from 'src/app/models/user-invitation';
 import { UserInvitationService } from 'src/app/services/user-invitation.service';
 import { InvitationStatus } from 'src/app/models/invitation-status.enum';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-invite-user',
@@ -16,6 +17,7 @@ import { AuthServiceService } from 'src/app/services/auth-service.service';
 export class InviteUserComponent implements OnInit {
 
   userInvitations: UserInvitation[] = [];
+  currentUserName: string;
 
   constructor(
     public dialogRef: MatDialogRef<InviteUserModal>,
@@ -23,29 +25,35 @@ export class InviteUserComponent implements OnInit {
     private invitationService: InvitationsService,
     private alertService: AlertService,
     private readonly userInvitationService: UserInvitationService,
+    private readonly userService: UserService,
     private readonly authService: AuthServiceService
   ) { }
 
   ngOnInit() {
     this.loadAllUserInvitations();
+    this.getCurrentUser();
   }
 
   invite() {
     let newInvitation = Object.assign({}, this.data);
-    if (this.isReceiverSameUserAsSender()) {
-      this.invitationService.createInvitation(newInvitation).subscribe(
-        () => {
-          this.alertService.showMessage("Pakvietimas išsiūstas");
-          this.loadAllUserInvitations();
-        },
-        error => {
-          this.alertService.showMessage("Vartotojas neegzistuoja/ jau turi pakvietimą");
-          console.log(error);
-        }
-      )
-    }
-    else {
-      this.alertService.showMessage("Negalite siūsti sau pakvietimo");
+    if (!this.isReceiverSameUserAsSender(newInvitation.receiverName)) {
+      if (!this.isUserHaveInvitation(newInvitation.receiverName)) {
+        this.invitationService.createInvitation(newInvitation).subscribe(
+          () => {
+            this.alertService.showMessage("Pakvietimas išsiųstas");
+            this.loadAllUserInvitations();
+          },
+          error => {
+            this.alertService.showMessage("Vartotojas neegzistuoja");
+            console.log(error);
+          }
+        )
+      }
+      else {
+        this.alertService.showMessage("Vartotojas jau turi pakvietimą");
+      }
+    } else {
+      this.alertService.showMessage("Negalite siųsti pakvietimo sau");
     }
   }
 
@@ -61,12 +69,29 @@ export class InviteUserComponent implements OnInit {
     return InvitationStatus[index];
   }
 
-  isReceiverSameUserAsSender() {
-    if (this.data.senderId == this.authService.getUserId()) {
+  isUserHaveInvitation(username: string): boolean {
+    let result: boolean = false;
+    this.userInvitations.forEach(element => {
+      if (element.username == username) {
+        result = true;
+      }
+    });
+
+    return result;
+  }
+
+  isReceiverSameUserAsSender(receiverName: string) {
+    if (this.currentUserName === receiverName) {
       return true;
     }
 
     return false;
+  }
+
+  getCurrentUser() {
+    this.userService.getUsername(this.authService.getUserId()).subscribe(name => {
+      this.currentUserName = name.username;
+    });
   }
 
 }

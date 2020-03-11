@@ -52,7 +52,7 @@ namespace bakalaurinis.Services
             var user = await _userRepository.GetByName(newInvitationDto.ReceiverName);
 
             if (user == null ||
-                !(await _invitationRepository.IsUserAlreadyHaveInvitation(newInvitationDto.SenderId, newInvitationDto.ActivityId, user.Id)))
+                (await _invitationRepository.IsUserAlreadyHaveInvitation(newInvitationDto.SenderId, newInvitationDto.ActivityId, user.Id)))
             {
                 throw new ArgumentNullException("User does not exist/ Invitation already created");
             }
