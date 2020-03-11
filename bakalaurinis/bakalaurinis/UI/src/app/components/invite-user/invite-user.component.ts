@@ -6,6 +6,7 @@ import { AlertService } from 'src/app/services/alert.service';
 import { UserInvitation } from 'src/app/models/user-invitation';
 import { UserInvitationService } from 'src/app/services/user-invitation.service';
 import { InvitationStatus } from 'src/app/models/invitation-status.enum';
+import { AuthServiceService } from 'src/app/services/auth-service.service';
 
 @Component({
   selector: 'app-invite-user',
@@ -21,7 +22,8 @@ export class InviteUserComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: InviteUserModal,
     private invitationService: InvitationsService,
     private alertService: AlertService,
-    private readonly userInvitationService: UserInvitationService
+    private readonly userInvitationService: UserInvitationService,
+    private readonly authService: AuthServiceService
   ) { }
 
   ngOnInit() {
@@ -30,16 +32,21 @@ export class InviteUserComponent implements OnInit {
 
   invite() {
     let newInvitation = Object.assign({}, this.data);
-    this.invitationService.createInvitation(newInvitation).subscribe(
-      () => {
-        this.alertService.showMessage("Pakvietimas išsiūstas");
-        this.loadAllUserInvitations();
-      },
-      error => {
-        this.alertService.showMessage("Vartotojas neegzistuoja");
-        console.log(error);
-      }
-    )
+    if (this.isReceiverSameUserAsSender()) {
+      this.invitationService.createInvitation(newInvitation).subscribe(
+        () => {
+          this.alertService.showMessage("Pakvietimas išsiūstas");
+          this.loadAllUserInvitations();
+        },
+        error => {
+          this.alertService.showMessage("Vartotojas neegzistuoja/ jau turi pakvietimą");
+          console.log(error);
+        }
+      )
+    }
+    else {
+      this.alertService.showMessage("Negalite siūsti sau pakvietimo");
+    }
   }
 
   loadAllUserInvitations() {
@@ -52,6 +59,14 @@ export class InviteUserComponent implements OnInit {
 
   getStatus(index: number): string {
     return InvitationStatus[index];
+  }
+
+  isReceiverSameUserAsSender() {
+    if (this.data.senderId == this.authService.getUserId()) {
+      return true;
+    }
+
+    return false;
   }
 
 }

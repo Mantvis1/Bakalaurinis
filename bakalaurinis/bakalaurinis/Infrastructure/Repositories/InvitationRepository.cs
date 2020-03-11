@@ -64,6 +64,17 @@ namespace bakalaurinis.Infrastructure.Repositories
             return invitation;
         }
 
+        public async Task<bool> IsUserAlreadyHaveInvitation(int senderId, int activityId, int receiverId)
+        {
+            var result = (await _context.Invitations.Where(x =>
+             x.ActivityId == activityId &&
+             x.SenderId == senderId &&
+             x.ReceiverId == receiverId
+            ).ToArrayAsync()).Length > 0;
+
+            return result;
+        }
+
         public async Task<bool> Update(Invitation entity)
         {
             _context.Invitations.Attach(entity);
