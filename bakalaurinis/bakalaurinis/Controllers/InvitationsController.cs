@@ -24,7 +24,7 @@ namespace bakalaurinis.Controllers
             return Ok(invitationId);
         }
 
-        [HttpPut]
+        [HttpPut("{invitationId}")]
         public async Task<IActionResult> Update(int invitationId, UpdateInvitationDto updateInvitationDto)
         {
             var isUpdated = await _invitationService.Update(invitationId, updateInvitationDto);

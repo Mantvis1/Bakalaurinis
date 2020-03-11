@@ -20,7 +20,7 @@ export class InvitationsService {
     return this.http.post(this.urlService.getAbsolutePath('Invitations'), newInvitation);
   }
 
-  updateInvitation(invitation: Invitation): any {
-    return this.http.post(this.urlService.getAbsolutePath('Invitations'), invitation);
+  updateInvitation(id: number, invitation: Invitation): any {
+    return this.http.put(this.urlService.getAbsolutePath('Invitations/' + id), invitation);
   }
 }
