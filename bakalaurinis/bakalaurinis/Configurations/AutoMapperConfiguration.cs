@@ -3,6 +3,7 @@ using bakalaurinis.Dtos.Activity;
 using bakalaurinis.Dtos.Invitation;
 using bakalaurinis.Dtos.Message;
 using bakalaurinis.Dtos.User;
+using bakalaurinis.Dtos.UserActivities;
 using bakalaurinis.Dtos.UserSettings;
 using bakalaurinis.Infrastructure.Database.Models;
 
@@ -49,6 +50,9 @@ namespace bakalaurinis.Configurations
 
             CreateMap<InvitationDto, Invitation>(MemberList.None);
             CreateMap<Invitation, InvitationDto>(MemberList.None);
+
+            CreateMap<UserInvitationsDto, Invitation>(MemberList.None);
+            CreateMap<Invitation, UserInvitationsDto>(MemberList.None);
         }
     }
 }

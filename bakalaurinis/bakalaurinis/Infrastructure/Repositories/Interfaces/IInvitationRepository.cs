@@ -8,5 +8,6 @@ namespace bakalaurinis.Infrastructure.Repositories.Interfaces
     {
         Task<ICollection<Invitation>> GetAllBySenderId(int senderId);
         Task<ICollection<Invitation>> GetAllByRecieverId(int recieverId);
+        Task<ICollection<Invitation>> GetAllByActivityId(int activityId);
     }
 }

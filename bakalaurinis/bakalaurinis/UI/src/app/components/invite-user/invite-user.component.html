@@ -1,12 +1,13 @@
 <form>
   <mat-form-field>
-    <div> <input matInput [(ngModel)]="data.receiverName" name="receiverName"></div>
-    <div><button mat-raised-button color="primary" (click)="invite()">Pakviesti</button></div>
+    <input matInput [(ngModel)]="data.receiverName" name="receiverName" placeholder="Įveskite vartotoją" />
   </mat-form-field>
+  <button mat-raised-button color="primary" (click)="invite()">Pakviesti</button>
 </form>
 
 <ul>
-  <li *ngFor="let hero of heroes">
-    {{ hero }}
+  <li *ngFor="let userInvitation of userInvitations">
+    Vartotojas: {{ userInvitation.username }}
+    Būsena: {{ getStatus(userInvitation.invitationStatus) }}
   </li>
 </ul>

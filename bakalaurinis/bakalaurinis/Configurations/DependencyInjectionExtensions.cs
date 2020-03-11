@@ -36,7 +36,8 @@ namespace bakalaurinis.Configurations
                  .AddScoped<IScheduleGenerationService, ScheduleGenerationService>()
                  .AddScoped<IUserSettingsService, UserSettingsService>()
                  .AddScoped<IMessageService, MessageService>()
-                 .AddScoped<IInvitationService, InvitationService>();
+                 .AddScoped<IInvitationService, InvitationService>()
+                 .AddScoped<IUserInvitationService, UserInvitationService>();
         }
     }
 }

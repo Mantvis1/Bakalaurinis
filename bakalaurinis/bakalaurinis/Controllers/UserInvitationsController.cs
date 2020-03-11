@@ -1,0 +1,33 @@
+﻿using bakalaurinis.Dtos.UserActivities;
+using bakalaurinis.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+
+namespace bakalaurinis.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class UserInvitationsController : ControllerBase
+    {
+        private readonly IUserInvitationService _userInvitationService;
+        public UserInvitationsController(IUserInvitationService userInvitationService)
+        {
+            _userInvitationService = userInvitationService;
+        }
+
+
+        [HttpGet("{id}")]
+        [Produces(typeof(UserInvitationsDto[]))]
+        public async Task<IActionResult> Get(int id)
+        {
+            var userInvitations = await _userInvitationService.GetAllByActivityId(id);
+
+            if(userInvitations.Length == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(userInvitations);
+        }
+    }
+}

@@ -36,6 +36,13 @@ namespace bakalaurinis.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
+        public async Task<ICollection<Invitation>> GetAllByActivityId(int activityId)
+        {
+            var invitations = await _context.Invitations.Where(x => x.ActivityId == activityId).ToArrayAsync();
+
+            return invitations;
+        }
+
         public async Task<ICollection<Invitation>> GetAllByRecieverId(int recieverId)
         {
             var invitations = await _context.Invitations.Where(x => x.ReceiverId == recieverId && x.InvitationStatus == 0).ToArrayAsync();
