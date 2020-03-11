@@ -1,0 +1,12 @@
+<form>
+  <mat-form-field>
+    <div> <input matInput [(ngModel)]="data.receiverName" name="receiverName"></div>
+    <div><button mat-raised-button color="primary" (click)="invite()">Pakviesti</button></div>
+  </mat-form-field>
+</form>
+
+<ul>
+  <li *ngFor="let hero of heroes">
+    {{ hero }}
+  </li>
+</ul>

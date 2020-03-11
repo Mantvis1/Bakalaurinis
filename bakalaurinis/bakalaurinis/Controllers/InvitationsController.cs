@@ -1,6 +1,7 @@
 ﻿using bakalaurinis.Dtos.Invitation;
 using bakalaurinis.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace bakalaurinis.Controllers
@@ -19,9 +20,16 @@ namespace bakalaurinis.Controllers
         [Produces(typeof(int))]
         public async Task<IActionResult> Create([FromBody]NewInvitationDto newInvitationDto)
         {
-            int invitationId = await _invitationService.Create(newInvitationDto);
+            try
+            {
+                int invitationId = await _invitationService.Create(newInvitationDto);
 
-            return Ok(invitationId);
+                return Ok(invitationId);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpPut("{invitationId}")]
@@ -38,7 +46,7 @@ namespace bakalaurinis.Controllers
         {
             var invitations = await _invitationService.GetAllBySenderId(senderId);
 
-            if(invitations == null)
+            if (invitations == null)
             {
                 return NotFound();
             }

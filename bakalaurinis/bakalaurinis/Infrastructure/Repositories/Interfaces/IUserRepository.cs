@@ -7,5 +7,6 @@ namespace bakalaurinis.Infrastructure.Repositories.Interfaces
     public interface IUserRepository : IRepository<User>
     {
         Task<User> GetUserByNameAndPassword(AuthenticateDto authenticateDto);
+        Task<User> GetByName(string username);
     }
 }

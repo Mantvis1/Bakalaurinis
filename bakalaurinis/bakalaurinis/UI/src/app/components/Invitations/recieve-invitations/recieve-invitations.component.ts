@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
 import { InvitationsService } from 'src/app/services/invitations.service';
 import { Invitation } from 'src/app/models/invitation';
-import { InvitationTypes } from 'src/app/models/invitation-types.enum';
 import { InvitationStatus } from 'src/app/models/invitation-status.enum';
 
 @Component({

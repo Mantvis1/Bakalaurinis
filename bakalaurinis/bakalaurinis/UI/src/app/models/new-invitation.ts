@@ -1,5 +1,5 @@
 export class NewInvitation {
   senderId: number;
-  receiverId: number;
+  receiverName: string;
   activityId: number;
 }

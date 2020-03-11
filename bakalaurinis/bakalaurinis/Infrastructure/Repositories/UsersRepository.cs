@@ -49,6 +49,13 @@ namespace bakalaurinis.Infrastructure.Repositories
             return user;
         }
 
+        public async Task<User> GetByName(string username)
+        {
+            var user = await _context.Users.Where(x => x.Username == username).FirstOrDefaultAsync();
+
+            return user;
+        }
+
         public async Task<User> GetUserByNameAndPassword(AuthenticateDto authenticateDto)
         {
             var user = await _context.Users.Where(x => x.Username == authenticateDto.Username && x.Password == authenticateDto.Password).FirstOrDefaultAsync();

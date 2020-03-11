@@ -45,6 +45,7 @@ import { MessagesComponent } from './components/messages/messages.component';
 import { RecieveInvitationsComponent } from './components/Invitations/recieve-invitations/recieve-invitations.component';
 import { SentInvitationsComponent } from './components/Invitations/sent-invitations/sent-invitations.component';
 import { BaseInvitationComponent } from './components/Invitations/base-invitation/base-invitation.component';
+import { InviteUserComponent } from './components/invite-user/invite-user.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -68,7 +69,8 @@ export function tokenGetter() {
     MessagesComponent,
     RecieveInvitationsComponent,
     SentInvitationsComponent,
-    BaseInvitationComponent
+    BaseInvitationComponent,
+    InviteUserComponent
   ],
   imports: [
     BrowserModule,
@@ -106,7 +108,8 @@ export function tokenGetter() {
   entryComponents: [
     LoginComponent,
     RegistrationComponent,
-    ActivityFormComponent
+    ActivityFormComponent,
+    InviteUserComponent
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-gb' },

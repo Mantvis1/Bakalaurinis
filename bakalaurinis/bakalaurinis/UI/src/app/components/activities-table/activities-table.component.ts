@@ -8,6 +8,7 @@ import { NewActivity } from "../../models/new-activity";
 import { ActivityPriority } from "./activity-priority.enum";
 import { InvitationsService } from 'src/app/services/invitations.service';
 import { NewInvitation } from 'src/app/models/new-invitation';
+import { InviteUserComponent } from '../invite-user/invite-user.component';
 
 @Component({
   selector: "app-activities-table",
@@ -117,16 +118,15 @@ export class ActivitiesTableComponent implements OnInit {
   }
 
   invite(activityId: number) {
-    let newInvitation = new NewInvitation();
-    newInvitation.activityId = activityId;
-    newInvitation.senderId = this.authService.getUserId();
-    newInvitation.receiverId = 1;
-
-
-    this.invitationService.createInvitation(newInvitation).subscribe(
-      error => {
-        console.log(error);
+    const dialogRef = this.dialog.open(InviteUserComponent, {
+      minWidth: "250px",
+      width: "35%",
+      data: {
+        senderId: this.authService.getUserId(),
+        activityId: activityId,
+        receiverName: ''
       }
-    );
+    });
+
   }
 }
