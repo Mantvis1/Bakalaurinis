@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using bakalaurinis.Dtos.Message;
 using bakalaurinis.Infrastructure.Database.Models;
+using bakalaurinis.Infrastructure.Enums;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Services.Interfaces;
 using System;
@@ -22,9 +23,11 @@ namespace bakalaurinis.Services
             _mapper = mapper;
         }
 
-        public async Task<int> Create(int userId, int messageType)
+        public async Task<int> Create(int userId, MessageTypeEnum messageType)
         {
-            var messageTemplate = await _messageTempalateRepository.GetById(messageType);
+            var messageId = SelectMessageId(messageType);
+            var messageTemplate = await _messageTempalateRepository.GetById(messageId);
+
             var message = new Message
             {
                 CreatedAt = DateTime.Now,
@@ -34,7 +37,7 @@ namespace bakalaurinis.Services
             };
 
             return await _messageRepository.Create(message);
-    }
+        }
 
         private string EditMessage(string messageText)
         {
@@ -47,7 +50,7 @@ namespace bakalaurinis.Services
         {
             var messages = await _messageRepository.GetAllByUserId(userId);
 
-            foreach(var message in messages)
+            foreach (var message in messages)
             {
                 await _messageRepository.Delete(message);
             }
@@ -68,9 +71,31 @@ namespace bakalaurinis.Services
             return messagesDto;
         }
 
-        public async Task<MessageDto> GetById(int userId)
+        private int SelectMessageId(MessageTypeEnum messageType)
         {
-            throw new System.NotImplementedException();
+            switch (messageType)
+            {
+                case MessageTypeEnum.NewActivity:
+                    return 1;
+                case MessageTypeEnum.DeleteActivity:
+                    return 2;
+                case MessageTypeEnum.Generation:
+                    return 3;
+                case MessageTypeEnum.GotNewInvitation:
+                    return 4;
+                case MessageTypeEnum.Decline:
+                    return 5;
+                case MessageTypeEnum.Accept:
+                    return 6;
+                case MessageTypeEnum.WasDeclined:
+                    return 7;
+                case MessageTypeEnum.WasAccepted:
+                    return 8;
+                case MessageTypeEnum.WasSent:
+                    return 9;
+                default:
+                    return 0;
+            }
         }
     }
 }

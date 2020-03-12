@@ -29,20 +29,6 @@ namespace bakalaurinis.Controllers
             return Ok(messages);
         }
 
-        [HttpGet("{userId}")]
-        [Produces(typeof(MessageDto))]
-        public async Task<IActionResult> Get(int userId)
-        {
-            var message = await _messageService.GetById(userId);
-
-            if (message == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(message);
-        }
-
         [HttpDelete("{messageId}")]
         public async Task<IActionResult> Delete(int messageId)
         {

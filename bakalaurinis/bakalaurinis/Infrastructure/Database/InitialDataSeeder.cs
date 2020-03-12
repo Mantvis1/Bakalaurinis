@@ -29,7 +29,7 @@ namespace bakalaurinis.Infrastructure.Database
                   new MessageTemplate
                   {
                       Id = 4,
-                      TitleTemplate = "Naujas kvietimas į renginį",
+                      TitleTemplate = "Naujas kvietimas gautas",
                       TextTemplate = "Vartotojas [user] pakvietė jus i veiką [activity]!"
                   },
                   new MessageTemplate
@@ -43,7 +43,25 @@ namespace bakalaurinis.Infrastructure.Database
                        Id = 6,
                        TitleTemplate = "Kvietimas priimtas",
                        TextTemplate = "Vartotojas [user] priėmė jūsų pakvietimą į renginį [activity]!"
-                   }
+                   },
+                  new MessageTemplate
+                  {
+                      Id = 7,
+                      TitleTemplate = "Jūs atmetėte kvietimą",
+                      TextTemplate = "Jūs atmetėte kvietimą vartotojo [user] pakvietimą į renginį [activity]!"
+                  },
+                   new MessageTemplate
+                   {
+                       Id = 8,
+                       TitleTemplate = "Jūs priėmėte kvietimą",
+                       TextTemplate = "Jūs priėmėte kvietimą vartotojo[user] pakvietimą į renginį[activity]!"
+                   },
+                  new MessageTemplate
+                  {
+                      Id = 9,
+                      TitleTemplate = "Naujas kvietimas iššiūstas",
+                      TextTemplate = "Vartotojas [user] pakvietė jus i veiką [activity]!"
+                  }
                 );
         }
     }

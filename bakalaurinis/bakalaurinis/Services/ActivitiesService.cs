@@ -2,6 +2,7 @@
 using bakalaurinis.Constants;
 using bakalaurinis.Dtos.Activity;
 using bakalaurinis.Infrastructure.Database.Models;
+using bakalaurinis.Infrastructure.Enums;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Services.Interfaces;
 using System;
@@ -38,7 +39,7 @@ namespace bakalaurinis.Services
             var activity = _mapper.Map<Activity>(newActivityDto);
             var activityId = await _repository.Create(activity);
 
-            await _messageService.Create(activity.UserId, MessageTypeConstats.NewActivity);
+            await _messageService.Create(activity.UserId, MessageTypeEnum.NewActivity);
 
             return activityId;
         }
@@ -51,6 +52,8 @@ namespace bakalaurinis.Services
             {
                 return false;
             }
+
+            await _messageService.Create(activity.UserId, MessageTypeEnum.DeleteActivity);
 
             return await _repository.Delete(activity);
         }
