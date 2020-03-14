@@ -25,6 +25,15 @@ namespace bakalaurinis.Controllers
             return Ok(isUpdated);
         }
 
+        [HttpPut("itemsPerPage/{userId}")]
+        [Produces(typeof(bool))]
+        public async Task<IActionResult> Update([FromBody]UpdateUserItemsPerPageSettings userSettingsDto)
+        {
+            var isUpdated = await _userSettingsService.Update(userSettingsDto);
+
+            return Ok(isUpdated);
+        }
+
 
         [HttpGet("{userId}")]
         [Produces(typeof(UserSettingsDto))]

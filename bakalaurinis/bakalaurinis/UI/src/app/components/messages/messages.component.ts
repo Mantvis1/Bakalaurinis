@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Message } from 'src/app/models/message';
 import { MessageService } from 'src/app/services/message.service';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
+import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { SettingsService } from 'src/app/services/settings.service';
 
 @Component({
   selector: 'app-messages',
@@ -10,20 +12,33 @@ import { AuthServiceService } from 'src/app/services/auth-service.service';
 })
 export class MessagesComponent implements OnInit {
 
-  messages: Message[] = [];
+  messages = new MatTableDataSource<Message>();
+  pageSize = 0;
+
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
+  displayedColumns: string[] = [
+    "Title",
+    "Text",
+    "Time",
+    "Delete"
+  ];
 
   constructor(
     private messageService: MessageService,
-    private authService: AuthServiceService
+    private authService: AuthServiceService,
+    private settingsService: SettingsService
   ) { }
 
   ngOnInit() {
+    this.getPageSize(this.authService.getUserId());
     this.getUserMessages();
+    this.messages.paginator = this.paginator;
   }
 
   getUserMessages(): void {
     this.messageService.getUserMessages(this.authService.getUserId()).subscribe(data => {
-      this.messages = Object.assign([], data);
+      this.messages.data = Object.assign([], data);
     })
   }
 
@@ -41,6 +56,14 @@ export class MessagesComponent implements OnInit {
         this.getUserMessages();
       }
     );
+  }
+
+  getPageSize(userId: number): void {
+    this.settingsService.getItemsPerPageSettings(userId).subscribe(
+      data => {
+        this.paginator._changePageSize(data.itemsPerPage);
+      }
+    )
   }
 
 }

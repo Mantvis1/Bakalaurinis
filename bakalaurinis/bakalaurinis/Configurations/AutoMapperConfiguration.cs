@@ -56,6 +56,9 @@ namespace bakalaurinis.Configurations
 
             CreateMap<GetUserItemsPerPageSetting, UserSettings>(MemberList.None);
             CreateMap<UserSettings, GetUserItemsPerPageSetting>(MemberList.None);
+
+            CreateMap<UpdateUserItemsPerPageSettings, UserSettings>(MemberList.None);
+            CreateMap<UserSettings, UpdateUserItemsPerPageSettings>(MemberList.None);
         }
     }
 }

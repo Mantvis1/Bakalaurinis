@@ -52,5 +52,14 @@ namespace bakalaurinis.Services
 
            return await _userSettingsRepository.Update(settings);
         }
+
+        public async Task<bool> Update(UpdateUserItemsPerPageSettings userSettingsDto)
+        {
+            var settings = await _userSettingsRepository.GetByUserId(userSettingsDto.UserId);
+
+            _mapper.Map(userSettingsDto, settings);
+
+            return await _userSettingsRepository.Update(settings);
+        }
     }
 }
