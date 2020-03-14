@@ -11,5 +11,7 @@ namespace bakalaurinis.Infrastructure.Database.Models
         public int StartTime { get; set; } = 8;
         [Required]
         public int EndTime { get; set; } = 22;
+        [Required]
+        public int ItemsPerPage { get; set; } = 10;
     }
 }

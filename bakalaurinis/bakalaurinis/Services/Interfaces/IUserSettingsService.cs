@@ -8,5 +8,6 @@ namespace bakalaurinis.Services.Interfaces
         Task<UserSettingsDto> GetByUserId(int userId);
         Task<bool> Update(UserSettingsDto userSettingsDto);
         Task<int> Create(int userId);
+        Task<GetUserItemsPerPageSetting> GetUserItemsPerPageSetting(int userId);
     }
 }

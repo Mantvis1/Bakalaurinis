@@ -1,14 +1,15 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { ActivityService } from "../../services/activity.service";
 import { AuthServiceService } from "../../services/auth-service.service";
 import { GetActivities } from "../../models/get-activities";
-import { MatDialog } from "@angular/material";
+import { MatDialog, MatPaginator, MatTableDataSource } from "@angular/material";
 import { ActivityFormComponent } from "../activity-form/activity-form.component";
 import { NewActivity } from "../../models/new-activity";
 import { ActivityPriority } from "./activity-priority.enum";
 import { InvitationsService } from 'src/app/services/invitations.service';
 import { NewInvitation } from 'src/app/models/new-invitation';
 import { InviteUserComponent } from '../invite-user/invite-user.component';
+import { SettingsService } from 'src/app/services/settings.service';
 
 @Component({
   selector: "app-activities-table",
@@ -20,10 +21,10 @@ export class ActivitiesTableComponent implements OnInit {
     private activityService: ActivityService,
     private authService: AuthServiceService,
     private dialog: MatDialog,
-    private invitationService: InvitationsService
+    private settingsService: SettingsService
   ) { }
 
-  activities: GetActivities[] = [];
+  activities = new MatTableDataSource<GetActivities>();
   displayedColumns: string[] = [
     "Title",
     "Description",
@@ -35,9 +36,14 @@ export class ActivitiesTableComponent implements OnInit {
   ];
   activityToEdit: NewActivity = new NewActivity();
   newActivity: NewActivity = new NewActivity();
+  pageSize = 0;
+
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   ngOnInit() {
+    this.getPageSize(this.authService.getUserId());
     this.refreshTable();
+    this.activities.paginator = this.paginator;
   }
 
   deleteById(id: number) {
@@ -50,9 +56,18 @@ export class ActivitiesTableComponent implements OnInit {
     this.activityService
       .getUserActivities(this.authService.getUserId())
       .subscribe(data => {
-        this.activities = data;
+        this.activities.data = data;
       });
   }
+
+  getPageSize(userId: number): void {
+    this.settingsService.getItemsPerPageSettings(userId).subscribe(
+      data => {
+        this.paginator._changePageSize(data.itemsPerPage);
+      }
+    )
+  }
+
 
   openCreateModal() {
     const dialogRef = this.dialog.open(ActivityFormComponent, {

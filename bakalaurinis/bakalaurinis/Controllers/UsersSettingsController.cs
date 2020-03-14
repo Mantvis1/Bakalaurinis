@@ -34,5 +34,14 @@ namespace bakalaurinis.Controllers
 
             return Ok(settings);
         }
+
+        [HttpGet("itemsPerPage/{userId}")]
+        [Produces(typeof(GetUserItemsPerPageSetting))]
+        public async Task<IActionResult> GetItemsPerPage(int userId)
+        {
+            var settings = await _userSettingsService.GetUserItemsPerPageSetting(userId);
+
+            return Ok(settings);
+        }
     }
 }

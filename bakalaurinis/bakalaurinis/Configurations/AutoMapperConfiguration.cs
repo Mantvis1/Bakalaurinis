@@ -53,6 +53,9 @@ namespace bakalaurinis.Configurations
 
             CreateMap<UserInvitationsDto, Invitation>(MemberList.None);
             CreateMap<Invitation, UserInvitationsDto>(MemberList.None);
+
+            CreateMap<GetUserItemsPerPageSetting, UserSettings>(MemberList.None);
+            CreateMap<UserSettings, GetUserItemsPerPageSetting>(MemberList.None);
         }
     }
 }

@@ -36,6 +36,14 @@ namespace bakalaurinis.Services
             return settingsDto;
         }
 
+        public async Task<GetUserItemsPerPageSetting> GetUserItemsPerPageSetting(int userId)
+        {
+            var settings = await _userSettingsRepository.GetByUserId(userId);
+            var settingsDto = _mapper.Map<GetUserItemsPerPageSetting>(settings);
+
+            return settingsDto;
+        }
+
         public async Task<bool> Update(UserSettingsDto userSettingsDto)
         {
             var settings = await _userSettingsRepository.GetByUserId(userSettingsDto.UserId);
