@@ -4,6 +4,7 @@ import { UrlService } from './url.service';
 import { Settings } from '../models/settings';
 import { Observable } from 'rxjs';
 import { UserPageSizeSetting } from '../models/user-page-size-setting';
+import { UpdatePageSizeSetting } from '../models/update-page-size-setting';
 
 @Injectable({
   providedIn: 'root'
@@ -24,4 +25,7 @@ export class SettingsService {
     return this.http.get<UserPageSizeSetting>(this.urlService.getAbsolutePath('UsersSettings/itemsPerPage/' + userId));
   }
 
+  updateItemsPerPageSettings(userId: number, updatePageSize: UpdatePageSizeSetting): any {
+    return this.http.put<any>(this.urlService.getAbsolutePath('UsersSettings/itemsPerPage/' + userId), updatePageSize);
+  }
 }

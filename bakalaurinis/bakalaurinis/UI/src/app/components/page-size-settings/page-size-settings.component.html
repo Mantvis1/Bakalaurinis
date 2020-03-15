@@ -1,0 +1,17 @@
+<mat-card>
+  <form>
+    <div>
+      <mat-form-field>
+        <mat-label>Pasirinkite puslapio dydį</mat-label>
+        <mat-select placeholder="Puslapio dydis" [(ngModel)]="pageSizeSetting" name="pageSizeSetting">
+          <mat-option [value]="5">5</mat-option>
+          <mat-option [value]="10">10</mat-option>
+          <mat-option [value]="20">20</mat-option>
+          <mat-option [value]="20">50</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button (click)="updatePageSize()">Keisti</button>
+    </div>
+  </form>
+</mat-card>

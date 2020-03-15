@@ -33,7 +33,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ActivityFormComponent } from './components/activity-form/activity-form.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { SettingsComponent } from './components/settings/settings.component';
 
 import { JwtModule } from '@auth0/angular-jwt';
 import { JwtInterceptor } from './helpers/jwt-iterceptor';
@@ -47,6 +46,7 @@ import { RecieveInvitationsComponent } from './components/Invitations/recieve-in
 import { SentInvitationsComponent } from './components/Invitations/sent-invitations/sent-invitations.component';
 import { BaseInvitationComponent } from './components/Invitations/base-invitation/base-invitation.component';
 import { InviteUserComponent } from './components/invite-user/invite-user.component';
+import { PageSizeSettingsComponent } from './components/page-size-settings/page-size-settings.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -63,7 +63,6 @@ export function tokenGetter() {
     ActivityFormComponent,
     ScheduleComponent,
     ProfileComponent,
-    SettingsComponent,
     DeleteAccountComponent,
     ChangePasswordComponent,
     ScheduleSettingsComponent,
@@ -71,7 +70,8 @@ export function tokenGetter() {
     RecieveInvitationsComponent,
     SentInvitationsComponent,
     BaseInvitationComponent,
-    InviteUserComponent
+    InviteUserComponent,
+    PageSizeSettingsComponent
   ],
   imports: [
     BrowserModule,
