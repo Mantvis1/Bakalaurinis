@@ -48,21 +48,21 @@ export class InviteUserComponent implements OnInit {
   invite() {
     let newInvitation = Object.assign({}, this.data);
     if (!this.isReceiverSameUserAsSender(newInvitation.receiverName)) {
-      //if (!this.isUserHaveInvitation(newInvitation.receiverName)) {
-      this.invitationService.createInvitation(newInvitation).subscribe(
-        () => {
-          this.alertService.showMessage("Pakvietimas išsiųstas");
-          this.loadAllUserInvitations();
-        },
-        error => {
-          this.alertService.showMessage("Vartotojas neegzistuoja");
-          console.log(error);
-        }
-      )
-      //}
-      // else {
-      //   this.alertService.showMessage("Vartotojas jau turi pakvietimą");
-      // }
+      if (!this.isUserHaveInvitation(newInvitation.receiverName)) {
+        this.invitationService.createInvitation(newInvitation).subscribe(
+          () => {
+            this.alertService.showMessage("Pakvietimas išsiųstas");
+            this.loadAllUserInvitations();
+          },
+          error => {
+            this.alertService.showMessage("Vartotojas neegzistuoja");
+            console.log(error);
+          }
+        )
+      }
+      else {
+        this.alertService.showMessage("Vartotojas jau turi pakvietimą");
+      }
     } else {
       this.alertService.showMessage("Negalite siųsti pakvietimo sau");
     }
@@ -80,16 +80,16 @@ export class InviteUserComponent implements OnInit {
     return InvitationStatus[index];
   }
 
-  /* isUserHaveInvitation(username: string): boolean {
-     let result: boolean = false;
-     this.userInvitations.forEach(element => {
-       if (element.username == username) {
-         result = true;
-       }
-     });
- 
-     return result;
-   }*/
+  isUserHaveInvitation(username: string): boolean {
+    let result: boolean = false;
+    this.userInvitations.data.forEach(element => {
+      if (element.username == username) {
+        result = true;
+      }
+    });
+
+    return result;
+  }
 
   isReceiverSameUserAsSender(receiverName: string) {
     if (this.currentUserName === receiverName) {
