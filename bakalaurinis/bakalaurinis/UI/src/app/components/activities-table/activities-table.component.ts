@@ -68,7 +68,6 @@ export class ActivitiesTableComponent implements OnInit {
     )
   }
 
-
   openCreateModal() {
     const dialogRef = this.dialog.open(ActivityFormComponent, {
       minWidth: "250px",

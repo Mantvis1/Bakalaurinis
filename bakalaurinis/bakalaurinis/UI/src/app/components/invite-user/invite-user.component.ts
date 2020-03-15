@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatPaginator } from '@angular/material';
 import { InviteUserModal } from './invite-user-modal';
 import { InvitationsService } from 'src/app/services/invitations.service';
 import { AlertService } from 'src/app/services/alert.service';
@@ -8,6 +8,7 @@ import { UserInvitationService } from 'src/app/services/user-invitation.service'
 import { InvitationStatus } from 'src/app/models/invitation-status.enum';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
 import { UserService } from 'src/app/services/user.service';
+import { SettingsService } from 'src/app/services/settings.service';
 
 @Component({
   selector: 'app-invite-user',
@@ -16,7 +17,14 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class InviteUserComponent implements OnInit {
 
-  userInvitations: UserInvitation[] = [];
+  userInvitations = new MatTableDataSource<UserInvitation>();
+  displayedColumns: string[] = [
+    "User",
+    "Status"
+  ];
+
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
   currentUserName: string;
 
   constructor(
@@ -24,34 +32,37 @@ export class InviteUserComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: InviteUserModal,
     private invitationService: InvitationsService,
     private alertService: AlertService,
-    private readonly userInvitationService: UserInvitationService,
-    private readonly userService: UserService,
-    private readonly authService: AuthServiceService
+    private userInvitationService: UserInvitationService,
+    private userService: UserService,
+    private authService: AuthServiceService,
+    private settingsService: SettingsService
   ) { }
 
   ngOnInit() {
+    this.getPageSize(this.authService.getUserId());
     this.loadAllUserInvitations();
     this.getCurrentUser();
+    this.userInvitations.paginator = this.paginator;
   }
 
   invite() {
     let newInvitation = Object.assign({}, this.data);
     if (!this.isReceiverSameUserAsSender(newInvitation.receiverName)) {
-      if (!this.isUserHaveInvitation(newInvitation.receiverName)) {
-        this.invitationService.createInvitation(newInvitation).subscribe(
-          () => {
-            this.alertService.showMessage("Pakvietimas išsiųstas");
-            this.loadAllUserInvitations();
-          },
-          error => {
-            this.alertService.showMessage("Vartotojas neegzistuoja");
-            console.log(error);
-          }
-        )
-      }
-      else {
-        this.alertService.showMessage("Vartotojas jau turi pakvietimą");
-      }
+      //if (!this.isUserHaveInvitation(newInvitation.receiverName)) {
+      this.invitationService.createInvitation(newInvitation).subscribe(
+        () => {
+          this.alertService.showMessage("Pakvietimas išsiųstas");
+          this.loadAllUserInvitations();
+        },
+        error => {
+          this.alertService.showMessage("Vartotojas neegzistuoja");
+          console.log(error);
+        }
+      )
+      //}
+      // else {
+      //   this.alertService.showMessage("Vartotojas jau turi pakvietimą");
+      // }
     } else {
       this.alertService.showMessage("Negalite siųsti pakvietimo sau");
     }
@@ -60,7 +71,7 @@ export class InviteUserComponent implements OnInit {
   loadAllUserInvitations() {
     this.userInvitationService.getAllByActivityId(this.data.activityId).subscribe(
       data => {
-        this.userInvitations = Object.assign([], data);
+        this.userInvitations.data = Object.assign([], data);
       }
     );
   }
@@ -69,16 +80,16 @@ export class InviteUserComponent implements OnInit {
     return InvitationStatus[index];
   }
 
-  isUserHaveInvitation(username: string): boolean {
-    let result: boolean = false;
-    this.userInvitations.forEach(element => {
-      if (element.username == username) {
-        result = true;
-      }
-    });
-
-    return result;
-  }
+  /* isUserHaveInvitation(username: string): boolean {
+     let result: boolean = false;
+     this.userInvitations.forEach(element => {
+       if (element.username == username) {
+         result = true;
+       }
+     });
+ 
+     return result;
+   }*/
 
   isReceiverSameUserAsSender(receiverName: string) {
     if (this.currentUserName === receiverName) {
@@ -96,6 +107,14 @@ export class InviteUserComponent implements OnInit {
 
   closeModal() {
     this.dialogRef.close();
+  }
+
+  getPageSize(userId: number): void {
+    this.settingsService.getItemsPerPageSettings(userId).subscribe(
+      data => {
+        this.paginator._changePageSize(data.itemsPerPage);
+      }
+    )
   }
 
 }
