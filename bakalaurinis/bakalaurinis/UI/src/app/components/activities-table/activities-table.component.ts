@@ -17,12 +17,7 @@ import { SettingsService } from 'src/app/services/settings.service';
   styleUrls: ["./activities-table.component.css"]
 })
 export class ActivitiesTableComponent implements OnInit {
-  constructor(
-    private activityService: ActivityService,
-    private authService: AuthServiceService,
-    private dialog: MatDialog,
-    private settingsService: SettingsService
-  ) { }
+
 
   activities = new MatTableDataSource<GetActivities>();
   displayedColumns: string[] = [
@@ -39,6 +34,13 @@ export class ActivitiesTableComponent implements OnInit {
   pageSize = 0;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
+  constructor(
+    private activityService: ActivityService,
+    private authService: AuthServiceService,
+    private dialog: MatDialog,
+    private settingsService: SettingsService
+  ) { }
 
   ngOnInit() {
     this.getPageSize(this.authService.getUserId());
