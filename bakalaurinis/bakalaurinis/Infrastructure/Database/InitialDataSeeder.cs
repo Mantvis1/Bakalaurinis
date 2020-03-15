@@ -54,7 +54,7 @@ namespace bakalaurinis.Infrastructure.Database
                    {
                        Id = 8,
                        TitleTemplate = "Jūs priėmėte kvietimą",
-                       TextTemplate = "Jūs priėmėte kvietimą vartotojo[user] pakvietimą į renginį[activity]!"
+                       TextTemplate = "Jūs priėmėte kvietimą vartotojo [user] pakvietimą į renginį [activity]!"
                    },
                   new MessageTemplate
                   {

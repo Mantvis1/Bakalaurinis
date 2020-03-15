@@ -13,17 +13,24 @@ namespace bakalaurinis.Services
 {
     public class MessageService : IMessageService
     {
-        protected readonly IRepository<MessageTemplate> _messageTempalateRepository;
-        protected readonly IMessageRepository _messageRepository;
-        protected readonly IMapper _mapper;
-        public MessageService(IRepository<MessageTemplate> messageTempalateRepository, IMessageRepository messageRepository, IMapper mapper)
+        private readonly IRepository<MessageTemplate> _messageTempalateRepository;
+        private readonly IMessageRepository _messageRepository;
+        private readonly IMapper _mapper;
+        private readonly IMessageFormationService _messageFormationService;
+        public MessageService(
+            IRepository<MessageTemplate> messageTempalateRepository,
+            IMessageRepository messageRepository,
+            IMapper mapper,
+            IMessageFormationService messageFormationService
+            )
         {
             _messageTempalateRepository = messageTempalateRepository;
             _messageRepository = messageRepository;
             _mapper = mapper;
+            _messageFormationService = messageFormationService;
         }
 
-        public async Task<int> Create(int userId, MessageTypeEnum messageType)
+        public async Task<int> Create(int userId, int activityId, MessageTypeEnum messageType)
         {
             var messageId = SelectMessageId(messageType);
             var messageTemplate = await _messageTempalateRepository.GetById(messageId);
@@ -33,17 +40,10 @@ namespace bakalaurinis.Services
                 CreatedAt = DateTime.Now,
                 Title = messageTemplate.TitleTemplate,
                 UserId = userId,
-                Text = EditMessage(messageTemplate.TextTemplate)
+                Text = await _messageFormationService.GetFormattedText(messageTemplate.TextTemplate, userId, activityId)
             };
 
             return await _messageRepository.Create(message);
-        }
-
-        private string EditMessage(string messageText)
-        {
-            var messageBuilder = new StringBuilder();
-
-            return messageText;
         }
 
         public async Task Delete(int userId)

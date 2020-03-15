@@ -10,6 +10,6 @@ namespace bakalaurinis.Services.Interfaces
         Task<ICollection<MessageDto>> GetAll(int userId);
         Task Delete(int messageId);
         Task DeleteById(int userId);
-        Task<int> Create(int userId, MessageTypeEnum messageType);
+        Task<int> Create(int userId, int activityId, MessageTypeEnum messageType);
     }
 }

@@ -39,7 +39,7 @@ namespace bakalaurinis.Services
             var activity = _mapper.Map<Activity>(newActivityDto);
             var activityId = await _repository.Create(activity);
 
-            await _messageService.Create(activity.UserId, MessageTypeEnum.NewActivity);
+            await _messageService.Create(activity.UserId, activityId, MessageTypeEnum.NewActivity);
 
             return activityId;
         }
@@ -53,7 +53,7 @@ namespace bakalaurinis.Services
                 return false;
             }
 
-            await _messageService.Create(activity.UserId, MessageTypeEnum.DeleteActivity);
+            await _messageService.Create(activity.UserId, activity.Id, MessageTypeEnum.DeleteActivity);
 
             return await _repository.Delete(activity);
         }
