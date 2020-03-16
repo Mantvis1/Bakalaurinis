@@ -21,8 +21,8 @@ namespace bakalaurinis.Configurations
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "UI";
-             //  spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
-              spa.UseAngularCliServer(npmScript: "start");
+             //spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+             spa.UseAngularCliServer(npmScript: "start");
             });
         }
 

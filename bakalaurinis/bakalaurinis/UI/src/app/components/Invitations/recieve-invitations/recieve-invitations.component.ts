@@ -3,8 +3,9 @@ import { AuthServiceService } from 'src/app/services/auth-service.service';
 import { InvitationsService } from 'src/app/services/invitations.service';
 import { Invitation } from 'src/app/models/invitation';
 import { InvitationStatus } from 'src/app/models/invitation-status.enum';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
 import { SettingsService } from 'src/app/services/settings.service';
+import { ActivityReviewComponent } from '../../activity-review/activity-review.component';
 
 @Component({
   selector: 'app-recieve-invitations',
@@ -23,19 +24,23 @@ export class RecieveInvitationsComponent implements OnInit {
   constructor(
     private authService: AuthServiceService,
     private invitationService: InvitationsService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
     this.getPageSize(this.authService.getUserId());
     this.getInvitations();
     this.invitations.paginator = this.paginator;
+
+
   }
 
   getInvitations() {
     this.invitationService.getInvitationsId(this.authService.getUserId(), 'receiver').subscribe(
       data => {
         this.invitations.data = Object.assign([], data);
+        console.log(this.invitations.data);
       }
     )
   }
@@ -70,5 +75,15 @@ export class RecieveInvitationsComponent implements OnInit {
         this.paginator._changePageSize(data.itemsPerPage);
       }
     )
+  }
+
+  showActivityInfoModal(id: number): void {
+    const dialogRef = this.dialog.open(ActivityReviewComponent, {
+      minWidth: "250px",
+      width: "35%",
+      data: {
+        activityId: id
+      }
+    });
   }
 }

@@ -16,6 +16,9 @@ export class ActivityService {
   getUserActivities(id: number): Observable<GetActivities[]> {
     return this.http.get<GetActivities[]>(this.urlService.getAbsolutePath('Activities/user/') + id);
   }
+  getUserActivityById(id: number): Observable<GetActivities> {
+    return this.http.get<GetActivities>(this.urlService.getAbsolutePath('Activities/') + id);
+  }
 
   deleteActivity(id: number): Observable<any> {
     return this.http.delete<any>(this.urlService.getAbsolutePath('Activities/') + id);

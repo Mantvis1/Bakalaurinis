@@ -11,5 +11,7 @@ namespace bakalaurinis.Services.Interfaces
         Task Delete(int messageId);
         Task DeleteById(int userId);
         Task<int> Create(int userId, int activityId, MessageTypeEnum messageType);
+        Task<MessageDto> GetById(MessageTypeEnum messageType);
+        int GetMessageId(MessageTypeEnum messageType);
     }
 }

@@ -47,6 +47,7 @@ import { SentInvitationsComponent } from './components/Invitations/sent-invitati
 import { BaseInvitationComponent } from './components/Invitations/base-invitation/base-invitation.component';
 import { InviteUserComponent } from './components/invite-user/invite-user.component';
 import { PageSizeSettingsComponent } from './components/page-size-settings/page-size-settings.component';
+import { ActivityReviewComponent } from './components/activity-review/activity-review.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -71,7 +72,8 @@ export function tokenGetter() {
     SentInvitationsComponent,
     BaseInvitationComponent,
     InviteUserComponent,
-    PageSizeSettingsComponent
+    PageSizeSettingsComponent,
+    ActivityReviewComponent
   ],
   imports: [
     BrowserModule,
@@ -111,7 +113,8 @@ export function tokenGetter() {
     LoginComponent,
     RegistrationComponent,
     ActivityFormComponent,
-    InviteUserComponent
+    InviteUserComponent,
+    ActivityReviewComponent
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-gb' },

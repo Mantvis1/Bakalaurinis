@@ -1,0 +1,19 @@
+<div align="right">
+  <button mat-flat-button color="warn" (click)="closeModal()">
+    <i class="material-icons">
+      clear
+    </i>
+  </button>
+</div>
+<form>
+  <h1 mat-dialog-title>{{activity.title}}</h1>
+  <mat-dialog-content>
+    <mat-card>
+      Aprašymas:{{activity.description}}
+    </mat-card>
+  </mat-dialog-content>
+  <mat-card-actions>
+    Trukmė: {{activity.durationInMinutes}} (minutėmis)
+  </mat-card-actions>
+
+</form>

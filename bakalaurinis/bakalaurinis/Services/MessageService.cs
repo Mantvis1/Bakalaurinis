@@ -32,7 +32,7 @@ namespace bakalaurinis.Services
 
         public async Task<int> Create(int userId, int activityId, MessageTypeEnum messageType)
         {
-            var messageId = SelectMessageId(messageType);
+            var messageId = GetMessageId(messageType);
             var messageTemplate = await _messageTempalateRepository.GetById(messageId);
 
             var message = new Message
@@ -71,31 +71,29 @@ namespace bakalaurinis.Services
             return messagesDto;
         }
 
-        private int SelectMessageId(MessageTypeEnum messageType)
+        public async Task<MessageDto> GetById(MessageTypeEnum messageType)
         {
-            switch (messageType)
+            var message = await _messageRepository.GetById(GetMessageId(messageType));
+            var messagesDto = _mapper.Map<MessageDto>(message);
+
+            return messagesDto; 
+        }
+
+        public int GetMessageId(MessageTypeEnum messageType)
+        {
+            return messageType switch
             {
-                case MessageTypeEnum.NewActivity:
-                    return 1;
-                case MessageTypeEnum.DeleteActivity:
-                    return 2;
-                case MessageTypeEnum.Generation:
-                    return 3;
-                case MessageTypeEnum.GotNewInvitation:
-                    return 4;
-                case MessageTypeEnum.Decline:
-                    return 5;
-                case MessageTypeEnum.Accept:
-                    return 6;
-                case MessageTypeEnum.WasDeclined:
-                    return 7;
-                case MessageTypeEnum.WasAccepted:
-                    return 8;
-                case MessageTypeEnum.WasSent:
-                    return 9;
-                default:
-                    return 0;
-            }
+                MessageTypeEnum.NewActivity => 1,
+                MessageTypeEnum.DeleteActivity => 2,
+                MessageTypeEnum.Generation => 3,
+                MessageTypeEnum.GotNewInvitation => 4,
+                MessageTypeEnum.Decline => 5,
+                MessageTypeEnum.Accept => 6,
+                MessageTypeEnum.WasDeclined => 7,
+                MessageTypeEnum.WasAccepted => 8,
+                MessageTypeEnum.WasSent => 9,
+                _ => 0,
+            };
         }
     }
 }

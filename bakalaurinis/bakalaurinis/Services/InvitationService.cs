@@ -2,10 +2,12 @@
 using bakalaurinis.Dtos.Invitation;
 using bakalaurinis.Infrastructure.Database.Models;
 using bakalaurinis.Infrastructure.Enums;
+using bakalaurinis.Infrastructure.Repositories;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace bakalaurinis.Services
@@ -16,13 +18,24 @@ namespace bakalaurinis.Services
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
         private readonly IMessageService _messageService;
+        private readonly IRepository<MessageTemplate> _messageTemplateRepository;
+        private readonly IMessageFormationService _messageFormationService;
 
-        public InvitationService(IInvitationRepository invitationRepository, IMapper mapper, IUserRepository userRepository, IMessageService messageService)
+        public InvitationService(
+            IInvitationRepository invitationRepository,
+            IMapper mapper,
+            IUserRepository userRepository,
+            IMessageService messageService,
+            IRepository<MessageTemplate> messageTemplateRepository,
+            IMessageFormationService messageFormationService
+            )
         {
             _invitationRepository = invitationRepository;
             _mapper = mapper;
             _userRepository = userRepository;
             _messageService = messageService;
+            _messageTemplateRepository = messageTemplateRepository;
+            _messageFormationService = messageFormationService;
         }
 
         public async Task<bool> Update(int invitationId, UpdateInvitationDto updateInvitationDto)
@@ -48,8 +61,17 @@ namespace bakalaurinis.Services
 
         public async Task<ICollection<InvitationDto>> GetAllByRecieverId(int recieverId)
         {
-            var invitations = await _invitationRepository.GetAllByRecieverId(recieverId);
+            var invitations = (await _invitationRepository.GetAllByRecieverId(recieverId)).ToArray();
             var invitationsDto = _mapper.Map<InvitationDto[]>(invitations);
+
+            for (int i = 0; i < invitations.Length; i++)
+            {
+                invitationsDto[i].Message = await _messageFormationService
+                    .GetFormattedText((
+                    await _messageTemplateRepository.GetById(_messageService.GetMessageId(MessageTypeEnum.GotNewInvitation))).TextTemplate,
+                    invitations[i].ReceiverId,
+                    invitations[i].ActivityId);
+            }
 
             return invitationsDto;
         }
@@ -58,6 +80,11 @@ namespace bakalaurinis.Services
         {
             var invitations = await _invitationRepository.GetAllBySenderId(senderId);
             var invitationsDto = _mapper.Map<InvitationDto[]>(invitations);
+
+            foreach (var invitationDto in invitationsDto)
+            {
+
+            }
 
             return invitationsDto;
         }
