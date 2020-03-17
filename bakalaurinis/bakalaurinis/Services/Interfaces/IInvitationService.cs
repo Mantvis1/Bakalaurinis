@@ -7,7 +7,6 @@ namespace bakalaurinis.Services.Interfaces
     public interface IInvitationService
     {
         Task<bool> Update(int invitationId, UpdateInvitationDto updateInvitationDto);
-        Task<ICollection<InvitationDto>> GetAllBySenderId(int senderId);
         Task<ICollection<InvitationDto>> GetAllByRecieverId(int recieverId);
         Task<int> Create(NewInvitationDto newInvitationDto);
     }

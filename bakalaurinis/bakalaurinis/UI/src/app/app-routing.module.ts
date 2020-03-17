@@ -7,14 +7,14 @@ import { AuthGuard } from './helpers/auth-guard';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { MessagesComponent } from './components/messages/messages.component';
-import { BaseInvitationComponent } from './components/Invitations/base-invitation/base-invitation.component';
+import { RecieveInvitationsComponent } from './components/recieve-invitations/recieve-invitations.component';
 
 const routes: Routes = [
   { path: "activities", component: ActivitiesTableComponent, canActivate: [AuthGuard] },
   { path: "schedule", component: ScheduleComponent, canActivate: [AuthGuard] },
   { path: "profile", component: ProfileComponent, canActivate: [AuthGuard] },
   { path: "messages", component: MessagesComponent, canActivate: [AuthGuard] },
-  { path: "invitations", component: BaseInvitationComponent, canActivate: [AuthGuard] },
+  { path: "invitations", component: RecieveInvitationsComponent, canActivate: [AuthGuard] },
   { path: "login", component: LoginComponent },
   { path: "registration", component: RegistrationComponent }
 ];

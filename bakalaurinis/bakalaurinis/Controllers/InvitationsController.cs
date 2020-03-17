@@ -40,21 +40,7 @@ namespace bakalaurinis.Controllers
             return Ok(isUpdated);
         }
 
-        [HttpGet("sender/{senderId}")]
-        [Produces(typeof(InvitationDto[]))]
-        public async Task<IActionResult> GetBySender(int senderId)
-        {
-            var invitations = await _invitationService.GetAllBySenderId(senderId);
-
-            if (invitations == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(invitations);
-        }
-
-        [HttpGet("receiver/{receiverId}")]
+        [HttpGet("{receiverId}")]
         [Produces(typeof(InvitationDto[]))]
         public async Task<IActionResult> GetByReciever(int receiverId)
         {

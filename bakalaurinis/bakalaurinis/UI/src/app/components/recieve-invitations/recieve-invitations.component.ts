@@ -5,7 +5,7 @@ import { Invitation } from 'src/app/models/invitation';
 import { InvitationStatus } from 'src/app/models/invitation-status.enum';
 import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
 import { SettingsService } from 'src/app/services/settings.service';
-import { ActivityReviewComponent } from '../../activity-review/activity-review.component';
+import { ActivityReviewComponent } from '../activity-review/activity-review.component';
 
 @Component({
   selector: 'app-recieve-invitations',
@@ -32,15 +32,12 @@ export class RecieveInvitationsComponent implements OnInit {
     this.getPageSize(this.authService.getUserId());
     this.getInvitations();
     this.invitations.paginator = this.paginator;
-
-
   }
 
   getInvitations() {
-    this.invitationService.getInvitationsId(this.authService.getUserId(), 'receiver').subscribe(
+    this.invitationService.getInvitationsId(this.authService.getUserId()).subscribe(
       data => {
         this.invitations.data = Object.assign([], data);
-        console.log(this.invitations.data);
       }
     )
   }

@@ -12,8 +12,8 @@ export class InvitationsService {
 
   constructor(private http: HttpClient, private urlService: UrlService) { }
 
-  getInvitationsId(id: number, type: string): Observable<Invitation[]> {
-    return this.http.get<Invitation[]>(this.urlService.getAbsolutePath('Invitations/' + type + '/' + id));
+  getInvitationsId(id: number): Observable<Invitation[]> {
+    return this.http.get<Invitation[]>(this.urlService.getAbsolutePath('Invitations/' + id));
   }
 
   createInvitation(newInvitation: NewInvitation): any {

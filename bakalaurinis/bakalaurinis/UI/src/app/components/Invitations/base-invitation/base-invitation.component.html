@@ -1,9 +1,0 @@
-<button (click)="updateSwitch(false);">Gauti pakvietimai</button>
-<button (click)="updateSwitch(true);">Išssiųsti pakvietimai</button>
-<div *ngIf="switch(); then userBlock else guestBlock"></div>
-<ng-template #guestBlock>
-  <app-recieve-invitations></app-recieve-invitations>
-</ng-template>
-<ng-template #userBlock>
-  <app-sent-invitations></app-sent-invitations>
-</ng-template>

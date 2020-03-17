@@ -2,7 +2,6 @@
 using bakalaurinis.Dtos.Invitation;
 using bakalaurinis.Infrastructure.Database.Models;
 using bakalaurinis.Infrastructure.Enums;
-using bakalaurinis.Infrastructure.Repositories;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Services.Interfaces;
 using System;
@@ -71,19 +70,6 @@ namespace bakalaurinis.Services
                     await _messageTemplateRepository.GetById(_messageService.GetMessageId(MessageTypeEnum.GotNewInvitation))).TextTemplate,
                     invitations[i].ReceiverId,
                     invitations[i].ActivityId);
-            }
-
-            return invitationsDto;
-        }
-
-        public async Task<ICollection<InvitationDto>> GetAllBySenderId(int senderId)
-        {
-            var invitations = await _invitationRepository.GetAllBySenderId(senderId);
-            var invitationsDto = _mapper.Map<InvitationDto[]>(invitations);
-
-            foreach (var invitationDto in invitationsDto)
-            {
-
             }
 
             return invitationsDto;

@@ -50,13 +50,6 @@ namespace bakalaurinis.Infrastructure.Repositories
             return invitations;
         }
 
-        public async Task<ICollection<Invitation>> GetAllBySenderId(int senderId)
-        {
-            var invitations = await _context.Invitations.Where(x => x.SenderId == senderId).ToArrayAsync();
-
-            return invitations;
-        }
-
         public async Task<Invitation> GetById(int id)
         {
             var invitation = await _context.Invitations.FindAsync(id);
