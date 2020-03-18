@@ -1,12 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../services/user.service';
-import { AuthServiceService } from '../../services/auth-service.service';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { GetActivities } from '../../models/get-activities';
-import { ScheduleService } from '../../services/schedule.service';
-import { ScheduleGenerationService } from '../../services/schedule-generation.service';
-import { ActivityService } from '../../services/activity.service';
-import { ActivitiesAfterUpdate } from 'src/app/models/activities-after-update';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
 
 @Component({
   selector: 'app-schedule',
@@ -14,67 +8,60 @@ import { ActivitiesAfterUpdate } from 'src/app/models/activities-after-update';
   styleUrls: ['./schedule.component.css']
 })
 export class ScheduleComponent implements OnInit {
-
-  isLoadSchedule = 1;
-  activities: GetActivities[] = [];
-  currentUserId: number = 0;
-  activitiesAfterUpdate: ActivitiesAfterUpdate = new ActivitiesAfterUpdate();
-
   constructor(
-    private userService: UserService,
-    private authService: AuthServiceService,
-    private scheduleService: ScheduleService,
-    private scheduleGenerationService: ScheduleGenerationService,
-    private activityService: ActivityService
   ) { }
 
+  events: any[];
+  options: any;
+  viewDate: Date = new Date();
+
   ngOnInit() {
-    this.currentUserId = this.authService.getUserId();
+    this.events = [
+      {
+        "title": "Intern day off",
+        "start": "2020-02-28"
+      },
+      {
+        "title": "Worker vacation",
+        "start": "2020-03-02",
+        "end": "2020-03-04"
+      },
+      {
+        "title": "Intern day off",
+        "start": "2020-03-12"
+      },
+      {
+        "title": "Intern day off",
+        "start": "2020-03-18"
+      },
+      {
+        "title": "Worker vacation",
+        "start": "2020-03-23",
+        "end": "2020-03-28"
+      },
+      {
+        "title": "Worker vacation",
+        "start": "2020-03-30",
+        "end": "2020-04-05"
+      }
+      ,
+      {
+        "title": "Worker vacation",
+        "start": "2020-03-17",
+        "end": "2020-03-20"
+      }
+    ];
 
-    this.generateScheduleIfNotExists();
-    this.isScheduleExists();
-    this.getAllUserActivities();
+    this.options = {
+      plugins: [dayGridPlugin, interactionPlugin],
+      defaultDate: this.viewDate,
+      header: {
+        left: 'prev,next',
+        center: 'title',
+        right: 'today',
+      },
+      firstDay: 1,
+      editable: true
+    };
   }
-
-  isScheduleExists() {
-    this.userService.getStatusById(this.currentUserId).subscribe(data => {
-      this.isLoadSchedule = data.scheduleStatus;
-    });
-  }
-
-  drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.activities, event.previousIndex, event.currentIndex);
-    this.activitiesAfterUpdate.activities = Object.assign([], this.activities);
-
-    this.updateActivitiesTime();
-  }
-
-  updateActivitiesTime() {
-    this.scheduleService.updateActivities(this.currentUserId, this.activitiesAfterUpdate).subscribe(() => {
-      this.getAllUserActivities();
-    });
-  }
-
-  getAllUserActivities() {
-    this.scheduleService.getUserTodaysActivities(this.authService.getUserId()).subscribe(data => {
-      this.activities = data;
-    });
-  }
-
-  generateScheduleIfNotExists(): void {
-    this.scheduleGenerationService.generateScheduleForUser(this.currentUserId).subscribe();
-  }
-
-  extend(id: number) {
-    this.activityService.extendActivity(this.currentUserId, id).subscribe(() => {
-      this.getAllUserActivities();
-    });
-  }
-
-  finish(id: number) {
-    this.activityService.finishActivity(this.currentUserId, id).subscribe(() => {
-      this.getAllUserActivities();
-    });
-  }
-
 }

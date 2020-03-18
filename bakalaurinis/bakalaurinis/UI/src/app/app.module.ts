@@ -46,6 +46,8 @@ import { InviteUserComponent } from './components/invite-user/invite-user.compon
 import { PageSizeSettingsComponent } from './components/page-size-settings/page-size-settings.component';
 import { ActivityReviewComponent } from './components/activity-review/activity-review.component';
 
+import { FullCalendarModule } from 'primeng/fullcalendar';
+
 export function tokenGetter() {
   return localStorage.getItem('token');
 }
@@ -95,6 +97,7 @@ export function tokenGetter() {
     DragDropModule,
     MatMenuModule,
     MatPaginatorModule,
+    FullCalendarModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
