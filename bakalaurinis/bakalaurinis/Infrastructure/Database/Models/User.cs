@@ -18,6 +18,7 @@ namespace bakalaurinis.Infrastructure.Database.Models
         [NotMapped]
         public string Token { get; set; }
         public ICollection<Message> Messages { get; set; }
-        public ICollection<Invitation> Invitations { get; set; }
+        public ICollection<Work> Works { get; set; }
+
     }
 }

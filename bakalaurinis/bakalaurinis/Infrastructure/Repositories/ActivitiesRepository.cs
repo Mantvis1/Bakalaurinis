@@ -17,39 +17,39 @@ namespace bakalaurinis.Infrastructure.Repositories
         {
             _context = context;
         }
-        public async Task<int> Create(Activity entity)
+        public async Task<int> Create(Work entity)
         {
-            _context.Activities.Add(entity);
+            _context.Works.Add(entity);
             await _context.SaveChangesAsync();
 
             return entity.Id;
         }
 
-        public async Task<bool> Delete(Activity entity)
+        public async Task<bool> Delete(Work entity)
         {
-            _context.Activities.Remove(entity);
+            _context.Works.Remove(entity);
             var changes = await _context.SaveChangesAsync();
 
             return changes > 0;
         }
 
-        public async Task<ICollection<Activity>> FilterByUserIdAndStartTime(int id)
+        public async Task<ICollection<Work>> FilterByUserIdAndStartTime(int id)
         {
-            var activities = await _context.Activities.Where(x => x.UserId == id && x.StartTime == null).ToArrayAsync();
+            var activities = await _context.Works.Where(x => x.UserId == id && x.StartTime == null).ToArrayAsync();
 
             return activities;
         }
 
-        public async Task<ICollection<Activity>> FilterByUserIdAndStartTimeIsNotNull(int id)
+        public async Task<ICollection<Work>> FilterByUserIdAndStartTimeIsNotNull(int id)
         {
-            var activities = await _context.Activities.Where(x => x.UserId == id && x.StartTime != null).ToArrayAsync();
+            var activities = await _context.Works.Where(x => x.UserId == id && x.StartTime != null).ToArrayAsync();
 
             return activities;
         }
 
-        public async Task<ICollection<Activity>> FilterByUserIdAndTime(int id, DateTime today)
+        public async Task<ICollection<Work>> FilterByUserIdAndTime(int id, DateTime today)
         {
-            var activities = await _context.Activities.Where(
+            var activities = await _context.Works.Where(
                 x => x.UserId == id &&
                 x.StartTime.Value.Year == today.Year &&
                 x.StartTime.Value.Month == today.Month &&
@@ -61,39 +61,39 @@ namespace bakalaurinis.Infrastructure.Repositories
             return activities;
         }
 
-        public async Task<ICollection<Activity>> FindAllByUserId(int id)
+        public async Task<ICollection<Work>> FindAllByUserId(int id)
         {
-            var activities = await _context.Activities.Where(x => x.UserId == id).ToArrayAsync();
+            var activities = await _context.Works.Where(x => x.UserId == id).ToArrayAsync();
 
             return activities;
         }
 
-        public async Task<Activity> FindLastByUserIdAndStartTime(int userId)
+        public async Task<Work> FindLastByUserIdAndStartTime(int userId)
         {
-            var activity = (await _context.Activities.Where(x => x.UserId == userId && x.StartTime != null).ToArrayAsync())
+            var activity = (await _context.Works.Where(x => x.UserId == userId && x.StartTime != null).ToArrayAsync())
                 .OrderBy(x => x.StartTime)
                 .LastOrDefault();
 
             return activity;
         }
 
-        public async Task<ICollection<Activity>> GetAll()
+        public async Task<ICollection<Work>> GetAll()
         {
-            var activities = await _context.Activities.ToArrayAsync();
+            var activities = await _context.Works.ToArrayAsync();
 
             return activities;
         }
 
-        public async Task<Activity> GetById(int id)
+        public async Task<Work> GetById(int id)
         {
-            var activity = await _context.Activities.FindAsync(id);
+            var activity = await _context.Works.FindAsync(id);
 
             return activity;
         }
 
-        public async Task<bool> Update(Activity entity)
+        public async Task<bool> Update(Work entity)
         {
-            _context.Activities.Attach(entity);
+            _context.Works.Attach(entity);
             var changes = await _context.SaveChangesAsync();
 
             return changes > 0;

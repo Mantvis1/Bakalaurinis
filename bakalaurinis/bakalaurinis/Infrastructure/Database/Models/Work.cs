@@ -1,20 +1,25 @@
 ﻿using bakalaurinis.Infrastructure.Enums;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace bakalaurinis.Infrastructure.Database.Models
 {
-    public class Activity : BaseEntity
+    public class Work : BaseEntity
     {
+        [Required]
+        public int UserId { get; set; }
+        [Required]
+        public User User { get; set; }
+
         [Required]
         public string Title { get; set; }
         [Required]
         [MaxLength(200)]
         public string Description { get; set; }
-        [Required]
-        public int UserId { get; set; }
         [Required]
         public int DurationInMinutes { get; set; }
         public DateTime? StartTime { get; set; }
@@ -22,6 +27,5 @@ namespace bakalaurinis.Infrastructure.Database.Models
         public ActivityPriorityEnum ActivityPriority { get; set; }
         [DefaultValue(false)]
         public bool IsFinished { get; set; }
-        
     }
 }

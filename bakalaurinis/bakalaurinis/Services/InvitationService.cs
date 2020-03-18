@@ -45,13 +45,13 @@ namespace bakalaurinis.Services
 
             if (updateInvitationDto.InvitationStatus == InvitationStatusEnum.Accept)
             {
-                await _messageService.Create(invitation.SenderId, invitation.ActivityId, MessageTypeEnum.Accept);
-                await _messageService.Create(invitation.ReceiverId, invitation.ActivityId, MessageTypeEnum.WasAccepted);
+                await _messageService.Create(invitation.SenderId, invitation.WorkId, MessageTypeEnum.Accept);
+                await _messageService.Create(invitation.ReceiverId, invitation.WorkId, MessageTypeEnum.WasAccepted);
             }
             else if (updateInvitationDto.InvitationStatus == InvitationStatusEnum.Decline)
             {
-                await _messageService.Create(invitation.SenderId, invitation.ActivityId, MessageTypeEnum.Decline);
-                await _messageService.Create(invitation.ReceiverId, invitation.ActivityId, MessageTypeEnum.WasDeclined);
+                await _messageService.Create(invitation.SenderId, invitation.WorkId, MessageTypeEnum.Decline);
+                await _messageService.Create(invitation.ReceiverId, invitation.WorkId, MessageTypeEnum.WasDeclined);
 
             }
 
@@ -69,7 +69,7 @@ namespace bakalaurinis.Services
                     .GetFormattedText((
                     await _messageTemplateRepository.GetById(_messageService.GetMessageId(MessageTypeEnum.GotNewInvitation))).TextTemplate,
                     invitations[i].ReceiverId,
-                    invitations[i].ActivityId);
+                    invitations[i].WorkId);
             }
 
             return invitationsDto;
@@ -87,8 +87,8 @@ namespace bakalaurinis.Services
             var invitation = _mapper.Map<Invitation>(newInvitationDto);
             invitation.ReceiverId = user.Id;
 
-            await _messageService.Create(invitation.ReceiverId, invitation.ActivityId, MessageTypeEnum.GotNewInvitation);
-            await _messageService.Create(invitation.SenderId, invitation.ActivityId, MessageTypeEnum.WasSent);
+            await _messageService.Create(invitation.ReceiverId, invitation.WorkId, MessageTypeEnum.GotNewInvitation);
+            await _messageService.Create(invitation.SenderId, invitation.WorkId, MessageTypeEnum.WasSent);
 
             return await _invitationRepository.Create(invitation);
         }

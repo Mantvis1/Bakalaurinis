@@ -115,7 +115,7 @@ namespace bakalaurinis.Services
             return false;
         }
 
-        private async Task UpdateSchedule(Activity current, int differentInMinutes, int userId)
+        private async Task UpdateSchedule(Work current, int differentInMinutes, int userId)
         {
             var userActivities = await _activitiesRepository.FilterByUserIdAndStartTime(userId);
 

@@ -15,11 +15,11 @@ namespace bakalaurinis.Configurations
 
         public AutoMapperConfiguration(string profileName) : base(profileName)
         {
-            CreateMap<NewActivityDto, Activity>(MemberList.None);
-            CreateMap<Activity, NewActivityDto>(MemberList.None);
+            CreateMap<NewActivityDto, Work>(MemberList.None);
+            CreateMap<Work, NewActivityDto>(MemberList.None);
 
-            CreateMap<ActivityDto, Activity>(MemberList.None);
-            CreateMap<Activity, ActivityDto>(MemberList.None);
+            CreateMap<ActivityDto, Work>(MemberList.None);
+            CreateMap<Work, ActivityDto>(MemberList.None);
             
             CreateMap<AfterAutentificationDto, User>(MemberList.None);
             CreateMap<User, AfterAutentificationDto>(MemberList.None);

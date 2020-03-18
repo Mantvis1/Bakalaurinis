@@ -10,8 +10,8 @@ using bakalaurinis.Infrastructure.Database;
 namespace bakalaurinis.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20200315183804_UpdateMessageTemplates2")]
-    partial class UpdateMessageTemplates2
+    [Migration("20200318163914_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,54 +21,12 @@ namespace bakalaurinis.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("bakalaurinis.Infrastructure.Database.Models.Activity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ActivityPriority")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
-
-                    b.Property<int>("DurationInMinutes")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("EndTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsFinished")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("StartTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Activities");
-                });
-
             modelBuilder.Entity("bakalaurinis.Infrastructure.Database.Models.Invitation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ActivityId")
-                        .HasColumnType("int");
 
                     b.Property<int>("InvitationStatus")
                         .HasColumnType("int");
@@ -79,11 +37,10 @@ namespace bakalaurinis.Migrations
                     b.Property<int>("SenderId")
                         .HasColumnType("int");
 
+                    b.Property<int>("WorkId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
-
-                    b.HasIndex("ActivityId");
-
-                    b.HasIndex("SenderId");
 
                     b.ToTable("Invitations");
                 });
@@ -247,19 +204,45 @@ namespace bakalaurinis.Migrations
                     b.ToTable("UserSettings");
                 });
 
-            modelBuilder.Entity("bakalaurinis.Infrastructure.Database.Models.Invitation", b =>
+            modelBuilder.Entity("bakalaurinis.Infrastructure.Database.Models.Work", b =>
                 {
-                    b.HasOne("bakalaurinis.Infrastructure.Database.Models.Activity", "Activity")
-                        .WithMany()
-                        .HasForeignKey("ActivityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.HasOne("bakalaurinis.Infrastructure.Database.Models.User", "Sender")
-                        .WithMany("Invitations")
-                        .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("ActivityPriority")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
+                    b.Property<int>("DurationInMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsFinished")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Works");
                 });
 
             modelBuilder.Entity("bakalaurinis.Infrastructure.Database.Models.Message", b =>
@@ -275,6 +258,15 @@ namespace bakalaurinis.Migrations
                 {
                     b.HasOne("bakalaurinis.Infrastructure.Database.Models.User", "User")
                         .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("bakalaurinis.Infrastructure.Database.Models.Work", b =>
+                {
+                    b.HasOne("bakalaurinis.Infrastructure.Database.Models.User", "User")
+                        .WithMany("Works")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

@@ -36,7 +36,7 @@ namespace bakalaurinis.Services
 
         public async Task<int> Create(NewActivityDto newActivityDto)
         {
-            var activity = _mapper.Map<Activity>(newActivityDto);
+            var activity = _mapper.Map<Work>(newActivityDto);
             var activityId = await _repository.Create(activity);
 
             await _messageService.Create(activity.UserId, activityId, MessageTypeEnum.NewActivity);

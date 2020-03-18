@@ -6,13 +6,12 @@ namespace bakalaurinis.Infrastructure.Database.Models
     public class Invitation : BaseEntity
     {
         [Required]
-        public int SenderId { get; set; }
-        public User Sender { get; set; }
+        public int SenderId { get; set; } 
         [Required]
         public int ReceiverId { get; set; }
         [Required]
-        public int ActivityId { get; set; }
-        public Activity Activity { get; set; }
+        public int WorkId { get; set; }
+        [Required]
         public InvitationStatusEnum InvitationStatus { get; set; }
     }
 }

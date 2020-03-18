@@ -38,7 +38,7 @@ namespace bakalaurinis.Infrastructure.Repositories
 
         public async Task<ICollection<Invitation>> GetAllByActivityId(int activityId)
         {
-            var invitations = await _context.Invitations.Where(x => x.ActivityId == activityId).ToArrayAsync();
+            var invitations = await _context.Invitations.Where(x => x.WorkId == activityId).ToArrayAsync();
 
             return invitations;
         }
@@ -60,7 +60,7 @@ namespace bakalaurinis.Infrastructure.Repositories
         public async Task<bool> IsUserAlreadyHaveInvitation(int senderId, int activityId, int receiverId)
         {
             var result = (await _context.Invitations.Where(x =>
-             x.ActivityId == activityId &&
+             x.WorkId == activityId &&
              x.SenderId == senderId &&
              x.ReceiverId == receiverId
             ).ToArrayAsync()).Length > 0;

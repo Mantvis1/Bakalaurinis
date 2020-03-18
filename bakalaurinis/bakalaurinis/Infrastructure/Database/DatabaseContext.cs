@@ -1,19 +1,17 @@
 ﻿using bakalaurinis.Infrastructure.Database.Models;
 using Microsoft.EntityFrameworkCore;
-using Activity = bakalaurinis.Infrastructure.Database.Models.Activity;
 
 namespace bakalaurinis.Infrastructure.Database
 {
     public class DatabaseContext : DbContext
     {
-        public DbSet<Activity> Activities { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserSettings> UserSettings { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Invitation> Invitations { get; set; }
         public DbSet<MessageTemplate> MessageTemplates { get; set; }
-
-        public DatabaseContext(DbContextOptions options) : base(options) 
+        public DbSet<Work> Works { get; set; }
+        public DatabaseContext(DbContextOptions options) : base(options)
         {
         }
 
