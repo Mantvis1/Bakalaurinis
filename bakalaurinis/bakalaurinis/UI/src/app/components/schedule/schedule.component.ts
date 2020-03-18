@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import { ActivityService } from 'src/app/services/activity.service';
+import { AuthServiceService } from 'src/app/services/auth-service.service';
+import { GetActivities } from 'src/app/models/get-activities';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin from '@fullcalendar/interaction';
 
 @Component({
   selector: 'app-schedule',
@@ -9,56 +12,41 @@ import interactionPlugin from '@fullcalendar/interaction';
 })
 export class ScheduleComponent implements OnInit {
   constructor(
+    private activityService: ActivityService,
+    private authService: AuthServiceService
   ) { }
 
+  activities: GetActivities[] = [];
   events: any[];
   options: any;
   viewDate: Date = new Date();
 
   ngOnInit() {
-    this.events = [
-      {
-        "title": "Intern day off",
-        "start": "2020-02-28"
-      },
-      {
-        "title": "Worker vacation",
-        "start": "2020-03-02",
-        "end": "2020-03-04"
-      },
-      {
-        "title": "Intern day off",
-        "start": "2020-03-12"
-      },
-      {
-        "title": "Intern day off",
-        "start": "2020-03-18"
-      },
-      {
-        "title": "Worker vacation",
-        "start": "2020-03-23",
-        "end": "2020-03-28"
-      },
-      {
-        "title": "Worker vacation",
-        "start": "2020-03-30",
-        "end": "2020-04-05"
-      }
-      ,
-      {
-        "title": "Worker vacation",
-        "start": "2020-03-17",
-        "end": "2020-03-20"
-      }
-    ];
+    this.getActivities();
+    this.setOptions();
+  }
 
+  getActivities() {
+    this.activityService.getUserActivityById(this.authService.getUserId()).subscribe(
+      data => {
+        console.log(data);
+        this.events = [{
+          "title": data.title,
+          "start": data.startTime,
+          "end": data.endTime
+        }];
+      }
+    );
+  }
+
+  setOptions() {
     this.options = {
-      plugins: [dayGridPlugin, interactionPlugin],
+      plugins: [timeGridPlugin, dayGridPlugin],
       defaultDate: this.viewDate,
       header: {
         left: 'prev,next',
         center: 'title',
-        right: 'today',
+        right: 'timeGridWeek,dayGridWeek',
       },
       firstDay: 1,
       editable: true
