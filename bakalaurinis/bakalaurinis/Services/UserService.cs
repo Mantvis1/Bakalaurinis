@@ -21,18 +21,21 @@ namespace bakalaurinis.Services
         private readonly IUserRepository _userRepository;
         private readonly AppSettings _appSettings;
         private readonly IUserSettingsService _userSettingsService;
+        private readonly IInvitationRepository _invitationRepository;
 
         public UserService(
             IOptions<AppSettings> appSettings,
             IMapper mapper,
             IUserRepository userRepository,
-            IUserSettingsService userSettingsService
+            IUserSettingsService userSettingsService,
+            IInvitationRepository invitationRepository
             )
         {
             _appSettings = appSettings.Value;
             _mapper = mapper;
             _userRepository = userRepository;
             _userSettingsService = userSettingsService;
+            _invitationRepository = invitationRepository;
         }
 
         public async Task<AfterAutentificationDto> Authenticate(AuthenticateDto authenticateDto)
@@ -92,6 +95,12 @@ namespace bakalaurinis.Services
             if(user == null)
             {
                 throw new ArgumentNullException();
+            }
+            var invitations = await _invitationRepository.GetAllByRecieverId(user.Id);
+
+            foreach(var invitation in invitations)
+            {
+                await _invitationRepository.Delete(invitation);
             }
 
             return await _userRepository.Delete(user);

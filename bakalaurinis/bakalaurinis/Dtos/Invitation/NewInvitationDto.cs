@@ -4,6 +4,6 @@
     {
         public int SenderId { get; set; }
         public string ReceiverName { get; set; }
-        public int ActivityId { get; set; }
+        public int WorkId { get; set; }
     }
 }

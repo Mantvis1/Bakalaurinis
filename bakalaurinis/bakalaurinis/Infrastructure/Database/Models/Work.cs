@@ -27,5 +27,6 @@ namespace bakalaurinis.Infrastructure.Database.Models
         public ActivityPriorityEnum ActivityPriority { get; set; }
         [DefaultValue(false)]
         public bool IsFinished { get; set; }
+        public ICollection<Invitation> Invitations { get; set; }
     }
 }

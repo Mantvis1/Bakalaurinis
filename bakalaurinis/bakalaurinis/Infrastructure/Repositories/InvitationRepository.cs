@@ -26,9 +26,12 @@ namespace bakalaurinis.Infrastructure.Repositories
             return entity.Id;
         }
 
-        public Task<bool> Delete(Invitation entity)
+        public async Task<bool> Delete(Invitation entity)
         {
-            throw new NotImplementedException();
+            _context.Invitations.Remove(entity);
+            var changes = await _context.SaveChangesAsync();
+
+            return changes > 0;
         }
 
         public Task<ICollection<Invitation>> GetAll()

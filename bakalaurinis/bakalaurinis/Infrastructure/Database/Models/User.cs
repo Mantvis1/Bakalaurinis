@@ -19,6 +19,6 @@ namespace bakalaurinis.Infrastructure.Database.Models
         public string Token { get; set; }
         public ICollection<Message> Messages { get; set; }
         public ICollection<Work> Works { get; set; }
-
+        public ICollection<Invitation> Invitations { get; set; }
     }
 }

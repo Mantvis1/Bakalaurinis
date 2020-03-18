@@ -133,13 +133,13 @@ export class ActivitiesTableComponent implements OnInit {
     return value;
   }
 
-  invite(activityId: number) {
+  invite(workId: number) {
     const dialogRef = this.dialog.open(InviteUserComponent, {
       minWidth: "250px",
       width: "35%",
       data: {
         senderId: this.authService.getUserId(),
-        activityId: activityId,
+        workId: workId,
         receiverName: ''
       }
     });

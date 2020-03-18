@@ -69,7 +69,7 @@ export class InviteUserComponent implements OnInit {
   }
 
   loadAllUserInvitations() {
-    this.userInvitationService.getAllByActivityId(this.data.activityId).subscribe(
+    this.userInvitationService.getAllByActivityId(this.data.workId).subscribe(
       data => {
         this.userInvitations.data = Object.assign([], data);
       }

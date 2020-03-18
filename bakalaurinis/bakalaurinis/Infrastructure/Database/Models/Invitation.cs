@@ -7,6 +7,7 @@ namespace bakalaurinis.Infrastructure.Database.Models
     {
         [Required]
         public int SenderId { get; set; } 
+        public User Sender { get; set; }
         [Required]
         public int ReceiverId { get; set; }
         [Required]

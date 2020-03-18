@@ -1,5 +1,5 @@
 export class InviteUserModal {
   senderId: number;
-  activityId: number;
+  workId: number;
   receiverName: string;
 }

@@ -10,6 +10,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200318170218_UpdateInvitations2.cs" />
+    <Compile Remove="Migrations\20200318170218_UpdateInvitations2.Designer.cs" />
+    <Compile Remove="Migrations\20200318171436_UpdateInvitations2.cs" />
+    <Compile Remove="Migrations\20200318171436_UpdateInvitations2.Designer.cs" />
+    <Compile Remove="Migrations\20200318171603_UpdateInvitations2.cs" />
+    <Compile Remove="Migrations\20200318171603_UpdateInvitations2.Designer.cs" />
+    <Compile Remove="Migrations\20200318173037_UpdateInvitations2.cs" />
+    <Compile Remove="Migrations\20200318173037_UpdateInvitations2.Designer.cs" />
+    <Compile Remove="Migrations\20200318173230_UpdateInvitations2.cs" />
+    <Compile Remove="Migrations\20200318173230_UpdateInvitations2.Designer.cs" />
+    <Compile Remove="Migrations\20200318184400_UpdateInvitations2.cs" />
+    <Compile Remove="Migrations\20200318184400_UpdateInvitations2.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.0" />
