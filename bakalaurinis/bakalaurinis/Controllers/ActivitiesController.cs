@@ -10,11 +10,9 @@ namespace bakalaurinis.Controllers
     public class ActivitiesController : ControllerBase
     {
         private readonly IActivitiesService _activitiesService;
-        private readonly IScheduleGenerationService _scheduleGenerationService;
-        public ActivitiesController(IActivitiesService activitiesService, IScheduleGenerationService scheduleGenerationService)
+        public ActivitiesController(IActivitiesService activitiesService)
         {
             _activitiesService = activitiesService;
-            _scheduleGenerationService = scheduleGenerationService;
         }
 
         [HttpPost]
@@ -22,8 +20,6 @@ namespace bakalaurinis.Controllers
         public async Task<IActionResult> Create([FromBody] NewActivityDto newActivityDto)
         {
             var newActivityId = await _activitiesService.Create(newActivityDto);
-
-            await _scheduleGenerationService.Generate(newActivityDto.UserId);
 
             return Ok(newActivityId);
         }

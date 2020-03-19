@@ -47,6 +47,7 @@ import { PageSizeSettingsComponent } from './components/page-size-settings/page-
 import { ActivityReviewComponent } from './components/activity-review/activity-review.component';
 
 import { FullCalendarModule } from 'primeng/fullcalendar';
+import { RefreshActivitiesComponent } from './components/refresh-activities/refresh-activities.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -69,7 +70,8 @@ export function tokenGetter() {
     RecieveInvitationsComponent,
     InviteUserComponent,
     PageSizeSettingsComponent,
-    ActivityReviewComponent
+    ActivityReviewComponent,
+    RefreshActivitiesComponent
   ],
   imports: [
     BrowserModule,
