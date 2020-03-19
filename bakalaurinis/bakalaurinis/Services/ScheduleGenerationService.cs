@@ -49,8 +49,6 @@ namespace bakalaurinis.Services
             foreach (var activity in activitiesToUpdate)
             {
                 var isFound = false;
-                var currentTime = time[0];
-                var emptySpace = 0;
 
                 if (!isFound)
                 {
