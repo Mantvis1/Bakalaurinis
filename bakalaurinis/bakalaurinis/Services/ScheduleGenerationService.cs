@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using bakalaurinis.Constants;
+using bakalaurinis.Dtos;
 using bakalaurinis.Dtos.Activity;
 using bakalaurinis.Infrastructure.Database.Models;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Services.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -61,10 +63,27 @@ namespace bakalaurinis.Services
 
                 if (!isFound)
                 {
+                    var empties = await GetAllEmptySpaces(userId);
+
+                    foreach (var empty in empties)
+                    {
+                        if (await GetActivityNotToLongActivity(empty.Duration, userId))
+                        {
+                            activity.StartTime = empty.Start;
+                            activity.EndTime = _timeService.AddMinutesToTime(activity.StartTime.Value, activity.DurationInMinutes);
+
+                            isFound = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!isFound)
+                {
                     currentDay = allActivities.Last().StartTime.Value.Day - _timeService.GetCurrentDay().Day;
                     time = await MoveToNextDay(userId, currentDay);
 
-                    if (time[1] -_timeService.GetDiferrentBetweenTwoDatesInMinutes(
+                    if (time[1] - _timeService.GetDiferrentBetweenTwoDatesInMinutes(
                         _timeService.GetCurrentDay(),
                         _timeService.AddMinutesToTime(allActivities.Last().EndTime.Value, activity.DurationInMinutes))
                         > 0)
@@ -94,17 +113,43 @@ namespace bakalaurinis.Services
             }
         }
 
-        private async Task<Work> GetActivityNotToLongActivity(int length, int userId)
+        private async Task<bool> GetActivityNotToLongActivity(int length, int userId)
         {
             var activities = await _activitiesRepository.FilterByUserIdAndStartTime(userId);
 
             foreach (var activity in activities)
             {
                 if (activity.DurationInMinutes <= length)
-                    return activity;
+                    return true;
             }
 
-            return null;
+            return false;
+        }
+
+        private async Task<ICollection<GeneratorFreeSpaceDto>> GetAllEmptySpaces(int userId)
+        {
+            var currentDay = 0;
+            int[] time = await MoveToNextDay(userId, currentDay);
+            var allActivities = (await _activitiesRepository.FilterByUserIdAndStartTimeIsNotNull(userId)).OrderBy(x => x.StartTime).ToList();
+            var result = new List<GeneratorFreeSpaceDto>();
+
+            for (int i = 0; i < allActivities.Count - 1; i++)
+            {
+                //start
+
+                if (_timeService.GetDiferrentBetweenTwoDatesInMinutes(allActivities[i].EndTime.Value,allActivities[i + 1].StartTime.Value) > 0 &&
+                    allActivities[i].EndTime.Value.Day == allActivities[i + 1].StartTime.Value.Day)
+                {
+                    result.Add(new GeneratorFreeSpaceDto(
+                        allActivities[i].EndTime.Value,
+                        allActivities[i + 1].StartTime.Value,
+                        _timeService.GetDiferrentBetweenTwoDatesInMinutes(allActivities[i].EndTime.Value, allActivities[i + 1].StartTime.Value))
+                        );
+                }
+                //end
+            }
+
+            return result;
         }
 
         private async Task<int[]> MoveToNextDay(int userId, int dayCount)
