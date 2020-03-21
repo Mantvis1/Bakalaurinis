@@ -67,7 +67,7 @@ namespace bakalaurinis.Services
 
                     foreach (var empty in empties)
                     {
-                        if (await GetActivityNotToLongActivity(empty.Duration, userId))
+                        if (IsActivityNotToLong(activity.DurationInMinutes, empty.Duration))
                         {
                             activity.StartTime = empty.Start;
                             activity.EndTime = _timeService.AddMinutesToTime(activity.StartTime.Value, activity.DurationInMinutes);
@@ -113,15 +113,10 @@ namespace bakalaurinis.Services
             }
         }
 
-        private async Task<bool> GetActivityNotToLongActivity(int length, int userId)
+        private bool IsActivityNotToLong(int currentActivityDuration, int maxDuration)
         {
-            var activities = await _activitiesRepository.FilterByUserIdAndStartTime(userId);
-
-            foreach (var activity in activities)
-            {
-                if (activity.DurationInMinutes <= length)
-                    return true;
-            }
+            if (currentActivityDuration <= maxDuration)
+                return true;
 
             return false;
         }
@@ -137,7 +132,7 @@ namespace bakalaurinis.Services
             {
                 //start
 
-                if (_timeService.GetDiferrentBetweenTwoDatesInMinutes(allActivities[i].EndTime.Value,allActivities[i + 1].StartTime.Value) > 0 &&
+                if (_timeService.GetDiferrentBetweenTwoDatesInMinutes(allActivities[i].EndTime.Value, allActivities[i + 1].StartTime.Value) > 0 &&
                     allActivities[i].EndTime.Value.Day == allActivities[i + 1].StartTime.Value.Day)
                 {
                     result.Add(new GeneratorFreeSpaceDto(
