@@ -64,12 +64,12 @@ namespace bakalaurinis.Services
                     currentDay = allActivities.Last().StartTime.Value.Day - _timeService.GetCurrentDay().Day;
                     time = await MoveToNextDay(userId, currentDay);
 
-                    if (_timeService.GetDiferrentBetweenTwoDatesInMinutes(
+                    if (time[1] -_timeService.GetDiferrentBetweenTwoDatesInMinutes(
                         _timeService.GetCurrentDay(),
                         _timeService.AddMinutesToTime(allActivities.Last().EndTime.Value, activity.DurationInMinutes))
-                        > time[1])
+                        > 0)
                     {
-                        activity.StartTime = _timeService.GetDateTime(time[0]);
+                        activity.StartTime = allActivities.Last().EndTime.Value;
                         activity.EndTime = _timeService.AddMinutesToTime(activity.StartTime.Value, activity.DurationInMinutes);
 
                         isFound = true;
