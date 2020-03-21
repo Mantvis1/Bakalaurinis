@@ -22,7 +22,7 @@ namespace bakalaurinis.Configurations
             {
                 spa.Options.SourcePath = "UI";
             spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
-       //    spa.UseAngularCliServer(npmScript: "start");
+          // spa.UseAngularCliServer(npmScript: "start");
             });
         }
 

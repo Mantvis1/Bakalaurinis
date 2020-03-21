@@ -4,6 +4,7 @@ using bakalaurinis.Dtos.Activity;
 using bakalaurinis.Infrastructure.Database.Models;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Services.Interfaces;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -41,7 +42,7 @@ namespace bakalaurinis.Services
 
         private async Task UpdateSchedule(int userId)
         {
-            int currentDay = 0;
+            var currentDay = 0;
             int[] time = await MoveToNextDay(userId, currentDay);
             var activitiesToUpdate = (await _activitiesRepository.FilterByUserIdAndStartTime(userId)).OrderByDescending(x => x.ActivityPriority).ToList();
             var allActivities = (await _activitiesRepository.FilterByUserIdAndStartTimeIsNotNull(userId)).ToList();
@@ -50,27 +51,50 @@ namespace bakalaurinis.Services
             {
                 var isFound = false;
 
-                if (!isFound)
+                if (allActivities.Count == 0)
                 {
-                    var days = allActivities.Last().StartTime.Value.Day - _timeService.GetCurrentDay().Day + 1;
-                    time = await MoveToNextDay(userId, days);
-
                     activity.StartTime = _timeService.GetDateTime(time[0]);
                     activity.EndTime = _timeService.AddMinutesToTime(activity.StartTime.Value, activity.DurationInMinutes);
 
                     isFound = true;
                 }
 
+                if (!isFound)
+                {
+                    currentDay = allActivities.Last().StartTime.Value.Day - _timeService.GetCurrentDay().Day;
+                    time = await MoveToNextDay(userId, currentDay);
+
+                    if (_timeService.GetDiferrentBetweenTwoDatesInMinutes(
+                        _timeService.GetCurrentDay(),
+                        _timeService.AddMinutesToTime(allActivities.Last().EndTime.Value, activity.DurationInMinutes))
+                        > time[1])
+                    {
+                        activity.StartTime = _timeService.GetDateTime(time[0]);
+                        activity.EndTime = _timeService.AddMinutesToTime(activity.StartTime.Value, activity.DurationInMinutes);
+
+                        isFound = true;
+                    }
+                    else
+                    {
+                        currentDay += 1;
+                        time = await MoveToNextDay(userId, currentDay);
+
+                        activity.StartTime = _timeService.GetDateTime(time[0]);
+                        activity.EndTime = _timeService.AddMinutesToTime(activity.StartTime.Value, activity.DurationInMinutes);
+
+                        isFound = true;
+                    }
+                }
+
                 if (isFound)
                 {
                     await _activitiesRepository.Update(activity);
                     allActivities.Add(activity);
-                    isFound = false;
                 }
             }
         }
 
-        private async Task<Work> GetActivitywithCorrectLength(int length, int userId)
+        private async Task<Work> GetActivityNotToLongActivity(int length, int userId)
         {
             var activities = await _activitiesRepository.FilterByUserIdAndStartTime(userId);
 
@@ -83,109 +107,13 @@ namespace bakalaurinis.Services
             return null;
         }
 
-        /*
-            private async Task<bool> CreateUserSchedule(int[] time, int userId)
-             {
-                 var userActivities = (await _activitiesRepository.FilterByUserIdAndStartTime(userId)).OrderBy(x => x.ActivityPriority);
-                 var lastActivity = await _activitiesRepository.FindLastByUserIdAndStartTime(userId);
-                 int dayCount = 0;
-
-                 if (lastActivity != null)
-                 {
-                     int diffentBetweenNowAndLastActivityDay = lastActivity.StartTime.Value.Day - _timeService.GetCurrentDay().Day;
-                     dayCount += diffentBetweenNowAndLastActivityDay;
-
-                     time = await MoveToNextDay(userId, dayCount);
-                 }
-
-                 while (userActivities.Count() > 0)
-                 {
-                     int finishTime = time[0] + userActivities.First().DurationInMinutes;
-
-                     if (finishTime > time[1])
-                     {
-                         time = await MoveToNextDay(userId, dayCount);
-                         dayCount++;
-                     }
-
-                     if (finishTime <= time[1])
-                     {
-                         userActivities.First().StartTime = _timeService.GetDateTime(time[0]);
-                         time[0] += userActivities.First().DurationInMinutes;
-                         userActivities.First().EndTime = _timeService.GetDateTime(time[0]);
-                     }
-
-                     await _activitiesRepository.Update(userActivities.First());
-
-                     userActivities = (await _activitiesRepository.FilterByUserIdAndStartTime(userId)).OrderBy(x => x.ActivityPriority);
-                 }
-
-                 return true;
-             }
-
-             private async Task<bool> IsPossibleToUpdateExistingSchedule(int userId)
-             {
-                 var userSchedule = (await _activitiesRepository.FilterByUserIdAndStartTimeIsNotNull(userId)).ToArray();
-
-                 if (userSchedule.Length > 1)
-                 {
-                     var currentActivity = userSchedule[0];
-                     var nextActivity = userSchedule[1];
-
-                     for (int i = 1; i < userSchedule.Length - 1; i++)
-                     {
-                         int differentBetweenActivities = _timeService.GetDiferrentBetweenTwoDatesInMinutes(currentActivity.EndTime.Value, nextActivity.StartTime.Value);
-
-                         if (differentBetweenActivities > 0)
-                         {
-                             await UpdateSchedule(currentActivity, differentBetweenActivities, userId);
-                         }
-
-                         userSchedule = (await _activitiesRepository.FilterByUserIdAndStartTimeIsNotNull(userId)).ToArray();
-
-                         currentActivity = userSchedule[i];
-                         nextActivity = userSchedule[i + 1];
-
-                     }
-                 }
-                 return await IsActivitiesWithoutDateExsists(userId);
-             }
-
-              private async Task<bool> IsActivitiesWithoutDateExsists(int userId)
-              {
-                  if ((await _activitiesRepository.FilterByUserIdAndStartTime(userId)).Any())
-                  {
-                      return true;
-                  }
-
-                  return false;
-              }
-
-              private async Task UpdateSchedule(Work current, int differentInMinutes, int userId)
-              {
-                  var userActivities = await _activitiesRepository.FilterByUserIdAndStartTime(userId);
-
-                  foreach (var activity in userActivities)
-                  {
-                      int finishTime = _timeService.GetDiferrentBetweenTwoDatesInMinutes(_timeService.GetCurrentDay(), current.EndTime.Value) + activity.DurationInMinutes;
-
-                      if (activity.DurationInMinutes <= differentInMinutes && finishTime <= 600)
-                      {
-                          activity.StartTime = current.EndTime.Value;
-                          activity.EndTime = _timeService.AddMinutesToTime(activity.StartTime.Value, activity.DurationInMinutes);
-
-                          differentInMinutes -= activity.DurationInMinutes;
-
-                          await _activitiesRepository.Update(activity);
-                      }
-                  }
-              }*/
-
         private async Task<int[]> MoveToNextDay(int userId, int dayCount)
         {
             int[] time = new int[2];
-            time[0] = (await _userSettingsRepository.GetByUserId(userId)).StartTime * TimeConstants.MinutesInHour + dayCount * 24 * TimeConstants.MinutesInHour;
-            time[1] = (await _userSettingsRepository.GetByUserId(userId)).EndTime * TimeConstants.MinutesInHour + dayCount * 24 * TimeConstants.MinutesInHour;
+            var userSettings = await _userSettingsRepository.GetByUserId(userId);
+
+            time[0] = userSettings.StartTime * TimeConstants.MinutesInHour + dayCount * 24 * TimeConstants.MinutesInHour;
+            time[1] = userSettings.EndTime * TimeConstants.MinutesInHour + dayCount * 24 * TimeConstants.MinutesInHour;
 
             return time;
         }
