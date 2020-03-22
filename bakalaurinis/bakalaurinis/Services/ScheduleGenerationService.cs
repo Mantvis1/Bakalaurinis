@@ -63,7 +63,7 @@ namespace bakalaurinis.Services
 
                 if (!isFound)
                 {
-                   var empties = await GetAllEmptySpaces(userId);
+                    var empties = await GetAllEmptySpaces(userId);
 
                     foreach (var empty in empties)
                     {
@@ -131,6 +131,7 @@ namespace bakalaurinis.Services
             for (int i = 0; i < allActivities.Count - 1; i++)
             {
                 var diferenceBetweenDays = 0;
+                time = await MoveToNextDay(userId, currentDay);
 
                 if (i == 0 && allActivities[i].StartTime.Value > _timeService.GetDateTime(time[0]))
                 {
@@ -166,7 +167,7 @@ namespace bakalaurinis.Services
                             ));
                     }
 
-                    diferenceBetweenDays = _timeService.GetDiferrentBetweenTwoDatesInMinutes(_timeService.GetDateTime(time[0]+1440), allActivities[i + 1].StartTime.Value);
+                    diferenceBetweenDays = _timeService.GetDiferrentBetweenTwoDatesInMinutes(_timeService.GetDateTime(time[0] + 1440), allActivities[i + 1].StartTime.Value);
 
                     if (diferenceBetweenDays > 0)
                     {
@@ -177,6 +178,18 @@ namespace bakalaurinis.Services
                                 ));
                     }
                 }
+
+                if (allActivities[i + 1].EndTime.Value.Day - allActivities[i].EndTime.Value.Day > 1)
+                {
+                    time = await MoveToNextDay(userId, 1 + allActivities[i].StartTime.Value.Day - _timeService.GetCurrentDay().Day);
+
+                    result.Add(new GeneratorFreeSpaceDto(
+                        _timeService.GetDateTime(time[0]),
+                        _timeService.GetDateTime(time[1]),
+                        time[1] - time[0]
+                        ));
+                }
+
             }
 
             return result;
