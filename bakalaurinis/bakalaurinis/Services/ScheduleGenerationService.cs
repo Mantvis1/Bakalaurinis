@@ -15,15 +15,24 @@ namespace bakalaurinis.Services
         private readonly IActivitiesRepository _activitiesRepository;
         private readonly ITimeService _timeService;
         private readonly IMapper _mapper;
+        private readonly IUserSettingsRepository _userSettingsRepository;
 
-
-        public ScheduleGenerationService(IActivitiesRepository activitiesRepository, ITimeService timeService, IMapper mapper)
+        public ScheduleGenerationService(
+            IActivitiesRepository activitiesRepository,
+            ITimeService timeService,
+            IMapper mapper,
+         IUserSettingsRepository userSettingsRepository
+            
+            )
         {
             _activitiesRepository = activitiesRepository;
             _timeService = timeService;
             _mapper = mapper;
-        }
-        public async Task<bool> Generate(int userId)
+            _userSettingsRepository = userSettingsRepository;
+            
+
+    }
+    public async Task<bool> Generate(int userId)
         {
             int startTime = 8 * TimeConstants.MinutesInHour;
             int endTime = 10 * TimeConstants.MinutesInHour;
@@ -179,15 +188,15 @@ namespace bakalaurinis.Services
             }
         }
 
-        public async Task CalculateActivitiesTime(UpdateActivitiesDto updateActivitiesDto)
+        public async Task CalculateActivitiesTime(int id, DateTime date, UpdateActivitiesDto updateActivitiesDto)
         {
-            var currentTime = 8 * TimeConstants.MinutesInHour;
+            var currentTime = _timeService.AddMinutesToTime(date, (await _userSettingsRepository.GetByUserId(id)).StartTime * 60);
 
             foreach (var activityDto in updateActivitiesDto.Activities)
             {
-                activityDto.StartTime = _timeService.GetDateTime(currentTime);
-                currentTime += activityDto.DurationInMinutes;
-                activityDto.EndTime = _timeService.GetDateTime(currentTime);
+                activityDto.StartTime = currentTime;
+                currentTime = _timeService.AddMinutesToTime(currentTime, activityDto.DurationInMinutes);
+                activityDto.EndTime = currentTime;
 
                 var activity = await _activitiesRepository.GetById(activityDto.Id);
                 _mapper.Map(activityDto, activity);

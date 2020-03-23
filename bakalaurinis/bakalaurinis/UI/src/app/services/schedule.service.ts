@@ -12,11 +12,11 @@ export class ScheduleService {
 
   constructor(private urlService: UrlService, private http: HttpClient) { }
 
-  getUserTodaysActivities(id: number): Observable<GetActivities[]> {
-    return this.http.get<GetActivities[]>(this.urlService.getAbsolutePath('Schedule/') + id);
+  getUserTodaysActivities(id: number, date: string): Observable<GetActivities[]> {
+    return this.http.get<GetActivities[]>(this.urlService.getAbsolutePath('Schedule/' + id + '/' + date));
   }
 
-  updateActivities(id: number, activitiesAfterUpdate: ActivitiesAfterUpdate): any {
-    return this.http.put<any>(this.urlService.getAbsolutePath('Schedule/' + id), activitiesAfterUpdate);
+  updateActivities(id: number, date: string, activitiesAfterUpdate: ActivitiesAfterUpdate): any {
+    return this.http.put<any>(this.urlService.getAbsolutePath('Schedule/' + id + '/' + date), activitiesAfterUpdate);
   }
 }

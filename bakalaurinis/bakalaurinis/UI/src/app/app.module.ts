@@ -48,6 +48,7 @@ import { ActivityReviewComponent } from './components/activity-review/activity-r
 
 import { FullCalendarModule } from 'primeng/fullcalendar';
 import { RefreshActivitiesComponent } from './components/refresh-activities/refresh-activities.component';
+import { DatePipe } from '@angular/common';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -118,7 +119,8 @@ export function tokenGetter() {
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-gb' },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    [DatePipe]
   ],
   bootstrap: [AppComponent]
 })
