@@ -4,6 +4,7 @@ import { MessageService } from 'src/app/services/message.service';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { SettingsService } from 'src/app/services/settings.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-messages',
@@ -27,6 +28,7 @@ export class MessagesComponent implements OnInit {
   constructor(
     private messageService: MessageService,
     private authService: AuthServiceService,
+    private datePipe: DatePipe,
     private settingsService: SettingsService
   ) { }
 
@@ -64,6 +66,10 @@ export class MessagesComponent implements OnInit {
         this.paginator._changePageSize(data.itemsPerPage);
       }
     )
+  }
+
+  getDataString(date: Date) {
+    return this.datePipe.transform(date, 'yyyy-MM-dd HH:mm:ss');
   }
 
 }
