@@ -1,1 +1,12 @@
-<p-fullCalendar [events]="events" [options]="options"></p-fullCalendar>
+<div style=" justify-content: center;">
+  <button mat-raised-button color="primary" (click)="updateDate(-1)">Previous</button>
+  <h1>Dienos ({{dateString}}) veiklų sąrašas </h1>
+  <button mat-raised-button color="primary" (click)="updateDate(1)">Next</button>
+</div>
+
+<div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+  <div class="example-box" *ngFor="let activity of activities" cdkDrag>
+    <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+    {{activity.title}}
+  </div>
+</div>

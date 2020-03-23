@@ -1,55 +1,64 @@
 import { Component, OnInit } from '@angular/core';
-import timeGridPlugin from '@fullcalendar/timegrid';
 import { ActivityService } from 'src/app/services/activity.service';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
 import { GetActivities } from 'src/app/models/get-activities';
-import dayGridPlugin from '@fullcalendar/daygrid';
+import { DatePipe } from '@angular/common';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { ScheduleService } from 'src/app/services/schedule.service';
+import { ActivitiesAfterUpdate } from 'src/app/models/activities-after-update';
 
 @Component({
   selector: 'app-schedule',
   templateUrl: './schedule.component.html',
-  styleUrls: ['./schedule.component.css']
+  styleUrls: ['./schedule.component.css'],
 })
 export class ScheduleComponent implements OnInit {
   constructor(
-    private activityService: ActivityService,
-    private authService: AuthServiceService
+    private scheduleService: ScheduleService,
+    private authService: AuthServiceService,
+    private datePipe: DatePipe,
   ) { }
 
   activities: GetActivities[] = [];
-  events: any[];
-  options: any;
-  viewDate: Date = new Date();
+  currentDate: Date;
+  dateString: string;
+  activitiesAfterUpdate: ActivitiesAfterUpdate = new ActivitiesAfterUpdate();
 
   ngOnInit() {
-    this.getActivities();
-    this.setOptions();
+    this.currentDate = new Date();
+    this.setCurrentDate();
+    this.getAllUserActivities();
   }
 
-  getActivities() {
-    this.activityService.getUserActivityById(this.authService.getUserId()).subscribe(
-      data => {
-        console.log(data);
-        this.events = [{
-          "title": data.title,
-          "start": data.startTime,
-          "end": data.endTime
-        }];
-      }
-    );
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.activities, event.previousIndex, event.currentIndex);
+    this.activitiesAfterUpdate.activities = Object.assign([], this.activities);
+
+    this.updateActivitiesTime();
   }
 
-  setOptions() {
-    this.options = {
-      plugins: [timeGridPlugin, dayGridPlugin],
-      defaultDate: this.viewDate,
-      header: {
-        left: 'prev,next',
-        center: 'title',
-        right: 'timeGridWeek,dayGridWeek',
-      },
-      firstDay: 1,
-      editable: true
-    };
+  getAllUserActivities() {
+    this.scheduleService.getUserTodaysActivities(this.authService.getUserId(), this.dateString).subscribe(data => {
+      this.activities = Object.assign([], data);
+    });
   }
+
+  setCurrentDate() {
+    this.dateString = this.datePipe.transform(this.currentDate, 'yyyy-MM-dd');
+
+    this.getAllUserActivities();
+  }
+
+  updateActivitiesTime() {
+    this.scheduleService.updateActivities(this.authService.getUserId(), this.dateString, this.activitiesAfterUpdate).subscribe(() => {
+      this.getAllUserActivities();
+    });
+  }
+
+  updateDate(dayCount: number) {
+    this.currentDate.setDate(this.currentDate.getDate() + dayCount);
+
+    this.setCurrentDate();
+  }
+
 }

@@ -31,7 +31,9 @@ namespace bakalaurinis.Services
             _mapper = mapper;
             _userSettingsRepository = userSettingsRepository;
         }
+        
         public async Task<bool> Generate(int userId)
+
         {
             if ((await _activitiesRepository.FilterByUserIdAndStartTime(userId)).Any())
             {
@@ -244,15 +246,15 @@ namespace bakalaurinis.Services
             }
         }
 
-        public async Task CalculateActivitiesTime(UpdateActivitiesDto updateActivitiesDto)
+        public async Task CalculateActivitiesTime(int id, DateTime date, UpdateActivitiesDto updateActivitiesDto)
         {
-            var currentTime = 8 * TimeConstants.MinutesInHour;
+            var currentTime = _timeService.AddMinutesToTime(date, (await _userSettingsRepository.GetByUserId(id)).StartTime * 60);
 
             foreach (var activityDto in updateActivitiesDto.Activities)
             {
-                activityDto.StartTime = _timeService.GetDateTime(currentTime);
-                currentTime += activityDto.DurationInMinutes;
-                activityDto.EndTime = _timeService.GetDateTime(currentTime);
+                activityDto.StartTime = currentTime;
+                currentTime = _timeService.AddMinutesToTime(currentTime, activityDto.DurationInMinutes);
+                activityDto.EndTime = currentTime;
 
                 var activity = await _activitiesRepository.GetById(activityDto.Id);
                 _mapper.Map(activityDto, activity);

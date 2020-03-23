@@ -1,4 +1,5 @@
 ﻿using bakalaurinis.Dtos.Activity;
+using System;
 using System.Threading.Tasks;
 
 namespace bakalaurinis.Services.Interfaces
@@ -8,6 +9,6 @@ namespace bakalaurinis.Services.Interfaces
         Task<bool> Generate(int userId);
         Task UpdateWhenExtendActivity(int userId, int activityId);
         Task UpdateWhenFinishActivity(int userId, int activityId);
-        Task CalculateActivitiesTime(UpdateActivitiesDto updateActivitiesDto);
+        Task CalculateActivitiesTime(int id, DateTime date, UpdateActivitiesDto updateActivitiesDto);
     }
 }
