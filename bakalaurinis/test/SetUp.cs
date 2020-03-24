@@ -84,5 +84,15 @@ namespace test
 
             context.SaveChanges();
         }
+
+        public int GetLength(string type)
+        {
+            switch (type)
+            {
+                case "works": return _works.Length;
+                case "users": return _users.Length;
+                default: return 0;
+            }
+        }
     }
 }
