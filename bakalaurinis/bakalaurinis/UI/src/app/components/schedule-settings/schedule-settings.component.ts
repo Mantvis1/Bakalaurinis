@@ -32,7 +32,10 @@ export class ScheduleSettingsComponent implements OnInit {
   }
 
   update(): void {
-    if (this.validateTime()) {
+    if (this.settings.startTime == null
+      || this.settings.endTime == null
+      || this.settings.startTime - this.settings.endTime < 0
+    ) {
       this.settings.userId = this.authService.getUserId();
 
       this.settingsService.updateSettings(this.settings.userId, this.settings).subscribe(
@@ -42,7 +45,7 @@ export class ScheduleSettingsComponent implements OnInit {
       )
     } else
       this.alertService.showMessage('Neteisingai įvedėte laikus!');
-    this.settings = new Settings();
+    // this.settings = new Settings();
   }
 
   getSettings() {
@@ -52,13 +55,4 @@ export class ScheduleSettingsComponent implements OnInit {
       }
     )
   }
-
-  validateTime(): boolean {
-    if (this.settings.startTime > this.settings.endTime || this.settings.startTime == null || this.settings.endTime == null) {
-      return false;
-    }
-
-    return true;
-  }
-
 }
