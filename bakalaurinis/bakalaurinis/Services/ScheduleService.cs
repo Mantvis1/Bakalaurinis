@@ -10,11 +10,11 @@ namespace bakalaurinis.Services
 {
     public class ScheduleService : IScheduleService
     {
-        private readonly IActivitiesRepository _repository;
+        private readonly IWorksRepository _repository;
         private readonly ITimeService _timeService;
         private readonly IMapper _mapper;
 
-        public ScheduleService(IActivitiesRepository repository, IMapper mapper, ITimeService timeService)
+        public ScheduleService(IWorksRepository repository, IMapper mapper, ITimeService timeService)
         {
             _repository = repository;
             _mapper = mapper;

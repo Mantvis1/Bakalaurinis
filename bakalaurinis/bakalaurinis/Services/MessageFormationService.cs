@@ -7,9 +7,9 @@ namespace bakalaurinis.Services
     public class MessageFormationService : IMessageFormationService
     {
         private readonly IUserRepository _userRepository;
-        private readonly IActivitiesRepository _activitiesRepository;
+        private readonly IWorksRepository _activitiesRepository;
 
-        public MessageFormationService(IUserRepository userRepository, IActivitiesRepository activitiesRepository)
+        public MessageFormationService(IUserRepository userRepository, IWorksRepository activitiesRepository)
         {
             _userRepository = userRepository;
             _activitiesRepository = activitiesRepository;

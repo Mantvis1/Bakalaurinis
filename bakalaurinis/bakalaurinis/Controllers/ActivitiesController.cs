@@ -9,8 +9,8 @@ namespace bakalaurinis.Controllers
     [Route("api/[controller]")]
     public class ActivitiesController : ControllerBase
     {
-        private readonly IActivitiesService _activitiesService;
-        public ActivitiesController(IActivitiesService activitiesService)
+        private readonly IWorksService _activitiesService;
+        public ActivitiesController(IWorksService activitiesService)
         {
             _activitiesService = activitiesService;
         }
@@ -79,22 +79,6 @@ namespace bakalaurinis.Controllers
         public async Task<IActionResult> Update(int id,[FromBody] NewActivityDto newActivityDto)
         {
             await _activitiesService.Update(id, newActivityDto);
-
-            return NoContent();
-        }
-
-        [HttpPut("extend/{userId}/{activityId}")]
-        public async Task<IActionResult> Extend(int userId, int activityId)
-        {
-            await _activitiesService.Extend(userId, activityId);
-
-            return NoContent();
-        }
-
-        [HttpPut("finish/{userId}/{activityId}")]
-        public async Task<IActionResult> Finish(int userId, int activityId)
-        {
-            await _activitiesService.Finish(userId, activityId);
 
             return NoContent();
         }

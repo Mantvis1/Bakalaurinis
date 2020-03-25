@@ -20,7 +20,7 @@ namespace test.Tests
             var _context = setUp.DatabaseContext;
 
             var userRepository = new UsersRepository(_context);
-            var activtiesRepository = new ActivitiesRepository(_context);
+            var activtiesRepository = new WorksRepository(_context);
 
             _messageFormationService = new MessageFormationService(userRepository, activtiesRepository);
         }

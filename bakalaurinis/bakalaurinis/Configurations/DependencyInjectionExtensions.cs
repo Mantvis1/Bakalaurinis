@@ -19,7 +19,7 @@ namespace bakalaurinis.Configurations
         public static IServiceCollection AddInfrastructureDependencies(this IServiceCollection service)
         {
             return service
-                .AddScoped<IActivitiesRepository, ActivitiesRepository>()
+                .AddScoped<IWorksRepository, WorksRepository>()
                 .AddScoped<IUserRepository, UsersRepository>()
                 .AddSingleton<ITimeService, TimeService>()
                 .AddScoped<IUserSettingsRepository, UserSettingsRepository>()
@@ -30,7 +30,7 @@ namespace bakalaurinis.Configurations
 
         public static IServiceCollection AddApplicationDependencies(this IServiceCollection service)
         {
-            return service.AddScoped<IActivitiesService, ActivitiesService>()
+            return service.AddScoped<IWorksService, WorksService>()
                  .AddScoped<IUserService, UserService>()
                  .AddScoped<IScheduleService, ScheduleService>()
                  .AddScoped<IScheduleGenerationService, ScheduleGenerationService>()

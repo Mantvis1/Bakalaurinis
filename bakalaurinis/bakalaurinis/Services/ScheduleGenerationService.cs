@@ -14,13 +14,13 @@ namespace bakalaurinis.Services
 {
     public class ScheduleGenerationService : IScheduleGenerationService
     {
-        private readonly IActivitiesRepository _activitiesRepository;
+        private readonly IWorksRepository _activitiesRepository;
         private readonly ITimeService _timeService;
         private readonly IMapper _mapper;
         private readonly IUserSettingsRepository _userSettingsRepository;
 
         public ScheduleGenerationService(
-            IActivitiesRepository activitiesRepository,
+            IWorksRepository activitiesRepository,
             ITimeService timeService,
             IMapper mapper,
             IUserSettingsRepository userSettingsRepository

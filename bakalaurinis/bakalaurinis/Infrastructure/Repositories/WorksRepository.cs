@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace bakalaurinis.Infrastructure.Repositories
 {
-    public class ActivitiesRepository : IActivitiesRepository
+    public class WorksRepository : IWorksRepository
     {
         protected readonly DatabaseContext _context;
 
-        public ActivitiesRepository(DatabaseContext context)
+        public WorksRepository(DatabaseContext context)
         {
             _context = context;
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace bakalaurinis.Infrastructure.Repositories.Interfaces
 {
-    public interface IActivitiesRepository : IRepository<Work>
+    public interface IWorksRepository : IRepository<Work>
     {
         Task<ICollection<Work>> FindAllByUserId(int id);
         Task<ICollection<Work>> FilterByUserIdAndTime(int id, DateTime today);

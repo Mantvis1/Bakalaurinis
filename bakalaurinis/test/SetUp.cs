@@ -127,6 +127,66 @@ namespace test
             };
             context.AddRange(_invitations);
 
+            _messageTemplates = new[]
+                {
+                new MessageTemplate
+                {
+                    Id =1,
+                    TextTemplate = "Jūs sukūrėte nauja veiklą [activity]!",
+                    TitleTemplate = "Veiklos sukūrimas"
+
+                },
+                new MessageTemplate
+                {
+                    Id =2,
+                    TextTemplate = "Jūs pašalinote veiklą [activity]!",
+                    TitleTemplate = "Veiklos šalinimas"
+                },
+                new MessageTemplate
+                {
+                    Id =3,
+                    TextTemplate = "Sistema atliko naują tvarkaraščio generavimą!",
+                    TitleTemplate = "Tvarkataščio generavimas atliktas"
+                },
+                new MessageTemplate
+                {
+                    Id =4,
+                    TextTemplate = "Jūs sukūrėte nauja veiklą [activity]!",
+                    TitleTemplate = "Naujas kvietimas gautas"
+                },
+                new MessageTemplate
+                {
+                    Id =5,
+                    TextTemplate = "Vartotojas [user] atmetė jūsų pakvietimą į renginį [activity]!",
+                    TitleTemplate = "Kvietimas atmestas"
+                },
+                new MessageTemplate
+                {
+                    Id =6,
+                     TextTemplate = "Vartotojas [user] priėmė jūsų pakvietimą į renginį [activity]!",
+                    TitleTemplate = "Kvietimas priimtas"
+                },
+                new MessageTemplate
+                {
+                    Id =7,
+                     TextTemplate = "Jūs atmetėte kvietimą vartotojo [user] pakvietimą į renginį [activity]!",
+                    TitleTemplate = "Jūs atmetėte kvietimą"
+                },
+                new MessageTemplate
+                {
+                    Id =8,
+                    TextTemplate = "Jūs priėmėte kvietimą vartotojo [user] pakvietimą į renginį [activity]!",
+                    TitleTemplate = "Jūs priėmėte kvietimą"
+                },
+                new MessageTemplate
+                {
+                    Id =9,
+                    TextTemplate = "Vartotojas [user] pakvietė jus i veiką [activity]!",
+                    TitleTemplate = "Naujas kvietimas iššiūstas"
+                }
+            };
+            _context.MessageTemplates.AddRange(_messageTemplates);
+
             context.SaveChanges();
         }
 

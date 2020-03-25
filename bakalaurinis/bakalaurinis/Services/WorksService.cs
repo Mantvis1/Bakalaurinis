@@ -11,16 +11,16 @@ using System.Threading.Tasks;
 
 namespace bakalaurinis.Services
 {
-    public class ActivitiesService : IActivitiesService
+    public class WorksService : IWorksService
     {
-        private readonly IActivitiesRepository _repository;
+        private readonly IWorksRepository _repository;
         private readonly IMapper _mapper;
         private readonly ITimeService _timeService;
         private readonly IScheduleGenerationService _scheduleGenerationService;
         private readonly IMessageService _messageService;
 
-        public ActivitiesService(
-            IActivitiesRepository repository,
+        public WorksService(
+            IWorksRepository repository,
             IMapper mapper,
             ITimeService timeService,
             IScheduleGenerationService scheduleGenerationService,
@@ -97,30 +97,6 @@ namespace bakalaurinis.Services
             }
 
             _mapper.Map(activityDto, activity);
-
-            return await _repository.Update(activity);
-        }
-
-        public async Task<bool> Extend(int userId, int activityId)
-        {
-            var activity = await _repository.GetById(activityId);
-
-            activity.EndTime = _timeService.AddMinutesToTime(activity.EndTime.Value, ActivityConstatns.ActivityExtensionTime);
-            activity.DurationInMinutes += ActivityConstatns.ActivityExtensionTime;
-
-            await _scheduleGenerationService.UpdateWhenExtendActivity(userId, activityId);
-
-            return await _repository.Update(activity);
-        }
-
-        public async Task<bool> Finish(int userId, int activityId)
-        {
-            var activity = await _repository.GetById(activityId);
-
-            activity.IsFinished = true;
-            activity.EndTime = _timeService.AddMinutesToTime(DateTime.Now, 0);
-
-            await _scheduleGenerationService.UpdateWhenFinishActivity(userId, activityId);
 
             return await _repository.Update(activity);
         }
