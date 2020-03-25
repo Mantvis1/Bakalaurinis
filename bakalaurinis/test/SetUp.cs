@@ -99,9 +99,33 @@ namespace test
                 Id = 1,
                 UserId = 1,
                 Title = "testWork1"
+            },
+            new Work
+            {
+                Id = 2,
+                UserId = 2,
+                Title = "testWork2"
             }
             };
             context.AddRange(_works);
+
+            _invitations = new[] {
+            new Invitation
+            {
+                Id = 1,
+                WorkId =1,
+                SenderId =1,
+                ReceiverId =2
+            },
+             new Invitation
+            {
+                Id = 2,
+                WorkId =2,
+                SenderId =2,
+                ReceiverId =1
+            }
+            };
+            context.AddRange(_invitations);
 
             context.SaveChanges();
         }
@@ -112,6 +136,7 @@ namespace test
             {
                 case "works": return _works.Length;
                 case "users": return _users.Length;
+                case "invitation": return _invitations.Length;
                 default: return 0;
             }
         }
