@@ -71,14 +71,6 @@ namespace bakalaurinis.Services
             return messagesDto;
         }
 
-        public async Task<MessageDto> GetById(MessageTypeEnum messageType)
-        {
-            var message = await _messageRepository.GetById(GetMessageId(messageType));
-            var messagesDto = _mapper.Map<MessageDto>(message);
-
-            return messagesDto; 
-        }
-
         public int GetMessageId(MessageTypeEnum messageType)
         {
             return messageType switch

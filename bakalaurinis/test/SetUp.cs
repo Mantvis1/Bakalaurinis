@@ -187,6 +187,19 @@ namespace test
             };
             _context.MessageTemplates.AddRange(_messageTemplates);
 
+            _messages = new[]
+            {
+                new Message
+                {
+                    Id = 1,
+                    Text = "Some text",
+                    Title = "Title",
+                    UserId = 1,
+                    CreatedAt = DateTime.Now
+                }
+            };
+            _context.Messages.AddRange(_messages);
+
             context.SaveChanges();
         }
 
@@ -197,6 +210,7 @@ namespace test
                 case "works": return _works.Length;
                 case "users": return _users.Length;
                 case "invitation": return _invitations.Length;
+                case "messages":return _messages.Length;
                 default: return 0;
             }
         }
