@@ -79,8 +79,29 @@ namespace test
                 Password = "testPassword2"
             }
             };
-
             context.Users.AddRange(_users);
+
+            _userSettings = new[] {
+            new UserSettings
+            {
+                Id = 1,
+                UserId = 1,
+                StartTime = 8,
+                EndTime = 10,
+                ItemsPerPage = 5
+            }
+            };
+            context.AddRange(_userSettings);
+
+            _works = new[] {
+            new Work
+            {
+                Id = 1,
+                UserId = 1,
+                Title = "testWork1"
+            }
+            };
+            context.AddRange(_works);
 
             context.SaveChanges();
         }

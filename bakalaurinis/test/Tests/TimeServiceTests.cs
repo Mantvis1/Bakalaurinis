@@ -9,9 +9,6 @@ namespace test.Tests
         private readonly TimeService _timeService;
         public TimeServiceTests()
         {
-            var setUp = new SetUp();
-            setUp.Initialize();
-
             _timeService = new TimeService();
         }
         [Fact]

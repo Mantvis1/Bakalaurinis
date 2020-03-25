@@ -60,7 +60,7 @@ namespace bakalaurinis.Infrastructure.Database
                   {
                       Id = 9,
                       TitleTemplate = "Naujas kvietimas iššiūstas",
-                      TextTemplate = "Vartotojas [user] pakvietė jus i veiką [activity]!"
+                      TextTemplate = "Jūs pakvietėtę [user] į veiką [activity]!"
                   }
                 );
         }
