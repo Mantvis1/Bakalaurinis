@@ -9,6 +9,8 @@ import { InvitationStatus } from 'src/app/models/invitation-status.enum';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
 import { UserService } from 'src/app/services/user.service';
 import { SettingsService } from 'src/app/services/settings.service';
+import { ActivityService } from 'src/app/services/activity.service';
+import { WorkStatusConfirmation } from 'src/app/models/work-status-confirmation';
 
 @Component({
   selector: 'app-invite-user',
@@ -26,6 +28,7 @@ export class InviteUserComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   currentUserName: string;
+  isConfirmed: boolean;
 
   constructor(
     public dialogRef: MatDialogRef<InviteUserModal>,
@@ -35,13 +38,16 @@ export class InviteUserComponent implements OnInit {
     private userInvitationService: UserInvitationService,
     private userService: UserService,
     private authService: AuthServiceService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private workService: ActivityService
   ) { }
 
   ngOnInit() {
     this.getPageSize(this.authService.getUserId());
     this.loadAllUserInvitations();
     this.getCurrentUser();
+    this.getWorkStatus();
+
     this.userInvitations.paginator = this.paginator;
   }
 
@@ -115,6 +121,23 @@ export class InviteUserComponent implements OnInit {
         this.paginator._changePageSize(data.itemsPerPage);
       }
     )
+  }
+
+  confirmUserList() {
+    let workStatusConfirmation = new WorkStatusConfirmation();
+    workStatusConfirmation.id = this.data.workId;
+    workStatusConfirmation.isInvitationsConfirmed = true;
+
+    this.workService.updateWorkStatus(this.data.workId, workStatusConfirmation).subscribe(() => {
+      this.getWorkStatus();
+    });
+
+  }
+
+  getWorkStatus() {
+    this.workService.getWorkStatus(this.data.workId).subscribe(data => {
+      this.isConfirmed = data.isInvitationsConfirmed;
+    })
   }
 
 }

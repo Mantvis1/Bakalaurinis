@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { GetActivities } from '../models/get-activities';
 import { NewActivity } from '../models/new-activity';
 import { UrlService } from './url.service';
+import { WorkStatusConfirmation } from '../models/work-status-confirmation';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +31,13 @@ export class ActivityService {
 
   editActivity(newActivity: NewActivity, id: number) {
     return this.http.put(this.urlService.getAbsolutePath('Activities/' + id), newActivity);
+  }
+
+  getWorkStatus(workId: number): Observable<WorkStatusConfirmation> {
+    return this.http.get<WorkStatusConfirmation>(this.urlService.getAbsolutePath('Activities/status/' + workId));
+  }
+
+  updateWorkStatus(workId: number, workStatusConfirmation: WorkStatusConfirmation): Observable<any> {
+    return this.http.put(this.urlService.getAbsolutePath('Activities/status/' + workId), workStatusConfirmation);
   }
 }

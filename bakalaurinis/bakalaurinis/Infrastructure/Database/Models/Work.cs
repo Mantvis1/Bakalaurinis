@@ -26,7 +26,7 @@ namespace bakalaurinis.Infrastructure.Database.Models
         public DateTime? EndTime { get; set; }
         public ActivityPriorityEnum ActivityPriority { get; set; }
         [DefaultValue(false)]
-        public bool IsFinished { get; set; }
+        public bool IsInvitationsConfirmed { get; set; }
         public ICollection<Invitation> Invitations { get; set; }
     }
 }

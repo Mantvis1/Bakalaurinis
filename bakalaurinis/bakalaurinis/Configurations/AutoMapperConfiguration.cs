@@ -59,6 +59,9 @@ namespace bakalaurinis.Configurations
 
             CreateMap<UpdateUserItemsPerPageSettings, UserSettings>(MemberList.None);
             CreateMap<UserSettings, UpdateUserItemsPerPageSettings>(MemberList.None);
+
+            CreateMap<WorkStatusConfirmationDto, Work>(MemberList.None);
+            CreateMap<Work, WorkStatusConfirmationDto>(MemberList.None);
         }
     }
 }

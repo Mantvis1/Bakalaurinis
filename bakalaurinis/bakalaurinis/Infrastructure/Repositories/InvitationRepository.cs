@@ -1,5 +1,6 @@
 ﻿using bakalaurinis.Infrastructure.Database;
 using bakalaurinis.Infrastructure.Database.Models;
+using bakalaurinis.Infrastructure.Enums;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -39,9 +40,16 @@ namespace bakalaurinis.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<ICollection<Invitation>> GetAllByActivityId(int activityId)
+        public async Task<ICollection<Invitation>> GetAllByActivityId(int workId)
         {
-            var invitations = await _context.Invitations.Where(x => x.WorkId == activityId).ToArrayAsync();
+            var invitations = await _context.Invitations.Where(x => x.WorkId == workId).ToArrayAsync();
+
+            return invitations;
+        }
+
+        public async Task<ICollection<Invitation>> GetAllByIdAndStatus(int workId, InvitationStatusEnum status)
+        {
+            var invitations = await _context.Invitations.Where(x => x.WorkId == workId && x.InvitationStatus == status).ToArrayAsync();
 
             return invitations;
         }
@@ -71,6 +79,13 @@ namespace bakalaurinis.Infrastructure.Repositories
             return result;
         }
 
+        public async Task<bool> IsWorkHavePendingInvitation(int workId)
+        {
+            var invitations = await _context.Invitations.Where(x => x.WorkId == workId && x.InvitationStatus == InvitationStatusEnum.Pending).ToArrayAsync();
+
+            return invitations.Length == 0;
+        }
+
         public async Task<bool> Update(Invitation entity)
         {
             _context.Invitations.Attach(entity);
@@ -78,5 +93,7 @@ namespace bakalaurinis.Infrastructure.Repositories
 
             return changes > 0;
         }
+
+
     }
 }

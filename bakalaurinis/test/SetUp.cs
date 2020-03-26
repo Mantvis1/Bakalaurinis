@@ -98,7 +98,9 @@ namespace test
             {
                 Id = 1,
                 UserId = 1,
-                Title = "testWork1"
+                Title = "testWork1",
+                IsInvitationsConfirmed = true
+
             },
             new Work
             {

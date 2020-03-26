@@ -19,6 +19,7 @@ namespace bakalaurinis.Services
         private readonly IMessageService _messageService;
         private readonly IRepository<MessageTemplate> _messageTemplateRepository;
         private readonly IMessageFormationService _messageFormationService;
+        private readonly IScheduleGenerationService _scheduleGenerationService;
 
         public InvitationService(
             IInvitationRepository invitationRepository,
@@ -26,7 +27,8 @@ namespace bakalaurinis.Services
             IUserRepository userRepository,
             IMessageService messageService,
             IRepository<MessageTemplate> messageTemplateRepository,
-            IMessageFormationService messageFormationService
+            IMessageFormationService messageFormationService,
+            IScheduleGenerationService scheduleGenerationService
             )
         {
             _invitationRepository = invitationRepository;
@@ -35,6 +37,7 @@ namespace bakalaurinis.Services
             _messageService = messageService;
             _messageTemplateRepository = messageTemplateRepository;
             _messageFormationService = messageFormationService;
+            _scheduleGenerationService = scheduleGenerationService;
         }
 
         public async Task<bool> Update(int invitationId, UpdateInvitationDto updateInvitationDto)
@@ -54,6 +57,8 @@ namespace bakalaurinis.Services
                 await _messageService.Create(invitation.ReceiverId, invitation.WorkId, MessageTypeEnum.WasDeclined);
 
             }
+
+            Task.Run(() => _scheduleGenerationService.GenerateTimeByWorkId(invitation.WorkId));
 
             return await _invitationRepository.Update(invitation);
         }

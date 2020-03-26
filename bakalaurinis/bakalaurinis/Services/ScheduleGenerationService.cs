@@ -2,7 +2,6 @@
 using bakalaurinis.Constants;
 using bakalaurinis.Dtos;
 using bakalaurinis.Dtos.Activity;
-using bakalaurinis.Infrastructure.Database.Models;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Services.Interfaces;
 using System;
@@ -18,18 +17,21 @@ namespace bakalaurinis.Services
         private readonly ITimeService _timeService;
         private readonly IMapper _mapper;
         private readonly IUserSettingsRepository _userSettingsRepository;
+        private readonly IInvitationRepository _invitationRepository;
 
         public ScheduleGenerationService(
             IWorksRepository activitiesRepository,
             ITimeService timeService,
             IMapper mapper,
-            IUserSettingsRepository userSettingsRepository
+            IUserSettingsRepository userSettingsRepository,
+            IInvitationRepository invitationRepository
             )
         {
             _activitiesRepository = activitiesRepository;
             _timeService = timeService;
             _mapper = mapper;
             _userSettingsRepository = userSettingsRepository;
+            _invitationRepository = invitationRepository;
         }
         
         public async Task<bool> Generate(int userId)
@@ -42,7 +44,6 @@ namespace bakalaurinis.Services
 
             return false;
         }
-
 
         private async Task UpdateSchedule(int userId)
         {
@@ -208,44 +209,6 @@ namespace bakalaurinis.Services
             return time;
         }
 
-        public async Task UpdateWhenExtendActivity(int userId, int activityId)
-        {
-            var isFound = false;
-            var userActivities = (await _activitiesRepository.FilterByUserIdAndTime(userId, _timeService.GetCurrentDay()))
-                .OrderBy(x => x.ActivityPriority);
-
-            foreach (var userActivity in userActivities)
-            {
-                if (userActivity.Id == activityId)
-                {
-                    isFound = true;
-                }
-                else if (isFound)
-                {
-                    userActivity.StartTime = _timeService.AddMinutesToTime(userActivity.StartTime.Value, ActivityConstatns.ActivityExtensionTime);
-                    userActivity.EndTime = _timeService.AddMinutesToTime(userActivity.EndTime.Value, ActivityConstatns.ActivityExtensionTime);
-
-                    await _activitiesRepository.Update(userActivity);
-                }
-            }
-        }
-
-        public async Task UpdateWhenFinishActivity(int userId, int activityId)
-        {
-            var userActivities = (await _activitiesRepository.FilterByUserIdAndTime(userId, _timeService.GetCurrentDay()))
-                .OrderBy(x => x.ActivityPriority);
-
-            foreach (var userActivity in userActivities)
-            {
-                if (userActivity.Id == activityId)
-                {
-                    userActivity.IsFinished = true;
-                }
-
-                await _activitiesRepository.Update(userActivity);
-            }
-        }
-
         public async Task CalculateActivitiesTime(int id, DateTime date, UpdateActivitiesDto updateActivitiesDto)
         {
             var currentTime = _timeService.AddMinutesToTime(date, (await _userSettingsRepository.GetByUserId(id)).StartTime * 60);
@@ -260,6 +223,14 @@ namespace bakalaurinis.Services
                 _mapper.Map(activityDto, activity);
 
                 await _activitiesRepository.Update(activity);
+            }
+        }
+
+        public async Task GenerateTimeByWorkId(int workId)
+        {
+            if(await _invitationRepository.IsWorkHavePendingInvitation(workId))
+            {
+                var invitations = _invitationRepository.GetAllByIdAndStatus(workId, Infrastructure.Enums.InvitationStatusEnum.Accept);
             }
         }
     }

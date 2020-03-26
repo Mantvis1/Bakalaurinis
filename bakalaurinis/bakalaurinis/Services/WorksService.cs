@@ -82,6 +82,14 @@ namespace bakalaurinis.Services
             return activitiesDto;
         }
 
+        public async Task<WorkStatusConfirmationDto> GetWorkConfirmationStatusById(int id)
+        {
+            var activity = await _repository.GetById(id);
+            var activityDto = _mapper.Map<WorkStatusConfirmationDto>(activity);
+
+            return activityDto;
+        }
+
         public async Task<bool> Update(int id, NewActivityDto activityDto)
         {
             if (activityDto == null)
@@ -97,6 +105,25 @@ namespace bakalaurinis.Services
             }
 
             _mapper.Map(activityDto, activity);
+
+            return await _repository.Update(activity);
+        }
+
+        public async Task<bool> Update(WorkStatusConfirmationDto workConfirmationStatusDto)
+        {
+            if (workConfirmationStatusDto == null)
+            {
+                throw new ArgumentNullException(nameof(workConfirmationStatusDto));
+            }
+
+            var activity = await _repository.GetById(workConfirmationStatusDto.Id);
+
+            if (activity == null)
+            {
+                throw new InvalidOperationException();
+            }
+
+            _mapper.Map(workConfirmationStatusDto, activity);
 
             return await _repository.Update(activity);
         }

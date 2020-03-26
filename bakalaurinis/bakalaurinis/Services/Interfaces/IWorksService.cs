@@ -8,9 +8,11 @@ namespace bakalaurinis.Services.Interfaces
     {
         Task<ActivityDto> GetById(int id);
         Task<ICollection<ActivityDto>> GetByUserId(int id);
+        Task<WorkStatusConfirmationDto> GetWorkConfirmationStatusById(int id);
         Task<ICollection<ActivityDto>> GetAll();
         Task<int> Create(NewActivityDto newActivityDto);
         Task<bool> Delete(int id);
         Task<bool> Update(int id, NewActivityDto activityDto);
+        Task<bool> Update(WorkStatusConfirmationDto workConfirmationStatusDto);
     }
 }

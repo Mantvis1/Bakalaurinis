@@ -119,5 +119,36 @@ namespace test.Tests
             Assert.Equal(updatedWork.Title, title);
 
         }
+
+        [Theory]
+        [InlineData(1)]
+        public async void GetWorkConfirmationStatusById_StatusObjectExists(int id)
+        {
+            var workStatusDto = await _worksService.GetWorkConfirmationStatusById(id);
+
+            Assert.NotNull(workStatusDto);
+            Assert.True(workStatusDto.IsInvitationsConfirmed);
+        }
+
+        [Theory]
+        [InlineData(1, false)]
+        public async void UpdateStatus_ValueHasChanged(int id, bool status)
+        {
+            var currentWork = await _worksService.GetWorkConfirmationStatusById(id);
+
+            var newWork = new WorkStatusConfirmationDto
+            {
+                Id = id,
+                IsInvitationsConfirmed = false
+            };
+
+            await _worksService.Update(newWork);
+
+            var updatedWork = await _worksService.GetWorkConfirmationStatusById(id);
+
+            Assert.NotEqual(currentWork.IsInvitationsConfirmed, updatedWork.IsInvitationsConfirmed);
+            Assert.Equal(updatedWork.IsInvitationsConfirmed, status);
+
+        }
     }
 }

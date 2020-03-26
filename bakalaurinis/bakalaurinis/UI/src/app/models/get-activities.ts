@@ -4,5 +4,5 @@ export class GetActivities extends NewActivity {
   id: number;
   startTime: Date;
   endTime: Date;
-  isFinished: boolean;
+  isConfirmed: boolean;
 }
