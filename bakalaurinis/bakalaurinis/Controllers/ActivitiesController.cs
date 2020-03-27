@@ -69,7 +69,7 @@ namespace bakalaurinis.Controllers
         [HttpPut("status/{workId}")]
         public async Task<IActionResult> Update(int workId, [FromBody]WorkStatusConfirmationDto workStatusConfirmation)
         {
-            await _activitiesService.Update(workStatusConfirmation);
+            await _activitiesService.Update(workId, workStatusConfirmation);
 
             return NoContent();
         }

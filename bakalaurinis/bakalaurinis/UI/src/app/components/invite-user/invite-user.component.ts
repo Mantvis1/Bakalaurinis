@@ -30,6 +30,7 @@ export class InviteUserComponent implements OnInit {
   currentUserName: string;
   isConfirmed: boolean;
 
+
   constructor(
     public dialogRef: MatDialogRef<InviteUserModal>,
     @Inject(MAT_DIALOG_DATA) public data: InviteUserModal,
@@ -138,6 +139,14 @@ export class InviteUserComponent implements OnInit {
     this.workService.getWorkStatus(this.data.workId).subscribe(data => {
       this.isConfirmed = data.isInvitationsConfirmed;
     })
+  }
+
+  isExistAnyInvitations(): boolean {
+    if (this.userInvitations.data.length > 0) {
+      return false;
+    }
+
+    return true;
   }
 
 }

@@ -44,6 +44,13 @@
           </mat-select>
         </mat-form-field>
       </div>
+
+
+      <div>
+        <mat-checkbox name="participants" [(ngModel)]="data.activityFormData.willBeParticipant">
+          Bus daugiau dalyvių
+        </mat-checkbox>
+      </div>
     </mat-card>
   </mat-dialog-content>
 

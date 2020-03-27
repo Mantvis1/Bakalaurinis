@@ -6,4 +6,5 @@ export class NewActivity {
   userId: number;
   durationInMinutes: number;
   activityPriority: ActivityPriority;
+  willBeParticipant: boolean;
 }

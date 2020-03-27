@@ -142,7 +142,7 @@ namespace test.Tests
                 IsInvitationsConfirmed = false
             };
 
-            await _worksService.Update(newWork);
+            await _worksService.Update(id, newWork);
 
             var updatedWork = await _worksService.GetWorkConfirmationStatusById(id);
 

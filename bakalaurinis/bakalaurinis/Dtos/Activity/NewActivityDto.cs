@@ -10,5 +10,6 @@ namespace bakalaurinis.Dtos.Activity
         public int UserId { get; set; }
         public int DurationInMinutes { get; set; }
         public ActivityPriorityEnum ActivityPriority { get; set; }
+        public bool WillBeParticipant { get; set; }
     }
 }

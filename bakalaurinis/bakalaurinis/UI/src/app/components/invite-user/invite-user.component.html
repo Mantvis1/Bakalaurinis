@@ -12,11 +12,12 @@
       <input matInput [(ngModel)]="data.receiverName" name="receiverName" placeholder="Įveskite vartotoją" />
     </mat-form-field>
     <button mat-raised-button color="primary" (click)="invite()">Pakviesti</button>
-    <button mat-raised-button color="primary" (click)="confirmUserList()">Patvirtinti
+    <button mat-raised-button color="primary" [disabled]="isExistAnyInvitations()"
+      (click)="confirmUserList()">Patvirtinti
       dalyvių sąraša </button>
   </ng-template>
   <ng-template #approvalMessage>
-    <h1>Jūsų laikas jau sugeneruotas arba patvirtinote jog sąrašas nebus tvarkomas</h1>
+    <h1>Negalite readaguot sąrašo</h1>
   </ng-template>
 
 </form>

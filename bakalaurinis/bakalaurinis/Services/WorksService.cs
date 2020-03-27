@@ -109,14 +109,14 @@ namespace bakalaurinis.Services
             return await _repository.Update(activity);
         }
 
-        public async Task<bool> Update(WorkStatusConfirmationDto workConfirmationStatusDto)
+        public async Task<bool> Update(int workId, WorkStatusConfirmationDto workConfirmationStatusDto)
         {
             if (workConfirmationStatusDto == null)
             {
                 throw new ArgumentNullException(nameof(workConfirmationStatusDto));
             }
 
-            var activity = await _repository.GetById(workConfirmationStatusDto.Id);
+            var activity = await _repository.GetById(workId);
 
             if (activity == null)
             {
