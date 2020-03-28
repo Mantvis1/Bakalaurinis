@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using bakalaurinis.Dtos.Invitation;
 using bakalaurinis.Dtos.UserActivities;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Services.Interfaces;
@@ -19,14 +20,14 @@ namespace bakalaurinis.Services
             _mapper = mapper;
         }
 
-        public async Task<UserInvitationsDto[]> GetAllByActivityId(int id)
+        public async Task<GetInvitationDto[]> GetAllByActivityId(int id)
         {
             var invitations = await _invitationRepository.GetAllByActivityId(id);
-            var userInvitationsDto = _mapper.Map<UserInvitationsDto[]>(invitations);
+            var userInvitationsDto = _mapper.Map<GetInvitationDto[]>(invitations);
 
             foreach(var item in userInvitationsDto)
             {
-                item.Username = (await _userRepository.GetById(item.ReceiverId)).Username;
+                item.ReceiverName = (await _userRepository.GetById(item.ReceiverId)).Username;
             }
 
             return userInvitationsDto;

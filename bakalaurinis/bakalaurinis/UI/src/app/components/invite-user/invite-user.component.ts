@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatPaginator } from 
 import { InviteUserModal } from './invite-user-modal';
 import { InvitationsService } from 'src/app/services/invitations.service';
 import { AlertService } from 'src/app/services/alert.service';
-import { UserInvitation } from 'src/app/models/user-invitation';
+import { UserInvitation } from 'src/app/models/new-user-invitation';
 import { UserInvitationService } from 'src/app/services/user-invitation.service';
 import { InvitationStatus } from 'src/app/models/invitation-status.enum';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
@@ -22,7 +22,8 @@ export class InviteUserComponent implements OnInit {
   userInvitations = new MatTableDataSource<UserInvitation>();
   displayedColumns: string[] = [
     "User",
-    "Status"
+    "Status",
+    "Withdraw"
   ];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -147,6 +148,12 @@ export class InviteUserComponent implements OnInit {
     }
 
     return true;
+  }
+
+  deleteInvitation(element: any): void {
+
+
+    this.loadAllUserInvitations();
   }
 
 }

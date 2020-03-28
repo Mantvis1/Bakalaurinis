@@ -2,7 +2,7 @@
 
 namespace bakalaurinis.Dtos.Invitation
 {
-    public class UpdateInvitationDto
+    public class UpdateInvitationDto 
     {
         public int Id { get; set; }
         public InvitationStatusEnum InvitationStatus { get; set; }

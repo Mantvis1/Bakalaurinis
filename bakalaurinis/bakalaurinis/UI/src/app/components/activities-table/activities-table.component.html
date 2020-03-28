@@ -29,18 +29,21 @@
           (click)="editFrom(element)">Redaguoti</button></td>
     </ng-container>
 
+    <ng-container matColumnDef="Invite">
+      <th mat-header-cell *matHeaderCellDef> </th>
+      <td mat-cell *matCellDef="let element">
+        <div *ngIf="element.willBeParticipant">
+          <button mat-raised-button color="primary" (click)="invite(element.id)">Pakviesti</button>
+        </div>
+      </td>
+    </ng-container>
+
     <ng-container matColumnDef="Delete">
       <th mat-header-cell *matHeaderCellDef> </th>
       <td mat-cell *matCellDef="let element">
         <button mat-raised-button color="warn" (click)="deleteById(element.id)"> <i class="material-icons">
             clear
           </i> </button></td>
-    </ng-container>
-
-    <ng-container matColumnDef="Invite">
-      <th mat-header-cell *matHeaderCellDef> </th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-raised-button color="primary" (click)="invite(element.id)">Pakviesti</button></td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

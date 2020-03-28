@@ -7,17 +7,18 @@
 </div>
 <form>
   <div *ngIf="isConfirmed; then approvalMessage else confirmationButtons"></div>
+
   <ng-template #confirmationButtons>
     <mat-form-field>
       <input matInput [(ngModel)]="data.receiverName" name="receiverName" placeholder="Įveskite vartotoją" />
     </mat-form-field>
     <button mat-raised-button color="primary" (click)="invite()">Pakviesti</button>
-    <button mat-raised-button color="primary" [disabled]="isExistAnyInvitations()"
-      (click)="confirmUserList()">Patvirtinti
-      dalyvių sąraša </button>
   </ng-template>
+
   <ng-template #approvalMessage>
-    <h1>Negalite readaguot sąrašo</h1>
+    <h1>
+      Negalite redaguoti sąrašo
+    </h1>
   </ng-template>
 
 </form>
@@ -35,9 +36,23 @@
       <td mat-cell *matCellDef="let element"> {{getStatus(element.invitationStatus)}} </td>
     </ng-container>
 
+    <ng-container matColumnDef="Withdraw">
+      <th mat-header-cell *matHeaderCellDef> Atšaukti </th>
+      <td mat-cell *matCellDef="let element">
+        <div *ngIf="element.invitationStatus==0 && !isConfirmed">
+          <button mat-raised-button color="warn" (click)="deleteInvitation(element)">Atšaukti</button>
+        </div>
+      </td>
+    </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
   <mat-paginator showFirstLastButtons></mat-paginator>
+</div>
+
+<div *ngIf="!isConfirmed" align="end">
+  <button mat-raised-button color="primary" [disabled]="isExistAnyInvitations()" (click)="confirmUserList()">Patvirtinti
+    dalyvių sąraša </button>
 </div>

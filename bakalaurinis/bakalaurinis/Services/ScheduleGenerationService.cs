@@ -2,6 +2,7 @@
 using bakalaurinis.Constants;
 using bakalaurinis.Dtos;
 using bakalaurinis.Dtos.Activity;
+using bakalaurinis.Infrastructure.Enums;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Services.Interfaces;
 using System;
@@ -18,13 +19,14 @@ namespace bakalaurinis.Services
         private readonly IMapper _mapper;
         private readonly IUserSettingsRepository _userSettingsRepository;
         private readonly IInvitationRepository _invitationRepository;
-
+        private readonly IMessageService _messageService;
         public ScheduleGenerationService(
             IWorksRepository activitiesRepository,
             ITimeService timeService,
             IMapper mapper,
             IUserSettingsRepository userSettingsRepository,
-            IInvitationRepository invitationRepository
+            IInvitationRepository invitationRepository,
+            IMessageService messageService
             )
         {
             _activitiesRepository = activitiesRepository;
@@ -32,6 +34,7 @@ namespace bakalaurinis.Services
             _mapper = mapper;
             _userSettingsRepository = userSettingsRepository;
             _invitationRepository = invitationRepository;
+            _messageService = messageService;
         }
         
         public async Task<bool> Generate(int userId)
@@ -40,6 +43,7 @@ namespace bakalaurinis.Services
             if ((await _activitiesRepository.FilterByUserIdAndStartTime(userId)).Any())
             {
                 await UpdateSchedule(userId);
+                await _messageService.Create(userId, 0, MessageTypeEnum.Generation);
             }
 
             return false;

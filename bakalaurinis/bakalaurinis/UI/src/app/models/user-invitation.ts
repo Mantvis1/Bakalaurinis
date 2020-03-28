@@ -1,7 +1,5 @@
-import { InvitationStatus } from './invitation-status.enum';
+import { NewUserInvitation } from './new-user-invitation';
 
-export class UserInvitation {
-  receiverId: number;
-  username: string;
-  invitationStatus: InvitationStatus
+export class UserInvitation extends NewUserInvitation {
+  id: number;
 }

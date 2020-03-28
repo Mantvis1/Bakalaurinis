@@ -106,6 +106,17 @@ namespace bakalaurinis.Services
 
             _mapper.Map(activityDto, activity);
 
+            if(activityDto.WillBeParticipant && !activity.IsInvitationsConfirmed)
+            {
+                activity.StartTime = null;
+                activity.EndTime = null;
+            }
+
+            if (!activityDto.WillBeParticipant)
+            {
+                activity.IsInvitationsConfirmed = false;
+            }
+
             return await _repository.Update(activity);
         }
 

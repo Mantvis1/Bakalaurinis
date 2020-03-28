@@ -42,7 +42,7 @@ namespace bakalaurinis.Infrastructure.Repositories
 
         public async Task<ICollection<Work>> FilterByUserIdAndStartTimeIsNotNull(int id)
         {
-            var activities = await _context.Works.Where(x => x.UserId == id && x.StartTime != null).ToArrayAsync();
+            var activities = await _context.Works.Where(x => x.UserId == id && x.StartTime != null && !x.WillBeParticipant).ToArrayAsync();
 
             return activities;
         }

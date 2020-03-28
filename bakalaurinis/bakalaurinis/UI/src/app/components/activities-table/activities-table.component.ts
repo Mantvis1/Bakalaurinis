@@ -26,8 +26,8 @@ export class ActivitiesTableComponent implements OnInit {
     "Duration",
     "Priority",
     "Edit",
-    "Delete",
-    "Invite"
+    "Invite",
+    "Delete"
   ];
   activityToEdit: NewActivity = new NewActivity();
   newActivity: NewActivity = new NewActivity();
