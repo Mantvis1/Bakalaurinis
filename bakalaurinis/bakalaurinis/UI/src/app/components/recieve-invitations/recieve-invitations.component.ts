@@ -42,10 +42,11 @@ export class RecieveInvitationsComponent implements OnInit {
     )
   }
 
-  decline(id: number) {
+  decline(id: number, workId: number) {
     let invitation = new Invitation();
     invitation.id = id;
     invitation.invitationStatus = InvitationStatus.Atmestas;
+    invitation.workId = workId;
 
     this.invitationService.updateInvitation(id, invitation).subscribe(
       () => {
@@ -54,10 +55,11 @@ export class RecieveInvitationsComponent implements OnInit {
     );
   }
 
-  accept(id: number) {
+  accept(id: number, workId: number) {
     let invitation = new Invitation();
     invitation.id = id;
     invitation.invitationStatus = InvitationStatus.Priimtas;
+    invitation.workId = workId;
 
     this.invitationService.updateInvitation(id, invitation).subscribe(
       () => {
