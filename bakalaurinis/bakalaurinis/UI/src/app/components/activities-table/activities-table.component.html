@@ -1,5 +1,10 @@
 <div><button mat-raised-button color="basic" (click)="openCreateModal()">Add new activity</button></div>
 
+<mat-form-field>
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Ex. ium">
+</mat-form-field>
+
 <div>
   <table mat-table [dataSource]="activities" class="mat-elevation-z8">
 

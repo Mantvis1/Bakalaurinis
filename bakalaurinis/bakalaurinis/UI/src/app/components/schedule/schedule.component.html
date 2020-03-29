@@ -1,7 +1,16 @@
-<div style=" justify-content: center;">
-  <button mat-raised-button color="primary" (click)="updateDate(-1)">Previous</button>
-  <h1>Dienos ({{dateString}}) veiklų sąrašas </h1>
-  <button mat-raised-button color="primary" (click)="updateDate(1)">Next</button>
+<div>
+
+  <button align="left" mat-raised-button color="primary" (click)="updateDate(-1)">
+    Pervious
+  </button>
+
+  <h1 align="center">
+    Dienos ({{dateString}}) veiklų sąrašas
+  </h1>
+
+  <button align="right" mat-raised-button color="primary" (click)="updateDate(1)">
+    Next
+  </button>
 </div>
 
 <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">

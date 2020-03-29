@@ -158,4 +158,8 @@ export class InviteUserComponent implements OnInit {
     );
   }
 
+  applyFilter(filterValue: string): void {
+    this.userInvitations.filter = filterValue.trim().toLowerCase();
+  }
+
 }

@@ -52,3 +52,17 @@
 .align-end {
   justify-content: flex-end;
 }
+
+div {
+  position: relative;
+}
+
+div h1 {
+  text-align: center;
+}
+
+right-button {
+  position: absolute !important;
+  right: 10px !important;
+  top: 80px !important;
+}

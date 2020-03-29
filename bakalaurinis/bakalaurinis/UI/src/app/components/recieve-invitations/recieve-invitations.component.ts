@@ -85,4 +85,8 @@ export class RecieveInvitationsComponent implements OnInit {
       }
     });
   }
+
+  applyFilter(filterValue: string): void {
+    this.invitations.filter = filterValue.trim().toLowerCase();
+  }
 }

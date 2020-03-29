@@ -143,6 +143,10 @@ export class ActivitiesTableComponent implements OnInit {
         receiverName: ''
       }
     });
-
   }
+
+  applyFilter(filterValue: string): void {
+    this.activities.filter = filterValue.trim().toLowerCase();
+  }
+
 }

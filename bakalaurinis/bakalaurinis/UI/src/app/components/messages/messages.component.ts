@@ -72,4 +72,8 @@ export class MessagesComponent implements OnInit {
     return this.datePipe.transform(date, 'yyyy-MM-dd HH:mm:ss');
   }
 
+  applyFilter(filterValue: string): void {
+    this.messages.filter = filterValue.trim().toLowerCase();
+  }
+
 }

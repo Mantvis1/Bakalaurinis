@@ -1,5 +1,10 @@
 <h1>Jūs esate kviečiamas prisijungti prie renginių</h1>
 
+<mat-form-field>
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Ex. ium">
+</mat-form-field>
+
 <div>
   <table mat-table [dataSource]="invitations" class="mat-elevation-z8">
 
