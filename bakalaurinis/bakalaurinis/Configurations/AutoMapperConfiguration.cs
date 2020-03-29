@@ -48,8 +48,8 @@ namespace bakalaurinis.Configurations
             CreateMap<UpdateInvitationDto, Invitation>(MemberList.None);
             CreateMap<Invitation, UpdateInvitationDto>(MemberList.None);
 
-            CreateMap<InvitationDto, Invitation>(MemberList.None);
-            CreateMap<Invitation, InvitationDto>(MemberList.None);
+            CreateMap<UserInvitationsDto, Invitation>(MemberList.None);
+            CreateMap<Invitation, UserInvitationsDto>(MemberList.None);
 
             CreateMap<UserInvitationsDto, Invitation>(MemberList.None);
             CreateMap<Invitation, UserInvitationsDto>(MemberList.None);

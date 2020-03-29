@@ -22,7 +22,7 @@ namespace bakalaurinis.Controllers
         {
             var userInvitations = await _userInvitationService.GetAllByActivityId(id);
 
-            if(userInvitations.Length == 0)
+            if (userInvitations == null)
             {
                 return NotFound();
             }

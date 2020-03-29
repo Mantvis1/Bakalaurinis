@@ -3,7 +3,6 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatPaginator } from 
 import { InviteUserModal } from './invite-user-modal';
 import { InvitationsService } from 'src/app/services/invitations.service';
 import { AlertService } from 'src/app/services/alert.service';
-import { UserInvitation } from 'src/app/models/new-user-invitation';
 import { UserInvitationService } from 'src/app/services/user-invitation.service';
 import { InvitationStatus } from 'src/app/models/invitation-status.enum';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
@@ -11,6 +10,7 @@ import { UserService } from 'src/app/services/user.service';
 import { SettingsService } from 'src/app/services/settings.service';
 import { ActivityService } from 'src/app/services/activity.service';
 import { WorkStatusConfirmation } from 'src/app/models/work-status-confirmation';
+import { UserInvitation } from 'src/app/models/user-invitation';
 
 @Component({
   selector: 'app-invite-user',
@@ -150,10 +150,12 @@ export class InviteUserComponent implements OnInit {
     return true;
   }
 
-  deleteInvitation(element: any): void {
-
-
-    this.loadAllUserInvitations();
+  deleteInvitation(id: any): void {
+    this.invitationService.delete(id).subscribe(
+      () => {
+        this.loadAllUserInvitations();
+      }
+    );
   }
 
 }

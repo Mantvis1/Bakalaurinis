@@ -40,7 +40,7 @@
       <th mat-header-cell *matHeaderCellDef> Atšaukti </th>
       <td mat-cell *matCellDef="let element">
         <div *ngIf="element.invitationStatus==0 && !isConfirmed">
-          <button mat-raised-button color="warn" (click)="deleteInvitation(element)">Atšaukti</button>
+          <button mat-raised-button color="warn" (click)="deleteInvitation(element.id)">Atšaukti</button>
         </div>
       </td>
     </ng-container>

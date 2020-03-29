@@ -97,5 +97,12 @@ namespace bakalaurinis.Services
 
             return await _invitationRepository.Create(invitation);
         }
+
+        public async Task<bool> Delete(int id)
+        {
+            var invitation = await _invitationRepository.GetById(id);
+
+            return await _invitationRepository.Delete(invitation);
+        }
     }
 }

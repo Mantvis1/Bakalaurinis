@@ -9,5 +9,6 @@ namespace bakalaurinis.Services.Interfaces
         Task<bool> Update(int invitationId, UpdateInvitationDto updateInvitationDto);
         Task<ICollection<InvitationDto>> GetAllByRecieverId(int recieverId);
         Task<int> Create(NewInvitationDto newInvitationDto);
+        Task<bool> Delete(int id);
     }
 }

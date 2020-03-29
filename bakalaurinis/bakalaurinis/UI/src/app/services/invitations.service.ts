@@ -23,4 +23,8 @@ export class InvitationsService {
   updateInvitation(id: number, invitation: Invitation): any {
     return this.http.put(this.urlService.getAbsolutePath('Invitations/' + id), invitation);
   }
+
+  delete(id: number): Observable<any> {
+    return this.http.delete<any>(this.urlService.getAbsolutePath('Invitations/' + id));
+  }
 }

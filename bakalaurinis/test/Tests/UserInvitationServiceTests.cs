@@ -39,7 +39,7 @@ namespace test.Tests
         [InlineData(1, "test2")]
         public async void GetAllByActivityId_CorrectUserName(int id, string expected)
         {
-            var actual = (await _userInvitationService.GetAllByActivityId(id))[0].Username;
+            var actual = (await _userInvitationService.GetAllByActivityId(id))[0].ReceiverName;
 
             Assert.Equal(expected, actual);
         }

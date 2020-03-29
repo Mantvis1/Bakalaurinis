@@ -20,14 +20,14 @@ namespace bakalaurinis.Services
             _mapper = mapper;
         }
 
-        public async Task<GetInvitationDto[]> GetAllByActivityId(int id)
+        public async Task<UserInvitationsDto[]> GetAllByActivityId(int id)
         {
             var invitations = await _invitationRepository.GetAllByActivityId(id);
-            var userInvitationsDto = _mapper.Map<GetInvitationDto[]>(invitations);
+            var userInvitationsDto = _mapper.Map<UserInvitationsDto[]>(invitations);
 
             foreach(var item in userInvitationsDto)
             {
-                item.ReceiverName = (await _userRepository.GetById(item.ReceiverId)).Username;
+                item.Username = (await _userRepository.GetById(item.ReceiverId)).Username;
             }
 
             return userInvitationsDto;
