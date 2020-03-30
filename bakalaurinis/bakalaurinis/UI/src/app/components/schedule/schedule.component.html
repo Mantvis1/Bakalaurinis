@@ -19,6 +19,6 @@
 <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
   <div class="example-box" *ngFor="let activity of activities" cdkDrag>
     <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-    {{activity.title}}
+    {{activity.title}} ({{activity.startTime}} - {{activity.endTime}})
   </div>
 </div>

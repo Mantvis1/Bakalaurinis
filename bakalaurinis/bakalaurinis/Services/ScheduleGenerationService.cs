@@ -2,6 +2,7 @@
 using bakalaurinis.Constants;
 using bakalaurinis.Dtos;
 using bakalaurinis.Dtos.Activity;
+using bakalaurinis.Infrastructure.Database.Models;
 using bakalaurinis.Infrastructure.Enums;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Services.Interfaces;
@@ -14,33 +15,36 @@ namespace bakalaurinis.Services
 {
     public class ScheduleGenerationService : IScheduleGenerationService
     {
-        private readonly IWorksRepository _activitiesRepository;
+        private readonly IWorksRepository _worksRepository;
         private readonly ITimeService _timeService;
         private readonly IMapper _mapper;
         private readonly IUserSettingsRepository _userSettingsRepository;
         private readonly IInvitationRepository _invitationRepository;
         private readonly IMessageService _messageService;
+        private readonly IUserRepository _userRepository;
         public ScheduleGenerationService(
-            IWorksRepository activitiesRepository,
+            IWorksRepository worksRepository,
             ITimeService timeService,
             IMapper mapper,
             IUserSettingsRepository userSettingsRepository,
             IInvitationRepository invitationRepository,
-            IMessageService messageService
+            IMessageService messageService,
+            IUserRepository userRepository
             )
         {
-            _activitiesRepository = activitiesRepository;
+            _worksRepository = worksRepository;
             _timeService = timeService;
             _mapper = mapper;
             _userSettingsRepository = userSettingsRepository;
             _invitationRepository = invitationRepository;
             _messageService = messageService;
+            _userRepository = userRepository;
         }
         
         public async Task<bool> Generate(int userId)
 
         {
-            if ((await _activitiesRepository.FilterByUserIdAndStartTime(userId)).Any())
+            if ((await _worksRepository.FilterByUserIdAndStartTime(userId)).Any())
             {
                 await UpdateSchedule(userId);
                 await _messageService.Create(userId, 0, MessageTypeEnum.Generation);
@@ -53,8 +57,8 @@ namespace bakalaurinis.Services
         {
             var currentDay = 0;
             int[] time = await MoveToNextDay(userId, currentDay);
-            var activitiesToUpdate = (await _activitiesRepository.FilterByUserIdAndStartTime(userId)).OrderByDescending(x => x.ActivityPriority).ToList();
-            var allActivities = (await _activitiesRepository.FilterByUserIdAndStartTimeIsNotNull(userId)).ToList();
+            var activitiesToUpdate = (await _worksRepository.FilterByUserIdAndStartTime(userId)).OrderByDescending(x => x.ActivityPriority).ToList();
+            var allActivities = (await _worksRepository.FilterByUserIdAndStartTimeIsNotNull(userId)).ToList();
 
             foreach (var activity in activitiesToUpdate)
             {
@@ -114,7 +118,7 @@ namespace bakalaurinis.Services
 
                 if (isFound)
                 {
-                    await _activitiesRepository.Update(activity);
+                    await _worksRepository.Update(activity);
                     allActivities.Add(activity);
                 }
             }
@@ -132,7 +136,7 @@ namespace bakalaurinis.Services
         {
             var currentDay = 0;
             int[] time = await MoveToNextDay(userId, currentDay);
-            var allActivities = (await _activitiesRepository.FilterByUserIdAndStartTimeIsNotNull(userId)).OrderBy(x => x.StartTime).ToList();
+            var allActivities = (await _worksRepository.FilterByUserIdAndStartTimeIsNotNull(userId)).OrderBy(x => x.StartTime).ToList();
             var result = new List<GeneratorFreeSpaceDto>();
 
             for (int i = 0; i < allActivities.Count - 1; i++)
@@ -223,18 +227,70 @@ namespace bakalaurinis.Services
                 currentTime = _timeService.AddMinutesToTime(currentTime, activityDto.DurationInMinutes);
                 activityDto.EndTime = currentTime;
 
-                var activity = await _activitiesRepository.GetById(activityDto.Id);
+                var activity = await _worksRepository.GetById(activityDto.Id);
                 _mapper.Map(activityDto, activity);
 
-                await _activitiesRepository.Update(activity);
+                await _worksRepository.Update(activity);
             }
         }
 
-        public async Task GenerateTimeByWorkId(int workId)
+        public async Task GenerateTimeByWorkId(int id)
         {
-            if(await _invitationRepository.IsWorkHavePendingInvitation(workId))
+            if(await _invitationRepository.IsWorkHavePendingInvitation(id))
             {
-                var invitations = _invitationRepository.GetAllByIdAndStatus(workId, Infrastructure.Enums.InvitationStatusEnum.Accept);
+                var invitations =  await _invitationRepository.GetAllByIdAndStatus(id, Infrastructure.Enums.InvitationStatusEnum.Accept);
+                var currentDay = 0;
+                int[] time = await MoveToNextDay(invitations.First().SenderId, currentDay);
+                var work = await _worksRepository.GetById(id);
+                var sender = await _userRepository.GetById(invitations.First().SenderId);
+                var lastWork = (await _worksRepository.FilterByUserIdAndStartTimeIsNotNull(invitations.First().SenderId)).OrderBy(x => x.StartTime).ToList().LastOrDefault(); 
+                var isFound = false;
+
+                if (lastWork == null)
+                {
+                    work.StartTime = _timeService.AddMinutesToTime(_timeService.GetCurrentDay(), time[0]);
+                    work.EndTime = _timeService.AddMinutesToTime(work.StartTime.Value, work.DurationInMinutes);
+
+                    isFound = true;
+                }
+
+                while (!isFound)
+                {
+                    currentDay = lastWork.StartTime.Value.Day - _timeService.GetCurrentDay().Day;
+                    time = await MoveToNextDay(invitations.First().SenderId, currentDay);
+
+                    if (time[1] - _timeService.GetDiferrentBetweenTwoDatesInMinutes(
+                        _timeService.GetCurrentDay(),
+                        _timeService.AddMinutesToTime(lastWork.EndTime.Value, work.DurationInMinutes))
+                        > 0)
+                    {
+                        work.StartTime = lastWork.EndTime.Value;
+                        work.EndTime = _timeService.AddMinutesToTime(work.StartTime.Value, work.DurationInMinutes);
+
+                        isFound = true;
+                    }
+                    else
+                    {
+                        currentDay += 1;
+                        time = await MoveToNextDay(invitations.First().SenderId, currentDay);
+
+                        work.StartTime = _timeService.GetDateTime(time[0]);
+                        work.EndTime = _timeService.AddMinutesToTime(work.StartTime.Value, work.DurationInMinutes);
+
+                        isFound = true;
+                    }
+                }
+
+                await _worksRepository.Update(work);
+
+
+                foreach(var invitation in invitations)
+                {
+                    work.Id = 0;
+                    work.UserId = invitation.ReceiverId;
+
+                    await _worksRepository.Create(work);
+                }
             }
         }
     }

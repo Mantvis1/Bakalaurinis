@@ -58,7 +58,7 @@ namespace bakalaurinis.Services
 
             }
 
-            Task.Run(() => _scheduleGenerationService.GenerateTimeByWorkId(invitation.WorkId));
+            await _scheduleGenerationService.GenerateTimeByWorkId(invitation.WorkId);
 
             return await _invitationRepository.Update(invitation);
         }
