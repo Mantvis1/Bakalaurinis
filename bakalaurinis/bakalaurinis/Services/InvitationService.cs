@@ -50,6 +50,8 @@ namespace bakalaurinis.Services
             {
                 await _messageService.Create(invitation.SenderId, invitation.WorkId, MessageTypeEnum.Accept);
                 await _messageService.Create(invitation.ReceiverId, invitation.WorkId, MessageTypeEnum.WasAccepted);
+
+                await _scheduleGenerationService.CreateWorkCopy(invitation.WorkId, invitation.ReceiverId);
             }
             else if (updateInvitationDto.InvitationStatus == InvitationStatusEnum.Decline)
             {
@@ -57,8 +59,6 @@ namespace bakalaurinis.Services
                 await _messageService.Create(invitation.ReceiverId, invitation.WorkId, MessageTypeEnum.WasDeclined);
 
             }
-
-            await _scheduleGenerationService.GenerateTimeByWorkId(invitation.WorkId);
 
             return await _invitationRepository.Update(invitation);
         }

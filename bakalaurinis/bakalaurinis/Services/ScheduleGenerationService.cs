@@ -42,7 +42,6 @@ namespace bakalaurinis.Services
         }
         
         public async Task<bool> Generate(int userId)
-
         {
             if ((await _worksRepository.FilterByUserIdAndStartTime(userId)).Any())
             {
@@ -234,64 +233,14 @@ namespace bakalaurinis.Services
             }
         }
 
-        public async Task GenerateTimeByWorkId(int id)
+        public async Task CreateWorkCopy(int workId, int userId)
         {
-            if(await _invitationRepository.IsWorkHavePendingInvitation(id))
-            {
-                var invitations =  await _invitationRepository.GetAllByIdAndStatus(id, Infrastructure.Enums.InvitationStatusEnum.Accept);
-                var currentDay = 0;
-                int[] time = await MoveToNextDay(invitations.First().SenderId, currentDay);
-                var work = await _worksRepository.GetById(id);
-                var sender = await _userRepository.GetById(invitations.First().SenderId);
-                var lastWork = (await _worksRepository.FilterByUserIdAndStartTimeIsNotNull(invitations.First().SenderId)).OrderBy(x => x.StartTime).ToList().LastOrDefault(); 
-                var isFound = false;
+            var work = await _worksRepository.GetById(workId);
 
-                if (lastWork == null)
-                {
-                    work.StartTime = _timeService.AddMinutesToTime(_timeService.GetCurrentDay(), time[0]);
-                    work.EndTime = _timeService.AddMinutesToTime(work.StartTime.Value, work.DurationInMinutes);
+            work.Id = 0;
+            work.UserId = userId;
 
-                    isFound = true;
-                }
-
-                while (!isFound)
-                {
-                    currentDay = lastWork.StartTime.Value.Day - _timeService.GetCurrentDay().Day;
-                    time = await MoveToNextDay(invitations.First().SenderId, currentDay);
-
-                    if (time[1] - _timeService.GetDiferrentBetweenTwoDatesInMinutes(
-                        _timeService.GetCurrentDay(),
-                        _timeService.AddMinutesToTime(lastWork.EndTime.Value, work.DurationInMinutes))
-                        > 0)
-                    {
-                        work.StartTime = lastWork.EndTime.Value;
-                        work.EndTime = _timeService.AddMinutesToTime(work.StartTime.Value, work.DurationInMinutes);
-
-                        isFound = true;
-                    }
-                    else
-                    {
-                        currentDay += 1;
-                        time = await MoveToNextDay(invitations.First().SenderId, currentDay);
-
-                        work.StartTime = _timeService.GetDateTime(time[0]);
-                        work.EndTime = _timeService.AddMinutesToTime(work.StartTime.Value, work.DurationInMinutes);
-
-                        isFound = true;
-                    }
-                }
-
-                await _worksRepository.Update(work);
-
-
-                foreach(var invitation in invitations)
-                {
-                    work.Id = 0;
-                    work.UserId = invitation.ReceiverId;
-
-                    await _worksRepository.Create(work);
-                }
-            }
+           await _worksRepository.Create(work);
         }
     }
 }

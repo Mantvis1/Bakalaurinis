@@ -39,7 +39,13 @@ namespace bakalaurinis.Services
             var activity = _mapper.Map<Work>(newActivityDto);
             var activityId = await _repository.Create(activity);
 
+            if (newActivityDto.WillBeParticipant)
+            {
+                await _scheduleGenerationService.Generate(newActivityDto.UserId);
+            }
+
             await _messageService.Create(activity.UserId, activityId, MessageTypeEnum.NewActivity);
+
 
             return activityId;
         }
