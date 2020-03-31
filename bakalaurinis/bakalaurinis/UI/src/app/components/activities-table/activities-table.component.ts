@@ -46,6 +46,8 @@ export class ActivitiesTableComponent implements OnInit {
     this.getPageSize(this.authService.getUserId());
     this.refreshTable();
     this.activities.paginator = this.paginator;
+
+
   }
 
   deleteById(id: number) {
@@ -56,10 +58,11 @@ export class ActivitiesTableComponent implements OnInit {
 
   refreshTable() {
     this.activityService
-      .getUserActivities(this.authService.getUserId())
-      .subscribe(data => {
-        this.activities.data = data;
-      });
+      .getUserActivities(this.authService.getUserId()).subscribe(
+        data => {
+          console.log(data);
+          this.activities.data = data;
+        });
   }
 
   getPageSize(userId: number): void {

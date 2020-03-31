@@ -22,6 +22,7 @@ namespace bakalaurinis.Services
         private readonly IInvitationRepository _invitationRepository;
         private readonly IMessageService _messageService;
         private readonly IUserRepository _userRepository;
+        private readonly IWorksService _worksService;
         public ScheduleGenerationService(
             IWorksRepository worksRepository,
             ITimeService timeService,
@@ -45,6 +46,7 @@ namespace bakalaurinis.Services
         {
             if ((await _worksRepository.FilterByUserIdAndStartTime(userId)).Any())
             {
+                await ResetSchedule(userId);
                 await UpdateSchedule(userId);
                 await _messageService.Create(userId, 0, MessageTypeEnum.Generation);
             }
@@ -239,8 +241,22 @@ namespace bakalaurinis.Services
 
             work.Id = 0;
             work.UserId = userId;
+            work.IsAuthor = false;
 
-           await _worksRepository.Create(work);
+            await _worksRepository.Create(work);
+        }
+
+        public async Task ResetSchedule(int userId)
+        {
+            var works = (await _worksRepository.FilterByUserIdAndStartTimeIsNotNull(userId)).Where(x => !x.WillBeParticipant).ToList();
+
+            foreach(var work in works)
+            {
+                work.StartTime = null;
+                work.EndTime = null;
+
+               await _worksRepository.Update(work);
+            }
         }
     }
 }

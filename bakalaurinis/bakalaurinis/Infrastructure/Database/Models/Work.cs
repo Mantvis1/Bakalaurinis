@@ -26,9 +26,9 @@ namespace bakalaurinis.Infrastructure.Database.Models
         public DateTime? EndTime { get; set; }
         public ActivityPriorityEnum ActivityPriority { get; set; }
         [DefaultValue(false)]
-        public bool IsInvitationsConfirmed { get; set; }
-        [DefaultValue(false)]
         public bool WillBeParticipant { get; set; }
+        [DefaultValue(true)]
+        public bool IsAuthor { get; set; }
         public ICollection<Invitation> Invitations { get; set; }
 
     }

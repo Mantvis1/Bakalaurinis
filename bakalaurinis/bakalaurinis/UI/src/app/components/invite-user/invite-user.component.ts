@@ -79,6 +79,8 @@ export class InviteUserComponent implements OnInit {
   loadAllUserInvitations() {
     this.userInvitationService.getAllByActivityId(this.data.workId).subscribe(
       data => {
+        console.log(data);
+
         this.userInvitations.data = Object.assign([], data);
       }
     );
@@ -123,17 +125,6 @@ export class InviteUserComponent implements OnInit {
         this.paginator._changePageSize(data.itemsPerPage);
       }
     )
-  }
-
-  confirmUserList() {
-    let workStatusConfirmation = new WorkStatusConfirmation();
-    workStatusConfirmation.id = this.data.workId;
-    workStatusConfirmation.isInvitationsConfirmed = true;
-
-    this.workService.updateWorkStatus(this.data.workId, workStatusConfirmation).subscribe(() => {
-      this.getWorkStatus();
-    });
-
   }
 
   getWorkStatus() {

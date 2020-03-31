@@ -37,7 +37,7 @@
     <ng-container matColumnDef="Invite">
       <th mat-header-cell *matHeaderCellDef> </th>
       <td mat-cell *matCellDef="let element">
-        <div *ngIf="element.willBeParticipant">
+        <div *ngIf="element.isAuthor">
           <button mat-raised-button color="primary" (click)="invite(element.id)">Pakviesti</button>
         </div>
       </td>

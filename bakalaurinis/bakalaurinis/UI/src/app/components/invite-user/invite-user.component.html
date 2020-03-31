@@ -56,8 +56,3 @@
 
   <mat-paginator showFirstLastButtons></mat-paginator>
 </div>
-
-<div *ngIf="!isConfirmed" align="end">
-  <button mat-raised-button color="primary" [disabled]="isExistAnyInvitations()" (click)="confirmUserList()">Patvirtinti
-    dalyvių sąraša </button>
-</div>

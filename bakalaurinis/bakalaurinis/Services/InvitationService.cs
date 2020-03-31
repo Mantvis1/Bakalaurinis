@@ -44,8 +44,6 @@ namespace bakalaurinis.Services
         {
             var invitation = await _invitationRepository.GetById(invitationId);
 
-            _mapper.Map(updateInvitationDto, invitation);
-
             if (updateInvitationDto.InvitationStatus == InvitationStatusEnum.Accept)
             {
                 await _messageService.Create(invitation.SenderId, invitation.WorkId, MessageTypeEnum.Accept);
@@ -57,8 +55,9 @@ namespace bakalaurinis.Services
             {
                 await _messageService.Create(invitation.SenderId, invitation.WorkId, MessageTypeEnum.Decline);
                 await _messageService.Create(invitation.ReceiverId, invitation.WorkId, MessageTypeEnum.WasDeclined);
-
             }
+            
+            _mapper.Map(updateInvitationDto, invitation);
 
             return await _invitationRepository.Update(invitation);
         }
