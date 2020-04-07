@@ -18,9 +18,9 @@ namespace bakalaurinis.Controllers
         [HttpGet("{userId}")]
         public async Task<IActionResult> Get(int userId)
         {
-           var isGenerated = await _scheduleGenerationService.Generate(userId);
+            var isGenerated = await _scheduleGenerationService.Generate(userId);
 
-           return Ok(isGenerated);
+            return Ok(isGenerated);
         }
 
     }

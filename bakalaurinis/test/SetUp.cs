@@ -2,18 +2,14 @@
 using bakalaurinis.Configurations;
 using bakalaurinis.Infrastructure.Database;
 using bakalaurinis.Infrastructure.Database.Models;
-using bakalaurinis.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.IO;
 
 namespace test
 {
-    class SetUp
+    internal class SetUp
     {
-        private TimeService _timeService = new TimeService();
         private Work[] _works;
         private User[] _users;
         private Invitation[] _invitations;
@@ -27,6 +23,7 @@ namespace test
             throw new InvalidOperationException("Run initialize method before accessing this property.");
 
         private IMapper _mapper;
+
         public IMapper Mapper =>
             _mapper ??
             throw new InvalidOperationException("Run initialize method before accessing this property.");
@@ -42,28 +39,26 @@ namespace test
                 .UseInternalServiceProvider(serviceProvider)
                 .Options;
 
-            var configuration = GetConfiguration();
             _context = new DatabaseContext(options);
             Seed(_context);
 
-            var config = new AutoMapper.MapperConfiguration(cfg =>
+            var config = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new AutoMapperConfiguration());
             });
             _mapper = config.CreateMapper();
         }
 
-        public Microsoft.Extensions.Configuration.IConfiguration GetConfiguration()
-        {
-            var config = new ConfigurationBuilder()
-                          .SetBasePath(Directory.GetCurrentDirectory())
-                          .Build();
-            return config;
-        }
+        //private IConfiguration GetConfiguration()
+        //{
+        //    var config = new ConfigurationBuilder()
+        //                  .SetBasePath(Directory.GetCurrentDirectory())
+        //                  .Build();
+        //    return config;
+        //}
 
-        private async void Seed(DatabaseContext context)
+        private void Seed(DatabaseContext context)
         {
-            var config = GetConfiguration();
 
             _users = new[] {
             new User
@@ -91,7 +86,7 @@ namespace test
                 ItemsPerPage = 5
             }
             };
-            context.AddRange(_userSettings);
+            context.UserSettings.AddRange(_userSettings);
 
             _works = new[] {
             new Work
@@ -108,7 +103,8 @@ namespace test
                 Title = "testWork2"
             }
             };
-            context.AddRange(_works);
+
+            context.Works.AddRange(_works);
 
             _invitations = new[] {
             new Invitation
@@ -126,7 +122,7 @@ namespace test
                 ReceiverId =1
             }
             };
-            context.AddRange(_invitations);
+            context.Invitations.AddRange(_invitations);
 
             _messageTemplates = new[]
                 {
@@ -211,7 +207,7 @@ namespace test
                 case "works": return _works.Length;
                 case "users": return _users.Length;
                 case "invitation": return _invitations.Length;
-                case "messages":return _messages.Length;
+                case "messages": return _messages.Length;
                 default: return 0;
             }
         }

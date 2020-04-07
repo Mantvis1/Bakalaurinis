@@ -1,7 +1,7 @@
 import { NewActivity } from '../../models/new-activity';
 
-export interface ActivityModal {
+export interface IActivityModal {
   activityFormData: NewActivity,
   formTitle: string,
-  formConfirmationButtonName : string
+  formConfirmationButtonName : string;
 }

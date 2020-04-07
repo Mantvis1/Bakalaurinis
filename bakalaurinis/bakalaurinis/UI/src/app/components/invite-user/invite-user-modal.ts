@@ -2,5 +2,5 @@ export class InviteUserModal {
   senderId: number;
   workId: number;
   receiverName: string;
-  isConfirmed: boolean
+  isConfirmed: boolean;
 }

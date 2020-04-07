@@ -50,7 +50,7 @@ namespace bakalaurinis.Services
 
             _mapper.Map(userSettingsDto, settings);
 
-           return await _userSettingsRepository.Update(settings);
+            return await _userSettingsRepository.Update(settings);
         }
 
         public async Task<bool> Update(UpdateUserItemsPerPageSettings userSettingsDto)

@@ -1,5 +1,4 @@
 ﻿using bakalaurinis.Infrastructure.Enums;
-using System;
 
 namespace bakalaurinis.Dtos.Activity
 {

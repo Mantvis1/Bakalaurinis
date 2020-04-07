@@ -33,17 +33,15 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    if (this._validateInput()) {
+    if (this.validateInput()) {
       this.authService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(() => {
         this.router.navigateByUrl("/schedule");
-      }, error => {
-        this.alertService.showMessage('Prisijungimo vardas arba slaptažodis yra neteisingi');
       });
     }
   }
 
-  private _validateInput(): boolean {
-    if (this.loginForm.value.username.length == 0 || this.loginForm.value.password.length == 0) {
+  private validateInput(): boolean {
+    if (this.loginForm.value.username.length === 0 || this.loginForm.value.password.length === 0) {
       this.alertService.showCheckFormMessage();
       return false;
     }

@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { ActivityModal } from './activity-modal';
+import { IActivityModal as ActivityModal } from './activity-modal';
 
 @Component({
   selector: 'app-activity-form',

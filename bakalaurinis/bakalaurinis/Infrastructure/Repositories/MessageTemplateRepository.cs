@@ -9,7 +9,7 @@ namespace bakalaurinis.Infrastructure.Repositories
 {
     public class MessageTemplateRepository : IRepository<MessageTemplate>
     {
-        protected readonly DatabaseContext _context;
+        private readonly DatabaseContext _context;
 
         public MessageTemplateRepository(DatabaseContext context)
         {

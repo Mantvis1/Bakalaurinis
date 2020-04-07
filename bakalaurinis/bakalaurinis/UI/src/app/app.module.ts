@@ -11,7 +11,7 @@ import { ToolbarAfterLogInComponent } from "./components/toolbars/toolbar-after-
 
 import { MatMenuModule } from "@angular/material/menu";
 import { MatCardModule } from "@angular/material/card";
-import { MatFormFieldModule, MatError } from "@angular/material/form-field";
+import { MatFormFieldModule } from "@angular/material/form-field";
 import {
   MatDialogModule,
   MatInputModule,

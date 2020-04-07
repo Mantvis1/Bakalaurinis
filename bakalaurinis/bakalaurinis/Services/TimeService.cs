@@ -19,12 +19,17 @@ namespace bakalaurinis.Services
 
         public DateTime GetDateTime(int? minutes)
         {
-            var date = new DateTime(GetCurrentDay().Year, GetCurrentDay().Month, GetCurrentDay().Day).AddMinutes(minutes.Value);
+            var date = new DateTime(GetCurrentDay().Year, GetCurrentDay().Month, GetCurrentDay().Day);
+            if (minutes != null) 
+            {
+              date = date.AddMinutes(minutes.Value);
+            }
 
             return date;
+
         }
 
-        public int GetDiferrentBetweenTwoDatesInMinutes(DateTime firstDate, DateTime secondDate)
+        public int GetDifferentBetweenTwoDatesInMinutes(DateTime firstDate, DateTime secondDate)
         {
             var timeSpan = secondDate - firstDate;
 

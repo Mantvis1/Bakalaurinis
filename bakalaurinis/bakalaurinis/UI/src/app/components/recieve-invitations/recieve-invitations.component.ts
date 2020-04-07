@@ -22,10 +22,10 @@ export class RecieveInvitationsComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
-    private authService: AuthServiceService,
-    private invitationService: InvitationsService,
-    private settingsService: SettingsService,
-    private dialog: MatDialog
+    private readonly authService: AuthServiceService,
+    private readonly invitationService: InvitationsService,
+    private readonly settingsService: SettingsService,
+    private readonly dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -39,7 +39,7 @@ export class RecieveInvitationsComponent implements OnInit {
       data => {
         this.invitations.data = Object.assign([], data);
       }
-    )
+    );
   }
 
   decline(id: number, workId: number) {
@@ -73,11 +73,11 @@ export class RecieveInvitationsComponent implements OnInit {
       data => {
         this.paginator._changePageSize(data.itemsPerPage);
       }
-    )
+    );
   }
 
   showActivityInfoModal(id: number): void {
-    const dialogRef = this.dialog.open(ActivityReviewComponent, {
+    this.dialog.open(ActivityReviewComponent, {
       minWidth: "250px",
       width: "35%",
       data: {

@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using bakalaurinis.Services.Interfaces;
+﻿using bakalaurinis.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace bakalaurinis.Controllers
 {

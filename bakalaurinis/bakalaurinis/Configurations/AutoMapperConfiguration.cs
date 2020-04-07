@@ -3,7 +3,7 @@ using bakalaurinis.Dtos.Activity;
 using bakalaurinis.Dtos.Invitation;
 using bakalaurinis.Dtos.Message;
 using bakalaurinis.Dtos.User;
-using bakalaurinis.Dtos.UserActivities;
+using bakalaurinis.Dtos.UserInvitations;
 using bakalaurinis.Dtos.UserSettings;
 using bakalaurinis.Infrastructure.Database.Models;
 
@@ -20,7 +20,7 @@ namespace bakalaurinis.Configurations
 
             CreateMap<ActivityDto, Work>(MemberList.None);
             CreateMap<Work, ActivityDto>(MemberList.None);
-            
+
             CreateMap<AfterAutentificationDto, User>(MemberList.None);
             CreateMap<User, AfterAutentificationDto>(MemberList.None);
 

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,13 +15,13 @@ namespace bakalaurinis.Configurations
 {
     public static class StartupExtensions
     {
-        public static void UseSPA(this IApplicationBuilder app)
+        public static void UseSpa(this IApplicationBuilder app)
         {
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "UI";
-            spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
-          // spa.UseAngularCliServer(npmScript: "start");
+                spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+                // spa.UseAngularCliServer(npmScript: "start");
             });
         }
 

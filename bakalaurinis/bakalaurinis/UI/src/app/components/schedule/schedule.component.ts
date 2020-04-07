@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivityService } from 'src/app/services/activity.service';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
 import { GetActivities } from 'src/app/models/get-activities';
 import { DatePipe } from '@angular/common';

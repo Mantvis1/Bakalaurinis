@@ -1,5 +1,5 @@
-﻿using bakalaurinis.Dtos.UserActivities;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using bakalaurinis.Dtos.UserInvitations;
 
 namespace bakalaurinis.Services.Interfaces
 {

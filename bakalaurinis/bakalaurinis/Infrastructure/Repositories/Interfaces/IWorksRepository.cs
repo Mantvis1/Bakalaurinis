@@ -1,5 +1,4 @@
-﻿using bakalaurinis.Dtos.Activity;
-using bakalaurinis.Infrastructure.Database.Models;
+﻿using bakalaurinis.Infrastructure.Database.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

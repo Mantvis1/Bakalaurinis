@@ -12,7 +12,7 @@ namespace bakalaurinis.Infrastructure.Repositories
 {
     public class InvitationRepository : IInvitationRepository
     {
-        protected readonly DatabaseContext _context;
+        private readonly DatabaseContext _context;
 
         public InvitationRepository(DatabaseContext context)
         {

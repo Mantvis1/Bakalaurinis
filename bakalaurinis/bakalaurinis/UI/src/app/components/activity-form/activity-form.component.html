@@ -38,9 +38,9 @@
         <mat-form-field>
           <mat-label>Select priority</mat-label>
           <mat-select placeholder="Priority" [(ngModel)]="data.activityFormData.activityPriority" name="priority">
-            <mat-option [value]="0">Žemas</mat-option>
-            <mat-option [value]="1">Vidutinis</mat-option>
-            <mat-option [value]="2">Aukštas</mat-option>
+            <mat-option [value]="0">Low</mat-option>
+            <mat-option [value]="1">Medium</mat-option>
+            <mat-option [value]="2">High</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -48,7 +48,7 @@
 
       <div>
         <mat-checkbox name="participants" [(ngModel)]="data.activityFormData.willBeParticipant">
-          Bus daugiau dalyvių
+          Will be more participant
         </mat-checkbox>
       </div>
     </mat-card>

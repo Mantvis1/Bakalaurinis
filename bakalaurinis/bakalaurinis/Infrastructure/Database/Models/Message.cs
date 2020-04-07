@@ -13,6 +13,6 @@ namespace bakalaurinis.Infrastructure.Database.Models
         public int UserId { get; set; }
         public User User { get; set; }
         [Required]
-        public DateTime CreatedAt { get; set; } 
+        public DateTime CreatedAt { get; set; }
     }
 }

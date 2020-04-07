@@ -1,6 +1,6 @@
 ﻿using bakalaurinis.Infrastructure.Enums;
 
-namespace bakalaurinis.Dtos.UserActivities
+namespace bakalaurinis.Dtos.UserInvitations
 {
     public class UserInvitationsDto
     {

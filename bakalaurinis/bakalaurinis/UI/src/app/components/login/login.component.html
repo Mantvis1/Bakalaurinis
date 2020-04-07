@@ -11,7 +11,7 @@
                class="form-control"
                required/>
         <mat-error *ngIf="this.loginForm.controls.username.invalid" class="error">
-          Įveskite vartotojo vardą
+          Įveskite username
         </mat-error>
       </mat-form-field>
     </div>
@@ -25,14 +25,14 @@
                formControlName="password"
                required />
         <mat-error *ngIf="this.loginForm.controls.password.invalid" class="error">
-          Įveskite slaptažodį
+          Įveskite password
         </mat-error>
       </mat-form-field>
     </div>
 
     <div class="center">
       <button [disabled]="isDisabled" mat-flat-button color="primary">
-        Prisijungti
+        Log in
       </button>
     </div>
 

@@ -27,7 +27,7 @@ export class PageSizeSettingsComponent implements OnInit {
       data => {
         this.pageSizeSetting = data.itemsPerPage;
       }
-    )
+    );
   }
 
   updatePageSize() {

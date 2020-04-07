@@ -41,7 +41,7 @@ export class MessagesComponent implements OnInit {
   getUserMessages(): void {
     this.messageService.getUserMessages(this.authService.getUserId()).subscribe(data => {
       this.messages.data = Object.assign([], data);
-    })
+    });
   }
 
   deleteAll() {
@@ -65,7 +65,7 @@ export class MessagesComponent implements OnInit {
       data => {
         this.paginator._changePageSize(data.itemsPerPage);
       }
-    )
+    );
   }
 
   getDataString(date: Date) {

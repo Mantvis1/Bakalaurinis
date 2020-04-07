@@ -50,7 +50,7 @@ namespace bakalaurinis
                 endpoints.MapControllers();
             });
 
-            app.UseSPA();
+            app.UseSpa();
 
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
         }

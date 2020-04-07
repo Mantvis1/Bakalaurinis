@@ -1,10 +1,5 @@
-﻿using AutoMapper;
-using bakalaurinis.Infrastructure.Database;
-using bakalaurinis.Infrastructure.Repositories;
+﻿using bakalaurinis.Infrastructure.Repositories;
 using bakalaurinis.Services;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace test.Tests
@@ -17,12 +12,12 @@ namespace test.Tests
             var setUp = new SetUp();
             setUp.Initialize();
 
-            var _context = setUp.DatabaseContext;
+            var context = setUp.DatabaseContext;
 
-            var userRepository = new UsersRepository(_context);
-            var activtiesRepository = new WorksRepository(_context);
+            var userRepository = new UsersRepository(context);
+            var worksRepository = new WorksRepository(context);
 
-            _messageFormationService = new MessageFormationService(userRepository, activtiesRepository);
+            _messageFormationService = new MessageFormationService(userRepository, worksRepository);
         }
 
         [Theory]

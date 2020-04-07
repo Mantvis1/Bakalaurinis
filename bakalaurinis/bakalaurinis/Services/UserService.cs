@@ -50,7 +50,7 @@ namespace bakalaurinis.Services
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new Claim[]
+                Subject = new ClaimsIdentity(new[]
                 {
                     new Claim(ClaimTypes.Name, user.Id.ToString())
                 }),
@@ -92,19 +92,19 @@ namespace bakalaurinis.Services
         {
             var user = await _userRepository.GetById(id);
 
-            if(user == null)
+            if (user == null)
             {
                 throw new ArgumentNullException();
             }
             var invitations = await _invitationRepository.GetAllByRecieverId(user.Id);
 
-            foreach(var invitation in invitations)
+            foreach (var invitation in invitations)
             {
                 await _invitationRepository.Delete(invitation);
             }
 
             return await _userRepository.Delete(user);
-       }
+        }
 
         public async Task<GetScheduleStatus> GetStatusById(int id)
         {

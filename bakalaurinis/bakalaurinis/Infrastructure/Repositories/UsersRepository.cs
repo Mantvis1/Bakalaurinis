@@ -3,7 +3,6 @@ using bakalaurinis.Infrastructure.Database;
 using bakalaurinis.Infrastructure.Database.Models;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,7 +11,7 @@ namespace bakalaurinis.Infrastructure.Repositories
 {
     public class UsersRepository : IUserRepository
     {
-        protected readonly DatabaseContext _context;
+        private readonly DatabaseContext _context;
 
         public UsersRepository(DatabaseContext context)
         {
@@ -30,7 +29,7 @@ namespace bakalaurinis.Infrastructure.Repositories
         public async Task<bool> Delete(User entity)
         {
             _context.Users.Remove(entity);
-           var changes = await _context.SaveChangesAsync();
+            var changes = await _context.SaveChangesAsync();
 
             return changes > 0;
         }

@@ -6,10 +6,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor() { }
+  ngOnInit() { }
 
-  ngOnInit() {
-  }
   deleteProfile() {
 
   }

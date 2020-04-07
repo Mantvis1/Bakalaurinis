@@ -10,7 +10,7 @@ namespace bakalaurinis.Infrastructure.Repositories
 {
     public class UserSettingsRepository : IUserSettingsRepository
     {
-        protected readonly DatabaseContext _context;
+        private readonly DatabaseContext _context;
 
         public UserSettingsRepository(DatabaseContext context)
         {

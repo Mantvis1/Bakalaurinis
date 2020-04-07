@@ -11,7 +11,7 @@ namespace bakalaurinis.Infrastructure.Repositories
 {
     public class WorksRepository : IWorksRepository
     {
-        protected readonly DatabaseContext _context;
+        private readonly DatabaseContext _context;
 
         public WorksRepository(DatabaseContext context)
         {

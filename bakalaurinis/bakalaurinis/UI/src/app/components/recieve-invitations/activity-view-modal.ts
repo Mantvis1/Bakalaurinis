@@ -1,3 +1,3 @@
-export interface ActivityViewModal {
+export interface IActivityViewModal {
   activityId: number;
 }

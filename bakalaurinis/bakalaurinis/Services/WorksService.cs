@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using bakalaurinis.Constants;
 using bakalaurinis.Dtos.Activity;
 using bakalaurinis.Infrastructure.Database.Models;
 using bakalaurinis.Infrastructure.Enums;
@@ -15,21 +14,18 @@ namespace bakalaurinis.Services
     {
         private readonly IWorksRepository _repository;
         private readonly IMapper _mapper;
-        private readonly ITimeService _timeService;
         private readonly IScheduleGenerationService _scheduleGenerationService;
         private readonly IMessageService _messageService;
 
         public WorksService(
             IWorksRepository repository,
             IMapper mapper,
-            ITimeService timeService,
             IScheduleGenerationService scheduleGenerationService,
             IMessageService messageService
             )
         {
             _repository = repository;
             _mapper = mapper;
-            _timeService = timeService;
             _scheduleGenerationService = scheduleGenerationService;
             _messageService = messageService;
         }
@@ -40,7 +36,7 @@ namespace bakalaurinis.Services
             activity.IsAuthor = true;
 
             var activityId = await _repository.Create(activity);
-            
+
             await _scheduleGenerationService.Generate(newActivityDto.UserId);
             await _messageService.Create(activity.UserId, activityId, MessageTypeEnum.NewActivity);
 

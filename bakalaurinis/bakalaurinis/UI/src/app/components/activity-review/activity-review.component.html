@@ -6,15 +6,15 @@
   </button>
 </div>
 <form>
-  <h1 mat-dialog-title>Pavadinimas:{{activity.title}}</h1>
+  <h1 mat-dialog-title>Title:{{activity.title}}</h1>
   <mat-dialog-content>
-    <mat-label>Aprašymas:</mat-label>
+    <mat-label>About:</mat-label>
     <mat-card>
       {{activity.description}}
     </mat-card>
   </mat-dialog-content>
   <mat-card-actions>
-    Trukmė (minutėmis): {{activity.durationInMinutes}}
+    Duration (in minutes): {{activity.durationInMinutes}}
   </mat-card-actions>
 
 </form>

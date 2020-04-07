@@ -9,7 +9,6 @@ import { AuthServiceService } from 'src/app/services/auth-service.service';
 import { UserService } from 'src/app/services/user.service';
 import { SettingsService } from 'src/app/services/settings.service';
 import { ActivityService } from 'src/app/services/activity.service';
-import { WorkStatusConfirmation } from 'src/app/models/work-status-confirmation';
 import { UserInvitation } from 'src/app/models/user-invitation';
 
 @Component({
@@ -66,7 +65,7 @@ export class InviteUserComponent implements OnInit {
             this.alertService.showMessage("Vartotojas neegzistuoja");
             console.log(error);
           }
-        )
+        );
       }
       else {
         this.alertService.showMessage("Vartotojas jau turi pakvietimą");
@@ -93,7 +92,7 @@ export class InviteUserComponent implements OnInit {
   isUserHaveInvitation(username: string): boolean {
     let result: boolean = false;
     this.userInvitations.data.forEach(element => {
-      if (element.username == username) {
+      if (element.username === username) {
         result = true;
       }
     });
@@ -124,13 +123,13 @@ export class InviteUserComponent implements OnInit {
       data => {
         this.paginator._changePageSize(data.itemsPerPage);
       }
-    )
+    );
   }
 
   getWorkStatus() {
     this.workService.getWorkStatus(this.data.workId).subscribe(data => {
       this.isConfirmed = data.isInvitationsConfirmed;
-    })
+    });
   }
 
   isExistAnyInvitations(): boolean {

@@ -10,7 +10,7 @@ namespace bakalaurinis.Infrastructure.Repositories
 {
     public class MessageRepository : IMessageRepository
     {
-        protected readonly DatabaseContext _context;
+        private readonly DatabaseContext _context;
         public MessageRepository(DatabaseContext context)
         {
             _context = context;

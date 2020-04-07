@@ -1,7 +1,7 @@
-﻿using bakalaurinis.Dtos.UserActivities;
-using bakalaurinis.Services.Interfaces;
+﻿using bakalaurinis.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using bakalaurinis.Dtos.UserInvitations;
 
 namespace bakalaurinis.Controllers
 {

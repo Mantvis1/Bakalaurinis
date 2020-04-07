@@ -1,10 +1,7 @@
 ﻿using bakalaurinis.Infrastructure.Database.Models;
-using bakalaurinis.Infrastructure.Enums;
-using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,14 +19,11 @@ namespace bakalaurinis.Services
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             using (var scope = _scopeFactory.CreateScope())
-            {
-
+            { 
                 var users = await (scope.ServiceProvider.GetService<IUserService>()).GetAll();
-                var _userRepository = scope.ServiceProvider.GetService<IUserRepository>();
+                var scheduleGenerationService = scope.ServiceProvider.GetService<IScheduleGenerationService>();
 
-                var _scheduleGenerationService = scope.ServiceProvider.GetService<IScheduleGenerationService>();
-
-                await GenerateSchedule(users, _scheduleGenerationService);
+                await GenerateSchedule(users, scheduleGenerationService);
 
             }
             await Task.CompletedTask;
@@ -40,11 +34,11 @@ namespace bakalaurinis.Services
             await Task.CompletedTask;
         }
 
-        private async Task GenerateSchedule(ICollection<User> users, IScheduleGenerationService _scheduleGenerationService)
+        private async Task GenerateSchedule(ICollection<User> users, IScheduleGenerationService scheduleGenerationService)
         {
             foreach (var user in users)
             {
-                await _scheduleGenerationService.Generate(user.Id);
+                await scheduleGenerationService.Generate(user.Id);
             }
 
         }

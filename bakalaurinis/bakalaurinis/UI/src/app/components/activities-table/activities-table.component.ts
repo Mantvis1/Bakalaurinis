@@ -6,8 +6,6 @@ import { MatDialog, MatPaginator, MatTableDataSource } from "@angular/material";
 import { ActivityFormComponent } from "../activity-form/activity-form.component";
 import { NewActivity } from "../../models/new-activity";
 import { ActivityPriority } from "./activity-priority.enum";
-import { InvitationsService } from 'src/app/services/invitations.service';
-import { NewInvitation } from 'src/app/models/new-invitation';
 import { InviteUserComponent } from '../invite-user/invite-user.component';
 import { SettingsService } from 'src/app/services/settings.service';
 
@@ -70,7 +68,7 @@ export class ActivitiesTableComponent implements OnInit {
       data => {
         this.paginator._changePageSize(data.itemsPerPage);
       }
-    )
+    );
   }
 
   openCreateModal() {
@@ -137,7 +135,7 @@ export class ActivitiesTableComponent implements OnInit {
   }
 
   invite(workId: number) {
-    const dialogRef = this.dialog.open(InviteUserComponent, {
+    this.dialog.open(InviteUserComponent, {
       minWidth: "250px",
       width: "35%",
       data: {

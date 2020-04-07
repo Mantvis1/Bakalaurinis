@@ -1,7 +1,5 @@
-﻿using bakalaurinis.Infrastructure.Database.Models;
-using bakalaurinis.Infrastructure.Enums;
+﻿using bakalaurinis.Infrastructure.Enums;
 using bakalaurinis.Infrastructure.Repositories;
-using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Services;
 using bakalaurinis.Services.Interfaces;
 using Moq;
@@ -19,15 +17,15 @@ namespace test.Tests
             var setUp = new SetUp();
             setUp.Initialize();
 
-            var _context = setUp.DatabaseContext;
-            var _mapper = setUp.Mapper;
+            var context = setUp.DatabaseContext;
+            var mapper = setUp.Mapper;
             _count = setUp.GetLength("messages");
 
-            var messageTemplateRepository = new MessageTemplateRepository(_context);
+            var messageTemplateRepository = new MessageTemplateRepository(context);
             var mockMessageFormationService = new Mock<IMessageFormationService>().Object;
 
-            var messageRepository = new MessageRepository(_context);
-            _messageService = new MessageService(messageTemplateRepository, messageRepository, _mapper, mockMessageFormationService);
+            var messageRepository = new MessageRepository(context);
+            _messageService = new MessageService(messageTemplateRepository, messageRepository, mapper, mockMessageFormationService);
         }
 
         [Theory]
@@ -51,7 +49,7 @@ namespace test.Tests
         [InlineData(MessageTypeEnum.WasSent, 9)]
         public void GetMessageId_CorrectIndex(MessageTypeEnum type, int expectedValue)
         {
-            int actualValue = _messageService.GetMessageId(type);
+            var actualValue = _messageService.GetMessageId(type);
 
             Assert.True(actualValue == expectedValue);
         }
@@ -62,7 +60,7 @@ namespace test.Tests
         {
             await _messageService.DeleteById(id);
 
-            int countAfterDeletion = (await _messageService.GetAll(id)).Count;
+            var countAfterDeletion = (await _messageService.GetAll(id)).Count;
 
             Assert.True(_count - 1 == countAfterDeletion);
         }

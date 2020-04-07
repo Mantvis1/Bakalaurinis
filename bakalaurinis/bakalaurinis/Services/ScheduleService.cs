@@ -11,14 +11,12 @@ namespace bakalaurinis.Services
     public class ScheduleService : IScheduleService
     {
         private readonly IWorksRepository _repository;
-        private readonly ITimeService _timeService;
         private readonly IMapper _mapper;
 
-        public ScheduleService(IWorksRepository repository, IMapper mapper, ITimeService timeService)
+        public ScheduleService(IWorksRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
-            _timeService = timeService;
         }
 
         public async Task<ICollection<ActivityDto>> GetAllByUserIdFilterByDate(int id, DateTime date)

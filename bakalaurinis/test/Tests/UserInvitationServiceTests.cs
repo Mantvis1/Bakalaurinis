@@ -1,7 +1,4 @@
-﻿using AutoMapper;
-using bakalaurinis.Dtos.UserSettings;
-using bakalaurinis.Infrastructure.Database;
-using bakalaurinis.Infrastructure.Repositories;
+﻿using bakalaurinis.Infrastructure.Repositories;
 using bakalaurinis.Services;
 using Xunit;
 
@@ -9,7 +6,6 @@ namespace test.Tests
 {
     public class UserInvitationServiceTests
     {
-        private readonly DatabaseContext _context;
         private readonly UserInvitationService _userInvitationService;
 
         public UserInvitationServiceTests()
@@ -17,13 +13,12 @@ namespace test.Tests
             var setUp = new SetUp();
             setUp.Initialize();
 
-            _context = setUp.DatabaseContext;
+            var context = setUp.DatabaseContext;
+            var mapper = setUp.Mapper;
+            var userRepository = new UsersRepository(context);
+            var invitationsRepository = new InvitationRepository(context);
 
-            var _mapper = setUp.Mapper;
-            var userRepository = new UsersRepository(_context);
-            var invitationsRepository = new InvitationRepository(_context);
-
-            _userInvitationService = new UserInvitationService(invitationsRepository, userRepository, _mapper);
+            _userInvitationService = new UserInvitationService(invitationsRepository, userRepository, mapper);
         }
 
         [Theory]

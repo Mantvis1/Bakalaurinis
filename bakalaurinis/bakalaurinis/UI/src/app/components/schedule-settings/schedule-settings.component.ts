@@ -42,7 +42,7 @@ export class ScheduleSettingsComponent implements OnInit {
         () => {
           this.getSettings();
         }
-      )
+      );
     } else
       this.alertService.showMessage('Neteisingai įvedėte laikus!');
     // this.settings = new Settings();
@@ -53,6 +53,6 @@ export class ScheduleSettingsComponent implements OnInit {
       data => {
         this.currentTime = Object.assign({}, data);
       }
-    )
+    );
   }
 }

@@ -28,7 +28,7 @@ export class RegistrationComponent implements OnInit {
   ngOnInit() { }
 
   register() {
-    if (this._validateInput()) {
+    if (this.validateInput()) {
       this.user = Object.assign({}, this.registrationForm.value);
 
       this.userService.register(this.user).subscribe(error => {
@@ -39,11 +39,11 @@ export class RegistrationComponent implements OnInit {
     }
   }
 
-  private _validateInput(): boolean {
-    if (this.registrationForm.value.username.length == 0 ||
-      this.registrationForm.value.password.length == 0 ||
-      this.registrationForm.value.reapeatPassword.length == 0 ||
-      this.registrationForm.value.email.length == 0
+  private validateInput(): boolean {
+    if (this.registrationForm.value.username.length === 0 ||
+      this.registrationForm.value.password.length === 0 ||
+      this.registrationForm.value.reapeatPassword.length === 0 ||
+      this.registrationForm.value.email.length === 0
     ) {
       this.alertService.showCheckFormMessage();
 

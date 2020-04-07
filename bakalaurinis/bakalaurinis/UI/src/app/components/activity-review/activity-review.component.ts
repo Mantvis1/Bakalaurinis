@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { ActivityViewModal } from '../recieve-invitations/activity-view-modal';
+import { IActivityViewModal as ActivityViewModal } from '../recieve-invitations/activity-view-modal';
 import { ActivityService } from 'src/app/services/activity.service';
 import { GetActivities } from 'src/app/models/get-activities';
 

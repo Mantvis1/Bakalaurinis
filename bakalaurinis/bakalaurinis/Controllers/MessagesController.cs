@@ -9,7 +9,7 @@ namespace bakalaurinis.Controllers
     [Route("api/[controller]")]
     public class MessagesController : ControllerBase
     {
-        protected readonly IMessageService _messageService;
+        private readonly IMessageService _messageService;
         public MessagesController(IMessageService messageService)
         {
             _messageService = messageService;

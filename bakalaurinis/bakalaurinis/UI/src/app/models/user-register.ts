@@ -1,5 +1,5 @@
 export class UserRegister {
-  Username: string;
-  Password: string;
-  Email: string;
+  username: string;
+  password: string;
+  email: string;
 }

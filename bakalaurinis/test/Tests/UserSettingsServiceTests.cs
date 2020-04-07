@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using bakalaurinis.Dtos.UserSettings;
-using bakalaurinis.Infrastructure.Database;
+﻿using bakalaurinis.Dtos.UserSettings;
 using bakalaurinis.Infrastructure.Repositories;
 using bakalaurinis.Services;
 using Xunit;
@@ -9,7 +7,6 @@ namespace test.Tests
 {
     public class UserSettingsServiceTests
     {
-        private readonly DatabaseContext _context;
         private readonly UserSettingsService _userSettingsService;
 
         public UserSettingsServiceTests()
@@ -17,12 +14,12 @@ namespace test.Tests
             var setUp = new SetUp();
             setUp.Initialize();
 
-            _context = setUp.DatabaseContext;
-            var _mapper = setUp.Mapper;
+            var context = setUp.DatabaseContext;
+            var mapper = setUp.Mapper;
 
-            var userSettingsRepository = new UserSettingsRepository(_context);
+            var userSettingsRepository = new UserSettingsRepository(context);
 
-            _userSettingsService = new UserSettingsService(_mapper, userSettingsRepository);
+            _userSettingsService = new UserSettingsService(mapper, userSettingsRepository);
         }
 
         [Theory]

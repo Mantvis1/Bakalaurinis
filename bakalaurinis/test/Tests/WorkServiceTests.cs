@@ -1,8 +1,5 @@
-﻿using AutoMapper;
-using bakalaurinis.Dtos.Activity;
-using bakalaurinis.Infrastructure.Database;
+﻿using bakalaurinis.Dtos.Activity;
 using bakalaurinis.Infrastructure.Repositories;
-using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Services;
 using bakalaurinis.Services.Interfaces;
 using Moq;
@@ -12,9 +9,7 @@ namespace test.Tests
 {
     public class WorkServiceTests
     {
-        private readonly DatabaseContext _context;
         private readonly WorksService _worksService;
-        private readonly IMapper _mapper;
         private readonly int _count;
 
         public WorkServiceTests()
@@ -22,16 +17,15 @@ namespace test.Tests
             var setUp = new SetUp();
             setUp.Initialize();
 
-            _context = setUp.DatabaseContext;
-            _mapper = setUp.Mapper;
+            var context = setUp.DatabaseContext;
+            var mapper = setUp.Mapper;
             _count = setUp.GetLength("works");
 
-            var worksRepository = new WorksRepository(_context);
-            var timeService = new Mock<TimeService>().Object;
+            var worksRepository = new WorksRepository(context);
             var scheduleGenerationService = new Mock<IScheduleGenerationService>().Object;
             var mockMessageService = new Mock<IMessageService>().Object;
 
-            _worksService = new WorksService(worksRepository, _mapper, timeService, scheduleGenerationService, mockMessageService);
+            _worksService = new WorksService(worksRepository, mapper, scheduleGenerationService, mockMessageService);
         }
 
         [Fact]
@@ -80,7 +74,7 @@ namespace test.Tests
 
         [Theory]
         [InlineData(1, 1)]
-        public async void GetByUserId_BothLenthsAreEqual(int id, int expectedCount)
+        public async void GetByUserId_BothLengthsAreEqual(int id, int expectedCount)
         {
             var worksDto = await _worksService.GetByUserId(id);
 
@@ -105,8 +99,8 @@ namespace test.Tests
         {
             var currentWork = await _worksService.GetById(id);
 
-            var newWork = new NewActivityDto 
-            { 
+            var newWork = new NewActivityDto
+            {
                 UserId = id,
                 Title = "updatedTitle"
             };
@@ -120,15 +114,15 @@ namespace test.Tests
 
         }
 
-        [Theory]
-        [InlineData(1)]
-        public async void GetWorkConfirmationStatusById_StatusObjectExists(int id)
-        {
-            var workStatusDto = await _worksService.GetWorkConfirmationStatusById(id);
+        /*   [Theory]
+           [InlineData(1)]
+           public async void GetWorkConfirmationStatusById_StatusObjectExists(int id)
+           {
+               var workStatusDto = await _worksService.GetWorkConfirmationStatusById(id);
 
-            Assert.NotNull(workStatusDto);
-            Assert.True(workStatusDto.IsInvitationsConfirmed);
-        }
+               Assert.NotNull(workStatusDto);
+               Assert.True(workStatusDto.IsInvitationsConfirmed);
+           }*/
 
         [Theory]
         [InlineData(1, false)]

@@ -6,7 +6,7 @@ namespace bakalaurinis.Infrastructure.Database.Models
     public class Invitation : BaseEntity
     {
         [Required]
-        public int SenderId { get; set; } 
+        public int SenderId { get; set; }
         public User Sender { get; set; }
         [Required]
         public int ReceiverId { get; set; }
