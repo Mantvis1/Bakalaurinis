@@ -47,7 +47,6 @@ export class InviteUserComponent implements OnInit {
     this.getPageSize(this.authService.getUserId());
     this.loadAllUserInvitations();
     this.getCurrentUser();
-    this.getWorkStatus();
 
     this.userInvitations.paginator = this.paginator;
   }
@@ -124,12 +123,6 @@ export class InviteUserComponent implements OnInit {
         this.paginator._changePageSize(data.itemsPerPage);
       }
     );
-  }
-
-  getWorkStatus() {
-    this.workService.getWorkStatus(this.data.workId).subscribe(data => {
-      this.isConfirmed = data.isInvitationsConfirmed;
-    });
   }
 
   isExistAnyInvitations(): boolean {

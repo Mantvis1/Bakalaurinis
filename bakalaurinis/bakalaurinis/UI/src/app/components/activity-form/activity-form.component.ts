@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { IActivityModal as ActivityModal } from './activity-modal';
+import { IActivityModal } from './activity-modal';
 
 @Component({
   selector: 'app-activity-form',
@@ -10,8 +10,8 @@ import { IActivityModal as ActivityModal } from './activity-modal';
 export class ActivityFormComponent {
 
   constructor(
-    public dialogRef: MatDialogRef<ActivityModal>,
-    @Inject(MAT_DIALOG_DATA) public data: ActivityModal
+    public dialogRef: MatDialogRef<IActivityModal>,
+    @Inject(MAT_DIALOG_DATA) public data: IActivityModal
   ) { }
 
   closeModal(returnValue: any) {

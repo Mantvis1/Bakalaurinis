@@ -52,28 +52,6 @@ namespace bakalaurinis.Controllers
             return Ok(activity);
         }
 
-        [HttpGet("status/{workId}")]
-        [Produces(typeof(WorkStatusConfirmationDto))]
-        public async Task<IActionResult> GetStatus(int workId)
-        {
-            var activityStatus = await _activitiesService.GetWorkConfirmationStatusById(workId);
-
-            if (activityStatus == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(activityStatus);
-        }
-
-        [HttpPut("status/{workId}")]
-        public async Task<IActionResult> Update(int workId, [FromBody]WorkStatusConfirmationDto workStatusConfirmation)
-        {
-            await _activitiesService.Update(workId, workStatusConfirmation);
-
-            return NoContent();
-        }
-
         [HttpGet("user/{userId}")]
         [Produces(typeof(ActivityDto[]))]
         public async Task<IActionResult> GetByUserId(int userId)

@@ -93,8 +93,9 @@ namespace test
             {
                 Id = 1,
                 UserId = 1,
-                Title = "testWork1"
-
+                Title = "testWork1",
+                StartTime = DateTime.MinValue.AddHours(8),
+                EndTime = DateTime.MinValue.AddHours(9)
             },
             new Work
             {

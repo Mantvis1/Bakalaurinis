@@ -2,6 +2,6 @@
 {
     public class ActivityConstatns
     {
-        static public int ActivityExtensionTime = 10;
+        public static int ActivityExtensionTime = 10;
     }
 }
