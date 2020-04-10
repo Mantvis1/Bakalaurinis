@@ -31,7 +31,7 @@ namespace test.Tests
         }
 
         [Theory]
-        [InlineData(1, "test2")]
+        [InlineData(1, "test1")]
         public async void GetAllByActivityId_CorrectUserName(int id, string expected)
         {
             var actual = (await _userInvitationService.GetAllByActivityId(id))[0].Username;

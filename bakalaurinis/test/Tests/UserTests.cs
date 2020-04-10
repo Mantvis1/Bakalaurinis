@@ -92,20 +92,14 @@ namespace test.Tests
             Assert.True(usersDto.Count == _usersCount);
         }
 
-   /*     [Theory]
-        [InlineData("test1", "testPassword")]
-        public async void Authenticate_UserId(string username, string password)
+        [Theory]
+        [InlineData(1)]
+        public async void Authenticate_UserId(int id)
         {
-            var authenticateDto = new AuthenticateDto()
-            {
-                Username = username,
-                Password = password
-            };
+            await _userService.Delete(id);
 
-            var afterAuthenticationDto = await _userService.Authenticate(authenticateDto);
-
-            Assert.NotNull(afterAuthenticationDto);
-        }*/
+            Assert.Null(await _userService.GetNameById(id));
+        }
 
         [Theory]
         [InlineData("wrongUsername", "wrongPassword")]
@@ -117,9 +111,9 @@ namespace test.Tests
                 Password = password
             };
 
-            var afterAutentificationDto = await _userService.Authenticate(authenticateDto);
+            var afterAuthenticationDto = await _userService.Authenticate(authenticateDto);
 
-            Assert.Null(afterAutentificationDto);
+            Assert.Null(afterAuthenticationDto);
         }
     }
 }

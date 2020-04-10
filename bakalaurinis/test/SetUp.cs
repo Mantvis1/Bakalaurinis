@@ -5,6 +5,8 @@ using bakalaurinis.Infrastructure.Database.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using bakalaurinis.Infrastructure.Enums;
+using static bakalaurinis.Infrastructure.Enums.ActivityPriorityEnum;
 
 namespace test
 {
@@ -42,20 +44,9 @@ namespace test
             _context = new DatabaseContext(options);
             Seed(_context);
 
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new AutoMapperConfiguration());
-            });
+            var config = new MapperConfiguration(cfg => { cfg.AddProfile(new AutoMapperConfiguration()); });
             _mapper = config.CreateMapper();
         }
-
-        //private IConfiguration GetConfiguration()
-        //{
-        //    var config = new ConfigurationBuilder()
-        //                  .SetBasePath(Directory.GetCurrentDirectory())
-        //                  .Build();
-        //    return config;
-        //}
 
         private void Seed(DatabaseContext context)
         {
@@ -72,6 +63,12 @@ namespace test
                 Id = 2,
                 Username = "test2",
                 Password = "testPassword2"
+            },
+            new User
+            {
+                Id = 3,
+                Username = "test3",
+                Password = "testPassword3"
             }
             };
             context.Users.AddRange(_users);
@@ -81,6 +78,14 @@ namespace test
             {
                 Id = 1,
                 UserId = 1,
+                StartTime = 8,
+                EndTime = 10,
+                ItemsPerPage = 5
+            },
+            new UserSettings
+            {
+                Id = 2,
+                UserId = 2,
                 StartTime = 8,
                 EndTime = 10,
                 ItemsPerPage = 5
@@ -95,14 +100,102 @@ namespace test
                 UserId = 1,
                 Title = "testWork1",
                 StartTime = DateTime.MinValue.AddHours(8),
-                EndTime = DateTime.MinValue.AddHours(9)
+                EndTime = DateTime.MinValue.AddHours(9),
+                DurationInMinutes = 60,
+                ActivityPriority = High
             },
             new Work
             {
                 Id = 2,
                 UserId = 2,
-                Title = "testWork2"
-            }
+                Title = "testWork2",
+                DurationInMinutes = 15,
+                ActivityPriority = Medium,
+                StartTime = null,
+                EndTime = null
+            },
+            new Work
+            {
+                Id = 3,
+                UserId = 1,
+                Title = "testWork3",
+                DurationInMinutes = 45,
+                ActivityPriority = Medium,
+                StartTime = DateTime.MinValue.AddHours(9).AddMinutes(15),
+                EndTime = DateTime.MinValue.AddHours(10)
+            },
+            new Work
+            {
+                Id = 4,
+                UserId = 1,
+                Title = "testWork4",
+                DurationInMinutes = 15,
+                ActivityPriority = Medium
+            },
+            new Work
+            {
+                Id = 5,
+                UserId = 1,
+                Title = "testWork5",
+                DurationInMinutes = 45,
+                ActivityPriority = Medium,
+                StartTime = DateTime.MinValue.AddDays(1).AddHours(8).AddMinutes(15),
+                EndTime = DateTime.MinValue.AddDays(1).AddHours(10)
+            },
+            new Work
+            {
+                Id = 6,
+                UserId = 1,
+                Title = "testWork6",
+                DurationInMinutes = 15,
+                ActivityPriority = Medium
+            },
+            new Work
+            {
+                Id = 7,
+                UserId = 1,
+                Title = "testWork7",
+                DurationInMinutes = 45,
+                ActivityPriority = Medium,
+                StartTime = DateTime.MinValue.AddDays(2).AddHours(8).AddMinutes(15),
+                EndTime = DateTime.MinValue.AddDays(2).AddHours(10)
+            },
+            new Work
+            {
+                Id = 8,
+                UserId = 1,
+                Title = "testWork6",
+                DurationInMinutes = 15,
+                ActivityPriority = Medium
+            },
+            new Work
+            {
+                Id = 9,
+                UserId = 3,
+                Title = "testWork8",
+                DurationInMinutes = 45,
+                ActivityPriority = Medium,
+                StartTime = DateTime.MinValue.AddHours(8),
+                EndTime = DateTime.MinValue.AddHours(10)
+            },
+            new Work
+            {
+                Id = 10,
+                UserId = 1,
+                Title = "testWork10",
+                DurationInMinutes = 15,
+                ActivityPriority = Medium
+            },
+            new Work
+            {
+                Id = 11,
+                UserId = 1,
+                Title = "testWork11",
+                DurationInMinutes = 45,
+                ActivityPriority = Medium,
+                StartTime = DateTime.MinValue.AddDays(3).AddHours(8),
+                EndTime = DateTime.MinValue.AddDays(3).AddHours(9).AddMinutes(45)
+            },
             };
 
             context.Works.AddRange(_works);
@@ -112,15 +205,17 @@ namespace test
             {
                 Id = 1,
                 WorkId =1,
-                SenderId =1,
-                ReceiverId =2
+                SenderId =2,
+                ReceiverId =1,
+                InvitationStatus = InvitationStatusEnum.Pending
             },
              new Invitation
             {
                 Id = 2,
-                WorkId =2,
+                WorkId =3,
                 SenderId =2,
-                ReceiverId =1
+                ReceiverId =1,
+                InvitationStatus = InvitationStatusEnum.Pending
             }
             };
             context.Invitations.AddRange(_invitations);
@@ -203,14 +298,16 @@ namespace test
 
         public int GetLength(string type)
         {
-            switch (type)
-            {
-                case "works": return _works.Length;
-                case "users": return _users.Length;
-                case "invitation": return _invitations.Length;
-                case "messages": return _messages.Length;
-                default: return 0;
-            }
+            if (type == "works")
+                return _works.Length;
+            else if (type == "users")
+                return _users.Length;
+            else if (type == "invitation")
+                return _invitations.Length;
+            else if (type == "messages")
+                return _messages.Length;
+            else
+                return 0;
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using bakalaurinis.Dtos.Activity;
-using bakalaurinis.Infrastructure.Database;
 using bakalaurinis.Infrastructure.Repositories;
 using bakalaurinis.Services;
 using bakalaurinis.Services.Interfaces;
@@ -74,7 +73,7 @@ namespace test.Tests
         }
 
         [Theory]
-        [InlineData(1, 1)]
+        [InlineData(2, 1)]
         public async void GetByUserId_BothLengthsAreEqual(int id, int expectedCount)
         {
             var worksDto = await _worksService.GetByUserId(id);
@@ -112,7 +111,6 @@ namespace test.Tests
 
             Assert.NotEqual(currentWork.Title, updatedWork.Title);
             Assert.Equal(updatedWork.Title, title);
-
         }
     }
 }

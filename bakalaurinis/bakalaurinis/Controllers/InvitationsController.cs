@@ -44,7 +44,7 @@ namespace bakalaurinis.Controllers
         [Produces(typeof(InvitationDto[]))]
         public async Task<IActionResult> GetByReciever(int receiverId)
         {
-            var invitations = await _invitationService.GetAllByRecieverId(receiverId);
+            var invitations = await _invitationService.GetAllByReceiverId(receiverId);
 
             if (invitations == null)
             {

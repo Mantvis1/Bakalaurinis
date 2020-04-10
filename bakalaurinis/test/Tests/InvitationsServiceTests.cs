@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using bakalaurinis.Dtos.Invitation;
+using bakalaurinis.Infrastructure.Database;
 using bakalaurinis.Infrastructure.Database.Models;
+using bakalaurinis.Infrastructure.Enums;
 using bakalaurinis.Infrastructure.Repositories;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Services;
 using bakalaurinis.Services.Interfaces;
 using Moq;
+using Xunit;
 
 namespace test.Tests
 {
@@ -14,25 +17,80 @@ namespace test.Tests
     {
         private readonly InvitationService _invitationService;
         private readonly int _count;
-
+        private readonly DatabaseContext _context;
         public InvitationsServiceTests()
         {
             var setUp = new SetUp();
             setUp.Initialize();
 
-            var context = setUp.DatabaseContext;
+            _context = setUp.DatabaseContext;
             var mapper = setUp.Mapper;
-            _count = setUp.GetLength("messages");
+            _count = setUp.GetLength("invitation");
 
-            var mockUserRepository = new Mock<IUserRepository>().Object;
-            var mockMessageService = new Mock<IMessageService>().Object;
-            var mockMessageRepository = new Mock<IRepository<MessageTemplate>>().Object;
-            var mockMessageFormationService = new Mock<IMessageFormationService>().Object;
+            var userRepository = new UsersRepository(_context);
+
+            var mockMessageService = new Mock<IMessageService>();
+            mockMessageService.Setup(x => x.GetMessageId(MessageTypeEnum.GotNewInvitation)).Returns(4);
+
+            var messageTemplateRepository = new MessageTemplateRepository(_context);
+            var messageFormationService = new Mock<IMessageFormationService>();
             var mockScheduleGenerationService = new Mock<IScheduleGenerationService>().Object;
 
-            var invitationRepository = new InvitationRepository(context);
-            _invitationService = new InvitationService(invitationRepository, mapper, mockUserRepository,
-                mockMessageService, mockMessageRepository, mockMessageFormationService, mockScheduleGenerationService);
+            var invitationRepository = new InvitationRepository(_context);
+            _invitationService = new InvitationService(invitationRepository, mapper, userRepository,
+                mockMessageService.Object, messageTemplateRepository, messageFormationService.Object, mockScheduleGenerationService);
+        }
+
+        [Fact]
+        public async void Create()
+        {
+            var newInvitationDto = new NewInvitationDto
+            {
+                WorkId = 1,
+                SenderId = 2,
+                ReceiverName = "test1"
+            };
+
+            var invitationId = await _invitationService.Create(newInvitationDto);
+            var invitation = _context.Invitations.FirstOrDefault(x => x.Id == invitationId);
+
+            Assert.NotNull(invitation);
+        }
+
+        [Theory]
+        [InlineData(1, 1,InvitationStatusEnum.Accept)]
+        [InlineData(1, 1, InvitationStatusEnum.Decline)]
+        public async void Update(int id, int workId, InvitationStatusEnum status)
+        {
+            var invitationDto = await _context.Invitations.FindAsync(id);
+            var updateInvitationDto = new UpdateInvitationDto
+            {
+                WorkId = workId,
+                InvitationStatus = status
+            };
+
+            await _invitationService.Update(id, updateInvitationDto);
+
+            Assert.True(invitationDto.InvitationStatus == (await _context.Invitations.FindAsync(id)).InvitationStatus);
+        }
+
+        [Theory]
+        [InlineData(1)]
+        public async void GetAllByReceiverId(int receiverId)
+        {
+            var actualCount = (await _invitationService.GetAllByReceiverId(receiverId)).Count;
+
+            Assert.Equal(_count, actualCount);
+        }
+
+        [Theory]
+        [InlineData(1)]
+        public async void Delete(int id)
+        {
+            await _invitationService.Delete(id);
+            var invitation = _context.Invitations.FirstOrDefault(x => x.Id == id);
+
+            Assert.Null(invitation);
         }
     }
 }

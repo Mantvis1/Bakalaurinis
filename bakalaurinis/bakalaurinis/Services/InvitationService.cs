@@ -57,14 +57,14 @@ namespace bakalaurinis.Services
                 await _messageService.Create(invitation.ReceiverId, invitation.WorkId, MessageTypeEnum.WasDeclined);
             }
 
-            _mapper.Map(updateInvitationDto, invitation);
+            invitation = _mapper.Map<Invitation>(updateInvitationDto);
 
             return await _invitationRepository.Update(invitation);
         }
 
-        public async Task<ICollection<InvitationDto>> GetAllByRecieverId(int recieverId)
+        public async Task<ICollection<InvitationDto>> GetAllByReceiverId(int receiverId)
         {
-            var invitations = (await _invitationRepository.GetAllByRecieverId(recieverId)).ToArray();
+            var invitations = (await _invitationRepository.GetAllByRecieverId(receiverId)).ToArray();
             var invitationsDto = _mapper.Map<InvitationDto[]>(invitations);
 
             for (int i = 0; i < invitations.Length; i++)

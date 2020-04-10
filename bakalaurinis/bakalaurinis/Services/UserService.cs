@@ -96,6 +96,7 @@ namespace bakalaurinis.Services
             {
                 throw new ArgumentNullException();
             }
+
             var invitations = await _invitationRepository.GetAllByRecieverId(user.Id);
 
             foreach (var invitation in invitations)
