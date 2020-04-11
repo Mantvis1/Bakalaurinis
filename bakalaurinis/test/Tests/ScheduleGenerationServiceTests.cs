@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using bakalaurinis.Dtos.Activity;
+using bakalaurinis.Dtos.Work;
 using bakalaurinis.Infrastructure.Database;
 using bakalaurinis.Infrastructure.Repositories;
 using bakalaurinis.Services;
@@ -42,6 +42,7 @@ namespace test.Tests
         public async void GenerateSchedule(int userId)
         {
             await _scheduleGenerationService.Generate(userId);
+            
             var works = await _context.Works.Where(x => x.UserId == userId).ToListAsync();
 
             Assert.True(works.Count > 0);
@@ -60,9 +61,9 @@ namespace test.Tests
             var works = (await _worksService.GetByUserId(userId)).Where(x => x.StartTime == null ||
                 x.StartTime.Value.Day == DateTime.MinValue.Day).ToList();
 
-            var updateActivitiesDto = new UpdateActivitiesDto
+            var updateActivitiesDto = new UpdateWorkDto
             {
-                Activities = new List<ActivityDto>()
+                Activities = new List<WorkDto>()
             };
 
             foreach (var work in works)

@@ -1,4 +1,4 @@
-﻿using bakalaurinis.Dtos.Activity;
+﻿using bakalaurinis.Dtos.Work;
 using bakalaurinis.Infrastructure.Repositories;
 using bakalaurinis.Services;
 using bakalaurinis.Services.Interfaces;
@@ -57,7 +57,7 @@ namespace test.Tests
         [Fact]
         public async void Create_WorkWasCreated()
         {
-            var newWorkDto = new NewActivityDto()
+            var newWorkDto = new NewWorkDto()
             {
                 UserId = 2,
                 DurationInMinutes = 20,
@@ -99,7 +99,7 @@ namespace test.Tests
         {
             var currentWork = await _worksService.GetById(id);
 
-            var newWork = new NewActivityDto
+            var newWork = new NewWorkDto
             {
                 UserId = id,
                 Title = "updatedTitle"

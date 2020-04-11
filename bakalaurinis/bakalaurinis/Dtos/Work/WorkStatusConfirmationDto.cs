@@ -1,4 +1,4 @@
-﻿namespace bakalaurinis.Dtos.Activity
+﻿namespace bakalaurinis.Dtos.Work
 {
     public class WorkStatusConfirmationDto
     {

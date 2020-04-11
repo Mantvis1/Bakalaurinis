@@ -6,10 +6,10 @@ namespace bakalaurinis.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ActivitiesRefreshController : ControllerBase
+    public class WorkRefreshController : ControllerBase
     {
         private readonly IScheduleGenerationService _scheduleGenerationService;
-        public ActivitiesRefreshController(IScheduleGenerationService scheduleGenerationService)
+        public WorkRefreshController(IScheduleGenerationService scheduleGenerationService)
         {
             _scheduleGenerationService = scheduleGenerationService;
         }

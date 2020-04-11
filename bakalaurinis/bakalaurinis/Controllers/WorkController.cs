@@ -1,34 +1,34 @@
-﻿using bakalaurinis.Dtos.Activity;
-using bakalaurinis.Services.Interfaces;
+﻿using bakalaurinis.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using bakalaurinis.Dtos.Work;
 
 namespace bakalaurinis.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ActivitiesController : ControllerBase
+    public class WorkController : ControllerBase
     {
-        private readonly IWorksService _activitiesService;
-        public ActivitiesController(IWorksService activitiesService)
+        private readonly IWorksService _worksService;
+        public WorkController(IWorksService worksService)
         {
-            _activitiesService = activitiesService;
+            _worksService = worksService;
         }
 
         [HttpPost]
         [Produces(typeof(int))]
-        public async Task<IActionResult> Create([FromBody] NewActivityDto newActivityDto)
+        public async Task<IActionResult> Create([FromBody] NewWorkDto newActivityDto)
         {
-            var newActivityId = await _activitiesService.Create(newActivityDto);
+            var newActivityId = await _worksService.Create(newActivityDto);
 
             return Ok(newActivityId);
         }
 
         [HttpGet]
-        [Produces(typeof(ActivityDto[]))]
+        [Produces(typeof(WorkDto[]))]
         public async Task<IActionResult> Get()
         {
-            var activities = await _activitiesService.GetAll();
+            var activities = await _worksService.GetAll();
 
             if (activities == null)
             {
@@ -39,10 +39,10 @@ namespace bakalaurinis.Controllers
         }
 
         [HttpGet("{id}")]
-        [Produces(typeof(ActivityDto))]
+        [Produces(typeof(WorkDto))]
         public async Task<IActionResult> Get(int id)
         {
-            var activity = await _activitiesService.GetById(id);
+            var activity = await _worksService.GetById(id);
 
             if (activity == null)
             {
@@ -53,10 +53,10 @@ namespace bakalaurinis.Controllers
         }
 
         [HttpGet("user/{userId}")]
-        [Produces(typeof(ActivityDto[]))]
+        [Produces(typeof(WorkDto[]))]
         public async Task<IActionResult> GetByUserId(int userId)
         {
-            var activities = await _activitiesService.GetByUserId(userId);
+            var activities = await _worksService.GetByUserId(userId);
 
             if (activities == null)
             {
@@ -69,15 +69,15 @@ namespace bakalaurinis.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await _activitiesService.Delete(id);
+            await _worksService.Delete(id);
 
             return NoContent();
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] NewActivityDto newActivityDto)
+        public async Task<IActionResult> Update(int id, [FromBody] NewWorkDto newActivityDto)
         {
-            await _activitiesService.Update(id, newActivityDto);
+            await _worksService.Update(id, newActivityDto);
 
             return NoContent();
         }

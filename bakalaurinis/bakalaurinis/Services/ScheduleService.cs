@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using bakalaurinis.Dtos.Activity;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using bakalaurinis.Dtos.Work;
 
 namespace bakalaurinis.Services
 {
@@ -19,10 +19,10 @@ namespace bakalaurinis.Services
             _mapper = mapper;
         }
 
-        public async Task<ICollection<ActivityDto>> GetAllByUserIdFilterByDate(int id, DateTime date)
+        public async Task<ICollection<WorkDto>> GetAllByUserIdFilterByDate(int id, DateTime date)
         {
             var activities = await _repository.FilterByUserIdAndTime(id, date);
-            var activitiesDto = _mapper.Map<ActivityDto[]>(activities);
+            var activitiesDto = _mapper.Map<WorkDto[]>(activities);
 
             return activitiesDto;
 

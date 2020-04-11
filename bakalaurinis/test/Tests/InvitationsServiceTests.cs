@@ -1,11 +1,8 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using bakalaurinis.Dtos.Invitation;
 using bakalaurinis.Infrastructure.Database;
-using bakalaurinis.Infrastructure.Database.Models;
 using bakalaurinis.Infrastructure.Enums;
 using bakalaurinis.Infrastructure.Repositories;
-using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Services;
 using bakalaurinis.Services.Interfaces;
 using Moq;

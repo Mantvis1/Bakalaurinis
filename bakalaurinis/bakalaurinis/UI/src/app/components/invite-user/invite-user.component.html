@@ -6,21 +6,10 @@
   </button>
 </div>
 <form>
-  <div *ngIf="isConfirmed; then approvalMessage else confirmationButtons"></div>
-
-  <ng-template #confirmationButtons>
-    <mat-form-field>
-      <input matInput [(ngModel)]="data.receiverName" name="receiverName" placeholder="Įveskite vartotoją" />
-    </mat-form-field>
-    <button mat-raised-button color="primary" (click)="invite()">Pakviesti</button>
-  </ng-template>
-
-  <ng-template #approvalMessage>
-    <h1>
-      Negalite redaguoti sąrašo
-    </h1>
-  </ng-template>
-
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.receiverName" name="receiverName" placeholder="Įveskite vartotoją" />
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="invite()">Send invitation</button>
 </form>
 
 <mat-form-field>

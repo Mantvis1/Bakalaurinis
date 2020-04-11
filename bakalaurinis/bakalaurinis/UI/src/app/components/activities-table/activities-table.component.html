@@ -1,4 +1,4 @@
-<div><button mat-raised-button color="basic" (click)="openCreateModal()">Add new activity</button></div>
+<div><button mat-raised-button color="basic" (click)="openCreateModal()">Add new work</button></div>
 
 <mat-form-field>
   <mat-label>Filter</mat-label>
@@ -31,14 +31,14 @@
     <ng-container matColumnDef="Edit">
       <th mat-header-cell *matHeaderCellDef> </th>
       <td mat-cell *matCellDef="let element"><button mat-raised-button color="primary"
-          (click)="editFrom(element)">Redaguoti</button></td>
+          (click)="editFrom(element)">Edit</button></td>
     </ng-container>
 
     <ng-container matColumnDef="Invite">
       <th mat-header-cell *matHeaderCellDef> </th>
       <td mat-cell *matCellDef="let element">
         <div *ngIf="element.isAuthor">
-          <button mat-raised-button color="primary" (click)="invite(element.id)">Pakviesti</button>
+          <button mat-raised-button color="primary" (click)="invite(element.id)">Invite</button>
         </div>
       </td>
     </ng-container>

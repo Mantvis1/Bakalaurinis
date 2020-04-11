@@ -39,8 +39,7 @@ export class InviteUserComponent implements OnInit {
     private userInvitationService: UserInvitationService,
     private userService: UserService,
     private authService: AuthServiceService,
-    private settingsService: SettingsService,
-    private workService: ActivityService
+    private settingsService: SettingsService
   ) { }
 
   ngOnInit() {

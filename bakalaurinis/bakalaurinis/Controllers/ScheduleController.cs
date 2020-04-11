@@ -1,8 +1,8 @@
-﻿using bakalaurinis.Dtos.Activity;
-using bakalaurinis.Services.Interfaces;
+﻿using bakalaurinis.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using bakalaurinis.Dtos.Work;
 
 namespace bakalaurinis.Controllers
 {
@@ -20,7 +20,7 @@ namespace bakalaurinis.Controllers
 
 
         [HttpGet("{userId}/{date}")]
-        [Produces(typeof(ActivityDto[]))]
+        [Produces(typeof(WorkDto[]))]
         public async Task<IActionResult> Get(int userId, DateTime date)
         {
             var activities = await _scheduleService.GetAllByUserIdFilterByDate(userId, date);
@@ -32,7 +32,7 @@ namespace bakalaurinis.Controllers
         }
 
         [HttpPut("{userId}/{date}")]
-        public async Task<IActionResult> Post(int userId, DateTime date, UpdateActivitiesDto updateActivitiesDto)
+        public async Task<IActionResult> Post(int userId, DateTime date, UpdateWorkDto updateActivitiesDto)
         {
             await _scheduleGenerationService.CalculateActivitiesTime(userId, date, updateActivitiesDto);
 

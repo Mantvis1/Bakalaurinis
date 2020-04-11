@@ -10,6 +10,6 @@ export class RefreshActivityService {
   constructor(private http: HttpClient, private urlService: UrlService) { }
 
   refreshActivities(id: number) {
-    return this.http.put(this.urlService.getAbsolutePath('ActivitiesRefresh/' + id), null);
+    return this.http.put(this.urlService.getAbsolutePath('WorkRefresh/' + id), null);
   }
 }

@@ -15,29 +15,29 @@ export class ActivityService {
   constructor(private http: HttpClient, private urlService: UrlService) { }
 
   getUserActivities(id: number): Observable<GetActivities[]> {
-    return this.http.get<GetActivities[]>(this.urlService.getAbsolutePath('Activities/user/') + id);
+    return this.http.get<GetActivities[]>(this.urlService.getAbsolutePath('Work/user/') + id);
   }
   getUserActivityById(id: number): Observable<GetActivities> {
-    return this.http.get<GetActivities>(this.urlService.getAbsolutePath('Activities/' + id));
+    return this.http.get<GetActivities>(this.urlService.getAbsolutePath('Work/' + id));
   }
 
   deleteActivity(id: number): Observable<any> {
-    return this.http.delete<any>(this.urlService.getAbsolutePath('Activities/') + id);
+    return this.http.delete<any>(this.urlService.getAbsolutePath('Work/') + id);
   }
 
   createNewActivity(newActivity: NewActivity) {
-    return this.http.post(this.urlService.getAbsolutePath('Activities'), newActivity);
+    return this.http.post(this.urlService.getAbsolutePath('Work'), newActivity);
   }
 
   editActivity(newActivity: NewActivity, id: number) {
-    return this.http.put(this.urlService.getAbsolutePath('Activities/' + id), newActivity);
+    return this.http.put(this.urlService.getAbsolutePath('Work/' + id), newActivity);
   }
 
   getWorkStatus(workId: number): Observable<WorkStatusConfirmation> {
-    return this.http.get<WorkStatusConfirmation>(this.urlService.getAbsolutePath('Activities/status/' + workId));
+    return this.http.get<WorkStatusConfirmation>(this.urlService.getAbsolutePath('Work/status/' + workId));
   }
 
   updateWorkStatus(workId: number, workStatusConfirmation: WorkStatusConfirmation): Observable<any> {
-    return this.http.put(this.urlService.getAbsolutePath('Activities/status/' + workId), workStatusConfirmation);
+    return this.http.put(this.urlService.getAbsolutePath('Work/status/' + workId), workStatusConfirmation);
   }
 }

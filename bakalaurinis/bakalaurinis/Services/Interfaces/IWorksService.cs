@@ -1,16 +1,16 @@
-﻿using bakalaurinis.Dtos.Activity;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using bakalaurinis.Dtos.Work;
 
 namespace bakalaurinis.Services.Interfaces
 {
     public interface IWorksService
     {
-        Task<ActivityDto> GetById(int id);
-        Task<ICollection<ActivityDto>> GetByUserId(int id);
-        Task<ICollection<ActivityDto>> GetAll();
-        Task<int> Create(NewActivityDto newActivityDto);
+        Task<WorkDto> GetById(int id);
+        Task<ICollection<WorkDto>> GetByUserId(int id);
+        Task<ICollection<WorkDto>> GetAll();
+        Task<int> Create(NewWorkDto newActivityDto);
         Task<bool> Delete(int id);
-        Task<bool> Update(int id, NewActivityDto activityDto);
+        Task<bool> Update(int id, NewWorkDto activityDto);
     }
 }

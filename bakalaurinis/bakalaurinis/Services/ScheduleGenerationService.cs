@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using bakalaurinis.Constants;
 using bakalaurinis.Dtos;
-using bakalaurinis.Dtos.Activity;
 using bakalaurinis.Infrastructure.Enums;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Services.Interfaces;
@@ -9,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using bakalaurinis.Dtos.Work;
 
 namespace bakalaurinis.Services
 {
@@ -120,10 +120,7 @@ namespace bakalaurinis.Services
 
         private bool IsActivityNotToLong(int currentActivityDuration, int maxDuration)
         {
-            if (currentActivityDuration <= maxDuration)
-                return true;
-
-            return false;
+            return currentActivityDuration <= maxDuration;
         }
 
         private async Task<ICollection<GeneratorFreeSpaceDto>> GetAllEmptySpaces(int userId)
@@ -132,7 +129,7 @@ namespace bakalaurinis.Services
             var allActivities = (await _worksRepository.FilterByUserIdAndStartTimeIsNotNull(userId)).OrderBy(x => x.StartTime).ToList();
             var result = new List<GeneratorFreeSpaceDto>();
 
-            for (int i = 0; i < allActivities.Count - 1; i++)
+            for (var i = 0; i < allActivities.Count - 1; i++)
             {
                 var time = await MoveToNextDay(userId, currentDay);
                 int differenceBetweenDays;
@@ -210,7 +207,7 @@ namespace bakalaurinis.Services
             return time;
         }
 
-        public async Task CalculateActivitiesTime(int id, DateTime date, UpdateActivitiesDto updateActivitiesDto)
+        public async Task CalculateActivitiesTime(int id, DateTime date, UpdateWorkDto updateActivitiesDto)
         {
             var currentTime = _timeService.AddMinutesToTime(date, (await _userSettingsRepository.GetByUserId(id)).StartTime * 60);
 

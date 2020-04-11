@@ -196,6 +196,97 @@ namespace test
                 StartTime = DateTime.MinValue.AddDays(3).AddHours(8),
                 EndTime = DateTime.MinValue.AddDays(3).AddHours(9).AddMinutes(45)
             },
+            new Work
+            {
+                Id = 12,
+                UserId = 1,
+                Title = "testWork12",
+                DurationInMinutes = 15,
+                ActivityPriority = Medium,
+                StartTime = DateTime.MinValue.AddDays(4).AddHours(8),
+                EndTime = DateTime.MinValue.AddDays(4).AddHours(8).AddMinutes(15)
+
+            },
+            new Work
+            {
+                Id = 13,
+                UserId = 1,
+                Title = "testWork13",
+                DurationInMinutes = 60,
+                ActivityPriority = Medium,
+                StartTime = DateTime.MinValue.AddDays(4).AddHours(9),
+                EndTime = DateTime.MinValue.AddDays(4).AddHours(10)
+            },
+            new Work
+            {
+                Id = 14,
+                UserId = 1,
+                Title = "testWork14",
+                DurationInMinutes = 30,
+                ActivityPriority = Medium,
+                StartTime = DateTime.MinValue.AddDays(4).AddHours(8).AddMinutes(30),
+                EndTime = DateTime.MinValue.AddDays(4).AddHours(9)
+            },
+            new Work
+            {
+                Id = 15,
+                UserId = 1,
+                Title = "testWork15",
+                DurationInMinutes = 60,
+                ActivityPriority = High,
+                StartTime = null,
+                EndTime = null
+            },
+            new Work
+            {
+                Id = 16,
+                UserId = 1,
+                Title = "testWork16",
+                DurationInMinutes = 22,
+                ActivityPriority = Low,
+                StartTime = null,
+                EndTime = null
+            },
+            new Work
+            {
+                Id = 17,
+                UserId = 1,
+                Title = "testWork14",
+                DurationInMinutes = 30,
+                ActivityPriority = Medium,
+                StartTime = DateTime.MinValue.AddDays(4).AddHours(8),
+                EndTime = DateTime.MinValue.AddDays(4).AddHours(9).AddMinutes(30)
+            },
+            new Work
+            {
+                Id = 18,
+                UserId = 1,
+                Title = "testWork14",
+                DurationInMinutes = 30,
+                ActivityPriority = Medium,
+                StartTime = DateTime.MinValue.AddDays(4).AddHours(8).AddMinutes(30),
+                EndTime = DateTime.MinValue.AddDays(4).AddHours(9)
+            },
+            new Work
+            {
+                Id = 19,
+                UserId = 1,
+                Title = "testWork14",
+                DurationInMinutes = 30,
+                ActivityPriority = Medium,
+                StartTime = DateTime.MinValue.AddDays(5).AddHours(9),
+                EndTime = DateTime.MinValue.AddDays(5).AddHours(9).AddMinutes(30)
+            },
+            new Work
+            {
+                Id = 20,
+                UserId = 1,
+                Title = "testWork14",
+                DurationInMinutes = 30,
+                ActivityPriority = Medium,
+                StartTime = DateTime.MinValue.AddDays(5).AddHours(9).AddMinutes(30),
+                EndTime = DateTime.MinValue.AddDays(5).AddHours(10)
+            },
             };
 
             context.Works.AddRange(_works);

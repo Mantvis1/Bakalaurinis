@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using bakalaurinis.Dtos.Activity;
 using bakalaurinis.Infrastructure.Database.Models;
 using bakalaurinis.Infrastructure.Enums;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
@@ -7,35 +6,36 @@ using bakalaurinis.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using bakalaurinis.Dtos.Work;
 
 namespace bakalaurinis.Services
 {
     public class WorksService : IWorksService
     {
-        private readonly IWorksRepository _repository;
+        private readonly IWorksRepository _worksRepository;
         private readonly IMapper _mapper;
         private readonly IScheduleGenerationService _scheduleGenerationService;
         private readonly IMessageService _messageService;
 
         public WorksService(
-            IWorksRepository repository,
+            IWorksRepository worksRepository,
             IMapper mapper,
             IScheduleGenerationService scheduleGenerationService,
             IMessageService messageService
             )
         {
-            _repository = repository;
+            _worksRepository = worksRepository;
             _mapper = mapper;
             _scheduleGenerationService = scheduleGenerationService;
             _messageService = messageService;
         }
 
-        public async Task<int> Create(NewActivityDto newActivityDto)
+        public async Task<int> Create(NewWorkDto newActivityDto)
         {
             var work = _mapper.Map<Work>(newActivityDto);
             work.IsAuthor = true;
 
-            var workId = await _repository.Create(work);
+            var workId = await _worksRepository.Create(work);
 
             await _scheduleGenerationService.Generate(newActivityDto.UserId);
             await _messageService.Create(work.UserId, workId, MessageTypeEnum.NewActivity);
@@ -45,7 +45,7 @@ namespace bakalaurinis.Services
 
         public async Task<bool> Delete(int id)
         {
-            var work = await _repository.GetById(id);
+            var work = await _worksRepository.GetById(id);
 
             if (work == null)
             {
@@ -54,41 +54,41 @@ namespace bakalaurinis.Services
 
             await _messageService.Create(work.UserId, work.Id, MessageTypeEnum.DeleteActivity);
 
-            return await _repository.Delete(work);
+            return await _worksRepository.Delete(work);
         }
 
-        public async Task<ICollection<ActivityDto>> GetAll()
+        public async Task<ICollection<WorkDto>> GetAll()
         {
-            var activities = await _repository.GetAll();
-            var activitiesDto = _mapper.Map<ActivityDto[]>(activities);
+            var activities = await _worksRepository.GetAll();
+            var activitiesDto = _mapper.Map<WorkDto[]>(activities);
 
             return activitiesDto;
         }
 
-        public async Task<ActivityDto> GetById(int id)
+        public async Task<WorkDto> GetById(int id)
         {
-            var work = await _repository.GetById(id);
-            var workDto = _mapper.Map<ActivityDto>(work);
+            var work = await _worksRepository.GetById(id);
+            var workDto = _mapper.Map<WorkDto>(work);
 
             return workDto;
         }
 
-        public async Task<ICollection<ActivityDto>> GetByUserId(int id)
+        public async Task<ICollection<WorkDto>> GetByUserId(int id)
         {
-            var activities = await _repository.FindAllByUserId(id);
-            var activitiesDto = _mapper.Map<ActivityDto[]>(activities);
+            var activities = await _worksRepository.FindAllByUserId(id);
+            var activitiesDto = _mapper.Map<WorkDto[]>(activities);
 
             return activitiesDto;
         }
 
-        public async Task<bool> Update(int id, NewActivityDto activityDto)
+        public async Task<bool> Update(int id, NewWorkDto activityDto)
         {
             if (activityDto == null)
             {
                 throw new ArgumentNullException(nameof(activityDto));
             }
 
-            var work = await _repository.GetById(id);
+            var work = await _worksRepository.GetById(id);
 
             if (work == null)
             {
@@ -97,7 +97,7 @@ namespace bakalaurinis.Services
 
             _mapper.Map(activityDto, work);
 
-            return await _repository.Update(work);
+            return await _worksRepository.Update(work);
         }
     }
 }

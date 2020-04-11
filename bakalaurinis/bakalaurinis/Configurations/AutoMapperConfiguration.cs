@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using bakalaurinis.Dtos.Activity;
 using bakalaurinis.Dtos.Invitation;
 using bakalaurinis.Dtos.Message;
 using bakalaurinis.Dtos.User;
 using bakalaurinis.Dtos.UserInvitations;
 using bakalaurinis.Dtos.UserSettings;
+using bakalaurinis.Dtos.Work;
 using bakalaurinis.Infrastructure.Database.Models;
 
 namespace bakalaurinis.Configurations
@@ -15,11 +15,11 @@ namespace bakalaurinis.Configurations
 
         public AutoMapperConfiguration(string profileName) : base(profileName)
         {
-            CreateMap<NewActivityDto, Work>(MemberList.None);
-            CreateMap<Work, NewActivityDto>(MemberList.None);
+            CreateMap<NewWorkDto, Work>(MemberList.None);
+            CreateMap<Work, NewWorkDto>(MemberList.None);
 
-            CreateMap<ActivityDto, Work>(MemberList.None);
-            CreateMap<Work, ActivityDto>(MemberList.None);
+            CreateMap<WorkDto, Work>(MemberList.None);
+            CreateMap<Work, WorkDto>(MemberList.None);
 
             CreateMap<AfterAutentificationDto, User>(MemberList.None);
             CreateMap<User, AfterAutentificationDto>(MemberList.None);

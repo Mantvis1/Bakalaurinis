@@ -10,7 +10,7 @@ import { MessagesComponent } from './components/messages/messages.component';
 import { RecieveInvitationsComponent } from './components/recieve-invitations/recieve-invitations.component';
 
 const routes: Routes = [
-  { path: "activities", component: ActivitiesTableComponent, canActivate: [AuthGuard] },
+  { path: "works", component: ActivitiesTableComponent, canActivate: [AuthGuard] },
   { path: "schedule", component: ScheduleComponent, canActivate: [AuthGuard] },
   { path: "profile", component: ProfileComponent, canActivate: [AuthGuard] },
   { path: "messages", component: MessagesComponent, canActivate: [AuthGuard] },

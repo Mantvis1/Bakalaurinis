@@ -7,12 +7,12 @@ using Xunit;
 
 namespace test.Tests
 {
-    public class UserTests
+    public class UserServiceTests
     {
         private readonly UserService _userService;
         private readonly int _usersCount;
 
-        public UserTests()
+        public UserServiceTests()
         {
             var setUp = new SetUp();
             setUp.Initialize();
