@@ -3,8 +3,28 @@ using System;
 
 namespace bakalaurinis.Services
 {
+    
     public class TimeService : ITimeService
     {
+        private readonly int _yearsToMinutes;
+        private readonly int _minutesInHour;
+        private readonly int DayToMinutes = 1440;
+        public TimeService()
+        {
+            _minutesInHour = 60;
+            _yearsToMinutes = DayToMinutes * 365;
+        }
+
+        public int GetYearsToMinutes()
+        {
+            return _yearsToMinutes;
+        }
+
+        public int GetMinutesInHour()
+        {
+            return _minutesInHour;
+        }
+
         public DateTime AddMinutesToTime(DateTime dateTime, int minutes)
         {
             var date = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, 0).AddMinutes(minutes);

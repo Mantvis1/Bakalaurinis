@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using bakalaurinis.Constants;
 using bakalaurinis.Dtos;
 using bakalaurinis.Infrastructure.Enums;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
@@ -198,11 +197,13 @@ namespace bakalaurinis.Services
 
         private async Task<int[]> MoveToNextDay(int userId, int dayCount)
         {
-            int[] time = new int[2];
+            var time = new int[2];
             var userSettings = await _userSettingsRepository.GetByUserId(userId);
 
-            time[0] = userSettings.StartTime * TimeConstants.MinutesInHour + dayCount * 24 * TimeConstants.MinutesInHour;
-            time[1] = userSettings.EndTime * TimeConstants.MinutesInHour + dayCount * 24 * TimeConstants.MinutesInHour;
+            time[0] = userSettings.StartTime * _timeService.GetMinutesInHour() +
+                      dayCount * 24 * _timeService.GetMinutesInHour();
+            time[1] = userSettings.EndTime * _timeService.GetMinutesInHour() +
+                      dayCount * 24 * _timeService.GetMinutesInHour();
 
             return time;
         }
