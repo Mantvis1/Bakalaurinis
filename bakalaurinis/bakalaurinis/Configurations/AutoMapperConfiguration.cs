@@ -21,8 +21,8 @@ namespace bakalaurinis.Configurations
             CreateMap<WorkDto, Work>(MemberList.None);
             CreateMap<Work, WorkDto>(MemberList.None);
 
-            CreateMap<AfterAutentificationDto, User>(MemberList.None);
-            CreateMap<User, AfterAutentificationDto>(MemberList.None);
+            CreateMap<AfterAutenticationDto, User>(MemberList.None);
+            CreateMap<User, AfterAutenticationDto>(MemberList.None);
 
             CreateMap<UserNameDto, User>(MemberList.None);
             CreateMap<User, UserNameDto>(MemberList.None);

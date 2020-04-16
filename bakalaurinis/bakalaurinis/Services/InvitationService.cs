@@ -64,7 +64,7 @@ namespace bakalaurinis.Services
 
         public async Task<ICollection<InvitationDto>> GetAllByReceiverId(int receiverId)
         {
-            var invitations = (await _invitationRepository.GetAllByRecieverId(receiverId)).ToArray();
+            var invitations = (await _invitationRepository.GetAllByReceiverId(receiverId)).ToArray();
             var invitationsDto = _mapper.Map<InvitationDto[]>(invitations);
 
             for (int i = 0; i < invitations.Length; i++)

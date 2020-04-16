@@ -19,7 +19,7 @@ namespace bakalaurinis.Controllers
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        [Produces(typeof(AfterAutentificationDto))]
+        [Produces(typeof(AfterAutenticationDto))]
         public async Task<IActionResult> Authenticate([FromBody]AuthenticateDto authenticateDto)
         {
             var user = await _userService.Authenticate(authenticateDto);

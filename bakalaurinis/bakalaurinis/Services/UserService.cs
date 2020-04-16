@@ -38,10 +38,10 @@ namespace bakalaurinis.Services
             _invitationRepository = invitationRepository;
         }
 
-        public async Task<AfterAutentificationDto> Authenticate(AuthenticateDto authenticateDto)
+        public async Task<AfterAutenticationDto> Authenticate(AuthenticateDto authenticateDto)
         {
             var user = await _userRepository.GetUserByNameAndPassword(authenticateDto);
-            var afterAuthDto = _mapper.Map<AfterAutentificationDto>(user);
+            var afterAuthDto = _mapper.Map<AfterAutenticationDto>(user);
 
             if (user == null)
                 return null;
@@ -97,7 +97,7 @@ namespace bakalaurinis.Services
                 throw new ArgumentNullException();
             }
 
-            var invitations = await _invitationRepository.GetAllByRecieverId(user.Id);
+            var invitations = await _invitationRepository.GetAllByReceiverId(user.Id);
 
             foreach (var invitation in invitations)
             {

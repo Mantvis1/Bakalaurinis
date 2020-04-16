@@ -22,7 +22,7 @@ namespace bakalaurinis.Controllers
         {
             try
             {
-                int invitationId = await _invitationService.Create(newInvitationDto);
+                var invitationId = await _invitationService.Create(newInvitationDto);
 
                 return Ok(invitationId);
             }

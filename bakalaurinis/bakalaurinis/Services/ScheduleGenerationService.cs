@@ -117,7 +117,7 @@ namespace bakalaurinis.Services
             }
         }
 
-        private bool IsActivityNotToLong(int currentActivityDuration, int maxDuration)
+        private static bool IsActivityNotToLong(int currentActivityDuration, int maxDuration)
         {
             return currentActivityDuration <= maxDuration;
         }
