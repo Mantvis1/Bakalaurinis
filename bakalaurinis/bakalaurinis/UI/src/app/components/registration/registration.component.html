@@ -1,59 +1,41 @@
 <mat-card class="login-card login-card-position">
   <form [formGroup]="registrationForm" (ngSubmit)="register()">
-    <h1 class="center" mat-dialog-title>Registracija</h1>
+    <h1 class="center" mat-dialog-title>Registration</h1>
 
     <div class="center">
       <mat-form-field>
-        <input matInput
-               name="username"
-               placeholder="Vartotojo vardas"
-               formControlName="username"
-               class="form-control"
-               required />
+        <input matInput name="username" placeholder="Username" formControlName="username" class="form-control"
+          required />
         <mat-error *ngIf="this.registrationForm.controls.username.invalid" class="error">
-          Įveskite vartotojo vardą
+          Username can not be empty!
         </mat-error>
       </mat-form-field>
     </div>
 
     <div class="center">
       <mat-form-field>
-        <input matInput
-               type="password"
-               name="password"
-               placeholder="Slaptažodis"
-               formControlName="password"
-               required />
+        <input matInput type="password" name="password" placeholder="Password" formControlName="password" required />
         <mat-error *ngIf="this.registrationForm.controls.username.invalid" class="error">
-          Įveskite slaptažodį
+          Password can not be empty!
         </mat-error>
       </mat-form-field>
     </div>
 
     <div class="center">
       <mat-form-field>
-        <input matInput
-               type="password"
-               name="reapeatPassword"
-               placeholder="Pakartoti slaptažodį"
-               formControlName="reapeatPassword"
-               required />
+        <input matInput type="password" name="reapeatPassword" placeholder="Confirm password"
+          formControlName="reapeatPassword" required />
         <mat-error *ngIf="this.registrationForm.controls.reapeatPassword.invalid" class="error">
-          Pakartokite slaptažodį
+          Password confirmation can not be empty!
         </mat-error>
       </mat-form-field>
     </div>
 
     <div class="center">
       <mat-form-field>
-        <input matInput
-               type="email"
-               name="email"
-               placeholder="El.paštas"
-               formControlName="email"
-               required />
+        <input matInput type="email" name="email" placeholder="Email" formControlName="email" required />
         <mat-error *ngIf="this.registrationForm.controls.email.invalid" class="error">
-          Įveskite el.paštą
+          Email can not be empty!
         </mat-error>
       </mat-form-field>
     </div>
@@ -61,7 +43,7 @@
     <div class="center">
       <mat-dialog-actions align="end">
         <button mat-flat-button color="primary">
-          Registruotis
+          Register now
         </button>
       </mat-dialog-actions>
     </div>

@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { UserRegister } from '../../models/user-register';
 import { AlertService } from '../../services/alert.service';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: "app-registration",
@@ -31,9 +32,13 @@ export class RegistrationComponent implements OnInit {
     if (this.validateInput()) {
       this.user = Object.assign({}, this.registrationForm.value);
 
-      this.userService.register(this.user).subscribe(error => {
-        console.log(error);
-      });
+      this.userService.register(this.user).subscribe(
+        () => {
+          this.alertService.showMessage("registration successful");
+        },
+        error => {
+          this.alertService.showMessage(error);
+        });
 
       this.registrationForm.reset();
     }
@@ -49,7 +54,7 @@ export class RegistrationComponent implements OnInit {
 
       return false;
     } else if (this.registrationForm.value.password !== this.registrationForm.value.reapeatPassword) {
-      this.alertService.showMessage('Slaptažodžiai nesutampa');
+      this.alertService.showMessage('Passwords do not match');
 
       return false;
     }
