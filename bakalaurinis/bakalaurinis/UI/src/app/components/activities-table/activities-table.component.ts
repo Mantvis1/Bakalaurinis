@@ -9,35 +9,27 @@ import { ActivityPriority } from "./activity-priority.enum";
 import { InviteUserComponent } from '../invite-user/invite-user.component';
 import { SettingsService } from 'src/app/services/settings.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { ActivityReviewComponent } from '../activity-review/activity-review.component';
 
 @Component({
   selector: "app-activities-table",
   templateUrl: "./activities-table.component.html",
-  styleUrls: ["./activities-table.component.css"],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
+  styleUrls: ["./activities-table.component.css"]
 })
 export class ActivitiesTableComponent implements OnInit {
-
-
   activities = new MatTableDataSource<GetActivities>();
+  isRowClick = true;
+
   displayedColumns: string[] = [
     "Title",
-    "Description",
-    "Duration",
     "Priority",
     "Edit",
     "Invite",
     "Delete"
   ];
+
   activityToEdit: NewActivity = new NewActivity();
   newActivity: NewActivity = new NewActivity();
-  pageSize = 0;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -52,13 +44,14 @@ export class ActivitiesTableComponent implements OnInit {
     this.getPageSize(this.authService.getUserId());
     this.refreshTable();
     this.activities.paginator = this.paginator;
-
-
   }
 
   deleteById(id: number) {
+    this.updateRowClick(false);
+
     this.activityService.deleteActivity(id).subscribe(() => {
       this.refreshTable();
+      this.updateRowClick(true);
     });
   }
 
@@ -80,6 +73,8 @@ export class ActivitiesTableComponent implements OnInit {
   }
 
   openCreateModal() {
+    this.updateRowClick(false);
+
     const dialogRef = this.dialog.open(ActivityFormComponent, {
       minWidth: "250px",
       width: "35%",
@@ -98,6 +93,7 @@ export class ActivitiesTableComponent implements OnInit {
         () => {
           this.refreshTable();
           this.newActivity = new NewActivity();
+          this.updateRowClick(true);
         },
         error => {
           console.log(error);
@@ -107,7 +103,9 @@ export class ActivitiesTableComponent implements OnInit {
   }
 
   editFrom(element: NewActivity) {
+    this.updateRowClick(false);
     this.activityToEdit = Object.assign({}, element);
+
     const dialogRef = this.dialog.open(ActivityFormComponent, {
       minWidth: "250px",
       width: "35%",
@@ -125,6 +123,7 @@ export class ActivitiesTableComponent implements OnInit {
           .subscribe(
             () => {
               this.refreshTable();
+              this.updateRowClick(true);
             },
             error => {
               console.log(error);
@@ -143,7 +142,9 @@ export class ActivitiesTableComponent implements OnInit {
   }
 
   invite(workId: number) {
-    this.dialog.open(InviteUserComponent, {
+    this.updateRowClick(false);
+
+    const dialogRef = this.dialog.open(InviteUserComponent, {
       minWidth: "250px",
       width: "35%",
       data: {
@@ -152,10 +153,28 @@ export class ActivitiesTableComponent implements OnInit {
         receiverName: ''
       }
     });
+
+    dialogRef.afterClosed().subscribe(() => { this.updateRowClick(true); })
   }
 
   applyFilter(filterValue: string): void {
     this.activities.filter = filterValue.trim().toLowerCase();
+  }
+
+  onRowClicked(row) {
+    if (this.isRowClick) {
+      this.dialog.open(ActivityReviewComponent, {
+        minWidth: "250px",
+        width: "35%",
+        data: {
+          activityId: row.id
+        }
+      });
+    }
+  }
+
+  private updateRowClick(isRowCanBeClicked: boolean): void {
+    this.isRowClick = isRowCanBeClicked;
   }
 
 }

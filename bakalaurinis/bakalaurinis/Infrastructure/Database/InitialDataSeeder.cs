@@ -11,56 +11,56 @@ namespace bakalaurinis.Infrastructure.Database
                 new MessageTemplate
                 {
                     Id = 1,
-                    TitleTemplate = "Veiklos sukūrimas",
-                    TextTemplate = "Jūs sukūrėte nauja veiklą [activity]!"
+                    TitleTemplate = "Work created",
+                    TextTemplate = "You created new work [work]!"
                 },
                 new MessageTemplate
                 {
                     Id = 2,
-                    TitleTemplate = "Veiklos šalinimas",
-                    TextTemplate = "Jūs pašalinote veiklą [activity]!"
+                    TitleTemplate = "Work deleted",
+                    TextTemplate = "You deleted work [work]!"
                 },
                   new MessageTemplate
                   {
                       Id = 3,
-                      TitleTemplate = "Tvarkataščio generavimas atliktas",
-                      TextTemplate = "Sistema atliko naują tvarkaraščio generavimą!"
+                      TitleTemplate = "Schedule generation complete",
+                      TextTemplate = "The system performed a new schedule generation!"
                   },
                   new MessageTemplate
                   {
                       Id = 4,
-                      TitleTemplate = "Naujas kvietimas gautas",
-                      TextTemplate = "Vartotojas [user] pakvietė jus i veiką [activity]!"
+                      TitleTemplate = "New invitation received",
+                      TextTemplate = "Vartotojas [user] pakvietė jus i veiką [work]!"
                   },
                   new MessageTemplate
                   {
                       Id = 5,
-                      TitleTemplate = "Kvietimas atmestas",
-                      TextTemplate = "Vartotojas [user] atmetė jūsų pakvietimą į renginį [activity]!"
+                      TitleTemplate = "Invitation declined",
+                      TextTemplate = "Vartotojas [user] atmetė jūsų pakvietimą į renginį [work]!"
                   },
                    new MessageTemplate
                    {
                        Id = 6,
-                       TitleTemplate = "Kvietimas priimtas",
-                       TextTemplate = "Vartotojas [user] priėmė jūsų pakvietimą į renginį [activity]!"
+                       TitleTemplate = "Invitation accepted",
+                       TextTemplate = "Vartotojas [user] priėmė jūsų pakvietimą į renginį [work]!"
                    },
                   new MessageTemplate
                   {
                       Id = 7,
-                      TitleTemplate = "Jūs atmetėte kvietimą",
-                      TextTemplate = "Jūs atmetėte kvietimą vartotojo [user] pakvietimą į renginį [activity]!"
+                      TitleTemplate = "You have declined invitation",
+                      TextTemplate = "Jūs atmetėte kvietimą vartotojo [user] pakvietimą į renginį [work]!"
                   },
                    new MessageTemplate
                    {
                        Id = 8,
-                       TitleTemplate = "Jūs priėmėte kvietimą",
-                       TextTemplate = "Jūs priėmėte kvietimą vartotojo [user] pakvietimą į renginį [activity]!"
+                       TitleTemplate = "You have accepted invitation",
+                       TextTemplate = "You have accepted [user]'s invitation to work [work]!"
                    },
                   new MessageTemplate
                   {
                       Id = 9,
-                      TitleTemplate = "Naujas kvietimas iššiūstas",
-                      TextTemplate = "Jūs pakvietėtę [user] į veiką [activity]!"
+                      TitleTemplate = "Invitation sent",
+                      TextTemplate = "Jūs pakvietėtę [user] į veiką [work]!"
                   }
                 );
         }

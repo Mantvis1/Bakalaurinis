@@ -17,7 +17,7 @@ namespace bakalaurinis.Services
 
         public async Task<string> GetFormattedText(string message, int userId, int activityId)
         {
-            if (message.Contains("[activity]"))
+            if (message.Contains("[work]"))
             {
                 message = await AddActivityName(message, activityId);
             }
@@ -37,7 +37,7 @@ namespace bakalaurinis.Services
 
         private async Task<string> AddActivityName(string message, int activityId)
         {
-            return message.Replace("[activity]", (await _activitiesRepository.GetById(activityId)).Title);
+            return message.Replace("[work]", (await _activitiesRepository.GetById(activityId)).Title);
         }
     }
 }
