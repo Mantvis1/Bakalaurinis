@@ -27,7 +27,8 @@ import {
   MatIconModule,
   MatPaginatorModule,
   MatCheckboxModule,
-  MatGridListModule
+  MatGridListModule,
+  MatSortModule
 } from "@angular/material";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { ActivitiesTableComponent } from "./components/activities-table/activities-table.component";
@@ -101,6 +102,7 @@ export function tokenGetter() {
     MatIconModule,
     DragDropModule,
     MatMenuModule,
+    MatSortModule,
     MatPaginatorModule,
     FullCalendarModule,
     MatCheckboxModule,

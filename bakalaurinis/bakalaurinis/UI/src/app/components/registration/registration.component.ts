@@ -3,7 +3,6 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { UserRegister } from '../../models/user-register';
 import { AlertService } from '../../services/alert.service';
-import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: "app-registration",
@@ -15,7 +14,7 @@ export class RegistrationComponent implements OnInit {
   registrationForm = new FormGroup({
     username: new FormControl(''),
     password: new FormControl(''),
-    reapeatPassword: new FormControl(''),
+    repeatPassword: new FormControl(''),
     email: new FormControl('')
   });
 
@@ -34,8 +33,7 @@ export class RegistrationComponent implements OnInit {
 
       this.userService.register(this.user).subscribe(
         () => {
-          this.alertService.showMessage("registration successful");
-          this.registrationForm.reset()
+          this.alertService.showMessage("Registration successful");
         },
         error => {
           this.alertService.showMessage(error);
@@ -50,8 +48,8 @@ export class RegistrationComponent implements OnInit {
       this.alertService.showCheckFormMessage();
 
       return false;
-    } else if (this.registrationForm.value.password !== this.registrationForm.value.reapeatPassword) {
-      this.alertService.showMessage('Passwords do not match');
+    } else if (this.registrationForm.value.password !== this.registrationForm.value.repeatPassword) {
+      this.alertService.showMessage('Passwords does not match');
 
       return false;
     }

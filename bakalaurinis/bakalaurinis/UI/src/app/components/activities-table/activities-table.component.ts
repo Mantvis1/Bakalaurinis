@@ -8,11 +8,19 @@ import { NewActivity } from "../../models/new-activity";
 import { ActivityPriority } from "./activity-priority.enum";
 import { InviteUserComponent } from '../invite-user/invite-user.component';
 import { SettingsService } from 'src/app/services/settings.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: "app-activities-table",
   templateUrl: "./activities-table.component.html",
-  styleUrls: ["./activities-table.component.css"]
+  styleUrls: ["./activities-table.component.css"],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class ActivitiesTableComponent implements OnInit {
 

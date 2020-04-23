@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Message } from 'src/app/models/message';
 import { MessageService } from 'src/app/services/message.service';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { SettingsService } from 'src/app/services/settings.service';
 import { DatePipe } from '@angular/common';
 
@@ -12,9 +12,7 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./messages.component.css']
 })
 export class MessagesComponent implements OnInit {
-
-  messages = new MatTableDataSource<Message>();
-  pageSize = 0;
+  messagesDataSource = new MatTableDataSource<Message>();
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -35,12 +33,14 @@ export class MessagesComponent implements OnInit {
   ngOnInit() {
     this.getPageSize(this.authService.getUserId());
     this.getUserMessages();
-    this.messages.paginator = this.paginator;
   }
 
   getUserMessages(): void {
     this.messageService.getUserMessages(this.authService.getUserId()).subscribe(data => {
-      this.messages.data = Object.assign([], data);
+      this.messagesDataSource = new MatTableDataSource(data);
+      this.messagesDataSource.paginator = this.paginator;
+      this.messagesDataSource.filterPredicate = this.filterTable;
+      this.updateDataSource();
     });
   }
 
@@ -73,7 +73,23 @@ export class MessagesComponent implements OnInit {
   }
 
   applyFilter(filterValue: string): void {
-    this.messages.filter = filterValue.trim().toLowerCase();
+    this.messagesDataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.messagesDataSource.paginator) {
+      this.messagesDataSource.paginator.firstPage();
+    }
+  }
+
+  updateDataSource() {
+    this.messagesDataSource.data.forEach(message => {
+      message.dataString = this.getDataString(message.createdAt);
+    });
+  }
+
+  private filterTable(message: Message, filterText: string): boolean {
+    return (message.dataString && message.dataString.toLowerCase().indexOf(filterText) >= 0) ||
+      (message.text && message.text.toLowerCase().indexOf(filterText) >= 0) ||
+      (message.title && message.title.toLowerCase().indexOf(filterText) >= 0);
   }
 
 }

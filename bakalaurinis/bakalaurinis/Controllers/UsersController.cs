@@ -3,7 +3,6 @@ using bakalaurinis.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace bakalaurinis.Controllers

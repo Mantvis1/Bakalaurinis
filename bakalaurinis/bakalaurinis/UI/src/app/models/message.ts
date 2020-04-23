@@ -4,4 +4,5 @@ export class Message {
   text: string;
   userId: number;
   createdAt: Date;
+  dataString: string;
 }

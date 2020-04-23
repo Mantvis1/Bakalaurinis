@@ -73,7 +73,7 @@ namespace bakalaurinis.Services
                 throw new ArgumentNullException();
             }
 
-            if((await _userRepository.GetByName(registrationDto.Username)) != null)
+            if ((await _userRepository.GetByName(registrationDto.Username)) != null)
             {
                 throw new ValidationException("Username is taken");
             }
