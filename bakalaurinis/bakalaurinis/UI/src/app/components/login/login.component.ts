@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { MatSnackBar } from "@angular/material";
 import { AuthServiceService } from "src/app/services/auth-service.service";
 import { Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -17,7 +16,6 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthServiceService,
     private router: Router,
-    private matSnackBar: MatSnackBar,
     private alertService: AlertService
   ) {
     if (this.authService.isAuthenticated()) {
@@ -36,6 +34,8 @@ export class LoginComponent implements OnInit {
     if (this.validateInput()) {
       this.authService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(() => {
         this.router.navigateByUrl("/schedule");
+      }, error => {
+        this.alertService.showMessage(error);
       });
     }
   }

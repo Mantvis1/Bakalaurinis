@@ -1,37 +1,28 @@
 <mat-card class="login-card login-card-position">
   <form [formGroup]="loginForm" (ngSubmit)="login()">
-    <h1 class="center" mat-dialog-title>Prisijugimas</h1>
+    <h1 class="center" mat-dialog-title>Login</h1>
 
     <div class="center">
       <mat-form-field>
-        <input matInput
-               name="username"
-               placeholder="Vartotojo vardas"
-               formControlName="username"
-               class="form-control"
-               required/>
+        <input matInput name="username" placeholder="Username" formControlName="username" class="form-control"
+          required />
         <mat-error *ngIf="this.loginForm.controls.username.invalid" class="error">
-          Įveskite username
+          Username can not be empty!
         </mat-error>
       </mat-form-field>
     </div>
 
     <div class="center">
       <mat-form-field>
-        <input matInput
-               type="password"
-               name="password"
-               placeholder="Slaptažodis"
-               formControlName="password"
-               required />
+        <input matInput type="password" name="password" placeholder="Password" formControlName="password" required />
         <mat-error *ngIf="this.loginForm.controls.password.invalid" class="error">
-          Įveskite password
+          Password can not be empty!
         </mat-error>
       </mat-form-field>
     </div>
 
     <div class="center">
-      <button [disabled]="isDisabled" mat-flat-button color="primary">
+      <button mat-flat-button color="primary">
         Log in
       </button>
     </div>

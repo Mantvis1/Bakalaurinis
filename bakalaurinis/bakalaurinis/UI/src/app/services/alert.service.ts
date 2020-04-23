@@ -13,6 +13,6 @@ export class AlertService {
   }
 
   public showCheckFormMessage(): void {
-    this.showMessage('Pasitikrinkite ar užpildėte visus privalomus laukus');
+    this.showMessage('Some of required form fields are empty');
   }
 }

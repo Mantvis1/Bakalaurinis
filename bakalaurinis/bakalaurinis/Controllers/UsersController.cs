@@ -2,6 +2,8 @@
 using bakalaurinis.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace bakalaurinis.Controllers
@@ -25,7 +27,9 @@ namespace bakalaurinis.Controllers
             var user = await _userService.Authenticate(authenticateDto);
 
             if (user == null)
+            {
                 return BadRequest(new { message = "Username or password is incorrect" });
+            }
 
             return Ok(user);
         }
@@ -35,9 +39,16 @@ namespace bakalaurinis.Controllers
         [Produces(typeof(bool))]
         public async Task<IActionResult> Register([FromBody]RegistrationDto registrationDto)
         {
-            await _userService.Register(registrationDto);
+            try
+            {
+                await _userService.Register(registrationDto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
 
-            return Ok(true);
+            return Ok();
         }
 
         [HttpGet("self/{id}")]

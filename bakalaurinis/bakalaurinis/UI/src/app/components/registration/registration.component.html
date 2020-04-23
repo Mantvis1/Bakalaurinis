@@ -15,7 +15,7 @@
     <div class="center">
       <mat-form-field>
         <input matInput type="password" name="password" placeholder="Password" formControlName="password" required />
-        <mat-error *ngIf="this.registrationForm.controls.username.invalid" class="error">
+        <mat-error *ngIf="this.registrationForm.controls.password.invalid" class="error">
           Password can not be empty!
         </mat-error>
       </mat-form-field>

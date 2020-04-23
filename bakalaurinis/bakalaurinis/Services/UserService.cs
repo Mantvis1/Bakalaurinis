@@ -8,6 +8,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -70,6 +71,11 @@ namespace bakalaurinis.Services
             if (registrationDto == null)
             {
                 throw new ArgumentNullException();
+            }
+
+            if((await _userRepository.GetByName(registrationDto.Username)) != null)
+            {
+                throw new ValidationException("Username is taken");
             }
 
             var user = _mapper.Map<User>(registrationDto);

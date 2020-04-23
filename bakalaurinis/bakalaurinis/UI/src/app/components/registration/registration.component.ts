@@ -35,21 +35,18 @@ export class RegistrationComponent implements OnInit {
       this.userService.register(this.user).subscribe(
         () => {
           this.alertService.showMessage("registration successful");
+          this.registrationForm.reset()
         },
         error => {
           this.alertService.showMessage(error);
         });
 
-      this.registrationForm.reset();
+      ;
     }
   }
 
   private validateInput(): boolean {
-    if (this.registrationForm.value.username.length === 0 ||
-      this.registrationForm.value.password.length === 0 ||
-      this.registrationForm.value.reapeatPassword.length === 0 ||
-      this.registrationForm.value.email.length === 0
-    ) {
+    if (!this.registrationForm.valid) {
       this.alertService.showCheckFormMessage();
 
       return false;
