@@ -26,7 +26,7 @@ namespace test.Tests
         [InlineData(3)]
         public async void GetAllByUserId_CountsAreEquals(int id)
         {
-            var scheduleLength = (await _scheduleService.GetAllByUserIdFilterByDate(id, DateTime.MinValue)).Count;
+            var scheduleLength = (await _scheduleService.GetAllByUserIdFilterByDate(id, DateTime.MinValue)).works.Count;
 
             Assert.True(scheduleLength == 1);
         }

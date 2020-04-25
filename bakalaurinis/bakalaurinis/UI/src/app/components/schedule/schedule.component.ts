@@ -28,7 +28,6 @@ export class ScheduleComponent implements OnInit {
     this.currentDate = new Date();
     this.setCurrentDate();
     this.getAllUserActivities();
-    this.getBusyness();
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -40,7 +39,8 @@ export class ScheduleComponent implements OnInit {
 
   getAllUserActivities() {
     this.scheduleService.getUserTodaysActivities(this.authService.getUserId(), this.dateString).subscribe(data => {
-      this.activities = Object.assign([], data);
+      this.activities = Object.assign([], data.works);
+      this.busyness = data.busyness;
     });
   }
 
@@ -64,11 +64,5 @@ export class ScheduleComponent implements OnInit {
 
   getDataString(date: Date) {
     return this.datePipe.transform(date, 'HH:mm:ss');
-  }
-
-  getBusyness() {
-    this.scheduleService.getBusyness(this.authService.getUserId()).subscribe(data => {
-      this.busyness = data;
-    });
   }
 }

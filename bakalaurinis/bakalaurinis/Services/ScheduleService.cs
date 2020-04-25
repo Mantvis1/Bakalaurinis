@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using bakalaurinis.Dtos.Work;
+using bakalaurinis.Dtos.Schedule;
 
 namespace bakalaurinis.Services
 {
@@ -21,12 +22,20 @@ namespace bakalaurinis.Services
             _userSettingsRepository = userSettingsRepository;
         }
 
-        public async Task<ICollection<WorkDto>> GetAllByUserIdFilterByDate(int id, DateTime date)
+        public async Task<GetScheduleDto> GetAllByUserIdFilterByDate(int id, DateTime date)
         {
             var works = await _repository.FilterByUserIdAndTime(id, date);
             var worksDto = _mapper.Map<WorkDto[]>(works);
+            var scheduleDto = new GetScheduleDto();
 
-            return worksDto;
+            foreach(var work in worksDto)
+            {
+                scheduleDto.works.Add(work);
+            }
+
+            scheduleDto.Busyness = await GetBusyness(id, date);
+
+            return scheduleDto;
         }
 
         public async Task<int> GetBusyness(int id, DateTime date)

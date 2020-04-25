@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using bakalaurinis.Dtos.Work;
+using bakalaurinis.Dtos.Schedule;
 
 namespace bakalaurinis.Controllers
 {
@@ -20,15 +21,17 @@ namespace bakalaurinis.Controllers
 
 
         [HttpGet("{userId}/{date}")]
-        [Produces(typeof(WorkDto[]))]
+        [Produces(typeof(GetScheduleDto))]
         public async Task<IActionResult> Get(int userId, DateTime date)
         {
-            var activities = await _scheduleService.GetAllByUserIdFilterByDate(userId, date);
+            var getScheduleDto = await _scheduleService.GetAllByUserIdFilterByDate(userId, date);
 
-            if (activities == null)
+            if (getScheduleDto == null)
+            {
                 return NotFound();
+            }
 
-            return Ok(activities);
+            return Ok(getScheduleDto);
         }
 
         [HttpPut("{userId}/{date}")]
@@ -37,15 +40,6 @@ namespace bakalaurinis.Controllers
             await _scheduleGenerationService.CalculateActivitiesTime(userId, date, updateActivitiesDto);
 
             return Ok();
-        }
-
-        [HttpGet("{userId}")]
-        [Produces(typeof(int))]
-        public async Task<IActionResult> GetBusyness(int userId)
-        {
-            var busyness = await _scheduleService.GetBusyness(userId, DateTime.Now);
-
-            return Ok(busyness);
         }
     }
 }
