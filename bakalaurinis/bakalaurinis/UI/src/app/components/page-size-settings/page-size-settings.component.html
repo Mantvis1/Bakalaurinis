@@ -2,8 +2,8 @@
   <form>
     <div>
       <mat-form-field>
-        <mat-label>Pasirinkite puslapio dydį</mat-label>
-        <mat-select placeholder="Puslapio dydis" [(ngModel)]="pageSizeSetting" name="pageSizeSetting">
+        <mat-label>Select page size</mat-label>
+        <mat-select placeholder="Page size" [(ngModel)]="pageSizeSetting" name="pageSizeSetting">
           <mat-option [value]="5">5</mat-option>
           <mat-option [value]="10">10</mat-option>
           <mat-option [value]="20">20</mat-option>
@@ -11,7 +11,9 @@
         </mat-select>
       </mat-form-field>
 
-      <button (click)="updatePageSize()">Keisti</button>
     </div>
   </form>
+
+  <button mat-raised-button color="primary" (click)="updatePageSize()">Update</button>
+
 </mat-card>

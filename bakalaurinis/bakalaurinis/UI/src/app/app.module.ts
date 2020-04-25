@@ -28,7 +28,9 @@ import {
   MatPaginatorModule,
   MatCheckboxModule,
   MatGridListModule,
-  MatSortModule
+  MatSortModule,
+  MatTabsModule,
+  MatButtonToggleModule
 } from "@angular/material";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { ActivitiesTableComponent } from "./components/activities-table/activities-table.component";
@@ -107,6 +109,8 @@ export function tokenGetter() {
     FullCalendarModule,
     MatCheckboxModule,
     MatGridListModule,
+    MatTabsModule,
+    MatButtonToggleModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

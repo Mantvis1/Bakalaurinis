@@ -15,12 +15,13 @@ export class DeleteAccountComponent {
     private router: Router) { }
 
   delete() {
-    this.userService.deleteUser(this.authService.getUserId()).subscribe(error => {
-      console.log(error);
-    });
+    if (confirm("Are you sure about that?")) {
+      this.userService.deleteUser(this.authService.getUserId()).subscribe(error => {
+        console.log(error);
+      });
 
-    this.authService.logout();
-    this.router.navigateByUrl("");
+      this.authService.logout();
+      this.router.navigateByUrl("");
+    }
   }
-
 }
