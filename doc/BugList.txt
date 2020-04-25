@@ -1,4 +1,3 @@
 Add new work -> doesn't check if duration is number
-List of works in lithuanina
 Invitation accept/ decline is not working
 Invite button apears then work will not have other participants
