@@ -16,6 +16,10 @@ export class ScheduleService {
     return this.http.get<GetActivities[]>(this.urlService.getAbsolutePath('Schedule/' + id + '/' + date));
   }
 
+  getBusyness(id: number, date: string): any {
+    return this.http.get<any>(this.urlService.getAbsolutePath('Schedule/' + id));
+  }
+
   updateActivities(id: number, date: string, activitiesAfterUpdate: ActivitiesAfterUpdate): any {
     return this.http.put<any>(this.urlService.getAbsolutePath('Schedule/' + id + '/' + date), activitiesAfterUpdate);
   }

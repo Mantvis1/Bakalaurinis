@@ -8,5 +8,6 @@ namespace bakalaurinis.Services.Interfaces
     public interface IScheduleService
     {
         Task<ICollection<WorkDto>> GetAllByUserIdFilterByDate(int id, DateTime date);
+        Task<int> GetBusyness(int id, DateTime date);
     }
 }

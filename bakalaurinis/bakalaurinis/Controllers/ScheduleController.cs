@@ -38,5 +38,14 @@ namespace bakalaurinis.Controllers
 
             return Ok();
         }
+
+        [HttpGet("{userId}")]
+        [Produces(typeof(int))]
+        public async Task<IActionResult> GetBusyness(int userId)
+        {
+            var busyness = await _scheduleService.GetBusyness(userId, DateTime.Now);
+
+            return Ok(busyness);
+        }
     }
 }

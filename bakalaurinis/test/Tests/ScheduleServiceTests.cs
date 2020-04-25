@@ -17,10 +17,9 @@ namespace test.Tests
             var context = setUp.DatabaseContext;
             var mapper = setUp.Mapper;
 
-
-
+            var settingsRepository = new UserSettingsRepository(context);
             var worksRepository = new WorksRepository(context);
-            _scheduleService = new ScheduleService(worksRepository, mapper);
+            _scheduleService = new ScheduleService(worksRepository, mapper, settingsRepository);
         }
 
         [Theory]
@@ -30,6 +29,15 @@ namespace test.Tests
             var scheduleLength = (await _scheduleService.GetAllByUserIdFilterByDate(id, DateTime.MinValue)).Count;
 
             Assert.True(scheduleLength == 1);
+        }
+
+        [Theory]
+        [InlineData(3, 50)]
+        public async void GetDayBusyness_CountsAreEquals(int id, int expectedValue)
+        {
+            var busynessInPersentage = await _scheduleService.GetBusyness(id, DateTime.MinValue);
+
+            Assert.True(expectedValue == busynessInPersentage);
         }
     }
 }

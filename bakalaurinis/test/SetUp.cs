@@ -89,6 +89,14 @@ namespace test
                 StartTime = 8,
                 EndTime = 10,
                 ItemsPerPage = 5
+            },
+            new UserSettings
+            {
+                Id = 3,
+                UserId = 3,
+                StartTime = 8,
+                EndTime = 10,
+                ItemsPerPage = 5
             }
             };
             context.UserSettings.AddRange(_userSettings);
@@ -173,10 +181,10 @@ namespace test
                 Id = 9,
                 UserId = 3,
                 Title = "testWork8",
-                DurationInMinutes = 45,
+                DurationInMinutes = 60,
                 ActivityPriority = Medium,
                 StartTime = DateTime.MinValue.AddHours(8),
-                EndTime = DateTime.MinValue.AddHours(10)
+                EndTime = DateTime.MinValue.AddHours(9)
             },
             new Work
             {

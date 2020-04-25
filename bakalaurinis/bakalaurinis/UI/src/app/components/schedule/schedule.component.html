@@ -16,9 +16,20 @@
   </mat-grid-tile>
 </mat-grid-list>
 
+<mat-card>
+  <mat-card-content>
+    <h2 class="example-h2">Busyness</h2>
+    <section class="example-section">
+      <mat-progress-bar class="example-margin" [color]="'primary'" [mode]="'determine'" [value]="busyness"
+        [bufferValue]="100">
+      </mat-progress-bar>
+    </section>
+  </mat-card-content>
+</mat-card>
+
 <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
   <div class="example-box" *ngFor="let activity of activities" cdkDrag>
     <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-    {{activity.title}} ({{activity.startTime}} - {{activity.endTime}})
+    {{activity.title}} ({{getDataString(activity.startTime)}} - {{getDataString(activity.endTime)}})
   </div>
 </div>

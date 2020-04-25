@@ -12,6 +12,7 @@ import { ActivitiesAfterUpdate } from 'src/app/models/activities-after-update';
   styleUrls: ['./schedule.component.css'],
 })
 export class ScheduleComponent implements OnInit {
+  busyness: number;
   constructor(
     private scheduleService: ScheduleService,
     private authService: AuthServiceService,
@@ -27,6 +28,7 @@ export class ScheduleComponent implements OnInit {
     this.currentDate = new Date();
     this.setCurrentDate();
     this.getAllUserActivities();
+    this.getBusyness();
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -60,4 +62,13 @@ export class ScheduleComponent implements OnInit {
     this.setCurrentDate();
   }
 
+  getDataString(date: Date) {
+    return this.datePipe.transform(date, 'HH:mm:ss');
+  }
+
+  getBusyness() {
+    this.scheduleService.getBusyness(this.authService.getUserId()).subscribe(data => {
+      this.busyness = data;
+    });
+  }
 }
