@@ -1,26 +1,68 @@
 <mat-card>
   <form>
-    <h1>Jūsų pasirinktas laikas</h1>
-    <div> Nuo {{currentTime.startTime}}</div>
-    <div> Nuo {{currentTime.endTime}}</div>
-    <div></div>
-    <label>Laikų ribų pasirinkimas</label>
     <mat-form-field>
-      <mat-select [(ngModel)]="settings.startTime" name="startTime">
-        <mat-option *ngFor="let hour of hours" value={{hour}}>
-          {{hour}}
-        </mat-option>
+      <mat-label>Start time</mat-label>
+      <mat-select [(ngModel)]="currentTime.startTime" name="startTime">
+        <mat-option [value]="1">1</mat-option>
+        <mat-option [value]="2">2</mat-option>
+        <mat-option [value]="3">3</mat-option>
+        <mat-option [value]="4">4</mat-option>
+        <mat-option [value]="5">5</mat-option>
+        <mat-option [value]="6">6</mat-option>
+        <mat-option [value]="7">7</mat-option>
+        <mat-option [value]="8">8</mat-option>
+        <mat-option [value]="9">9</mat-option>
+        <mat-option [value]="10">10</mat-option>
+        <mat-option [value]="11">11</mat-option>
+        <mat-option [value]="12">12</mat-option>
+        <mat-option [value]="13">13</mat-option>
+        <mat-option [value]="14">14</mat-option>
+        <mat-option [value]="15">15</mat-option>
+        <mat-option [value]="16">16</mat-option>
+        <mat-option [value]="17">17</mat-option>
+        <mat-option [value]="18">18</mat-option>
+        <mat-option [value]="19">19</mat-option>
+        <mat-option [value]="20">20</mat-option>
+        <mat-option [value]="21">21</mat-option>
+        <mat-option [value]="22">22</mat-option>
+        <mat-option [value]="23">23</mat-option>
+        <mat-option [value]="24">24</mat-option>
       </mat-select>
     </mat-form-field>
 
+    <br>
+
     <mat-form-field>
-      <mat-select [(ngModel)]="settings.endTime" name="endTime">
-        <mat-option *ngFor="let hour of hours" value={{hour}}>
-          {{hour}}
-        </mat-option>
+      <mat-label>End time</mat-label>
+      <mat-select [(ngModel)]="currentTime.endTime" name="endTime">
+        <mat-option [value]="1">1</mat-option>
+        <mat-option [value]="2">2</mat-option>
+        <mat-option [value]="3">3</mat-option>
+        <mat-option [value]="4">4</mat-option>
+        <mat-option [value]="5">5</mat-option>
+        <mat-option [value]="6">6</mat-option>
+        <mat-option [value]="7">7</mat-option>
+        <mat-option [value]="8">8</mat-option>
+        <mat-option [value]="9">9</mat-option>
+        <mat-option [value]="10">10</mat-option>
+        <mat-option [value]="11">11</mat-option>
+        <mat-option [value]="12">12</mat-option>
+        <mat-option [value]="13">13</mat-option>
+        <mat-option [value]="14">14</mat-option>
+        <mat-option [value]="15">15</mat-option>
+        <mat-option [value]="16">16</mat-option>
+        <mat-option [value]="17">17</mat-option>
+        <mat-option [value]="18">18</mat-option>
+        <mat-option [value]="19">19</mat-option>
+        <mat-option [value]="20">20</mat-option>
+        <mat-option [value]="21">21</mat-option>
+        <mat-option [value]="22">22</mat-option>
+        <mat-option [value]="23">23</mat-option>
+        <mat-option [value]="24">24</mat-option>
       </mat-select>
     </mat-form-field>
-    <button (click)="update()">Update</button>
+
   </form>
+  <button mat-raised-button color="primary" (click)="update()">Update</button>
 
 </mat-card>

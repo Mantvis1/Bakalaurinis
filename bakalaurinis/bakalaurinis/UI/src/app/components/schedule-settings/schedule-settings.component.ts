@@ -10,8 +10,6 @@ import { AlertService } from 'src/app/services/alert.service';
   styleUrls: ['./schedule-settings.component.css']
 })
 export class ScheduleSettingsComponent implements OnInit {
-  hours: number[] = [];
-  settings: Settings = new Settings();
   currentTime: Settings = new Settings();
 
   constructor(
@@ -22,30 +20,20 @@ export class ScheduleSettingsComponent implements OnInit {
 
   ngOnInit() {
     this.getSettings();
-    this.getAll();
-  }
-
-  getAll() {
-    for (let i = 1; i <= 24; i++) {
-      this.hours.push(i);
-    }
   }
 
   update(): void {
-    if (this.settings.startTime == null
-      || this.settings.endTime == null
-      || this.settings.startTime - this.settings.endTime < 0
-    ) {
-      this.settings.userId = this.authService.getUserId();
+    if (this.currentTime.startTime < this.currentTime.endTime) {
+      this.currentTime.userId = this.authService.getUserId();
 
-      this.settingsService.updateSettings(this.settings.userId, this.settings).subscribe(
+      this.settingsService.updateSettings(this.currentTime.userId, this.currentTime).subscribe(
         () => {
           this.getSettings();
+          this.alertService.showMessage("Selected time was updated");
         }
       );
     } else
-      this.alertService.showMessage('Neteisingai įvedėte laikus!');
-    // this.settings = new Settings();
+      this.alertService.showMessage('Start time value must smaller than end time');
   }
 
   getSettings() {
