@@ -1,15 +1,12 @@
-<mat-grid-list cols="6" rowHeight="100px">
-  <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <mat-form-field appearance="outline">
-      <mat-label>Search...</mat-label>
-      <span matSuffix class="material-icons">
-        search
-      </span>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Ex. ium">
-    </mat-form-field>
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]="4" [rowspan]="1">
-  </mat-grid-tile>
+<mat-form-field appearance="outline">
+  <mat-label>Search...</mat-label>
+  <span matSuffix class="material-icons">
+    search
+  </span>
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Ex. ium">
+</mat-form-field>
+
+<mat-grid-list cols="5" rowHeight="50px">
   <mat-grid-tile [colspan]="1" [rowspan]="1">
     <button mat-raised-button color="basic" (click)="openCreateModal()">Add new work</button>
   </mat-grid-tile>

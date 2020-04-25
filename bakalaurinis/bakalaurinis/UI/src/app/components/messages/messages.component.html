@@ -1,19 +1,10 @@
-<mat-grid-list cols="6" rowHeight="100px">
-  <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <mat-form-field appearance="outline">
-      <mat-label>Search...</mat-label>
-      <span matSuffix class="material-icons">
-        search
-      </span>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Ex. ium">
-    </mat-form-field>
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]="4" [rowspan]="1">
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <button mat-raised-button color="warn" (click)="deleteAll()">DeleteAll</button>
-  </mat-grid-tile>
-</mat-grid-list>
+<mat-form-field appearance="outline">
+  <mat-label>Search...</mat-label>
+  <span matSuffix class="material-icons">
+    search
+  </span>
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Ex. ium">
+</mat-form-field>
 
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="messagesDataSource">
@@ -44,8 +35,26 @@
       </td>
     </ng-container>
 
+    <ng-container matColumnDef="deleteAllText">
+      <td mat-header-cell *matHeaderCellDef colspan="3">
+        Delete all
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="deleteAllButton">
+      <td mat-header-cell *matHeaderCellDef colspan="1">
+        <button mat-raised-button color="warn" (click)="deleteAll()">
+          <i class="material-icons">
+            clear
+          </i></button>
+      </td>
+    </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-footer-row *matHeaderRowDef="['deleteAllText','deleteAllButton']"></tr>
+
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
   </table>
 
   <mat-paginator showFirstLastButtons></mat-paginator>

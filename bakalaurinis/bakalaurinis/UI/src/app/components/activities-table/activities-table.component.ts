@@ -79,7 +79,7 @@ export class ActivitiesTableComponent implements OnInit {
       minWidth: "250px",
       width: "35%",
       data: {
-        formTitle: "New activity",
+        formTitle: "New work",
         activityFormData: this.newActivity,
         formConfirmationButtonName: "Create"
       }
@@ -110,7 +110,7 @@ export class ActivitiesTableComponent implements OnInit {
       minWidth: "250px",
       width: "35%",
       data: {
-        formTitle: "Edit activity",
+        formTitle: "Edit work",
         activityFormData: this.activityToEdit,
         formConfirmationButtonName: "Edit"
       }
@@ -134,11 +134,6 @@ export class ActivitiesTableComponent implements OnInit {
 
   getActivityPriority(priorityId: number) {
     return ActivityPriority[priorityId];
-  }
-
-  isValueExists(value: any) {
-    if (value === null) return "Nenustatyta";
-    return value;
   }
 
   invite(workId: number) {
