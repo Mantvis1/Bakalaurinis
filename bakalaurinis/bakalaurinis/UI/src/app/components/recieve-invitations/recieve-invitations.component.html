@@ -24,13 +24,12 @@
                 clear
               </i>
             </button>
-            <button mat-raised-button color="primary" (click)="showActivityInfoModal(element.workId)">Plačiau</button>
           </mat-card-actions>
         </mat-card>
       </td>
     </ng-container>
 
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClicked(row.workId)"></tr>
   </table>
 
   <mat-paginator showFirstLastButtons></mat-paginator>

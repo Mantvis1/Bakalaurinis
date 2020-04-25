@@ -13,7 +13,7 @@ import { ActivityReviewComponent } from '../activity-review/activity-review.comp
   styleUrls: ['./recieve-invitations.component.css']
 })
 export class RecieveInvitationsComponent implements OnInit {
-
+  isRowClick = true;
   invitations = new MatTableDataSource<Invitation>();
   displayedColumns: string[] = [
     "Row"
@@ -43,6 +43,8 @@ export class RecieveInvitationsComponent implements OnInit {
   }
 
   decline(id: number, workId: number) {
+    this.updateRowClick(false);
+
     let invitation = new Invitation();
     invitation.id = id;
     invitation.invitationStatus = InvitationStatus.Atmestas;
@@ -51,11 +53,14 @@ export class RecieveInvitationsComponent implements OnInit {
     this.invitationService.updateInvitation(id, invitation).subscribe(
       () => {
         this.getInvitations();
+        this.updateRowClick(true);
       }
     );
   }
 
   accept(id: number, workId: number) {
+    this.updateRowClick(false);
+
     let invitation = new Invitation();
     invitation.id = id;
     invitation.invitationStatus = InvitationStatus.Priimtas;
@@ -64,6 +69,7 @@ export class RecieveInvitationsComponent implements OnInit {
     this.invitationService.updateInvitation(id, invitation).subscribe(
       () => {
         this.getInvitations();
+        this.updateRowClick(true);
       }
     );
   }
@@ -76,17 +82,23 @@ export class RecieveInvitationsComponent implements OnInit {
     );
   }
 
-  showActivityInfoModal(id: number): void {
-    this.dialog.open(ActivityReviewComponent, {
-      minWidth: "250px",
-      width: "35%",
-      data: {
-        activityId: id
-      }
-    });
-  }
-
   applyFilter(filterValue: string): void {
     this.invitations.filter = filterValue.trim().toLowerCase();
+  }
+
+  onRowClicked(rowId: number) {
+    if (this.isRowClick) {
+      this.dialog.open(ActivityReviewComponent, {
+        minWidth: "300px",
+        width: "50%",
+        data: {
+          activityId: rowId
+        }
+      });
+    }
+  }
+
+  private updateRowClick(isRowCanBeClicked: boolean): void {
+    this.isRowClick = isRowCanBeClicked;
   }
 }

@@ -30,7 +30,9 @@ import {
   MatGridListModule,
   MatSortModule,
   MatTabsModule,
-  MatButtonToggleModule
+  MatButtonToggleModule,
+  MatExpansionPanel,
+  MatExpansionModule
 } from "@angular/material";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { ActivitiesTableComponent } from "./components/activities-table/activities-table.component";
@@ -111,6 +113,7 @@ export function tokenGetter() {
     MatGridListModule,
     MatTabsModule,
     MatButtonToggleModule,
+    MatExpansionModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

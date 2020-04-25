@@ -45,19 +45,23 @@ export class MessagesComponent implements OnInit {
   }
 
   deleteAll() {
-    this.messageService.deleteUserAllMessagesById(this.authService.getUserId()).subscribe(
-      () => {
-        this.getUserMessages();
-      }
-    );
+    if (confirm("Do you want to delete all messages?")) {
+      this.messageService.deleteUserAllMessagesById(this.authService.getUserId()).subscribe(
+        () => {
+          this.getUserMessages();
+        }
+      );
+    }
   }
 
   deleteById(messageId: number) {
-    this.messageService.deleteUserMessagesById(this.authService.getUserId(), messageId).subscribe(
-      () => {
-        this.getUserMessages();
-      }
-    );
+    if (confirm("Do you want to delete current message?")) {
+      this.messageService.deleteUserMessagesById(this.authService.getUserId(), messageId).subscribe(
+        () => {
+          this.getUserMessages();
+        }
+      );
+    }
   }
 
   getPageSize(userId: number): void {

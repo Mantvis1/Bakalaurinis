@@ -49,10 +49,12 @@ export class ActivitiesTableComponent implements OnInit {
   deleteById(id: number) {
     this.updateRowClick(false);
 
-    this.activityService.deleteActivity(id).subscribe(() => {
-      this.refreshTable();
-      this.updateRowClick(true);
-    });
+    if (confirm("Do you want to delete current?")) {
+      this.activityService.deleteActivity(id).subscribe(() => {
+        this.refreshTable();
+        this.updateRowClick(true);
+      });
+    }
   }
 
   refreshTable() {
@@ -159,8 +161,8 @@ export class ActivitiesTableComponent implements OnInit {
   onRowClicked(row) {
     if (this.isRowClick) {
       this.dialog.open(ActivityReviewComponent, {
-        minWidth: "250px",
-        width: "35%",
+        minWidth: "300px",
+        width: "50%",
         data: {
           activityId: row.id
         }
