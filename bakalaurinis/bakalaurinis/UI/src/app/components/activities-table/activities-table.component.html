@@ -1,16 +1,9 @@
-<mat-form-field appearance="outline">
-  <mat-label>Search...</mat-label>
-  <span matSuffix class="material-icons">
-    search
-  </span>
-  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Ex. ium">
-</mat-form-field>
-
-<mat-grid-list cols="5" rowHeight="50px">
-  <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <button mat-raised-button color="basic" (click)="openCreateModal()">Add new work</button>
-  </mat-grid-tile>
-</mat-grid-list>
+<button mat-raised-button color="basic" (click)="openCreateModal()">
+  <i class="material-icons">
+    add
+  </i>
+  Add new work
+</button>
 
 <div>
   <table mat-table [dataSource]="activities" class="mat-elevation-z8">
@@ -48,7 +41,21 @@
           </i> </button></td>
     </ng-container>
 
+    <ng-container matColumnDef="search">
+      <td mat-header-cell *matHeaderCellDef colspan="5">
+        <mat-form-field appearance="outline">
+          <mat-label>Search...</mat-label>
+          <span matSuffix class="material-icons">
+            search
+          </span>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Ex. ium">
+        </mat-form-field>
+      </td>
+    </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-footer-row *matHeaderRowDef="['search']"></tr>
+
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClicked(row)"></tr>
   </table>
 

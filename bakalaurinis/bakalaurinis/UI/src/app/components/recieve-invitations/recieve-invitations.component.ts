@@ -15,9 +15,7 @@ import { ActivityReviewComponent } from '../activity-review/activity-review.comp
 export class RecieveInvitationsComponent implements OnInit {
   isRowClick = true;
   invitations = new MatTableDataSource<Invitation>();
-  displayedColumns: string[] = [
-    "Row"
-  ];
+  displayedColumns: string[] = ["Row"];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -47,7 +45,7 @@ export class RecieveInvitationsComponent implements OnInit {
 
     let invitation = new Invitation();
     invitation.id = id;
-    invitation.invitationStatus = InvitationStatus.Atmestas;
+    invitation.invitationStatus = InvitationStatus.Declined;
     invitation.workId = workId;
 
     this.invitationService.updateInvitation(id, invitation).subscribe(
@@ -63,7 +61,7 @@ export class RecieveInvitationsComponent implements OnInit {
 
     let invitation = new Invitation();
     invitation.id = id;
-    invitation.invitationStatus = InvitationStatus.Priimtas;
+    invitation.invitationStatus = InvitationStatus.Accepted;
     invitation.workId = workId;
 
     this.invitationService.updateInvitation(id, invitation).subscribe(
