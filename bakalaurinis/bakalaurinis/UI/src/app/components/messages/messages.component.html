@@ -1,18 +1,13 @@
-<mat-grid-list cols="5" rowHeight="50px">
-  <mat-grid-tile [colspan]="4" [rowspan]="1">
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <button mat-raised-button color="warn" (click)="deleteAll()">
-      <i class="material-icons">
-        clear
-      </i>
-      clear
-    </button>
-  </mat-grid-tile>
-</mat-grid-list>
+<button mat-raised-button color="warn" class="delete-all-button" (click)="deleteAll()">
+  <i class="material-icons">
+    clear
+  </i>
+  clear
+</button>
 
-<div class="mat-elevation-z8">
-  <table mat-table [dataSource]="messagesDataSource">
+
+<div>
+  <table mat-table [dataSource]="messagesDataSource" class="mat-elevation-z8">
 
     <ng-container matColumnDef="Title">
       <th mat-header-cell *matHeaderCellDef> Title </th>

@@ -39,7 +39,7 @@
     <ng-container matColumnDef="Withdraw">
       <th mat-header-cell *matHeaderCellDef> Withdraw </th>
       <td mat-cell *matCellDef="let element">
-        <div *ngIf="element.invitationStatus==0 && !isConfirmed">
+        <div *ngIf="element.invitationStatus==0">
           <button mat-raised-button color="warn" (click)="deleteInvitation(element.id)">Withdraw</button>
         </div>
       </td>
