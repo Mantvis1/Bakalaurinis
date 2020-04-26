@@ -16,6 +16,7 @@ export class RecieveInvitationsComponent implements OnInit {
   isRowClick = true;
   invitations = new MatTableDataSource<Invitation>();
   displayedColumns: string[] = ["Row"];
+  breakpoint: number = 7;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -27,9 +28,8 @@ export class RecieveInvitationsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getPageSize(this.authService.getUserId());
     this.getInvitations();
-    this.invitations.paginator = this.paginator;
+    this.onResize(window);
   }
 
   getInvitations() {
@@ -72,14 +72,6 @@ export class RecieveInvitationsComponent implements OnInit {
     );
   }
 
-  getPageSize(userId: number): void {
-    this.settingsService.getItemsPerPageSettings(userId).subscribe(
-      data => {
-        this.paginator._changePageSize(data.itemsPerPage);
-      }
-    );
-  }
-
   applyFilter(filterValue: string): void {
     this.invitations.filter = filterValue.trim().toLowerCase();
   }
@@ -98,5 +90,18 @@ export class RecieveInvitationsComponent implements OnInit {
 
   private updateRowClick(isRowCanBeClicked: boolean): void {
     this.isRowClick = isRowCanBeClicked;
+  }
+
+  onResize(event): void {
+    if (event.innerWidth <= 1200 && event.innerWidth > 800) {
+      this.breakpoint = 3;
+    } else if (event.innerWidth <= 800 && event.innerWidth > 600) {
+      this.breakpoint = 2;
+    } else if (event.innerWidth > 1200) {
+      this.breakpoint = 4;
+    }
+    else {
+      this.breakpoint = 1;
+    }
   }
 }
