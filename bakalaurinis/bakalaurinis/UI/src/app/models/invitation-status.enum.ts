@@ -1,7 +1,7 @@
 export enum InvitationStatus {
-  Svarstomas,
-  Priimtas,
-  Atmestas
+  Pending,
+  Accepted,
+  Declined
 }
 
 

@@ -8,7 +8,6 @@ import { InvitationStatus } from 'src/app/models/invitation-status.enum';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
 import { UserService } from 'src/app/services/user.service';
 import { SettingsService } from 'src/app/services/settings.service';
-import { ActivityService } from 'src/app/services/activity.service';
 import { UserInvitation } from 'src/app/models/user-invitation';
 
 @Component({
@@ -17,7 +16,7 @@ import { UserInvitation } from 'src/app/models/user-invitation';
   styleUrls: ['./invite-user.component.css']
 })
 export class InviteUserComponent implements OnInit {
-
+  currentUserName: string;
   userInvitations = new MatTableDataSource<UserInvitation>();
   displayedColumns: string[] = [
     "User",
@@ -26,10 +25,6 @@ export class InviteUserComponent implements OnInit {
   ];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-
-  currentUserName: string;
-  isConfirmed: boolean;
-
 
   constructor(
     public dialogRef: MatDialogRef<InviteUserModal>,
@@ -46,39 +41,45 @@ export class InviteUserComponent implements OnInit {
     this.getPageSize(this.authService.getUserId());
     this.loadAllUserInvitations();
     this.getCurrentUser();
-
-    this.userInvitations.paginator = this.paginator;
   }
 
   invite() {
     let newInvitation = Object.assign({}, this.data);
-    if (!this.isReceiverSameUserAsSender(newInvitation.receiverName)) {
-      if (!this.isUserHaveInvitation(newInvitation.receiverName)) {
-        this.invitationService.createInvitation(newInvitation).subscribe(
-          () => {
-            this.alertService.showMessage("Pakvietimas išsiųstas");
-            this.loadAllUserInvitations();
-          },
-          error => {
-            this.alertService.showMessage("Vartotojas neegzistuoja");
-            console.log(error);
-          }
-        );
-      }
-      else {
-        this.alertService.showMessage("Vartotojas jau turi pakvietimą");
+    if (newInvitation.receiverName.length !== 0) {
+      if (!this.isReceiverSameUserAsSender(newInvitation.receiverName)) {
+        if (!this.isUserHaveInvitation(newInvitation.receiverName)) {
+          this.invitationService.createInvitation(newInvitation).subscribe(
+            () => {
+              this.alertService.showMessage("Invitation sent");
+              this.loadAllUserInvitations();
+            },
+            error => {
+              this.alertService.showMessage("User does not exists");
+              console.log(error);
+            }
+          );
+        }
+        else {
+          this.alertService.showMessage("User already got invitation");
+        }
+      } else {
+        this.alertService.showMessage("You cant send invitation to yourself");
       }
     } else {
-      this.alertService.showMessage("Negalite siųsti pakvietimo sau");
+      this.alertService.showMessage("Receiver name can not be empty");
     }
   }
 
   loadAllUserInvitations() {
     this.userInvitationService.getAllByActivityId(this.data.workId).subscribe(
       data => {
-        console.log(data);
-
         this.userInvitations.data = Object.assign([], data);
+        this.userInvitations.paginator = this.paginator;
+        this.userInvitations.filterPredicate = this.filterTable;
+
+        this.userInvitations.data.forEach(invitation => {
+          invitation.status = this.getStatus(invitation.invitationStatus);
+        });
       }
     );
   }
@@ -89,6 +90,7 @@ export class InviteUserComponent implements OnInit {
 
   isUserHaveInvitation(username: string): boolean {
     let result: boolean = false;
+
     this.userInvitations.data.forEach(element => {
       if (element.username === username) {
         result = true;
@@ -133,15 +135,22 @@ export class InviteUserComponent implements OnInit {
   }
 
   deleteInvitation(id: any): void {
-    this.invitationService.delete(id).subscribe(
-      () => {
-        this.loadAllUserInvitations();
-      }
-    );
+    if (confirm("Are sure about withdrawing current invitation?")) {
+      this.invitationService.delete(id).subscribe(
+        () => {
+          this.loadAllUserInvitations();
+        }
+      );
+    }
   }
 
   applyFilter(filterValue: string): void {
     this.userInvitations.filter = filterValue.trim().toLowerCase();
+  }
+
+  private filterTable(invitation: UserInvitation, filterText: string): boolean {
+    return (invitation.username && invitation.username.toLowerCase().indexOf(filterText) >= 0) ||
+      (invitation.status && invitation.status.toLowerCase().indexOf(filterText) >= 0);
   }
 
 }
