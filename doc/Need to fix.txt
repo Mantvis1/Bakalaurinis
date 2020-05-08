@@ -1,0 +1,10 @@
+
+
+Deja, bet techniniu dokumentu Jus rašyti nemokate, naudojate šukius: "kad visiems butu gera"... "sistema sprendia tokia ir tokia problema", be emociju. Ar turite drauge, kuri paskaitytu darba. Radau pavieniu klaidu. Persitikrinkite.
+Taip pat nagrinejate sistema, o citavimu i svetaines nera.. tai vel panašu i plagiata.
+Diagrama per visa puslapi be aiškinamojo teksto - nemandagu.
+ Jei yra pav., tai tekste turi buti r. pav., pageidautina naudoti cross reference, kad nebutu nušokimu.
+
+Nenaudokite pirmo asmens. "Sugalvojau" ir panašus negali buti naudojami techniniame dokumente. Naudokite bevarde gimine "Darbe nagrinejama", "darbo tikslas", "projektuojama sistema"
+
+Jei yra klases, daniausiai veliau breiasi seku diagramos panaudos atvejams.
