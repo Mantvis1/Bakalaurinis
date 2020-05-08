@@ -23,7 +23,6 @@ export class RecieveInvitationsComponent implements OnInit {
   constructor(
     private readonly authService: AuthServiceService,
     private readonly invitationService: InvitationsService,
-    private readonly settingsService: SettingsService,
     private readonly dialog: MatDialog
   ) { }
 
