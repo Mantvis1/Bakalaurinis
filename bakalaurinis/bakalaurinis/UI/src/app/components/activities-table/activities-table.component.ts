@@ -8,7 +8,6 @@ import { NewActivity } from "../../models/new-activity";
 import { ActivityPriority } from "./activity-priority.enum";
 import { InviteUserComponent } from '../invite-user/invite-user.component';
 import { SettingsService } from 'src/app/services/settings.service';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ActivityReviewComponent } from '../activity-review/activity-review.component';
 
 @Component({
@@ -43,7 +42,6 @@ export class ActivitiesTableComponent implements OnInit {
   ngOnInit() {
     this.getPageSize(this.authService.getUserId());
     this.refreshTable();
-    this.activities.paginator = this.paginator;
   }
 
   deleteById(id: number) {
@@ -61,8 +59,10 @@ export class ActivitiesTableComponent implements OnInit {
     this.activityService
       .getUserActivities(this.authService.getUserId()).subscribe(
         data => {
-          console.log(data);
           this.activities.data = data;
+          this.updateDataSource();
+          this.activities.paginator = this.paginator;
+          this.activities.filterPredicate = this.filterTable;
         });
   }
 
@@ -96,9 +96,6 @@ export class ActivitiesTableComponent implements OnInit {
           this.refreshTable();
           this.newActivity = new NewActivity();
           this.updateRowClick(true);
-        },
-        error => {
-          console.log(error);
         }
       );
     });
@@ -126,9 +123,6 @@ export class ActivitiesTableComponent implements OnInit {
             () => {
               this.refreshTable();
               this.updateRowClick(true);
-            },
-            error => {
-              console.log(error);
             }
           );
     });
@@ -173,5 +167,17 @@ export class ActivitiesTableComponent implements OnInit {
   private updateRowClick(isRowCanBeClicked: boolean): void {
     this.isRowClick = isRowCanBeClicked;
   }
+
+  private updateDataSource() {
+    this.activities.data.forEach(work => {
+      work.priorityString = this.getActivityPriority(work.activityPriority);
+    });
+  }
+
+  private filterTable(work: GetActivities, filterText: string): boolean {
+    return (work.title && work.title.toLowerCase().indexOf(filterText) >= 0) ||
+      (work.priorityString && work.priorityString.toLowerCase().indexOf(filterText) >= 0);
+  }
+
 
 }

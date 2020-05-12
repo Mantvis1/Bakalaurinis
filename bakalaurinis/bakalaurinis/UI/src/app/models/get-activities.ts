@@ -5,5 +5,6 @@ export class GetActivities extends NewActivity {
   startTime: Date;
   endTime: Date;
   isConfirmed: boolean;
-  isAuthor:boolean;
+  isAuthor: boolean;
+  priorityString: String;
 }

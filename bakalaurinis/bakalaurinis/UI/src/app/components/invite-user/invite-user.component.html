@@ -5,13 +5,6 @@
     </i>
   </button>
 </div>
-<mat-form-field appearance="outline">
-  <mat-label>Search...</mat-label>
-  <span matSuffix class="material-icons">
-    search
-  </span>
-  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Ex. ium">
-</mat-form-field>
 
 <form>
   <div>
@@ -45,7 +38,21 @@
       </td>
     </ng-container>
 
+    <ng-container matColumnDef="search">
+      <td mat-header-cell *matHeaderCellDef colspan="4">
+        <mat-form-field appearance="outline">
+          <mat-label>Search...</mat-label>
+          <span matSuffix class="material-icons">
+            search
+          </span>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Ex. ium">
+        </mat-form-field>
+      </td>
+    </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-footer-row *matHeaderRowDef="['search']"></tr>
+
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
