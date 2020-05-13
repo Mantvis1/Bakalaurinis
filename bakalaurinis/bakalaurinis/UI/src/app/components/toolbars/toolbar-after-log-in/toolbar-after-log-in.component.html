@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar *ngIf="resizeMenu()" color="primary">
   <a mat-button routerLink="/schedule" routerLinkActive="active">
     <i class="material-icons"> schedule </i>Schedule</a>
 
@@ -35,3 +35,46 @@
     Log out
   </button>
 </mat-toolbar>
+
+<div *ngIf="!resizeMenu()">
+  <div class="menu-item">
+    <a mat-button routerLink="/schedule" routerLinkActive="active">
+      <i class="material-icons"> schedule </i>Schedule</a>
+  </div>
+  <div class="menu-item">
+    <a mat-button routerLink="/works" routerLinkActive="active">
+      <i class="material-icons">
+        list
+      </i>
+      Works
+    </a>
+  </div>
+  <div class="menu-item">
+    <a mat-button routerLink="/invitations" routerLinkActive="active">
+      <i class="material-icons">
+        insert_invitation
+      </i>
+      Invitations
+    </a>
+  </div>
+  <div class="menu-item">
+    <a mat-button routerLink="/messages" routerLinkActive="active">
+      <i class="material-icons">
+        mail_outline
+      </i>
+      Messages
+    </a>
+  </div>
+  <div class="menu-item">
+    <a mat-button routerLink="/profile" routerLinkActive="active">
+      <i class="material-icons"> account_circle </i>
+      {{ currentUserName }}
+    </a>
+  </div>
+  <div class="menu-item">
+    <button mat-button (click)="logout()">
+      <i class="material-icons"> power_settings_new</i>
+      Log out
+    </button>
+  </div>
+</div>

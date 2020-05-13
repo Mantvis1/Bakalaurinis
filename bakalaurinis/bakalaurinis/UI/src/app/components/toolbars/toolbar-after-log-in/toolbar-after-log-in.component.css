@@ -1,3 +1,11 @@
 .fill-empty-space-in-toolbar {
     flex: 1 1 auto;
 }
+
+.menu-item {
+    width: 100%;
+    text-align: center;
+    height: 32px;
+    background: #673ab7;
+    color: #fff;
+}

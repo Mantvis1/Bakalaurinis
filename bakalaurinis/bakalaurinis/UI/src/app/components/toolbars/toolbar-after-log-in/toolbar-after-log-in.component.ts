@@ -11,12 +11,29 @@ import { UserService } from '../../../services/user.service';
 export class ToolbarAfterLogInComponent implements OnInit {
   currentUserName: string;
 
-  constructor(private auth: AuthServiceService, private router: Router, private userService: UserService) { }
+  constructor(
+    private auth: AuthServiceService,
+    private router: Router,
+    private userService: UserService
+  ) { }
 
   ngOnInit() {
+    this.getUserNameById();
+    this.resizeMenu();
+  }
+
+  getUserNameById() {
     this.userService.getUsername(this.auth.getUserId()).subscribe(name => {
       this.currentUserName = name.username;
     });
+  }
+
+  resizeMenu(): boolean {
+    if (window.innerWidth > 600) {
+      return true;
+    }
+
+    return false;
   }
 
   logout() {
