@@ -20,7 +20,7 @@
 
     <ng-container matColumnDef="Edit">
       <th mat-header-cell *matHeaderCellDef> </th>
-      <td mat-cell *matCellDef="let element"><button mat-raised-button color="primary"
+      <td mat-cell *matCellDef="let element"><button mat-raised-button color="primary" [disabled]="element.startTime"
           (click)="editFrom(element)">Edit</button></td>
     </ng-container>
 

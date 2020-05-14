@@ -15,7 +15,6 @@ export class ActivityFormComponent {
   ) { }
 
   closeModal(returnValue: any) {
-    console.log(this.data.activityFormData);
     this.dialogRef.close(returnValue);
   }
 

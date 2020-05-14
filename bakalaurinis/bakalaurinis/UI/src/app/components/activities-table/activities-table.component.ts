@@ -88,16 +88,19 @@ export class ActivitiesTableComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(newActivity => {
+      this.updateRowClick(true);
+
       if (newActivity) {
         newActivity.userId = this.authService.getUserId();
+
+        this.activityService.createNewActivity(newActivity).subscribe(
+          () => {
+            this.refreshTable();
+            this.newActivity = new NewActivity();
+
+          }
+        );
       }
-      this.activityService.createNewActivity(newActivity).subscribe(
-        () => {
-          this.refreshTable();
-          this.newActivity = new NewActivity();
-          this.updateRowClick(true);
-        }
-      );
     });
   }
 
@@ -116,15 +119,15 @@ export class ActivitiesTableComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(editActivity => {
-      if (editActivity)
-        this.activityService
-          .editActivity(editActivity, editActivity.id)
-          .subscribe(
-            () => {
-              this.refreshTable();
-              this.updateRowClick(true);
-            }
-          );
+      this.updateRowClick(true);
+
+      if (editActivity) {
+        this.activityService.editActivity(editActivity, editActivity.id).subscribe(
+          () => {
+            this.refreshTable();
+          }
+        );
+      }
     });
   }
 

@@ -37,7 +37,7 @@ namespace bakalaurinis.Services
 
             var workId = await _worksRepository.Create(work);
 
-            await _scheduleGenerationService.Generate(newActivityDto.UserId);
+         ///   await _scheduleGenerationService.Generate(newActivityDto.UserId);
             await _messageService.Create(work.UserId, workId, MessageTypeEnum.NewActivity);
 
             return workId;

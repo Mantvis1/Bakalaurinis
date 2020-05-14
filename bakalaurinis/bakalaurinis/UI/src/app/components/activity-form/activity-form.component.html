@@ -16,9 +16,8 @@
       <div>
         <mat-form-field>
           <input matInput [(ngModel)]="data.activityFormData.description" name="description" placeholder="Description"
-            required #nameInput="ngModel" />
-
-          <mat-error *ngIf="nameInput.invalid" class="error">
+            required #descriptionInput="ngModel" />
+          <mat-error *ngIf="descriptionInput.invalid" class="error">
             Description cannot be empty.
           </mat-error>
         </mat-form-field>
@@ -26,9 +25,9 @@
 
       <div>
         <mat-form-field>
-          <input matInput [(ngModel)]="data.activityFormData.durationInMinutes" name="duration" placeholder="Trukmė"
-            required #nameInput="ngModel" />
-          <mat-error *ngIf="nameInput.invalid" class="error">
+          <input matInput [(ngModel)]="data.activityFormData.durationInMinutes" name="duration" placeholder="Duration"
+            required #durationInput="ngModel" type="number" />
+          <mat-error *ngIf=" durationInput.invalid" class="error">
             Duration cannot be empty.
           </mat-error>
         </mat-form-field>
@@ -55,8 +54,10 @@
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
-    <button mat-flat-button mat-button-base [mat-dialog-close]>Close</button>
-    <button mat-flat-button color="primary" (click)="closeModal(data.activityFormData)">
+    <button mat-flat-button mat-button-base (click)="closeModal(null)" [mat-dialog-close]>Close</button>
+    <button mat-flat-button color="primary"
+      [disabled]="nameInput.invalid || descriptionInput.invalid || durationInput.invalid || durationInput.value <= 0"
+      (click)="closeModal(data.activityFormData)">
       {{ data.formConfirmationButtonName }}
     </button>
   </mat-dialog-actions>
