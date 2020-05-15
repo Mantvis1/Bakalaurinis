@@ -1,6 +1,8 @@
 ﻿using bakalaurinis.Dtos.UserSettings;
 using bakalaurinis.Infrastructure.Repositories;
 using bakalaurinis.Services;
+using bakalaurinis.Services.Interfaces;
+using Moq;
 using Xunit;
 
 namespace test.Tests
@@ -18,8 +20,8 @@ namespace test.Tests
             var mapper = setUp.Mapper;
 
             var userSettingsRepository = new UserSettingsRepository(context);
-
-            _userSettingsService = new UserSettingsService(mapper, userSettingsRepository);
+            var mockIScheduleGenerationService = new Mock<IScheduleGenerationService>().Object;
+            _userSettingsService = new UserSettingsService(mapper, userSettingsRepository, mockIScheduleGenerationService);
         }
 
         [Theory]

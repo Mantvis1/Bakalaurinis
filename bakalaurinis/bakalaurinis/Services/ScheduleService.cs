@@ -14,13 +14,13 @@ namespace bakalaurinis.Services
     {
         private readonly IWorksRepository _repository;
         private readonly IMapper _mapper;
-        private readonly IUserSettingsRepository _userSettingsRepository;
+        private readonly IUserSettingsService _userSettingsService;
 
-        public ScheduleService(IWorksRepository repository, IMapper mapper, IUserSettingsRepository userSettingsRepository)
+        public ScheduleService(IWorksRepository repository, IMapper mapper, IUserSettingsService userSettingsService)
         {
             _repository = repository;
             _mapper = mapper;
-            _userSettingsRepository = userSettingsRepository;
+            _userSettingsService = userSettingsService;
         }
 
         public async Task<GetScheduleDto> GetAllByUserIdFilterByDate(int userId, DateTime date)
@@ -35,8 +35,8 @@ namespace bakalaurinis.Services
             }
 
             scheduleDto.Busyness = await GetBusyness(userId, date);
-            scheduleDto.StartTime = (await GetUserSettings(userId)).StartTime;
-            scheduleDto.EndTime = (await GetUserSettings(userId)).EndTime;
+            scheduleDto.StartTime = (await _userSettingsService.GetByUserId(userId)).StartTime;
+            scheduleDto.EndTime = (await _userSettingsService.GetByUserId(userId)).EndTime;
 
             return scheduleDto;
         }
@@ -44,7 +44,7 @@ namespace bakalaurinis.Services
         public async Task<int> GetBusyness(int userId, DateTime date)
         {
             var works = await _repository.FilterByUserIdAndTime(userId, date);
-            var settings = await GetUserSettings(userId);
+            var settings = await _userSettingsService.GetByUserId(userId);
             int busynessInMinutes = 0;
             
             foreach(var work in works)
@@ -57,11 +57,6 @@ namespace bakalaurinis.Services
             int workDuration = settings.EndTime - settings.StartTime;
 
             return busynessInMinutes / workDuration;
-        }
-
-        private async Task<UserSettings> GetUserSettings(int userId)
-        {
-            return await _userSettingsRepository.GetByUserId(userId);
         }
     }
 }

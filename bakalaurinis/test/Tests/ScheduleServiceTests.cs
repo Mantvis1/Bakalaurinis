@@ -1,6 +1,8 @@
 ﻿using System;
 using bakalaurinis.Infrastructure.Repositories;
 using bakalaurinis.Services;
+using bakalaurinis.Services.Interfaces;
+using Moq;
 using Xunit;
 
 namespace test.Tests
@@ -17,9 +19,14 @@ namespace test.Tests
             var context = setUp.DatabaseContext;
             var mapper = setUp.Mapper;
 
-            var settingsRepository = new UserSettingsRepository(context);
             var worksRepository = new WorksRepository(context);
-            _scheduleService = new ScheduleService(worksRepository, mapper, settingsRepository);
+            var userSettingsRepository = new UserSettingsRepository(context);
+            var mockTimeService = new Mock<ITimeService>().Object;
+            var mockMessageService = new Mock<IMessageService>().Object;
+
+            var scheduleGenerationService = new ScheduleGenerationService(worksRepository, mockTimeService, mapper, userSettingsRepository, mockMessageService);
+            var userSettingsService = new UserSettingsService(mapper, userSettingsRepository, scheduleGenerationService);
+            _scheduleService = new ScheduleService(worksRepository, mapper, userSettingsService);
         }
 
         [Theory]

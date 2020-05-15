@@ -2,7 +2,9 @@
 using bakalaurinis.Dtos.User;
 using bakalaurinis.Infrastructure.Repositories;
 using bakalaurinis.Services;
+using bakalaurinis.Services.Interfaces;
 using Microsoft.Extensions.Options;
+using Moq;
 using Xunit;
 
 namespace test.Tests
@@ -25,7 +27,8 @@ namespace test.Tests
             var appSettings = Options.Create(new AppSettings());
             var userSettingsRepository = new UserSettingsRepository(context);
             var invitationsRepository = new InvitationRepository(context);
-            var userSettingsService = new UserSettingsService(mapper, userSettingsRepository);
+            var mockIScheduleGenerationService = new Mock<IScheduleGenerationService>().Object;
+            var userSettingsService = new UserSettingsService(mapper, userSettingsRepository, mockIScheduleGenerationService);
 
             _userService = new UserService(appSettings, mapper, userRepository, userSettingsService, invitationsRepository);
         }
