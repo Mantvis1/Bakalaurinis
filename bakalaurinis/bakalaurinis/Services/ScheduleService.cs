@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using bakalaurinis.Dtos.Work;
 using bakalaurinis.Dtos.Schedule;
+using bakalaurinis.Infrastructure.Database.Models;
 
 namespace bakalaurinis.Services
 {
@@ -22,9 +23,9 @@ namespace bakalaurinis.Services
             _userSettingsRepository = userSettingsRepository;
         }
 
-        public async Task<GetScheduleDto> GetAllByUserIdFilterByDate(int id, DateTime date)
+        public async Task<GetScheduleDto> GetAllByUserIdFilterByDate(int userId, DateTime date)
         {
-            var works = await _repository.FilterByUserIdAndTime(id, date);
+            var works = await _repository.FilterByUserIdAndTime(userId, date);
             var worksDto = _mapper.Map<WorkDto[]>(works);
             var scheduleDto = new GetScheduleDto();
 
@@ -33,15 +34,17 @@ namespace bakalaurinis.Services
                 scheduleDto.works.Add(work);
             }
 
-            scheduleDto.Busyness = await GetBusyness(id, date);
+            scheduleDto.Busyness = await GetBusyness(userId, date);
+            scheduleDto.StartTime = (await GetUserSettings(userId)).StartTime;
+            scheduleDto.EndTime = (await GetUserSettings(userId)).EndTime;
 
             return scheduleDto;
         }
 
-        public async Task<int> GetBusyness(int id, DateTime date)
+        public async Task<int> GetBusyness(int userId, DateTime date)
         {
-            var works = await _repository.FilterByUserIdAndTime(id, date);
-            var settings = await _userSettingsRepository.GetByUserId(id);
+            var works = await _repository.FilterByUserIdAndTime(userId, date);
+            var settings = await GetUserSettings(userId);
             int busynessInMinutes = 0;
             
             foreach(var work in works)
@@ -54,6 +57,11 @@ namespace bakalaurinis.Services
             int workDuration = settings.EndTime - settings.StartTime;
 
             return busynessInMinutes / workDuration;
+        }
+
+        private async Task<UserSettings> GetUserSettings(int userId)
+        {
+            return await _userSettingsRepository.GetByUserId(userId);
         }
     }
 }

@@ -7,5 +7,7 @@ namespace bakalaurinis.Dtos.Schedule
     {
         public List<WorkDto> works = new List<WorkDto>();
         public int Busyness { get; set; }
+        public int StartTime { get; set; }
+        public int EndTime { get; set; }
     }
 }

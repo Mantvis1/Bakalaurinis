@@ -5,18 +5,25 @@ import { DatePipe } from '@angular/common';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ScheduleService } from 'src/app/services/schedule.service';
 import { ActivitiesAfterUpdate } from 'src/app/models/activities-after-update';
+import { ScheduleInfoComponent } from '../schedule-info/schedule-info.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-schedule',
   templateUrl: './schedule.component.html',
   styleUrls: ['./schedule.component.css'],
 })
+
 export class ScheduleComponent implements OnInit {
   busyness: number;
+  startTime: number;
+  endTime: number;
+
   constructor(
     private scheduleService: ScheduleService,
     private authService: AuthServiceService,
     private datePipe: DatePipe,
+    private dialog: MatDialog
   ) { }
 
   activities: GetActivities[] = [];
@@ -41,6 +48,8 @@ export class ScheduleComponent implements OnInit {
     this.scheduleService.getUserTodaysActivities(this.authService.getUserId(), this.dateString).subscribe(data => {
       this.activities = Object.assign([], data.works);
       this.busyness = data.busyness;
+      this.startTime = data.startTime;
+      this.endTime = data.endTime;
     });
   }
 
@@ -63,6 +72,20 @@ export class ScheduleComponent implements OnInit {
   }
 
   getDataString(date: Date) {
-    return this.datePipe.transform(date, 'HH:mm:ss');
+    return this.datePipe.transform(date, 'HH:mm');
+  }
+
+  openInfoModal() {
+    this.dialog.open(ScheduleInfoComponent, {
+      minWidth: "300px",
+      width: "35%",
+      data: {
+        date: this.dateString,
+        startTime: this.startTime,
+        endTime: this.endTime,
+        worksCount: this.activities.length,
+        busyness: this.busyness
+      }
+    });
   }
 }

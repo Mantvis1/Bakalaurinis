@@ -1,0 +1,20 @@
+<div align="right">
+  <button mat-flat-button color="warn" (click)="closeModal()">
+    <i class="material-icons">
+      clear
+    </i>
+  </button>
+</div>
+<mat-list>
+  <mat-divider></mat-divider>
+  <mat-list-item> Date : {{data.date}}</mat-list-item>
+  <mat-divider></mat-divider>
+  <mat-list-item> Start : {{data.startTime}}:00</mat-list-item>
+  <mat-divider></mat-divider>
+  <mat-list-item> End : {{data.endTime}}:00</mat-list-item>
+  <mat-divider></mat-divider>
+  <mat-list-item> Busyness : {{data.busyness}} %</mat-list-item>
+  <mat-divider></mat-divider>
+  <mat-list-item> Works count: {{data.worksCount}}</mat-list-item>
+  <mat-divider></mat-divider>
+</mat-list>

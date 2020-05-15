@@ -34,7 +34,8 @@ import {
   MatExpansionPanel,
   MatExpansionModule,
   MatProgressBarModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatListModule
 } from "@angular/material";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { ActivitiesTableComponent } from "./components/activities-table/activities-table.component";
@@ -58,6 +59,7 @@ import { ActivityReviewComponent } from './components/activity-review/activity-r
 import { FullCalendarModule } from 'primeng/fullcalendar';
 import { RefreshActivitiesComponent } from './components/refresh-activities/refresh-activities.component';
 import { DatePipe } from '@angular/common';
+import { ScheduleInfoComponent } from './components/schedule-info/schedule-info.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -81,7 +83,8 @@ export function tokenGetter() {
     InviteUserComponent,
     PageSizeSettingsComponent,
     ActivityReviewComponent,
-    RefreshActivitiesComponent
+    RefreshActivitiesComponent,
+    ScheduleInfoComponent,
   ],
   imports: [
     BrowserModule,
@@ -118,6 +121,7 @@ export function tokenGetter() {
     MatExpansionModule,
     MatProgressBarModule,
     MatTooltipModule,
+    MatListModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -131,7 +135,8 @@ export function tokenGetter() {
     RegistrationComponent,
     ActivityFormComponent,
     InviteUserComponent,
-    ActivityReviewComponent
+    ActivityReviewComponent,
+    ScheduleInfoComponent
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-gb' },

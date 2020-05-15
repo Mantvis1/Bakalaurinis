@@ -22,6 +22,10 @@ table {
   width: 100%;
 }
 
-.mat-row:hover {
+mat-row:hover {
+  background-color: #F0E68C;
+}
+
+.mat-list-item:hover {
   background-color: #F0E68C;
 }

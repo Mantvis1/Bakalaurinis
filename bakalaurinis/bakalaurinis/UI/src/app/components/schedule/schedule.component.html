@@ -8,6 +8,7 @@
     <h1>
       Day ({{dateString}}) works list
     </h1>
+    <mat-icon style="cursor: pointer;" (click)="openInfoModal()">info</mat-icon>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
     <button mat-raised-button color="primary" (click)="updateDate(1)">
