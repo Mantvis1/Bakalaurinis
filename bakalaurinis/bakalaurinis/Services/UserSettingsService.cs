@@ -11,11 +11,17 @@ namespace bakalaurinis.Services
     {
         private readonly IMapper _mapper;
         private readonly IUserSettingsRepository _userSettingsRepository;
+        private readonly IScheduleGenerationService _scheduleGenerationService;
 
-        public UserSettingsService(IMapper mapper, IUserSettingsRepository userSettingsRepository)
+        public UserSettingsService(
+            IMapper mapper,
+            IUserSettingsRepository userSettingsRepository,
+            IScheduleGenerationService scheduleGenerationService
+            )
         {
             _mapper = mapper;
             _userSettingsRepository = userSettingsRepository;
+            _scheduleGenerationService = scheduleGenerationService;
         }
 
         public async Task<int> Create(int userId)
@@ -50,7 +56,10 @@ namespace bakalaurinis.Services
 
             _mapper.Map(userSettingsDto, settings);
 
-            return await _userSettingsRepository.Update(settings);
+            var ok = await _userSettingsRepository.Update(settings);
+            await _scheduleGenerationService.RecalculateWorkTimeWhenUserChangesSettings(userSettingsDto.UserId);
+
+            return ok;
         }
 
         public async Task<bool> Update(UpdateUserItemsPerPageSettings userSettingsDto)

@@ -10,6 +10,7 @@ import { AlertService } from '../../services/alert.service';
   styleUrls: ["./registration.component.css"]
 })
 export class RegistrationComponent implements OnInit {
+  hide = true;
 
   registrationForm = new FormGroup({
     username: new FormControl(''),
@@ -55,5 +56,9 @@ export class RegistrationComponent implements OnInit {
     }
 
     return true;
+  }
+
+  updatePasswordHidden() {
+    this.hide = !this.hide;
   }
 }

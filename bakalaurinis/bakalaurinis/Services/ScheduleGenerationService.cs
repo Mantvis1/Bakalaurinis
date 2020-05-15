@@ -237,5 +237,20 @@ namespace bakalaurinis.Services
 
             await _worksRepository.Create(work);
         }
+
+        public async Task RecalculateWorkTimeWhenUserChangesSettings(int userId)
+        {
+            var worksToUpdate = (await _worksRepository.FilterByUserIdAndStartTimeIsNotNull(userId)).ToList();
+
+            foreach (var workToUpdate in worksToUpdate)
+            {
+                workToUpdate.StartTime = null;
+                workToUpdate.EndTime = null;
+
+                await _worksRepository.Update(workToUpdate);
+            }
+
+            await Generate(userId);
+        }
     }
 }

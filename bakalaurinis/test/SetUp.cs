@@ -97,6 +97,14 @@ namespace test
                 StartTime = 8,
                 EndTime = 10,
                 ItemsPerPage = 5
+            },
+            new UserSettings
+            {
+                Id = 4,
+                UserId = 4,
+                StartTime = 8,
+                EndTime = 10,
+                ItemsPerPage = 5
             }
             };
             context.UserSettings.AddRange(_userSettings);

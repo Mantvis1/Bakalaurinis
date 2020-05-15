@@ -98,5 +98,12 @@ namespace test.Tests
             Assert.Equal(work.Title, newWork.Title);
         }
 
+        [Theory]
+        [InlineData(1)]
+        public async void RecalculateUserScheduleTimes(int userId)
+        {
+
+        }
+
     }
 }

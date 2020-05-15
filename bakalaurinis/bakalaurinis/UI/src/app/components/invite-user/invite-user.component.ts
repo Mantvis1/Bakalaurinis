@@ -40,6 +40,7 @@ export class InviteUserComponent implements OnInit {
   ngOnInit() {
     this.getPageSize(this.authService.getUserId());
     this.loadAllUserInvitations();
+    console.log(this.userInvitations);
     this.getCurrentUser();
   }
 

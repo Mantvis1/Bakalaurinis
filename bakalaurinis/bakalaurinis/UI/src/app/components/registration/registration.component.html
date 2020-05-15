@@ -1,5 +1,5 @@
 <mat-card class="login-card login-card-position">
-  <form [formGroup]="registrationForm" (ngSubmit)="register()">
+  <form [formGroup]="registrationForm">
     <h1 class="center" mat-dialog-title>Registration</h1>
 
     <div class="center">
@@ -14,7 +14,8 @@
 
     <div class="center">
       <mat-form-field>
-        <input matInput type="password" name="password" placeholder="Password" formControlName="password" required />
+        <input matInput [type]="'password'" name="password" placeholder="Password" formControlName="password"
+          required />
         <mat-error *ngIf="this.registrationForm.controls.password.invalid" class="error">
           Password can not be empty!
         </mat-error>
@@ -23,7 +24,7 @@
 
     <div class="center">
       <mat-form-field>
-        <input matInput type="password" name="repeatPassword" placeholder="Confirm password"
+        <input matInput [type]="'password'" name="repeatPassword" placeholder="Confirm password"
           formControlName="repeatPassword" required />
         <mat-error *ngIf="this.registrationForm.controls.repeatPassword.invalid" class="error">
           Password confirmation can not be empty!
@@ -42,7 +43,7 @@
 
     <div class="center">
       <mat-dialog-actions align="end">
-        <button mat-flat-button color="primary">
+        <button mat-flat-button color="primary" (click)="register()">
           Register now
         </button>
       </mat-dialog-actions>
