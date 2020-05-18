@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using bakalaurinis.Dtos.Work;
+using bakalaurinis.Infrastructure.Database.Models;
 
 namespace bakalaurinis.Services
 {
@@ -228,14 +229,15 @@ namespace bakalaurinis.Services
         public async Task CreateWorkCopy(int workId, int userId)
         {
             var work = await _worksRepository.GetById(workId);
+            var newWork = work.Clone();
 
-            work.Id = 0;
-            work.UserId = userId;
-            work.IsAuthor = false;
-            work.StartTime = null;
-            work.EndTime = null;
+            newWork.Id = 0;
+            newWork.UserId = userId;
+            newWork.IsAuthor = false;
+            newWork.StartTime = null;
+            newWork.EndTime = null;
 
-            await _worksRepository.Create(work);
+            await _worksRepository.Create(newWork);
         }
 
         public async Task RecalculateWorkTimeWhenUserChangesSettings(int userId)

@@ -49,7 +49,7 @@ namespace bakalaurinis.Services
                 await _messageService.Create(invitation.SenderId, invitation.WorkId, MessageTypeEnum.Accept);
                 await _messageService.Create(invitation.ReceiverId, invitation.WorkId, MessageTypeEnum.WasAccepted);
 
-                await _scheduleGenerationService.CreateWorkCopy(invitation.WorkId, invitation.ReceiverId);
+                await _scheduleGenerationService.CreateWorkCopy(updateInvitationDto.WorkId, invitation.ReceiverId);
             }
             else if (updateInvitationDto.InvitationStatus == InvitationStatusEnum.Decline)
             {
@@ -57,7 +57,7 @@ namespace bakalaurinis.Services
                 await _messageService.Create(invitation.ReceiverId, invitation.WorkId, MessageTypeEnum.WasDeclined);
             }
 
-            invitation = _mapper.Map<Invitation>(updateInvitationDto);
+            invitation.InvitationStatus = updateInvitationDto.InvitationStatus;
 
             return await _invitationRepository.Update(invitation);
         }
@@ -72,7 +72,7 @@ namespace bakalaurinis.Services
                 invitationsDto[i].Message = await _messageFormationService
                     .GetFormattedText((
                     await _messageTemplateRepository.GetById(_messageService.GetMessageId(MessageTypeEnum.GotNewInvitation))).TextTemplate,
-                    invitations[i].ReceiverId,
+                    invitations[i].SenderId,
                     invitations[i].WorkId);
             }
 

@@ -42,6 +42,7 @@ export class ActivitiesTableComponent implements OnInit {
   ngOnInit() {
     this.getPageSize(this.authService.getUserId());
     this.refreshTable();
+
   }
 
   deleteById(id: number) {
@@ -60,6 +61,7 @@ export class ActivitiesTableComponent implements OnInit {
       .getUserActivities(this.authService.getUserId()).subscribe(
         data => {
           this.activities.data = data;
+          console.log(this.activities.data);
           this.updateDataSource();
           this.activities.paginator = this.paginator;
           this.activities.filterPredicate = this.filterTable;
