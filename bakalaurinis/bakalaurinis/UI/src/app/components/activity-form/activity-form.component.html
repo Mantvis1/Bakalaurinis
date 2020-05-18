@@ -15,8 +15,9 @@
 
       <div>
         <mat-form-field>
-          <input matInput [(ngModel)]="data.activityFormData.description" name="description" placeholder="Description"
-            required #descriptionInput="ngModel" />
+          <textarea matInput [(ngModel)]="data.activityFormData.description" name="description"
+            placeholder="Description" required #descriptionInput="ngModel" cdkTextareaAutosize cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="20"></textarea>
           <mat-error *ngIf="descriptionInput.invalid" class="error">
             Description cannot be empty.
           </mat-error>

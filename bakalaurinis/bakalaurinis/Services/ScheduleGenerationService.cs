@@ -229,13 +229,7 @@ namespace bakalaurinis.Services
         public async Task CreateWorkCopy(int workId, int userId)
         {
             var work = await _worksRepository.GetById(workId);
-            var newWork = work.Clone();
-
-            newWork.Id = 0;
-            newWork.UserId = userId;
-            newWork.IsAuthor = false;
-            newWork.StartTime = null;
-            newWork.EndTime = null;
+            var newWork = work.Clone(userId);
 
             await _worksRepository.Create(newWork);
         }

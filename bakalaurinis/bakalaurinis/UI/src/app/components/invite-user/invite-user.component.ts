@@ -40,7 +40,6 @@ export class InviteUserComponent implements OnInit {
   ngOnInit() {
     this.getPageSize(this.authService.getUserId());
     this.loadAllUserInvitations();
-    console.log(this.userInvitations);
     this.getCurrentUser();
   }
 
@@ -56,7 +55,6 @@ export class InviteUserComponent implements OnInit {
             },
             error => {
               this.alertService.showMessage("User does not exists");
-              console.log(error);
             }
           );
         }
@@ -72,7 +70,6 @@ export class InviteUserComponent implements OnInit {
   }
 
   loadAllUserInvitations() {
-    console.log(this.data);
     this.userInvitationService.getAllByActivityId(this.data.workId).subscribe(
       data => {
         this.userInvitations.data = Object.assign([], data);

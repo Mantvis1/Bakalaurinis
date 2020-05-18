@@ -30,9 +30,17 @@ namespace bakalaurinis.Infrastructure.Database.Models
         public ICollection<Invitation> Invitations { get; set; }
 
 
-        public Work Clone()
+        public Work Clone(int userId)
         {
-            return (Work) MemberwiseClone();
+            var work = (Work)MemberwiseClone();
+
+            work.Id = 0;
+            work.UserId = userId;
+            work.IsAuthor = false;
+            work.StartTime = null;
+            work.EndTime = null;
+
+            return work;
         }
     }
 }

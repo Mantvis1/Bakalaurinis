@@ -6,20 +6,17 @@
   </button>
 </div>
 <form>
-  <h1 mat-dialog-title>Title:{{activity.title}}</h1>
-  <mat-accordion>
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        Description
-      </mat-expansion-panel-header>
-      {{activity.description}}
-    </mat-expansion-panel>
-
-
-  </mat-accordion>
-  <br>
-  <mat-card-actions>
+  <h1 mat-card-title>Title:{{activity.title}}</h1>
+  <mat-card-content>
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          Description
+        </mat-expansion-panel-header>
+        {{activity.description}}
+      </mat-expansion-panel>
+    </mat-accordion>
+    <br>
     Duration is {{getDurationHoursAndMinutes()}}
-  </mat-card-actions>
-
+  </mat-card-content>
 </form>
