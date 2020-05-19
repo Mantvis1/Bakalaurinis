@@ -27,7 +27,7 @@
       <div>
         <mat-form-field>
           <input matInput [(ngModel)]="data.activityFormData.durationInMinutes" name="duration" placeholder="Duration"
-            required #durationInput="ngModel" type="number" />
+            required #durationInput="ngModel" type="number" min="1" />
           <mat-error *ngIf=" durationInput.invalid" class="error">
             Duration cannot be empty.
           </mat-error>

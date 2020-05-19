@@ -7,15 +7,21 @@
 </div>
 
 <form>
-  <div>
-    <mat-form-field>
-      <input matInput [(ngModel)]="data.receiverName" name="receiverName" placeholder="Receiver name" />
-    </mat-form-field>
+  <mat-grid-list rowHeight="80px" cols="4" rows="1">
 
-    <button mat-raised-button color="primary" (click)="invite()">Send invitation</button>
-  </div>
+    <mat-grid-tile [colspan]="3" [rowspan]="1">
+      <mat-form-field>
+        <input matInput [(ngModel)]="data.receiverName" name="receiverName" placeholder="Receiver name" />
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+      <button mat-raised-button color="primary" (click)="invite()">Send invitation</button>
+    </mat-grid-tile>
+
+  </mat-grid-list>
 </form>
-<br>
+
 <div>
   <table mat-table [dataSource]="userInvitations" class="mat-elevation-z8">
 
