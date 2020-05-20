@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { ActivityService } from "../../services/activity.service";
+import { WorkService } from "../../services/work.service";
 import { AuthServiceService } from "../../services/auth-service.service";
 import { GetActivities } from "../../models/get-activities";
 import { MatDialog, MatPaginator, MatTableDataSource } from "@angular/material";
@@ -33,7 +33,7 @@ export class WorksTableComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
-    private activityService: ActivityService,
+    private workService: WorkService,
     private authService: AuthServiceService,
     private dialog: MatDialog,
     private settingsService: SettingsService
@@ -48,7 +48,7 @@ export class WorksTableComponent implements OnInit {
     this.updateRowClick(false);
 
     if (confirm("Do you want to delete current?")) {
-      this.activityService.deleteActivity(id).subscribe(() => {
+      this.workService.delete(id).subscribe(() => {
         this.refreshTable();
         this.updateRowClick(true);
       });
@@ -56,14 +56,13 @@ export class WorksTableComponent implements OnInit {
   }
 
   refreshTable() {
-    this.activityService
-      .getUserActivities(this.authService.getUserId()).subscribe(
-        data => {
-          this.works.data = data;
-          this.updateDataSource();
-          this.works.paginator = this.paginator;
-          this.works.filterPredicate = this.filterTable;
-        });
+    this.workService.getAllByUserId(this.authService.getUserId()).subscribe(
+      data => {
+        this.works.data = data;
+        this.updateDataSource();
+        this.works.paginator = this.paginator;
+        this.works.filterPredicate = this.filterTable;
+      });
   }
 
   getPageSize(userId: number): void {
@@ -93,7 +92,7 @@ export class WorksTableComponent implements OnInit {
       if (newActivity) {
         newActivity.userId = this.authService.getUserId();
 
-        this.activityService.createNewActivity(newActivity).subscribe(
+        this.workService.create(newActivity).subscribe(
           () => {
             this.refreshTable();
             this.newActivity = new NewActivity();
@@ -122,7 +121,7 @@ export class WorksTableComponent implements OnInit {
       this.updateRowClick(true);
 
       if (editActivity) {
-        this.activityService.editActivity(editActivity, editActivity.id).subscribe(
+        this.workService.update(editActivity, editActivity.id).subscribe(
           () => {
             this.refreshTable();
           }
