@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Settings } from 'src/app/models/settings';
-import { AuthServiceService } from 'src/app/services/auth-service.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { SettingsService } from 'src/app/services/settings.service';
 import { AlertService } from 'src/app/services/alert.service';
 
@@ -13,7 +13,7 @@ export class ScheduleSettingsComponent implements OnInit {
   currentTime: Settings = new Settings();
 
   constructor(
-    private authService: AuthServiceService,
+    private authenticationService: AuthenticationService,
     private settingsService: SettingsService,
     private alertService: AlertService
   ) { }
@@ -24,7 +24,7 @@ export class ScheduleSettingsComponent implements OnInit {
 
   update(): void {
     if (this.currentTime.startTime < this.currentTime.endTime) {
-      this.currentTime.userId = this.authService.getUserId();
+      this.currentTime.userId = this.authenticationService.getUserId();
 
       this.settingsService.updateSettings(this.currentTime.userId, this.currentTime).subscribe(
         () => {
@@ -37,7 +37,7 @@ export class ScheduleSettingsComponent implements OnInit {
   }
 
   getSettings() {
-    this.settingsService.getSettings(this.authService.getUserId()).subscribe(
+    this.settingsService.getSettings(this.authenticationService.getUserId()).subscribe(
       data => {
         this.currentTime = Object.assign({}, data);
       }

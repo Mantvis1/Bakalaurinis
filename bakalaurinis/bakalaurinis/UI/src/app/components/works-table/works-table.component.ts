@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { WorkService } from "../../services/work.service";
-import { AuthServiceService } from "../../services/auth-service.service";
+import { AuthenticationService } from "../../services/authentication.service";
 import { GetActivities } from "../../models/get-activities";
 import { MatDialog, MatPaginator, MatTableDataSource } from "@angular/material";
 import { NewActivity } from "../../models/new-activity";
@@ -18,7 +18,7 @@ import { WorkReviewComponent } from '../work-review/work-review.component';
 
 export class WorksTableComponent implements OnInit {
   works = new MatTableDataSource<GetActivities>();
-  isRowClick = true;
+  isRowClicked = true;
   workToEdit: NewActivity = new NewActivity();
   newActivity: NewActivity = new NewActivity();
 
@@ -34,13 +34,13 @@ export class WorksTableComponent implements OnInit {
 
   constructor(
     private workService: WorkService,
-    private authService: AuthServiceService,
+    private authenticationService: AuthenticationService,
     private dialog: MatDialog,
     private settingsService: SettingsService
   ) { }
 
   ngOnInit() {
-    this.getPageSize(this.authService.getUserId());
+    this.getPageSize(this.authenticationService.getUserId());
     this.refreshTable();
   }
 
@@ -56,7 +56,7 @@ export class WorksTableComponent implements OnInit {
   }
 
   refreshTable() {
-    this.workService.getAllByUserId(this.authService.getUserId()).subscribe(
+    this.workService.getAllByUserId(this.authenticationService.getUserId()).subscribe(
       data => {
         this.works.data = data;
         this.updateDataSource();
@@ -90,7 +90,7 @@ export class WorksTableComponent implements OnInit {
       this.updateRowClick(true);
 
       if (newActivity) {
-        newActivity.userId = this.authService.getUserId();
+        newActivity.userId = this.authenticationService.getUserId();
 
         this.workService.create(newActivity).subscribe(
           () => {
@@ -130,7 +130,7 @@ export class WorksTableComponent implements OnInit {
     });
   }
 
-  getActivityPriority(priorityId: number) {
+  getWorkPriority(priorityId: number) {
     return ActivityPriority[priorityId];
   }
 
@@ -141,7 +141,7 @@ export class WorksTableComponent implements OnInit {
       minWidth: "250px",
       width: "35%",
       data: {
-        senderId: this.authService.getUserId(),
+        senderId: this.authenticationService.getUserId(),
         workId: workId,
         receiverName: ''
       }
@@ -155,7 +155,7 @@ export class WorksTableComponent implements OnInit {
   }
 
   onRowClicked(row) {
-    if (this.isRowClick) {
+    if (this.isRowClicked) {
       this.dialog.open(WorkReviewComponent, {
         minWidth: "300px",
         width: "50%",
@@ -167,12 +167,12 @@ export class WorksTableComponent implements OnInit {
   }
 
   private updateRowClick(isRowCanBeClicked: boolean): void {
-    this.isRowClick = isRowCanBeClicked;
+    this.isRowClicked = isRowCanBeClicked;
   }
 
   private updateDataSource() {
     this.works.data.forEach(work => {
-      work.priorityString = this.getActivityPriority(work.activityPriority);
+      work.priorityString = this.getWorkPriority(work.activityPriority);
     });
   }
 

@@ -5,7 +5,7 @@ import { InvitationsService } from 'src/app/services/invitations.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { UserInvitationService } from 'src/app/services/user-invitation.service';
 import { InvitationStatus } from 'src/app/models/invitation-status.enum';
-import { AuthServiceService } from 'src/app/services/auth-service.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
 import { SettingsService } from 'src/app/services/settings.service';
 import { UserInvitation } from 'src/app/models/user-invitation';
@@ -33,12 +33,12 @@ export class InviteUserComponent implements OnInit {
     private alertService: AlertService,
     private userInvitationService: UserInvitationService,
     private userService: UserService,
-    private authService: AuthServiceService,
+    private authenticationService: AuthenticationService,
     private settingsService: SettingsService
   ) { }
 
   ngOnInit() {
-    this.getPageSize(this.authService.getUserId());
+    this.getPageSize(this.authenticationService.getUserId());
     this.loadAllUserInvitations();
     this.getCurrentUser();
   }
@@ -53,7 +53,7 @@ export class InviteUserComponent implements OnInit {
               this.alertService.showMessage("Invitation sent");
               this.loadAllUserInvitations();
             },
-            error => {
+            () => {
               this.alertService.showMessage("User does not exists");
             }
           );
@@ -108,7 +108,7 @@ export class InviteUserComponent implements OnInit {
   }
 
   getCurrentUser() {
-    this.userService.getUsername(this.authService.getUserId()).subscribe(name => {
+    this.userService.getUsername(this.authenticationService.getUserId()).subscribe(name => {
       this.currentUserName = name.username;
     });
   }

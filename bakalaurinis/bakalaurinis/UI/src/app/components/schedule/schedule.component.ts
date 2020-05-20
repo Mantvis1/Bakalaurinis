@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthServiceService } from 'src/app/services/auth-service.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { GetActivities } from 'src/app/models/get-activities';
 import { DatePipe } from '@angular/common';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -21,7 +21,7 @@ export class ScheduleComponent implements OnInit {
 
   constructor(
     private scheduleService: ScheduleService,
-    private authService: AuthServiceService,
+    private authenticationService: AuthenticationService,
     private datePipe: DatePipe,
     private dialog: MatDialog
   ) { }
@@ -45,7 +45,7 @@ export class ScheduleComponent implements OnInit {
   }
 
   getAllUserActivities() {
-    this.scheduleService.getUserTodaysActivities(this.authService.getUserId(), this.dateString).subscribe(data => {
+    this.scheduleService.getUserTodaysActivities(this.authenticationService.getUserId(), this.dateString).subscribe(data => {
       this.activities = Object.assign([], data.works);
       this.busyness = data.busyness;
       this.startTime = data.startTime;
@@ -60,7 +60,7 @@ export class ScheduleComponent implements OnInit {
   }
 
   updateActivitiesTime() {
-    this.scheduleService.updateActivities(this.authService.getUserId(), this.dateString, this.activitiesAfterUpdate).subscribe(() => {
+    this.scheduleService.updateActivities(this.authenticationService.getUserId(), this.dateString, this.activitiesAfterUpdate).subscribe(() => {
       this.getAllUserActivities();
     });
   }

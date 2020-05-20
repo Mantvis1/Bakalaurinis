@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { AuthServiceService } from "src/app/services/auth-service.service";
+import { AuthenticationService } from "src/app/services/authentication.service";
 import { Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AlertService } from '../../services/alert.service';
@@ -10,15 +10,14 @@ import { AlertService } from '../../services/alert.service';
   styleUrls: ["./login.component.css"]
 })
 export class LoginComponent implements OnInit {
-
   loginForm: FormGroup;
 
   constructor(
-    private authService: AuthServiceService,
+    private authenticationService: AuthenticationService,
     private router: Router,
     private alertService: AlertService
   ) {
-    if (this.authService.isAuthenticated()) {
+    if (this.authenticationService.isAuthenticated()) {
       this.router.navigateByUrl("/schedule");
     }
   }
@@ -32,7 +31,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     if (this.validateInput()) {
-      this.authService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(() => {
+      this.authenticationService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(() => {
         this.router.navigateByUrl("/schedule");
       }, error => {
         this.alertService.showMessage(error);

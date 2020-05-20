@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AuthServiceService } from 'src/app/services/auth-service.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { InvitationsService } from 'src/app/services/invitations.service';
 import { Invitation } from 'src/app/models/invitation';
 import { InvitationStatus } from 'src/app/models/invitation-status.enum';
@@ -20,7 +20,7 @@ export class RecieveInvitationsComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
-    private readonly authService: AuthServiceService,
+    private readonly authenticationService: AuthenticationService,
     private readonly invitationService: InvitationsService,
     private readonly dialog: MatDialog
   ) { }
@@ -31,7 +31,7 @@ export class RecieveInvitationsComponent implements OnInit {
   }
 
   getInvitations() {
-    this.invitationService.getInvitationsId(this.authService.getUserId()).subscribe(
+    this.invitationService.getInvitationsId(this.authenticationService.getUserId()).subscribe(
       data => {
         this.invitations.data = Object.assign([], data);
       }

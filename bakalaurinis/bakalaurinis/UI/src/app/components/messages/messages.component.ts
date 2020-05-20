@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Message } from 'src/app/models/message';
 import { MessageService } from 'src/app/services/message.service';
-import { AuthServiceService } from 'src/app/services/auth-service.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { SettingsService } from 'src/app/services/settings.service';
 import { DatePipe } from '@angular/common';
@@ -25,18 +25,18 @@ export class MessagesComponent implements OnInit {
 
   constructor(
     private messageService: MessageService,
-    private authService: AuthServiceService,
+    private authenticationService: AuthenticationService,
     private datePipe: DatePipe,
     private settingsService: SettingsService
   ) { }
 
   ngOnInit() {
-    this.getPageSize(this.authService.getUserId());
+    this.getPageSize(this.authenticationService.getUserId());
     this.getUserMessages();
   }
 
   getUserMessages(): void {
-    this.messageService.getUserMessages(this.authService.getUserId()).subscribe(data => {
+    this.messageService.getUserMessages(this.authenticationService.getUserId()).subscribe(data => {
       this.messagesDataSource = new MatTableDataSource(data);
       this.messagesDataSource.paginator = this.paginator;
       this.messagesDataSource.filterPredicate = this.filterTable;
@@ -46,7 +46,7 @@ export class MessagesComponent implements OnInit {
 
   deleteAll() {
     if (confirm("Do you want to delete all messages?")) {
-      this.messageService.deleteUserAllMessagesById(this.authService.getUserId()).subscribe(
+      this.messageService.deleteUserAllMessagesById(this.authenticationService.getUserId()).subscribe(
         () => {
           this.getUserMessages();
         }
@@ -56,7 +56,7 @@ export class MessagesComponent implements OnInit {
 
   deleteById(messageId: number) {
     if (confirm("Do you want to delete current message?")) {
-      this.messageService.deleteUserMessagesById(this.authService.getUserId(), messageId).subscribe(
+      this.messageService.deleteUserMessagesById(this.authenticationService.getUserId(), messageId).subscribe(
         () => {
           this.getUserMessages();
         }
