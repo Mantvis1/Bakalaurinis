@@ -1,6 +1,5 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
-
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -8,7 +7,6 @@ import { LoginComponent } from "./components/login/login.component";
 import { RegistrationComponent } from "./components/registration/registration.component";
 import { ToolbarComponent } from "./components/toolbars/toolbar/toolbar.component";
 import { ToolbarAfterLogInComponent } from "./components/toolbars/toolbar-after-log-in/toolbar-after-log-in.component";
-
 import { MatMenuModule } from "@angular/material/menu";
 import { MatCardModule } from "@angular/material/card";
 import { MatFormFieldModule } from "@angular/material/form-field";
@@ -31,19 +29,15 @@ import {
   MatSortModule,
   MatTabsModule,
   MatButtonToggleModule,
-  MatExpansionPanel,
   MatExpansionModule,
   MatProgressBarModule,
   MatTooltipModule,
   MatListModule
 } from "@angular/material";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
-import { ActivitiesTableComponent } from "./components/activities-table/activities-table.component";
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ActivityFormComponent } from './components/activity-form/activity-form.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { ProfileComponent } from './components/profile/profile.component';
-
 import { JwtModule } from '@auth0/angular-jwt';
 import { JwtInterceptor } from './helpers/jwt-iterceptor';
 import { ErrorInterceptor } from './helpers/error-interceptor';
@@ -54,12 +48,12 @@ import { MessagesComponent } from './components/messages/messages.component';
 import { RecieveInvitationsComponent } from './components/recieve-invitations/recieve-invitations.component';
 import { InviteUserComponent } from './components/invite-user/invite-user.component';
 import { PageSizeSettingsComponent } from './components/page-size-settings/page-size-settings.component';
-import { ActivityReviewComponent } from './components/activity-review/activity-review.component';
-
-import { FullCalendarModule } from 'primeng/fullcalendar';
 import { RefreshActivitiesComponent } from './components/refresh-activities/refresh-activities.component';
 import { DatePipe } from '@angular/common';
 import { ScheduleInfoComponent } from './components/schedule-info/schedule-info.component';
+import { WorkFormComponent } from './components/work-form/work-form.component';
+import { WorksTableComponent } from './components/works-table/works-table.component';
+import { WorkReviewComponent } from './components/work-review/work-review.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -72,8 +66,8 @@ export function tokenGetter() {
     ToolbarAfterLogInComponent,
     LoginComponent,
     RegistrationComponent,
-    ActivitiesTableComponent,
-    ActivityFormComponent,
+    WorksTableComponent,
+    WorkFormComponent,
     ScheduleComponent,
     ProfileComponent,
     DeleteAccountComponent,
@@ -82,7 +76,7 @@ export function tokenGetter() {
     RecieveInvitationsComponent,
     InviteUserComponent,
     PageSizeSettingsComponent,
-    ActivityReviewComponent,
+    WorkReviewComponent,
     RefreshActivitiesComponent,
     ScheduleInfoComponent,
   ],
@@ -113,7 +107,6 @@ export function tokenGetter() {
     MatMenuModule,
     MatSortModule,
     MatPaginatorModule,
-    FullCalendarModule,
     MatCheckboxModule,
     MatGridListModule,
     MatTabsModule,
@@ -133,9 +126,9 @@ export function tokenGetter() {
   entryComponents: [
     LoginComponent,
     RegistrationComponent,
-    ActivityFormComponent,
+    WorkFormComponent,
     InviteUserComponent,
-    ActivityReviewComponent,
+    WorkReviewComponent,
     ScheduleInfoComponent
   ],
   providers: [

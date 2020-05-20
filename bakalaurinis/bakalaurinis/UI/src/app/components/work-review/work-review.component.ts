@@ -6,14 +6,13 @@ import { GetActivities } from 'src/app/models/get-activities';
 import { String } from 'typescript-string-operations';
 
 @Component({
-  selector: 'app-activity-review',
-  templateUrl: './activity-review.component.html',
-  styleUrls: ['./activity-review.component.css']
+  selector: 'app-work-review',
+  templateUrl: './work-review.component.html',
+  styleUrls: ['./work-review.component.css']
 })
-export class ActivityReviewComponent implements OnInit {
+export class WorkReviewComponent implements OnInit {
   descriptionPanelOpenState: false;
   activity: GetActivities = new GetActivities();
-  author: string = '';
 
   constructor(
     public dialogRef: MatDialogRef<ActivityViewModal>,

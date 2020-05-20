@@ -2,8 +2,8 @@
 {
     public enum MessageTypeEnum
     {
-        NewActivity = 1,
-        DeleteActivity = 2,
+        NewWork = 1,
+        DeleteWork = 2,
         Generation = 3,
         GotNewInvitation = 4,
         Decline = 5,

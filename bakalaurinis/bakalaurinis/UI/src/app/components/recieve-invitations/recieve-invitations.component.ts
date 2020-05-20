@@ -4,8 +4,7 @@ import { InvitationsService } from 'src/app/services/invitations.service';
 import { Invitation } from 'src/app/models/invitation';
 import { InvitationStatus } from 'src/app/models/invitation-status.enum';
 import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
-import { SettingsService } from 'src/app/services/settings.service';
-import { ActivityReviewComponent } from '../activity-review/activity-review.component';
+import { WorkReviewComponent } from '../work-review/work-review.component';
 
 @Component({
   selector: 'app-recieve-invitations',
@@ -77,7 +76,7 @@ export class RecieveInvitationsComponent implements OnInit {
 
   onRowClicked(rowId: number) {
     if (this.isRowClick) {
-      this.dialog.open(ActivityReviewComponent, {
+      this.dialog.open(WorkReviewComponent, {
         minWidth: "300px",
         width: "50%",
         data: {

@@ -3,21 +3,24 @@ import { ActivityService } from "../../services/activity.service";
 import { AuthServiceService } from "../../services/auth-service.service";
 import { GetActivities } from "../../models/get-activities";
 import { MatDialog, MatPaginator, MatTableDataSource } from "@angular/material";
-import { ActivityFormComponent } from "../activity-form/activity-form.component";
 import { NewActivity } from "../../models/new-activity";
-import { ActivityPriority } from "./activity-priority.enum";
+import { ActivityPriority } from "./works-priority.enum";
 import { InviteUserComponent } from '../invite-user/invite-user.component';
 import { SettingsService } from 'src/app/services/settings.service';
-import { ActivityReviewComponent } from '../activity-review/activity-review.component';
+import { WorkFormComponent } from '../work-form/work-form.component';
+import { WorkReviewComponent } from '../work-review/work-review.component';
 
 @Component({
-  selector: "app-activities-table",
-  templateUrl: "./activities-table.component.html",
-  styleUrls: ["./activities-table.component.css"]
+  selector: "app-works-table",
+  templateUrl: "./works-table.component.html",
+  styleUrls: ["./works-table.component.css"]
 })
-export class ActivitiesTableComponent implements OnInit {
-  activities = new MatTableDataSource<GetActivities>();
+
+export class WorksTableComponent implements OnInit {
+  works = new MatTableDataSource<GetActivities>();
   isRowClick = true;
+  workToEdit: NewActivity = new NewActivity();
+  newActivity: NewActivity = new NewActivity();
 
   displayedColumns: string[] = [
     "Title",
@@ -26,9 +29,6 @@ export class ActivitiesTableComponent implements OnInit {
     "Invite",
     "Delete"
   ];
-
-  activityToEdit: NewActivity = new NewActivity();
-  newActivity: NewActivity = new NewActivity();
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -42,7 +42,6 @@ export class ActivitiesTableComponent implements OnInit {
   ngOnInit() {
     this.getPageSize(this.authService.getUserId());
     this.refreshTable();
-
   }
 
   deleteById(id: number) {
@@ -60,11 +59,10 @@ export class ActivitiesTableComponent implements OnInit {
     this.activityService
       .getUserActivities(this.authService.getUserId()).subscribe(
         data => {
-          this.activities.data = data;
-          console.log(this.activities.data);
+          this.works.data = data;
           this.updateDataSource();
-          this.activities.paginator = this.paginator;
-          this.activities.filterPredicate = this.filterTable;
+          this.works.paginator = this.paginator;
+          this.works.filterPredicate = this.filterTable;
         });
   }
 
@@ -79,7 +77,7 @@ export class ActivitiesTableComponent implements OnInit {
   openCreateModal() {
     this.updateRowClick(false);
 
-    const dialogRef = this.dialog.open(ActivityFormComponent, {
+    const dialogRef = this.dialog.open(WorkFormComponent, {
       minWidth: "250px",
       width: "35%",
       data: {
@@ -108,14 +106,14 @@ export class ActivitiesTableComponent implements OnInit {
 
   editFrom(element: NewActivity) {
     this.updateRowClick(false);
-    this.activityToEdit = Object.assign({}, element);
+    this.workToEdit = Object.assign({}, element);
 
-    const dialogRef = this.dialog.open(ActivityFormComponent, {
+    const dialogRef = this.dialog.open(WorkFormComponent, {
       minWidth: "250px",
       width: "35%",
       data: {
         formTitle: "Edit work",
-        activityFormData: this.activityToEdit,
+        activityFormData: this.workToEdit,
         formConfirmationButtonName: "Edit"
       }
     });
@@ -154,12 +152,12 @@ export class ActivitiesTableComponent implements OnInit {
   }
 
   applyFilter(filterValue: string): void {
-    this.activities.filter = filterValue.trim().toLowerCase();
+    this.works.filter = filterValue.trim().toLowerCase();
   }
 
   onRowClicked(row) {
     if (this.isRowClick) {
-      this.dialog.open(ActivityReviewComponent, {
+      this.dialog.open(WorkReviewComponent, {
         minWidth: "300px",
         width: "50%",
         data: {
@@ -174,7 +172,7 @@ export class ActivitiesTableComponent implements OnInit {
   }
 
   private updateDataSource() {
-    this.activities.data.forEach(work => {
+    this.works.data.forEach(work => {
       work.priorityString = this.getActivityPriority(work.activityPriority);
     });
   }

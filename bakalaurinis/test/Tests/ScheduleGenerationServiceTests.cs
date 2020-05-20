@@ -29,9 +29,8 @@ namespace test.Tests
 
             var worksRepository = new WorksRepository(_context);
             var userSettingsRepository = new UserSettingsRepository(_context);
-            var mockScheduleGenerationService = new Mock<IScheduleGenerationService>().Object;
             var mockMessageService = new Mock<IMessageService>().Object;
-            _worksService = new WorksService(worksRepository, mapper, mockScheduleGenerationService, mockMessageService);
+            _worksService = new WorksService(worksRepository, mapper, mockMessageService);
             _scheduleGenerationService = new ScheduleGenerationService(worksRepository, mockTimeService.Object, mapper, userSettingsRepository, mockMessageService);
         }
 

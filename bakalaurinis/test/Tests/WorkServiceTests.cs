@@ -22,10 +22,9 @@ namespace test.Tests
             _count = setUp.GetLength("works");
 
             var worksRepository = new WorksRepository(context);
-            var scheduleGenerationService = new Mock<IScheduleGenerationService>().Object;
             var mockMessageService = new Mock<IMessageService>().Object;
 
-            _worksService = new WorksService(worksRepository, mapper, scheduleGenerationService, mockMessageService);
+            _worksService = new WorksService(worksRepository, mapper, mockMessageService);
         }
 
         [Fact]

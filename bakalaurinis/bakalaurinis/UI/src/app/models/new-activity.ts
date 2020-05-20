@@ -1,4 +1,4 @@
-import { ActivityPriority } from '../components/activities-table/activity-priority.enum';
+import { ActivityPriority } from '../components/works-table/works-priority.enum';
 
 export class NewActivity {
   title: string;

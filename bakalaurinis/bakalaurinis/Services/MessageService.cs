@@ -74,8 +74,8 @@ namespace bakalaurinis.Services
         {
             return messageType switch
             {
-                MessageTypeEnum.NewActivity => 1,
-                MessageTypeEnum.DeleteActivity => 2,
+                MessageTypeEnum.NewWork => 1,
+                MessageTypeEnum.DeleteWork => 2,
                 MessageTypeEnum.Generation => 3,
                 MessageTypeEnum.GotNewInvitation => 4,
                 MessageTypeEnum.Decline => 5,
