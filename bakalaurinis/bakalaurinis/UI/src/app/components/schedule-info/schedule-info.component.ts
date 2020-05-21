@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { IScheduleInfoReview } from './schedule-info-review';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 

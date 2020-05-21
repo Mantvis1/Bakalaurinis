@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { GetActivities } from '../models/get-activities';
-import { NewActivity } from '../models/new-activity';
+import { GetWork } from '../models/get-work';
+import { NewWork } from '../models/new-work';
 import { UrlService } from './url.service';
 
 @Injectable({
@@ -16,23 +16,23 @@ export class WorkService {
     private urlService: UrlService
   ) { }
 
-  getAllByUserId(userId: number): Observable<GetActivities[]> {
-    return this.http.get<GetActivities[]>(this.urlService.getAbsolutePath('Work/user/') + userId);
+  getAllByUserId(userId: number): Observable<GetWork[]> {
+    return this.http.get<GetWork[]>(this.urlService.getAbsolutePath('Work/user/') + userId);
   }
 
-  getByUserId(userId: number): Observable<GetActivities> {
-    return this.http.get<GetActivities>(this.urlService.getAbsolutePath('Work/' + userId));
+  getByUserId(userId: number): Observable<GetWork> {
+    return this.http.get<GetWork>(this.urlService.getAbsolutePath('Work/' + userId));
   }
 
   delete(id: number): Observable<any> {
     return this.http.delete<any>(this.urlService.getAbsolutePath('Work/') + id);
   }
 
-  create(newWork: NewActivity) {
+  create(newWork: NewWork) {
     return this.http.post(this.urlService.getAbsolutePath('Work'), newWork);
   }
 
-  update(newWork: NewActivity, id: number) {
+  update(newWork: NewWork, id: number) {
     return this.http.put(this.urlService.getAbsolutePath('Work/' + id), newWork);
   }
 }

@@ -80,7 +80,7 @@ export class RecieveInvitationsComponent implements OnInit {
         minWidth: "300px",
         width: "50%",
         data: {
-          activityId: rowId
+          workId: rowId
         }
       });
     }

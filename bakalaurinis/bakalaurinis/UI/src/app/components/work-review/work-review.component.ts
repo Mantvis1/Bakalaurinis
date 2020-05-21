@@ -1,9 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { IActivityViewModal as ActivityViewModal } from '../recieve-invitations/activity-view-modal';
+import { IWorkViewModal } from '../recieve-invitations/work-view-modal';
 import { WorkService } from 'src/app/services/work.service';
-import { GetActivities } from 'src/app/models/get-activities';
 import { String } from 'typescript-string-operations';
+import { GetWork } from 'src/app/models/get-work';
 
 @Component({
   selector: 'app-work-review',
@@ -11,17 +11,17 @@ import { String } from 'typescript-string-operations';
   styleUrls: ['./work-review.component.css']
 })
 export class WorkReviewComponent implements OnInit {
-  isDescriptionPanelOpen: false;
-  work: GetActivities = new GetActivities();
+  //isDescriptionPanelOpen: false;
+  work: GetWork = new GetWork();
 
   constructor(
-    public dialogRef: MatDialogRef<ActivityViewModal>,
-    @Inject(MAT_DIALOG_DATA) public data: ActivityViewModal,
+    public dialogRef: MatDialogRef<IWorkViewModal>,
+    @Inject(MAT_DIALOG_DATA) public data: IWorkViewModal,
     private workService: WorkService
   ) { }
 
   ngOnInit() {
-    this.workService.getByUserId(this.data.activityId).subscribe(
+    this.workService.getByUserId(this.data.workId).subscribe(
       work => {
         this.work = Object.assign({}, work);
       }

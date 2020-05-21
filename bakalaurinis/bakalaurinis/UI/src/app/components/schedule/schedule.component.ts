@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { GetActivities } from 'src/app/models/get-activities';
+import { GetWork } from 'src/app/models/get-work';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ScheduleService } from 'src/app/services/schedule.service';
-import { ActivitiesAfterUpdate } from 'src/app/models/activities-after-update';
+import { WorksAfterUpdate } from 'src/app/models/works-after-update';
 import { ScheduleInfoComponent } from '../schedule-info/schedule-info.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ConvertToStringService } from 'src/app/services/convert-to-string.service';
@@ -26,10 +26,10 @@ export class ScheduleComponent implements OnInit {
     public convertToStringService: ConvertToStringService
   ) { }
 
-  activities: GetActivities[] = [];
+  works: GetWork[] = [];
   currentDate: Date = new Date();
   dateString: string;
-  activitiesAfterUpdate: ActivitiesAfterUpdate = new ActivitiesAfterUpdate();
+  activitiesAfterUpdate: WorksAfterUpdate = new WorksAfterUpdate();
 
   ngOnInit() {
     this.setCurrentDate();
@@ -37,15 +37,15 @@ export class ScheduleComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.activities, event.previousIndex, event.currentIndex);
-    this.activitiesAfterUpdate.activities = Object.assign([], this.activities);
+    moveItemInArray(this.works, event.previousIndex, event.currentIndex);
+    this.activitiesAfterUpdate.activities = Object.assign([], this.works);
 
     this.updateActivitiesTime();
   }
 
   getAllUserActivities() {
     this.scheduleService.getTodaysWorks(this.authenticationService.getUserId(), this.dateString).subscribe(data => {
-      this.activities = Object.assign([], data.works);
+      this.works = Object.assign([], data.works);
       this.busyness = data.busyness;
       this.startTime = data.startTime;
       this.endTime = data.endTime;
@@ -76,7 +76,7 @@ export class ScheduleComponent implements OnInit {
         date: this.dateString,
         startTime: this.startTime,
         endTime: this.endTime,
-        worksCount: this.activities.length,
+        worksCount: this.works.length,
         busyness: this.busyness
       }
     });

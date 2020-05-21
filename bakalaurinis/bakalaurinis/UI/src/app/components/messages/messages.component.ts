@@ -34,10 +34,10 @@ export class MessagesComponent implements OnInit {
 
   ngOnInit() {
     this.getPageSize(this.authenticationService.getUserId());
-    this.getUserMessages();
+    this.getAllMessages();
   }
 
-  getUserMessages(): void {
+  getAllMessages(): void {
     this.messageService.getUserMessages(this.authenticationService.getUserId()).subscribe(data => {
       this.messagesDataSource = new MatTableDataSource(data);
       this.messagesDataSource.paginator = this.paginator;
@@ -50,7 +50,7 @@ export class MessagesComponent implements OnInit {
     if (confirm("Do you want to delete all messages?")) {
       this.messageService.deleteUserAllMessagesById(this.authenticationService.getUserId()).subscribe(
         () => {
-          this.getUserMessages();
+          this.getAllMessages();
         }
       );
     }
@@ -60,7 +60,7 @@ export class MessagesComponent implements OnInit {
     if (confirm("Do you want to delete current message?")) {
       this.messageService.deleteUserMessagesById(this.authenticationService.getUserId(), messageId).subscribe(
         () => {
-          this.getUserMessages();
+          this.getAllMessages();
         }
       );
     }

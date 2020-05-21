@@ -1,7 +1,7 @@
-import { NewActivity } from '../../models/new-activity';
+import { NewWork } from '../../models/new-work';
 
 export interface IWorkModal {
-  workFormData: NewActivity,
+  workFormData: NewWork,
   formTitle: string,
   formConfirmationButtonName: string;
 }

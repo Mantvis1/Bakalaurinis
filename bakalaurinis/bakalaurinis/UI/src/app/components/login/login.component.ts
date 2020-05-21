@@ -23,13 +23,10 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loginForm = new FormGroup({
-      username: new FormControl(''),
-      password: new FormControl('')
-    });
+    this.createLoginForm();
   }
 
-  login() {
+  login(): void {
     if (this.validateInput()) {
       this.authenticationService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(() => {
         this.router.navigateByUrl("/schedule");
@@ -46,5 +43,12 @@ export class LoginComponent implements OnInit {
     }
 
     return true;
+  }
+
+  createLoginForm(): void {
+    this.loginForm = new FormGroup({
+      username: new FormControl(''),
+      password: new FormControl('')
+    });
   }
 }

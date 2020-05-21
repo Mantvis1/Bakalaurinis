@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { WorkService } from "../../services/work.service";
 import { AuthenticationService } from "../../services/authentication.service";
-import { GetActivities } from "../../models/get-activities";
+import { GetWork } from "../../models/get-work";
 import { MatDialog, MatPaginator, MatTableDataSource } from "@angular/material";
-import { NewActivity } from "../../models/new-activity";
+import { NewWork } from "../../models/new-work";
 import { InviteUserComponent } from '../invite-user/invite-user.component';
 import { SettingsService } from 'src/app/services/settings.service';
 import { WorkFormComponent } from '../work-form/work-form.component';
@@ -18,10 +18,10 @@ import { ConvertToStringService } from 'src/app/services/convert-to-string.servi
 })
 
 export class WorksTableComponent implements OnInit {
-  works = new MatTableDataSource<GetActivities>();
+  works = new MatTableDataSource<GetWork>();
   isRowClicked = true;
-  workToEdit: NewActivity = new NewActivity();
-  newActivity: NewActivity = new NewActivity();
+  workToEdit: NewWork = new NewWork();
+  newWork: NewWork = new NewWork();
 
   displayedColumns: string[] = [
     "Title",
@@ -84,21 +84,21 @@ export class WorksTableComponent implements OnInit {
       width: "35%",
       data: {
         formTitle: "New work",
-        activityFormData: this.newActivity,
+        activityFormData: this.newWork,
         formConfirmationButtonName: "Create"
       }
     });
 
-    dialogRef.afterClosed().subscribe(newActivity => {
+    dialogRef.afterClosed().subscribe(newWork => {
       this.updateRowClick(true);
 
-      if (newActivity) {
-        newActivity.userId = this.authenticationService.getUserId();
+      if (newWork) {
+        newWork.userId = this.authenticationService.getUserId();
 
-        this.workService.create(newActivity).subscribe(
+        this.workService.create(newWork).subscribe(
           () => {
             this.refreshTable();
-            this.newActivity = new NewActivity();
+            this.newWork = new newWork();
 
           }
         );
@@ -106,7 +106,7 @@ export class WorksTableComponent implements OnInit {
     });
   }
 
-  editFrom(element: NewActivity) {
+  editFrom(element: NewWork) {
     this.updateRowClick(false);
     this.workToEdit = Object.assign({}, element);
 
@@ -153,13 +153,13 @@ export class WorksTableComponent implements OnInit {
     this.works.filter = this.filterService.getFilteredValue(value);
   }
 
-  onRowClicked(row) {
+  onRowClicked(workId: number): void {
     if (this.isRowClicked) {
       this.dialog.open(WorkReviewComponent, {
         minWidth: "300px",
         width: "50%",
         data: {
-          activityId: row.id
+          workId: workId
         }
       });
     }
@@ -175,7 +175,7 @@ export class WorksTableComponent implements OnInit {
     });
   }
 
-  private filterTable(work: GetActivities, filterText: string): boolean {
+  private filterTable(work: GetWork, filterText: string): boolean {
     return (work.title && work.title.toLowerCase().indexOf(filterText) >= 0) ||
       (work.priorityString && work.priorityString.toLowerCase().indexOf(filterText) >= 0);
   }
