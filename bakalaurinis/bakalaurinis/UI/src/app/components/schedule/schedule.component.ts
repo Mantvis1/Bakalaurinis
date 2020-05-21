@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { GetActivities } from 'src/app/models/get-activities';
-import { DatePipe } from '@angular/common';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ScheduleService } from 'src/app/services/schedule.service';
 import { ActivitiesAfterUpdate } from 'src/app/models/activities-after-update';
 import { ScheduleInfoComponent } from '../schedule-info/schedule-info.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ConvertToStringService } from 'src/app/services/convert-to-string.service';
 
 @Component({
   selector: 'app-schedule',
@@ -22,17 +22,16 @@ export class ScheduleComponent implements OnInit {
   constructor(
     private scheduleService: ScheduleService,
     private authenticationService: AuthenticationService,
-    private datePipe: DatePipe,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public convertToStringService: ConvertToStringService
   ) { }
 
   activities: GetActivities[] = [];
-  currentDate: Date;
+  currentDate: Date = new Date();
   dateString: string;
   activitiesAfterUpdate: ActivitiesAfterUpdate = new ActivitiesAfterUpdate();
 
   ngOnInit() {
-    this.currentDate = new Date();
     this.setCurrentDate();
     this.getAllUserActivities();
   }
@@ -45,7 +44,7 @@ export class ScheduleComponent implements OnInit {
   }
 
   getAllUserActivities() {
-    this.scheduleService.getUserTodaysActivities(this.authenticationService.getUserId(), this.dateString).subscribe(data => {
+    this.scheduleService.getTodaysWorks(this.authenticationService.getUserId(), this.dateString).subscribe(data => {
       this.activities = Object.assign([], data.works);
       this.busyness = data.busyness;
       this.startTime = data.startTime;
@@ -54,25 +53,19 @@ export class ScheduleComponent implements OnInit {
   }
 
   setCurrentDate() {
-    this.dateString = this.datePipe.transform(this.currentDate, 'yyyy-MM-dd');
-
+    this.dateString = this.convertToStringService.getFullDate(this.currentDate);
     this.getAllUserActivities();
   }
 
   updateActivitiesTime() {
-    this.scheduleService.updateActivities(this.authenticationService.getUserId(), this.dateString, this.activitiesAfterUpdate).subscribe(() => {
+    this.scheduleService.updateSchedule(this.authenticationService.getUserId(), this.dateString, this.activitiesAfterUpdate).subscribe(() => {
       this.getAllUserActivities();
     });
   }
 
   updateDate(dayCount: number) {
     this.currentDate.setDate(this.currentDate.getDate() + dayCount);
-
     this.setCurrentDate();
-  }
-
-  getDataString(date: Date) {
-    return this.datePipe.transform(date, 'HH:mm');
   }
 
   openInfoModal() {

@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Message } from 'src/app/models/message';
 import { MessageService } from 'src/app/services/message.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
+import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { SettingsService } from 'src/app/services/settings.service';
-import { DatePipe } from '@angular/common';
+import { ConvertToStringService } from 'src/app/services/convert-to-string.service';
+import { FilterService } from 'src/app/services/filter.service';
 
 @Component({
   selector: 'app-messages',
@@ -26,8 +27,9 @@ export class MessagesComponent implements OnInit {
   constructor(
     private messageService: MessageService,
     private authenticationService: AuthenticationService,
-    private datePipe: DatePipe,
-    private settingsService: SettingsService
+    private convertToStringService: ConvertToStringService,
+    private settingsService: SettingsService,
+    private filterService: FilterService
   ) { }
 
   ngOnInit() {
@@ -72,12 +74,8 @@ export class MessagesComponent implements OnInit {
     );
   }
 
-  getDataString(date: Date) {
-    return this.datePipe.transform(date, 'yyyy-MM-dd HH:mm:ss');
-  }
-
-  applyFilter(filterValue: string): void {
-    this.messagesDataSource.filter = filterValue.trim().toLowerCase();
+  applyFilter(value: string): void {
+    this.messagesDataSource.filter = this.filterService.getFilteredValue(value);
 
     if (this.messagesDataSource.paginator) {
       this.messagesDataSource.paginator.firstPage();
@@ -86,7 +84,7 @@ export class MessagesComponent implements OnInit {
 
   updateDataSource() {
     this.messagesDataSource.data.forEach(message => {
-      message.dataString = this.getDataString(message.createdAt);
+      message.dataString = this.convertToStringService.getFullDateAndTime(message.createdAt);
     });
   }
 

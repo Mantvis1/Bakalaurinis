@@ -4,11 +4,12 @@ import { AuthenticationService } from "../../services/authentication.service";
 import { GetActivities } from "../../models/get-activities";
 import { MatDialog, MatPaginator, MatTableDataSource } from "@angular/material";
 import { NewActivity } from "../../models/new-activity";
-import { ActivityPriority } from "./works-priority.enum";
 import { InviteUserComponent } from '../invite-user/invite-user.component';
 import { SettingsService } from 'src/app/services/settings.service';
 import { WorkFormComponent } from '../work-form/work-form.component';
 import { WorkReviewComponent } from '../work-review/work-review.component';
+import { FilterService } from 'src/app/services/filter.service';
+import { ConvertToStringService } from 'src/app/services/convert-to-string.service';
 
 @Component({
   selector: "app-works-table",
@@ -36,7 +37,9 @@ export class WorksTableComponent implements OnInit {
     private workService: WorkService,
     private authenticationService: AuthenticationService,
     private dialog: MatDialog,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private filterService: FilterService,
+    public convertToStringService: ConvertToStringService
   ) { }
 
   ngOnInit() {
@@ -130,10 +133,6 @@ export class WorksTableComponent implements OnInit {
     });
   }
 
-  getWorkPriority(priorityId: number) {
-    return ActivityPriority[priorityId];
-  }
-
   invite(workId: number) {
     this.updateRowClick(false);
 
@@ -150,8 +149,8 @@ export class WorksTableComponent implements OnInit {
     dialogRef.afterClosed().subscribe(() => { this.updateRowClick(true); })
   }
 
-  applyFilter(filterValue: string): void {
-    this.works.filter = filterValue.trim().toLowerCase();
+  applyFilter(value: string): void {
+    this.works.filter = this.filterService.getFilteredValue(value);
   }
 
   onRowClicked(row) {
@@ -172,7 +171,7 @@ export class WorksTableComponent implements OnInit {
 
   private updateDataSource() {
     this.works.data.forEach(work => {
-      work.priorityString = this.getWorkPriority(work.activityPriority);
+      work.priorityString = this.convertToStringService.getWorkPriorityByIndex(work.activityPriority);
     });
   }
 
@@ -180,6 +179,4 @@ export class WorksTableComponent implements OnInit {
     return (work.title && work.title.toLowerCase().indexOf(filterText) >= 0) ||
       (work.priorityString && work.priorityString.toLowerCase().indexOf(filterText) >= 0);
   }
-
-
 }

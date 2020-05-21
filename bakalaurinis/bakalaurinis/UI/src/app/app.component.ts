@@ -12,8 +12,9 @@ export class AppComponent {
   constructor(private authenticationService: AuthenticationService) { }
 
   isAuthenticated() {
-    if (this.authenticationService.isAuthenticated())
+    if (this.authenticationService.isAuthenticated()) {
       return true;
+    }
 
     return false;
   }

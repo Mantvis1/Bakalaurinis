@@ -4,20 +4,23 @@ import { InviteUserModal } from './invite-user-modal';
 import { InvitationsService } from 'src/app/services/invitations.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { UserInvitationService } from 'src/app/services/user-invitation.service';
-import { InvitationStatus } from 'src/app/models/invitation-status.enum';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
 import { SettingsService } from 'src/app/services/settings.service';
 import { UserInvitation } from 'src/app/models/user-invitation';
+import { ConvertToStringService } from 'src/app/services/convert-to-string.service';
+import { FilterService } from 'src/app/services/filter.service';
 
 @Component({
   selector: 'app-invite-user',
   templateUrl: './invite-user.component.html',
   styleUrls: ['./invite-user.component.css']
 })
+
 export class InviteUserComponent implements OnInit {
   currentUserName: string;
   userInvitations = new MatTableDataSource<UserInvitation>();
+
   displayedColumns: string[] = [
     "User",
     "Status",
@@ -34,7 +37,9 @@ export class InviteUserComponent implements OnInit {
     private userInvitationService: UserInvitationService,
     private userService: UserService,
     private authenticationService: AuthenticationService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    public convertToStringService: ConvertToStringService,
+    private filterService: FilterService
   ) { }
 
   ngOnInit() {
@@ -77,14 +82,10 @@ export class InviteUserComponent implements OnInit {
         this.userInvitations.filterPredicate = this.filterTable;
 
         this.userInvitations.data.forEach(invitation => {
-          invitation.status = this.getStatus(invitation.invitationStatus);
+          invitation.status = this.convertToStringService.getInvitationStatusByIndex(invitation.invitationStatus);
         });
       }
     );
-  }
-
-  getStatus(index: number): string {
-    return InvitationStatus[index];
   }
 
   isUserHaveInvitation(username: string): boolean {
@@ -143,8 +144,8 @@ export class InviteUserComponent implements OnInit {
     }
   }
 
-  applyFilter(filterValue: string): void {
-    this.userInvitations.filter = filterValue.trim().toLowerCase();
+  applyFilter(value: string): void {
+    this.userInvitations.filter = this.filterService.getFilteredValue(value);
   }
 
   private filterTable(invitation: UserInvitation, filterText: string): boolean {

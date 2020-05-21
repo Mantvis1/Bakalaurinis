@@ -6,9 +6,9 @@ import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-page-size-settings',
-  templateUrl: './page-size-settings.component.html',
-  styleUrls: ['./page-size-settings.component.css']
+  templateUrl: './page-size-settings.component.html'
 })
+
 export class PageSizeSettingsComponent implements OnInit {
   updatePageSizeSetting = new UpdatePageSizeSetting();
 
@@ -38,7 +38,6 @@ export class PageSizeSettingsComponent implements OnInit {
         this.alertService.showMessage('Page size was updated');
         this.getPageSize();
       }
-
     );
   }
 

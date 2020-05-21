@@ -10,9 +10,11 @@ import { Router } from '@angular/router';
 })
 export class DeleteAccountComponent {
 
-  constructor(private userService: UserService,
+  constructor(
+    private userService: UserService,
     private authenticationService: AuthenticationService,
-    private router: Router) { }
+    private router: Router
+  ) { }
 
   delete() {
     if (confirm("Are you sure about that?")) {
