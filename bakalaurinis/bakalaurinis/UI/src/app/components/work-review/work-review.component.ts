@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { IWorkViewModal } from '../recieve-invitations/work-view-modal';
+import { IWorkViewModal } from '../receive-invitations/work-view-modal';
 import { WorkService } from 'src/app/services/work.service';
 import { String } from 'typescript-string-operations';
 import { GetWork } from 'src/app/models/get-work';
@@ -11,7 +11,6 @@ import { GetWork } from 'src/app/models/get-work';
   styleUrls: ['./work-review.component.css']
 })
 export class WorkReviewComponent implements OnInit {
-  //isDescriptionPanelOpen: false;
   work: GetWork = new GetWork();
 
   constructor(

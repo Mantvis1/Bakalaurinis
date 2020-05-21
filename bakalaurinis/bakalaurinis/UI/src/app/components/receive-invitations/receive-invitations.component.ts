@@ -7,14 +7,13 @@ import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
 import { WorkReviewComponent } from '../work-review/work-review.component';
 
 @Component({
-  selector: 'app-recieve-invitations',
-  templateUrl: './recieve-invitations.component.html',
-  styleUrls: ['./recieve-invitations.component.css']
+  selector: 'app-receive-invitations',
+  templateUrl: './receive-invitations.component.html',
+  styleUrls: ['./receive-invitations.component.css']
 })
-export class RecieveInvitationsComponent implements OnInit {
+export class ReceiveInvitationsComponent implements OnInit {
   isRowClick = true;
   invitations = new MatTableDataSource<Invitation>();
-  displayedColumns: string[] = ["Row"];
   breakpoint: number = 7;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;

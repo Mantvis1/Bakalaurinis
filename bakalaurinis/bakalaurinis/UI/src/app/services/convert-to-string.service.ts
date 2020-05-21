@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { InvitationStatus } from '../models/invitation-status.enum';
-import { ActivityPriority } from '../components/works-table/works-priority.enum';
+import { WorkPriority } from '../components/works-table/works-priority.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +28,7 @@ export class ConvertToStringService {
   }
 
   getWorkPriorityByIndex(index: number) {
-    return ActivityPriority[index];
+    return WorkPriority[index];
   }
 
 }

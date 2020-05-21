@@ -45,15 +45,15 @@ import { DeleteAccountComponent } from './components/delete-account/delete-accou
 import { ScheduleSettingsComponent } from './components/schedule-settings/schedule-settings.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MessagesComponent } from './components/messages/messages.component';
-import { RecieveInvitationsComponent } from './components/recieve-invitations/recieve-invitations.component';
 import { InviteUserComponent } from './components/invite-user/invite-user.component';
 import { PageSizeSettingsComponent } from './components/page-size-settings/page-size-settings.component';
-import { RefreshActivitiesComponent } from './components/refresh-activities/refresh-activities.component';
 import { DatePipe } from '@angular/common';
 import { ScheduleInfoComponent } from './components/schedule-info/schedule-info.component';
 import { WorkFormComponent } from './components/work-form/work-form.component';
 import { WorksTableComponent } from './components/works-table/works-table.component';
 import { WorkReviewComponent } from './components/work-review/work-review.component';
+import { RefreshScheduleComponent } from './components/refresh-schedule/refresh-schedule.component';
+import { ReceiveInvitationsComponent } from './components/receive-invitations/receive-invitations.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -73,11 +73,11 @@ export function tokenGetter() {
     DeleteAccountComponent,
     ScheduleSettingsComponent,
     MessagesComponent,
-    RecieveInvitationsComponent,
+    ReceiveInvitationsComponent,
     InviteUserComponent,
     PageSizeSettingsComponent,
     WorkReviewComponent,
-    RefreshActivitiesComponent,
+    RefreshScheduleComponent,
     ScheduleInfoComponent,
   ],
   imports: [
