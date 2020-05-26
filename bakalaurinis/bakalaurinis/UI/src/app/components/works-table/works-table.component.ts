@@ -69,7 +69,7 @@ export class WorksTableComponent implements OnInit {
   }
 
   getPageSize(userId: number): void {
-    this.settingsService.getItemsPerPageSettings(userId).subscribe(
+    this.settingsService.getItemsPerPageSetting(userId).subscribe(
       data => {
         this.paginator._changePageSize(data.itemsPerPage);
       }
@@ -171,7 +171,7 @@ export class WorksTableComponent implements OnInit {
 
   private updateDataSource() {
     this.works.data.forEach(work => {
-      work.priorityString = this.convertToStringService.getWorkPriorityByIndex(work.activityPriority);
+      work.priorityString = this.convertToStringService.getWorkPriorityByIndex(work.workPriority);
     });
   }
 

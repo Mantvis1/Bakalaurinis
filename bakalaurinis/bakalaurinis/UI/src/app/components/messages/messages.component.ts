@@ -67,7 +67,7 @@ export class MessagesComponent implements OnInit {
   }
 
   getPageSize(userId: number): void {
-    this.settingsService.getItemsPerPageSettings(userId).subscribe(
+    this.settingsService.getItemsPerPageSetting(userId).subscribe(
       data => {
         this.paginator._changePageSize(data.itemsPerPage);
       }

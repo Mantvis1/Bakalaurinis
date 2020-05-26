@@ -26,7 +26,7 @@ export class ScheduleSettingsComponent implements OnInit {
     if (this.currentTime.startTime < this.currentTime.endTime) {
       this.currentTime.userId = this.authenticationService.getUserId();
 
-      this.settingsService.updateSettings(this.currentTime.userId, this.currentTime).subscribe(
+      this.settingsService.update(this.currentTime.userId, this.currentTime).subscribe(
         () => {
           this.getSettings();
           this.alertService.showMessage("Selected time was updated");
@@ -37,7 +37,7 @@ export class ScheduleSettingsComponent implements OnInit {
   }
 
   getSettings() {
-    this.settingsService.getSettings(this.authenticationService.getUserId()).subscribe(
+    this.settingsService.getByUserId(this.authenticationService.getUserId()).subscribe(
       data => {
         this.currentTime = Object.assign({}, data);
       }

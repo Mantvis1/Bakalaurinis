@@ -23,7 +23,7 @@ export class PageSizeSettingsComponent implements OnInit {
   }
 
   getPageSize() {
-    this.settingsService.getItemsPerPageSettings(this.authenticationService.getUserId()).subscribe(
+    this.settingsService.getItemsPerPageSetting(this.authenticationService.getUserId()).subscribe(
       data => {
         this.updatePageSizeSetting.itemsPerPage = data.itemsPerPage;
       }
@@ -33,7 +33,7 @@ export class PageSizeSettingsComponent implements OnInit {
   updatePageSize() {
     this.updatePageSizeSetting.userId = this.authenticationService.getUserId();
 
-    this.settingsService.updateItemsPerPageSettings(this.authenticationService.getUserId(), this.updatePageSizeSetting).subscribe(
+    this.settingsService.updateItemsPerPageSetting(this.authenticationService.getUserId(), this.updatePageSizeSetting).subscribe(
       () => {
         this.alertService.showMessage('Page size was updated');
         this.getPageSize();

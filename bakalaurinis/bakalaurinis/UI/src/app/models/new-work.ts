@@ -5,6 +5,6 @@ export class NewWork {
   description: string;
   userId: number;
   durationInMinutes: number;
-  activityPriority: WorkPriority;
+  workPriority: WorkPriority;
   willBeParticipant: boolean;
 }

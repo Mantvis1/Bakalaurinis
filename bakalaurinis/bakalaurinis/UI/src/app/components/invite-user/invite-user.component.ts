@@ -50,6 +50,7 @@ export class InviteUserComponent implements OnInit {
 
   invite() {
     let newInvitation = Object.assign({}, this.data);
+
     if (newInvitation.receiverName.length !== 0) {
       if (!this.isReceiverSameUserAsSender(newInvitation.receiverName)) {
         if (!this.isUserHaveInvitation(newInvitation.receiverName)) {
@@ -119,7 +120,7 @@ export class InviteUserComponent implements OnInit {
   }
 
   getPageSize(userId: number): void {
-    this.settingsService.getItemsPerPageSettings(userId).subscribe(
+    this.settingsService.getItemsPerPageSetting(userId).subscribe(
       data => {
         this.paginator._changePageSize(data.itemsPerPage);
       }
