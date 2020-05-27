@@ -3,6 +3,7 @@ import { AuthenticationService } from "src/app/services/authentication.service";
 import { Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AlertService } from '../../services/alert.service';
+import { EncryptionDecryptionService } from 'src/app/services/encryption-decryption.service';
 
 @Component({
   selector: "app-login",
@@ -15,7 +16,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private encryptionDecryptionService: EncryptionDecryptionService
   ) {
     if (this.authenticationService.isAuthenticated()) {
       this.router.navigateByUrl("/schedule");
@@ -28,7 +30,10 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     if (this.validateInput()) {
-      this.authenticationService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(() => {
+      this.authenticationService.login(
+        this.loginForm.value.username,
+        this.encryptionDecryptionService.encrypt(this.loginForm.value.password)
+      ).subscribe(() => {
         this.router.navigateByUrl("/schedule");
       }, error => {
         this.alertService.showMessage(error);

@@ -28,6 +28,7 @@ export class WorksTableComponent implements OnInit {
     "Priority",
     "Edit",
     "Invite",
+    
     "Delete"
   ];
 

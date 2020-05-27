@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { UserRegister } from '../../models/user-register';
 import { AlertService } from '../../services/alert.service';
+import { EncryptionDecryptionService } from 'src/app/services/encryption-decryption.service';
 
 @Component({
   selector: "app-registration",
@@ -23,7 +24,8 @@ export class RegistrationComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private encryptionDecryption: EncryptionDecryptionService
   ) { }
 
   ngOnInit() { }
@@ -31,6 +33,7 @@ export class RegistrationComponent implements OnInit {
   register() {
     if (this.validateInput()) {
       this.user = Object.assign({}, this.registrationForm.value);
+      this.user.password = this.encryptionDecryption.encrypt(this.registrationForm.value.password);
 
       this.userService.register(this.user).subscribe(
         () => {

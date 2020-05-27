@@ -40,6 +40,7 @@ namespace bakalaurinis.Services
         public DateTime GetDateTime(int? minutes)
         {
             var date = new DateTime(GetCurrentDay().Year, GetCurrentDay().Month, GetCurrentDay().Day);
+            
             if (minutes != null) 
             {
               date = date.AddMinutes(minutes.Value);

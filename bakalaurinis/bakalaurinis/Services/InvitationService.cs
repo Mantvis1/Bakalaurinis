@@ -48,7 +48,6 @@ namespace bakalaurinis.Services
             {
                 await _messageService.Create(invitation.SenderId, invitation.WorkId, MessageTypeEnum.Accept);
                 await _messageService.Create(invitation.ReceiverId, invitation.WorkId, MessageTypeEnum.WasAccepted);
-
                 await _scheduleGenerationService.CreateWorkCopy(updateInvitationDto.WorkId, invitation.ReceiverId);
             }
             else if (updateInvitationDto.InvitationStatus == InvitationStatusEnum.Decline)

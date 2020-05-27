@@ -29,7 +29,7 @@ namespace bakalaurinis.Services
             _messageFormationService = messageFormationService;
         }
 
-        public async Task<int> Create(int userId, int activityId, MessageTypeEnum messageType)
+        public async Task<int> Create(int userId, int workId, MessageTypeEnum messageType)
         {
             var messageId = GetMessageId(messageType);
             var messageTemplate = await _messageTempalateRepository.GetById(messageId);
@@ -39,7 +39,7 @@ namespace bakalaurinis.Services
                 CreatedAt = DateTime.Now,
                 Title = messageTemplate.TitleTemplate,
                 UserId = userId,
-                Text = await _messageFormationService.GetFormattedText(messageTemplate.TextTemplate, userId, activityId)
+                Text = await _messageFormationService.GetFormattedText(messageTemplate.TextTemplate, userId, workId)
             };
 
             return await _messageRepository.Create(message);

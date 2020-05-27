@@ -45,18 +45,16 @@ namespace bakalaurinis.Services
         {
             var works = await _repository.FilterByUserIdAndTime(userId, date);
             var settings = await _userSettingsService.GetByUserId(userId);
-            int busynessInMinutes = 0;
+            var busynessInMinutes = 0;
             
             foreach(var work in works)
             {
                 busynessInMinutes += work.DurationInMinutes;
             }
 
-            busynessInMinutes *= 100;
-            busynessInMinutes /= 60;
-            int workDuration = settings.EndTime - settings.StartTime;
+            busynessInMinutes = (busynessInMinutes *100 / 60)/ (settings.EndTime - settings.StartTime);
 
-            return busynessInMinutes / workDuration;
+            return busynessInMinutes;
         }
     }
 }
