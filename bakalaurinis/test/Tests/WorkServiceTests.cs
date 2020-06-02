@@ -62,7 +62,7 @@ namespace test.Tests
                 DurationInMinutes = 20,
                 Title = "title",
                 Description = "description",
-                ActivityPriority = bakalaurinis.Infrastructure.Enums.ActivityPriorityEnum.Low
+                WorkPriority = bakalaurinis.Infrastructure.Enums.WorkPriorityEnum.Low
             };
 
             var workId = await _worksService.Create(newWorkDto);

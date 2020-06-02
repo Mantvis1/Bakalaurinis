@@ -22,7 +22,7 @@ namespace bakalaurinis.Infrastructure.Database.Models
         public int DurationInMinutes { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
-        public ActivityPriorityEnum ActivityPriority { get; set; }
+        public WorkPriorityEnum WorkPriority { get; set; }
         [DefaultValue(false)]
         public bool WillBeParticipant { get; set; }
         [DefaultValue(true)]

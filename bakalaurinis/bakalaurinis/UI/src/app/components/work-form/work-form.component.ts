@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { IWorkModal } from './work-modal';
 
@@ -7,12 +7,16 @@ import { IWorkModal } from './work-modal';
   templateUrl: './work-form.component.html',
   styleUrls: ['./work-form.component.css']
 })
-export class WorkFormComponent {
+export class WorkFormComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<IWorkModal>,
     @Inject(MAT_DIALOG_DATA) public data: IWorkModal
   ) { }
+
+  ngOnInit() {
+    console.log(this.data);
+  }
 
   closeModal(returnValue: any) {
     this.dialogRef.close(returnValue);

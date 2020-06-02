@@ -8,7 +8,7 @@ namespace bakalaurinis.Dtos.Work
         public string Description { get; set; }
         public int UserId { get; set; }
         public int DurationInMinutes { get; set; }
-        public ActivityPriorityEnum ActivityPriority { get; set; }
+        public WorkPriorityEnum WorkPriority { get; set; }
         public bool WillBeParticipant { get; set; }
     }
 }

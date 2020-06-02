@@ -49,7 +49,7 @@ namespace bakalaurinis.Services
         {
             var currentDay = 0;
             int[] time = await MoveToNextDay(userId, currentDay);
-            var activitiesToUpdate = (await _worksRepository.FilterByUserIdAndStartTime(userId)).OrderByDescending(x => x.ActivityPriority).ToList();
+            var activitiesToUpdate = (await _worksRepository.FilterByUserIdAndStartTime(userId)).OrderByDescending(x => x.WorkPriority).ToList();
             var allActivities = (await _worksRepository.FilterByUserIdAndStartTimeIsNotNull(userId)).ToList();
 
             foreach (var activity in activitiesToUpdate)

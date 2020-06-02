@@ -60,6 +60,7 @@ namespace test.Tests
         public async void Update(int id, int workId, InvitationStatusEnum status)
         {
             var invitationDto = await _context.Invitations.FindAsync(id);
+
             var updateInvitationDto = new UpdateInvitationDto
             {
                 WorkId = workId,

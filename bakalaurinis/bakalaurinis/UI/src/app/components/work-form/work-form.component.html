@@ -3,6 +3,7 @@
 
   <mat-dialog-content>
     <mat-card>
+
       <div>
         <mat-form-field>
           <input matInput [(ngModel)]="data.workFormData.title" name="title" placeholder="Title" required
@@ -37,14 +38,13 @@
       <div>
         <mat-form-field>
           <mat-label>Select priority</mat-label>
-          <mat-select placeholder="Priority" [(ngModel)]="data.workFormData.activityPriority" name="priority">
+          <mat-select placeholder="Priority" [(ngModel)]="data.workFormData.workPriority" name="workPriority">
             <mat-option [value]="0">Low</mat-option>
             <mat-option [value]="1">Medium</mat-option>
             <mat-option [value]="2">High</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
-
 
       <div>
         <mat-checkbox name="participants" [(ngModel)]="data.workFormData.willBeParticipant">
@@ -56,9 +56,7 @@
 
   <mat-dialog-actions align="end">
     <button mat-flat-button mat-button-base (click)="closeModal(null)" [mat-dialog-close]>Close</button>
-    <button mat-flat-button color="primary"
-      [disabled]="nameInput.invalid || descriptionInput.invalid || durationInput.invalid || durationInput.value <= 0"
-      (click)="closeModal(data.workFormData)">
+    <button mat-flat-button color="primary" (click)="closeModal(data.workFormData)">
       {{ data.formConfirmationButtonName }}
     </button>
   </mat-dialog-actions>

@@ -1,6 +1,6 @@
 ﻿namespace bakalaurinis.Infrastructure.Enums
 {
-    public enum ActivityPriorityEnum
+    public enum WorkPriorityEnum
     {
         Low,
         Medium,

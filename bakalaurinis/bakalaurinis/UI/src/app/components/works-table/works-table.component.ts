@@ -28,7 +28,6 @@ export class WorksTableComponent implements OnInit {
     "Priority",
     "Edit",
     "Invite",
-    
     "Delete"
   ];
 
@@ -46,12 +45,13 @@ export class WorksTableComponent implements OnInit {
   ngOnInit() {
     this.getPageSize(this.authenticationService.getUserId());
     this.refreshTable();
+    console.log(this.works);
   }
 
   deleteById(id: number) {
     this.updateRowClick(false);
 
-    if (confirm("Do you want to delete current?")) {
+    if (confirm("Do you want to delete current work?")) {
       this.workService.delete(id).subscribe(() => {
         this.refreshTable();
         this.updateRowClick(true);
@@ -85,7 +85,7 @@ export class WorksTableComponent implements OnInit {
       width: "35%",
       data: {
         formTitle: "New work",
-        activityFormData: this.newWork,
+        workFormData: this.newWork,
         formConfirmationButtonName: "Create"
       }
     });
@@ -99,8 +99,7 @@ export class WorksTableComponent implements OnInit {
         this.workService.create(newWork).subscribe(
           () => {
             this.refreshTable();
-            this.newWork = new newWork();
-
+            this.newWork = new NewWork();
           }
         );
       }
@@ -109,23 +108,24 @@ export class WorksTableComponent implements OnInit {
 
   editFrom(element: NewWork) {
     this.updateRowClick(false);
-    this.workToEdit = Object.assign({}, element);
+
+    console.log(this.workToEdit);
 
     const dialogRef = this.dialog.open(WorkFormComponent, {
       minWidth: "250px",
       width: "35%",
       data: {
         formTitle: "Edit work",
-        activityFormData: this.workToEdit,
+        workFormData: element,
         formConfirmationButtonName: "Edit"
       }
     });
 
-    dialogRef.afterClosed().subscribe(editActivity => {
+    dialogRef.afterClosed().subscribe(editWork => {
       this.updateRowClick(true);
 
-      if (editActivity) {
-        this.workService.update(editActivity, editActivity.id).subscribe(
+      if (editWork) {
+        this.workService.update(editWork, editWork.id).subscribe(
           () => {
             this.refreshTable();
           }
