@@ -29,9 +29,9 @@
 </mat-card>
 
 <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-  <div class="example-box" *ngFor="let activity of activities" cdkDrag>
+  <div class="example-box" *ngFor="let work of works" cdkDrag>
     <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-    <h2> {{activity.title}} (Start : {{convertToStringService.getHoursAndMinutesFromDate(activity.startTime)}}
-      End:{{convertToStringService.getHoursAndMinutesFromDate(activity.endTime)}})</h2>
+    <h2> {{work.title}} (Start : {{convertToStringService.getHoursAndMinutesFromDate(work.startTime)}}
+      End:{{convertToStringService.getHoursAndMinutesFromDate(work.endTime)}})</h2>
   </div>
 </div>

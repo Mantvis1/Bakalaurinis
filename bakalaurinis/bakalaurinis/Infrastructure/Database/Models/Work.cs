@@ -1,4 +1,5 @@
 ﻿using bakalaurinis.Infrastructure.Enums;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,16 +31,8 @@ namespace bakalaurinis.Infrastructure.Database.Models
         public ICollection<Invitation> Invitations { get; set; }
 
 
-        public Work Clone(int userId)
+        public Work Clone<Work>(Work work)
         {
-            var work = (Work)MemberwiseClone();
-
-            work.Id = 0;
-            work.UserId = userId;
-            work.IsAuthor = false;
-            work.StartTime = null;
-            work.EndTime = null;
-
             return work;
         }
     }

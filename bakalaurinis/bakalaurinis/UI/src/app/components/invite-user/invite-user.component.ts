@@ -78,6 +78,7 @@ export class InviteUserComponent implements OnInit {
   loadAllUserInvitations() {
     this.userInvitationService.getAllByActivityId(this.data.workId).subscribe(
       data => {
+        console.log(this.data.workId);
         this.userInvitations.data = Object.assign([], data);
         this.userInvitations.paginator = this.paginator;
         this.userInvitations.filterPredicate = this.filterTable;
