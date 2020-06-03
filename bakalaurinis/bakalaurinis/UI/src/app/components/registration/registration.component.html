@@ -43,7 +43,10 @@
 
     <div class="center">
       <mat-dialog-actions align="end">
-        <button mat-flat-button color="primary" (click)="register()">
+        <button mat-flat-button color="primary" [disabled]="this.registrationForm.controls.email.invalid ||
+           this.registrationForm.controls.repeatPassword.invalid ||
+            this.registrationForm.controls.password.invalid ||
+             this.registrationForm.controls.username.invalid" (click)="register()">
           Register now
         </button>
       </mat-dialog-actions>
