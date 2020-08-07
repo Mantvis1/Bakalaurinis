@@ -138,11 +138,7 @@ namespace bakalaurinis.Services
                 {
                     differenceBetweenDays = _timeService.GetDifferentBetweenTwoDatesInMinutes(_timeService.GetDateTime(time[0]), allActivities[i].StartTime.Value);
 
-                    result.Add(new GeneratorFreeSpaceDto(
-                           _timeService.GetDateTime(time[0]),
-                            allActivities[i].StartTime.Value,
-                           differenceBetweenDays
-                            ));
+                    result.Add(GetGeneratedFreeSpace(time, differenceBetweenDays));
                 }
 
                 if (_timeService.GetDifferentBetweenTwoDatesInMinutes(allActivities[i].EndTime.Value, allActivities[i + 1].StartTime.Value) > 0 &&
@@ -161,22 +157,14 @@ namespace bakalaurinis.Services
 
                     if (differenceBetweenDays > 0)
                     {
-                        result.Add(new GeneratorFreeSpaceDto(
-                            allActivities[i].EndTime.Value,
-                            _timeService.GetDateTime(time[1]),
-                            differenceBetweenDays
-                            ));
+                        result.Add(GetGeneratedFreeSpace(time, differenceBetweenDays));
                     }
 
                     differenceBetweenDays = _timeService.GetDifferentBetweenTwoDatesInMinutes(_timeService.GetDateTime(time[0] + 1440), allActivities[i + 1].StartTime.Value);
 
                     if (differenceBetweenDays > 0)
                     {
-                        result.Add(new GeneratorFreeSpaceDto(
-                               _timeService.GetDateTime(time[0]),
-                                allActivities[i].StartTime.Value,
-                               differenceBetweenDays
-                                ));
+                        result.Add(GetGeneratedFreeSpace(time, differenceBetweenDays));
                     }
                 }
 
@@ -184,11 +172,7 @@ namespace bakalaurinis.Services
                 {
                     time = await MoveToNextDay(userId, 1 + allActivities[i].StartTime.Value.Day - _timeService.GetCurrentDay().Day);
 
-                    result.Add(new GeneratorFreeSpaceDto(
-                        _timeService.GetDateTime(time[0]),
-                        _timeService.GetDateTime(time[1]),
-                        time[1] - time[0]
-                        ));
+                    result.Add(GetGeneratedFreeSpace(time, time[1] - time[0]));
                 }
 
             }
@@ -255,6 +239,11 @@ namespace bakalaurinis.Services
             }
 
             await Generate(userId);
+        }
+
+        private GeneratorFreeSpaceDto GetGeneratedFreeSpace(int [] time, int diferentBetweenTimes)
+        {
+            return new GeneratorFreeSpaceDto(_timeService.GetDateTime(time[0]), _timeService.GetDateTime(time[1]), diferentBetweenTimes);
         }
     }
 }
