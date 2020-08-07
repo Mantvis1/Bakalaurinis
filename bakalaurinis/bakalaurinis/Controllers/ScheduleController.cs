@@ -13,6 +13,7 @@ namespace bakalaurinis.Controllers
     {
         private readonly IScheduleService _scheduleService;
         private readonly IScheduleGenerationService _scheduleGenerationService;
+
         public ScheduleController(IScheduleService scheduleService, IScheduleGenerationService scheduleGenerationService)
         {
             _scheduleService = scheduleService;

@@ -57,7 +57,9 @@ namespace bakalaurinis.Controllers
             var username = await _userService.GetNameById(id);
 
             if (username == null)
+            {
                 return NotFound();
+            }
 
             return Ok(username);
         }
@@ -78,7 +80,9 @@ namespace bakalaurinis.Controllers
             var userStatus = await _userService.GetStatusById(id);
 
             if (userStatus == null)
+            {
                 return NotFound();
+            }
 
             return Ok(userStatus);
         }
