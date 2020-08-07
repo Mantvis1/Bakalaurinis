@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { AuthServiceService } from '../../services/auth-service.service';
+import { AuthenticationService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,17 +10,17 @@ import { Router } from '@angular/router';
 })
 export class DeleteAccountComponent {
 
-  constructor(private userService: UserService,
-    private authService: AuthServiceService,
-    private router: Router) { }
+  constructor(
+    private userService: UserService,
+    private authenticationService: AuthenticationService,
+    private router: Router
+  ) { }
 
   delete() {
     if (confirm("Are you sure about that?")) {
-      this.userService.deleteUser(this.authService.getUserId()).subscribe(error => {
-        console.log(error);
-      });
+      this.userService.deleteUser(this.authenticationService.getUserId()).subscribe();
 
-      this.authService.logout();
+      this.authenticationService.logout();
       this.router.navigateByUrl("");
     }
   }

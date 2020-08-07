@@ -4,20 +4,23 @@ import { InviteUserModal } from './invite-user-modal';
 import { InvitationsService } from 'src/app/services/invitations.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { UserInvitationService } from 'src/app/services/user-invitation.service';
-import { InvitationStatus } from 'src/app/models/invitation-status.enum';
-import { AuthServiceService } from 'src/app/services/auth-service.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
 import { SettingsService } from 'src/app/services/settings.service';
 import { UserInvitation } from 'src/app/models/user-invitation';
+import { ConvertToStringService } from 'src/app/services/convert-to-string.service';
+import { FilterService } from 'src/app/services/filter.service';
 
 @Component({
   selector: 'app-invite-user',
   templateUrl: './invite-user.component.html',
   styleUrls: ['./invite-user.component.css']
 })
+
 export class InviteUserComponent implements OnInit {
   currentUserName: string;
   userInvitations = new MatTableDataSource<UserInvitation>();
+
   displayedColumns: string[] = [
     "User",
     "Status",
@@ -33,18 +36,21 @@ export class InviteUserComponent implements OnInit {
     private alertService: AlertService,
     private userInvitationService: UserInvitationService,
     private userService: UserService,
-    private authService: AuthServiceService,
-    private settingsService: SettingsService
+    private authenticationService: AuthenticationService,
+    private settingsService: SettingsService,
+    public convertToStringService: ConvertToStringService,
+    private filterService: FilterService
   ) { }
 
   ngOnInit() {
-    this.getPageSize(this.authService.getUserId());
+    this.getPageSize(this.authenticationService.getUserId());
     this.loadAllUserInvitations();
     this.getCurrentUser();
   }
 
   invite() {
     let newInvitation = Object.assign({}, this.data);
+
     if (newInvitation.receiverName.length !== 0) {
       if (!this.isReceiverSameUserAsSender(newInvitation.receiverName)) {
         if (!this.isUserHaveInvitation(newInvitation.receiverName)) {
@@ -53,7 +59,7 @@ export class InviteUserComponent implements OnInit {
               this.alertService.showMessage("Invitation sent");
               this.loadAllUserInvitations();
             },
-            error => {
+            () => {
               this.alertService.showMessage("User does not exists");
             }
           );
@@ -77,14 +83,10 @@ export class InviteUserComponent implements OnInit {
         this.userInvitations.filterPredicate = this.filterTable;
 
         this.userInvitations.data.forEach(invitation => {
-          invitation.status = this.getStatus(invitation.invitationStatus);
+          invitation.status = this.convertToStringService.getInvitationStatusByIndex(invitation.invitationStatus);
         });
       }
     );
-  }
-
-  getStatus(index: number): string {
-    return InvitationStatus[index];
   }
 
   isUserHaveInvitation(username: string): boolean {
@@ -108,7 +110,7 @@ export class InviteUserComponent implements OnInit {
   }
 
   getCurrentUser() {
-    this.userService.getUsername(this.authService.getUserId()).subscribe(name => {
+    this.userService.getUsername(this.authenticationService.getUserId()).subscribe(name => {
       this.currentUserName = name.username;
     });
   }
@@ -118,7 +120,7 @@ export class InviteUserComponent implements OnInit {
   }
 
   getPageSize(userId: number): void {
-    this.settingsService.getItemsPerPageSettings(userId).subscribe(
+    this.settingsService.getItemsPerPageSetting(userId).subscribe(
       data => {
         this.paginator._changePageSize(data.itemsPerPage);
       }
@@ -143,8 +145,8 @@ export class InviteUserComponent implements OnInit {
     }
   }
 
-  applyFilter(filterValue: string): void {
-    this.userInvitations.filter = filterValue.trim().toLowerCase();
+  applyFilter(value: string): void {
+    this.userInvitations.filter = this.filterService.getFilteredValue(value);
   }
 
   private filterTable(invitation: UserInvitation, filterText: string): boolean {

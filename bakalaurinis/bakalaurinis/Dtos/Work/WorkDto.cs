@@ -12,7 +12,7 @@ namespace bakalaurinis.Dtos.Work
         public int DurationInMinutes { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
-        public ActivityPriorityEnum ActivityPriority { get; set; }
+        public WorkPriorityEnum WorkPriority { get; set; }
         public bool WillBeParticipant { get; set; }
         public bool IsAuthor { get; set; }
     }

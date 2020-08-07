@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { AuthServiceService } from './services/auth-service.service';
+import { AuthenticationService } from './services/authentication.service';
 
 @Component({
   selector: "app-root",
@@ -9,11 +9,12 @@ import { AuthServiceService } from './services/auth-service.service';
 export class AppComponent {
   title = "UI";
 
-  constructor(private auth: AuthServiceService) { }
+  constructor(private authenticationService: AuthenticationService) { }
 
-  isAuthentificated() {
-    if (this.auth.isAuthenticated())
+  isAuthenticated() {
+    if (this.authenticationService.isAuthenticated()) {
       return true;
+    }
 
     return false;
   }

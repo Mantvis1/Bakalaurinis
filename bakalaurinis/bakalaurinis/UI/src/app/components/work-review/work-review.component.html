@@ -1,0 +1,24 @@
+<div align="right">
+  <button mat-flat-button color="warn" (click)="closeModal()">
+    <i class="material-icons">
+      clear
+    </i>
+  </button>
+</div>
+<form>
+  <mat-card>
+    <h1 mat-card-title>{{work.title}}</h1>
+    <mat-card-content>
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            Description
+          </mat-expansion-panel-header>
+          {{work.description}}
+        </mat-expansion-panel>
+      </mat-accordion>
+      <br>
+      Duration is {{getDurationHoursAndMinutes()}}
+    </mat-card-content>
+  </mat-card>
+</form>

@@ -49,7 +49,7 @@ namespace bakalaurinis.Services
         {
             var currentDay = 0;
             int[] time = await MoveToNextDay(userId, currentDay);
-            var activitiesToUpdate = (await _worksRepository.FilterByUserIdAndStartTime(userId)).OrderByDescending(x => x.ActivityPriority).ToList();
+            var activitiesToUpdate = (await _worksRepository.FilterByUserIdAndStartTime(userId)).OrderByDescending(x => x.WorkPriority).ToList();
             var allActivities = (await _worksRepository.FilterByUserIdAndStartTimeIsNotNull(userId)).ToList();
 
             foreach (var activity in activitiesToUpdate)
@@ -229,7 +229,15 @@ namespace bakalaurinis.Services
         public async Task CreateWorkCopy(int workId, int userId)
         {
             var work = await _worksRepository.GetById(workId);
-            var newWork = work.Clone(userId);
+
+            var newWork = new Work()
+            {
+                UserId = userId,
+                Title = work.Title,
+                WorkPriority = work.WorkPriority,
+                Description = work.Description,
+                DurationInMinutes = work.DurationInMinutes
+            };
 
             await _worksRepository.Create(newWork);
         }

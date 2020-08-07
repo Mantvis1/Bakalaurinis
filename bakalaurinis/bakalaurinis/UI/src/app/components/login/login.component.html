@@ -22,7 +22,8 @@
     </div>
 
     <div class="center">
-      <button mat-flat-button color="primary">
+      <button mat-flat-button color="primary"
+        [disabled]="this.loginForm.controls.password.invalid || this.loginForm.controls.username.invalid">
         Log in
       </button>
     </div>

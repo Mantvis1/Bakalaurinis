@@ -1,27 +1,25 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AuthServiceService } from 'src/app/services/auth-service.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { InvitationsService } from 'src/app/services/invitations.service';
 import { Invitation } from 'src/app/models/invitation';
 import { InvitationStatus } from 'src/app/models/invitation-status.enum';
 import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
-import { SettingsService } from 'src/app/services/settings.service';
-import { ActivityReviewComponent } from '../activity-review/activity-review.component';
+import { WorkReviewComponent } from '../work-review/work-review.component';
 
 @Component({
-  selector: 'app-recieve-invitations',
-  templateUrl: './recieve-invitations.component.html',
-  styleUrls: ['./recieve-invitations.component.css']
+  selector: 'app-receive-invitations',
+  templateUrl: './receive-invitations.component.html',
+  styleUrls: ['./receive-invitations.component.css']
 })
-export class RecieveInvitationsComponent implements OnInit {
+export class ReceiveInvitationsComponent implements OnInit {
   isRowClick = true;
   invitations = new MatTableDataSource<Invitation>();
-  displayedColumns: string[] = ["Row"];
   breakpoint: number = 7;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
-    private readonly authService: AuthServiceService,
+    private readonly authenticationService: AuthenticationService,
     private readonly invitationService: InvitationsService,
     private readonly dialog: MatDialog
   ) { }
@@ -32,7 +30,7 @@ export class RecieveInvitationsComponent implements OnInit {
   }
 
   getInvitations() {
-    this.invitationService.getInvitationsId(this.authService.getUserId()).subscribe(
+    this.invitationService.getInvitationsId(this.authenticationService.getUserId()).subscribe(
       data => {
         this.invitations.data = Object.assign([], data);
       }
@@ -77,11 +75,11 @@ export class RecieveInvitationsComponent implements OnInit {
 
   onRowClicked(rowId: number) {
     if (this.isRowClick) {
-      this.dialog.open(ActivityReviewComponent, {
+      this.dialog.open(WorkReviewComponent, {
         minWidth: "300px",
         width: "50%",
         data: {
-          activityId: rowId
+          workId: rowId
         }
       });
     }

@@ -13,19 +13,19 @@ export class SettingsService {
 
   constructor(private http: HttpClient, private urlService: UrlService) { }
 
-  updateSettings(userId: number, settings: Settings): any {
+  update(userId: number, settings: Settings): any {
     return this.http.put<any>(this.urlService.getAbsolutePath('UsersSettings/' + userId), settings);
   }
 
-  getSettings(userId: number): Observable<Settings> {
+  getByUserId(userId: number): Observable<Settings> {
     return this.http.get<Settings>(this.urlService.getAbsolutePath('UsersSettings/' + userId));
   }
 
-  getItemsPerPageSettings(userId: number): Observable<UserPageSizeSetting> {
+  getItemsPerPageSetting(userId: number): Observable<UserPageSizeSetting> {
     return this.http.get<UserPageSizeSetting>(this.urlService.getAbsolutePath('UsersSettings/itemsPerPage/' + userId));
   }
 
-  updateItemsPerPageSettings(userId: number, updatePageSize: UpdatePageSizeSetting): any {
+  updateItemsPerPageSetting(userId: number, updatePageSize: UpdatePageSizeSetting): any {
     return this.http.put<any>(this.urlService.getAbsolutePath('UsersSettings/itemsPerPage/' + userId), updatePageSize);
   }
 }

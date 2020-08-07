@@ -30,25 +30,25 @@ namespace bakalaurinis.Infrastructure.Database
                   {
                       Id = 4,
                       TitleTemplate = "New invitation received",
-                      TextTemplate = "Vartotojas [user] pakvietė jus i veiką [work]!"
+                      TextTemplate = "You got inivtation from [user] to work [work]!"
                   },
                   new MessageTemplate
                   {
                       Id = 5,
                       TitleTemplate = "Invitation declined",
-                      TextTemplate = "Vartotojas [user] atmetė jūsų pakvietimą į renginį [work]!"
+                      TextTemplate = "[user] declined your invitation to work [work]!"
                   },
                    new MessageTemplate
                    {
                        Id = 6,
                        TitleTemplate = "Invitation accepted",
-                       TextTemplate = "Vartotojas [user] priėmė jūsų pakvietimą į renginį [work]!"
+                       TextTemplate = "[user] accepted your invitation to work [work]!"
                    },
                   new MessageTemplate
                   {
                       Id = 7,
                       TitleTemplate = "You have declined invitation",
-                      TextTemplate = "Jūs atmetėte kvietimą vartotojo [user] pakvietimą į renginį [work]!"
+                      TextTemplate = "You have declined [user]'s invitation to work [work]!"
                   },
                    new MessageTemplate
                    {

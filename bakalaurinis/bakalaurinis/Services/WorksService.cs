@@ -14,30 +14,27 @@ namespace bakalaurinis.Services
     {
         private readonly IWorksRepository _worksRepository;
         private readonly IMapper _mapper;
-        private readonly IScheduleGenerationService _scheduleGenerationService;
         private readonly IMessageService _messageService;
 
         public WorksService(
             IWorksRepository worksRepository,
             IMapper mapper,
-            IScheduleGenerationService scheduleGenerationService,
             IMessageService messageService
             )
         {
             _worksRepository = worksRepository;
             _mapper = mapper;
-            _scheduleGenerationService = scheduleGenerationService;
             _messageService = messageService;
         }
 
-        public async Task<int> Create(NewWorkDto newActivityDto)
+        public async Task<int> Create(NewWorkDto newworkDto)
         {
-            var work = _mapper.Map<Work>(newActivityDto);
+            var work = _mapper.Map<Work>(newworkDto);
             work.IsAuthor = true;
 
             var workId = await _worksRepository.Create(work);
 
-            await _messageService.Create(work.UserId, workId, MessageTypeEnum.NewActivity);
+            await _messageService.Create(work.UserId, workId, MessageTypeEnum.NewWork);
 
             return workId;
         }
@@ -51,17 +48,17 @@ namespace bakalaurinis.Services
                 return false;
             }
 
-            await _messageService.Create(work.UserId, work.Id, MessageTypeEnum.DeleteActivity);
+            await _messageService.Create(work.UserId, work.Id, MessageTypeEnum.DeleteWork);
 
             return await _worksRepository.Delete(work);
         }
 
         public async Task<ICollection<WorkDto>> GetAll()
         {
-            var activities = await _worksRepository.GetAll();
-            var activitiesDto = _mapper.Map<WorkDto[]>(activities);
+            var works = await _worksRepository.GetAll();
+            var worksDto = _mapper.Map<WorkDto[]>(works);
 
-            return activitiesDto;
+            return worksDto;
         }
 
         public async Task<WorkDto> GetById(int id)
@@ -74,17 +71,17 @@ namespace bakalaurinis.Services
 
         public async Task<ICollection<WorkDto>> GetByUserId(int id)
         {
-            var activities = await _worksRepository.FindAllByUserId(id);
-            var activitiesDto = _mapper.Map<WorkDto[]>(activities);
+            var works = await _worksRepository.FindAllByUserId(id);
+            var worksDto = _mapper.Map<WorkDto[]>(works);
 
-            return activitiesDto;
+            return worksDto;
         }
 
-        public async Task<bool> Update(int id, NewWorkDto activityDto)
+        public async Task<bool> Update(int id, NewWorkDto workDto)
         {
-            if (activityDto == null)
+            if (workDto == null)
             {
-                throw new ArgumentNullException(nameof(activityDto));
+                throw new ArgumentNullException(nameof(workDto));
             }
 
             var work = await _worksRepository.GetById(id);
@@ -94,7 +91,7 @@ namespace bakalaurinis.Services
                 throw new InvalidOperationException();
             }
 
-            _mapper.Map(activityDto, work);
+            _mapper.Map(workDto, work);
 
             return await _worksRepository.Update(work);
         }

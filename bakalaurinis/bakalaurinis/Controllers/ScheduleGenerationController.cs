@@ -9,6 +9,7 @@ namespace bakalaurinis.Controllers
     public class ScheduleGenerationController : ControllerBase
     {
         private readonly IScheduleGenerationService _scheduleGenerationService;
+
         public ScheduleGenerationController(IScheduleGenerationService scheduleGenerationService)
         {
             _scheduleGenerationService = scheduleGenerationService;

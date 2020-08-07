@@ -22,10 +22,9 @@ namespace test.Tests
             _count = setUp.GetLength("works");
 
             var worksRepository = new WorksRepository(context);
-            var scheduleGenerationService = new Mock<IScheduleGenerationService>().Object;
             var mockMessageService = new Mock<IMessageService>().Object;
 
-            _worksService = new WorksService(worksRepository, mapper, scheduleGenerationService, mockMessageService);
+            _worksService = new WorksService(worksRepository, mapper, mockMessageService);
         }
 
         [Fact]
@@ -63,7 +62,7 @@ namespace test.Tests
                 DurationInMinutes = 20,
                 Title = "title",
                 Description = "description",
-                ActivityPriority = bakalaurinis.Infrastructure.Enums.ActivityPriorityEnum.Low
+                WorkPriority = bakalaurinis.Infrastructure.Enums.WorkPriorityEnum.Low
             };
 
             var workId = await _worksService.Create(newWorkDto);

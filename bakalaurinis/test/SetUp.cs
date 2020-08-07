@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using bakalaurinis.Infrastructure.Enums;
-using static bakalaurinis.Infrastructure.Enums.ActivityPriorityEnum;
+using static bakalaurinis.Infrastructure.Enums.WorkPriorityEnum;
 
 namespace test
 {
@@ -118,7 +118,7 @@ namespace test
                 StartTime = DateTime.MinValue.AddHours(8),
                 EndTime = DateTime.MinValue.AddHours(9),
                 DurationInMinutes = 60,
-                ActivityPriority = High
+                WorkPriority = High
             },
             new Work
             {
@@ -126,7 +126,7 @@ namespace test
                 UserId = 2,
                 Title = "testWork2",
                 DurationInMinutes = 15,
-                ActivityPriority = Medium,
+                WorkPriority = Medium,
                 StartTime = null,
                 EndTime = null
             },
@@ -136,7 +136,7 @@ namespace test
                 UserId = 1,
                 Title = "testWork3",
                 DurationInMinutes = 45,
-                ActivityPriority = Medium,
+                WorkPriority = Medium,
                 StartTime = DateTime.MinValue.AddHours(9).AddMinutes(15),
                 EndTime = DateTime.MinValue.AddHours(10)
             },
@@ -146,7 +146,7 @@ namespace test
                 UserId = 1,
                 Title = "testWork4",
                 DurationInMinutes = 15,
-                ActivityPriority = Medium
+                WorkPriority = Medium
             },
             new Work
             {
@@ -154,7 +154,7 @@ namespace test
                 UserId = 1,
                 Title = "testWork5",
                 DurationInMinutes = 45,
-                ActivityPriority = Medium,
+                WorkPriority = Medium,
                 StartTime = DateTime.MinValue.AddDays(1).AddHours(8).AddMinutes(15),
                 EndTime = DateTime.MinValue.AddDays(1).AddHours(10)
             },
@@ -164,7 +164,7 @@ namespace test
                 UserId = 1,
                 Title = "testWork6",
                 DurationInMinutes = 15,
-                ActivityPriority = Medium
+                WorkPriority = Medium
             },
             new Work
             {
@@ -172,7 +172,7 @@ namespace test
                 UserId = 1,
                 Title = "testWork7",
                 DurationInMinutes = 45,
-                ActivityPriority = Medium,
+                WorkPriority = Medium,
                 StartTime = DateTime.MinValue.AddDays(2).AddHours(8).AddMinutes(15),
                 EndTime = DateTime.MinValue.AddDays(2).AddHours(10)
             },
@@ -182,7 +182,7 @@ namespace test
                 UserId = 1,
                 Title = "testWork6",
                 DurationInMinutes = 15,
-                ActivityPriority = Medium
+                WorkPriority = Medium
             },
             new Work
             {
@@ -190,7 +190,7 @@ namespace test
                 UserId = 3,
                 Title = "testWork8",
                 DurationInMinutes = 60,
-                ActivityPriority = Medium,
+                WorkPriority = Medium,
                 StartTime = DateTime.MinValue.AddHours(8),
                 EndTime = DateTime.MinValue.AddHours(9)
             },
@@ -200,7 +200,7 @@ namespace test
                 UserId = 1,
                 Title = "testWork10",
                 DurationInMinutes = 15,
-                ActivityPriority = Medium
+                WorkPriority = Medium
             },
             new Work
             {
@@ -208,7 +208,7 @@ namespace test
                 UserId = 1,
                 Title = "testWork11",
                 DurationInMinutes = 45,
-                ActivityPriority = Medium,
+                WorkPriority = Medium,
                 StartTime = DateTime.MinValue.AddDays(3).AddHours(8),
                 EndTime = DateTime.MinValue.AddDays(3).AddHours(9).AddMinutes(45)
             },
@@ -218,7 +218,7 @@ namespace test
                 UserId = 1,
                 Title = "testWork12",
                 DurationInMinutes = 15,
-                ActivityPriority = Medium,
+                WorkPriority = Medium,
                 StartTime = DateTime.MinValue.AddDays(4).AddHours(8),
                 EndTime = DateTime.MinValue.AddDays(4).AddHours(8).AddMinutes(15)
 
@@ -229,7 +229,7 @@ namespace test
                 UserId = 1,
                 Title = "testWork13",
                 DurationInMinutes = 60,
-                ActivityPriority = Medium,
+                WorkPriority = Medium,
                 StartTime = DateTime.MinValue.AddDays(4).AddHours(9),
                 EndTime = DateTime.MinValue.AddDays(4).AddHours(10)
             },
@@ -239,7 +239,7 @@ namespace test
                 UserId = 1,
                 Title = "testWork14",
                 DurationInMinutes = 30,
-                ActivityPriority = Medium,
+                WorkPriority = Medium,
                 StartTime = DateTime.MinValue.AddDays(4).AddHours(8).AddMinutes(30),
                 EndTime = DateTime.MinValue.AddDays(4).AddHours(9)
             },
@@ -249,7 +249,7 @@ namespace test
                 UserId = 1,
                 Title = "testWork15",
                 DurationInMinutes = 60,
-                ActivityPriority = High,
+                WorkPriority = High,
                 StartTime = null,
                 EndTime = null
             },
@@ -259,7 +259,7 @@ namespace test
                 UserId = 1,
                 Title = "testWork16",
                 DurationInMinutes = 22,
-                ActivityPriority = Low,
+                WorkPriority = Low,
                 StartTime = null,
                 EndTime = null
             },
@@ -269,7 +269,7 @@ namespace test
                 UserId = 1,
                 Title = "testWork14",
                 DurationInMinutes = 30,
-                ActivityPriority = Medium,
+                WorkPriority = Medium,
                 StartTime = DateTime.MinValue.AddDays(4).AddHours(8),
                 EndTime = DateTime.MinValue.AddDays(4).AddHours(9).AddMinutes(30)
             },
@@ -279,7 +279,7 @@ namespace test
                 UserId = 1,
                 Title = "testWork14",
                 DurationInMinutes = 30,
-                ActivityPriority = Medium,
+                WorkPriority = Medium,
                 StartTime = DateTime.MinValue.AddDays(4).AddHours(8).AddMinutes(30),
                 EndTime = DateTime.MinValue.AddDays(4).AddHours(9)
             },
@@ -289,7 +289,7 @@ namespace test
                 UserId = 1,
                 Title = "testWork14",
                 DurationInMinutes = 30,
-                ActivityPriority = Medium,
+                WorkPriority = Medium,
                 StartTime = DateTime.MinValue.AddDays(5).AddHours(9),
                 EndTime = DateTime.MinValue.AddDays(5).AddHours(9).AddMinutes(30)
             },
@@ -299,7 +299,7 @@ namespace test
                 UserId = 1,
                 Title = "testWork14",
                 DurationInMinutes = 30,
-                ActivityPriority = Medium,
+                WorkPriority = Medium,
                 StartTime = DateTime.MinValue.AddDays(5).AddHours(9).AddMinutes(30),
                 EndTime = DateTime.MinValue.AddDays(5).AddHours(10)
             },

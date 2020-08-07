@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Message } from 'src/app/models/message';
 import { MessageService } from 'src/app/services/message.service';
-import { AuthServiceService } from 'src/app/services/auth-service.service';
-import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { SettingsService } from 'src/app/services/settings.service';
-import { DatePipe } from '@angular/common';
+import { ConvertToStringService } from 'src/app/services/convert-to-string.service';
+import { FilterService } from 'src/app/services/filter.service';
 
 @Component({
   selector: 'app-messages',
@@ -25,18 +26,19 @@ export class MessagesComponent implements OnInit {
 
   constructor(
     private messageService: MessageService,
-    private authService: AuthServiceService,
-    private datePipe: DatePipe,
-    private settingsService: SettingsService
+    private authenticationService: AuthenticationService,
+    private convertToStringService: ConvertToStringService,
+    private settingsService: SettingsService,
+    private filterService: FilterService
   ) { }
 
   ngOnInit() {
-    this.getPageSize(this.authService.getUserId());
-    this.getUserMessages();
+    this.getPageSize(this.authenticationService.getUserId());
+    this.getAllMessages();
   }
 
-  getUserMessages(): void {
-    this.messageService.getUserMessages(this.authService.getUserId()).subscribe(data => {
+  getAllMessages(): void {
+    this.messageService.getUserMessages(this.authenticationService.getUserId()).subscribe(data => {
       this.messagesDataSource = new MatTableDataSource(data);
       this.messagesDataSource.paginator = this.paginator;
       this.messagesDataSource.filterPredicate = this.filterTable;
@@ -46,9 +48,9 @@ export class MessagesComponent implements OnInit {
 
   deleteAll() {
     if (confirm("Do you want to delete all messages?")) {
-      this.messageService.deleteUserAllMessagesById(this.authService.getUserId()).subscribe(
+      this.messageService.deleteUserAllMessagesById(this.authenticationService.getUserId()).subscribe(
         () => {
-          this.getUserMessages();
+          this.getAllMessages();
         }
       );
     }
@@ -56,28 +58,24 @@ export class MessagesComponent implements OnInit {
 
   deleteById(messageId: number) {
     if (confirm("Do you want to delete current message?")) {
-      this.messageService.deleteUserMessagesById(this.authService.getUserId(), messageId).subscribe(
+      this.messageService.deleteUserMessagesById(this.authenticationService.getUserId(), messageId).subscribe(
         () => {
-          this.getUserMessages();
+          this.getAllMessages();
         }
       );
     }
   }
 
   getPageSize(userId: number): void {
-    this.settingsService.getItemsPerPageSettings(userId).subscribe(
+    this.settingsService.getItemsPerPageSetting(userId).subscribe(
       data => {
         this.paginator._changePageSize(data.itemsPerPage);
       }
     );
   }
 
-  getDataString(date: Date) {
-    return this.datePipe.transform(date, 'yyyy-MM-dd HH:mm:ss');
-  }
-
-  applyFilter(filterValue: string): void {
-    this.messagesDataSource.filter = filterValue.trim().toLowerCase();
+  applyFilter(value: string): void {
+    this.messagesDataSource.filter = this.filterService.getFilteredValue(value);
 
     if (this.messagesDataSource.paginator) {
       this.messagesDataSource.paginator.firstPage();
@@ -86,7 +84,7 @@ export class MessagesComponent implements OnInit {
 
   updateDataSource() {
     this.messagesDataSource.data.forEach(message => {
-      message.dataString = this.getDataString(message.createdAt);
+      message.dataString = this.convertToStringService.getFullDateAndTime(message.createdAt);
     });
   }
 

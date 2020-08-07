@@ -17,6 +17,8 @@ export class InvitationsService {
   }
 
   createInvitation(newInvitation: NewInvitation): any {
+    console.log(newInvitation);
+
     return this.http.post(this.urlService.getAbsolutePath('Invitations'), newInvitation);
   }
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { AuthServiceService } from "../../../services/auth-service.service";
+import { AuthenticationService } from "../../../services/authentication.service";
 import { Router } from "@angular/router";
 import { UserService } from '../../../services/user.service';
 
@@ -12,7 +12,7 @@ export class ToolbarAfterLogInComponent implements OnInit {
   currentUserName: string;
 
   constructor(
-    private auth: AuthServiceService,
+    private authenticationService: AuthenticationService,
     private router: Router,
     private userService: UserService
   ) { }
@@ -23,7 +23,7 @@ export class ToolbarAfterLogInComponent implements OnInit {
   }
 
   getUserNameById() {
-    this.userService.getUsername(this.auth.getUserId()).subscribe(name => {
+    this.userService.getUsername(this.authenticationService.getUserId()).subscribe(name => {
       this.currentUserName = name.username;
     });
   }
@@ -37,7 +37,7 @@ export class ToolbarAfterLogInComponent implements OnInit {
   }
 
   logout() {
-    this.auth.logout();
+    this.authenticationService.logout();
     this.router.navigateByUrl("");
   }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using bakalaurinis.Infrastructure.Database;
 
 namespace bakalaurinis.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200602153645_UpdateActivityPriorityToWorkPriority")]
+    partial class UpdateActivityPriorityToWorkPriority
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,25 +116,25 @@ namespace bakalaurinis.Migrations
                         new
                         {
                             Id = 4,
-                            TextTemplate = "You got inivtation from [user] to work [work]!",
+                            TextTemplate = "Vartotojas [user] pakvietė jus i veiką [work]!",
                             TitleTemplate = "New invitation received"
                         },
                         new
                         {
                             Id = 5,
-                            TextTemplate = "[user] declined your invitation to work [work]!",
+                            TextTemplate = "Vartotojas [user] atmetė jūsų pakvietimą į renginį [work]!",
                             TitleTemplate = "Invitation declined"
                         },
                         new
                         {
                             Id = 6,
-                            TextTemplate = "[user] accepted your invitation to work [work]!",
+                            TextTemplate = "Vartotojas [user] priėmė jūsų pakvietimą į renginį [work]!",
                             TitleTemplate = "Invitation accepted"
                         },
                         new
                         {
                             Id = 7,
-                            TextTemplate = "You have declined [user]'s invitation to work [work]!",
+                            TextTemplate = "Jūs atmetėte kvietimą vartotojo [user] pakvietimą į renginį [work]!",
                             TitleTemplate = "You have declined invitation"
                         },
                         new

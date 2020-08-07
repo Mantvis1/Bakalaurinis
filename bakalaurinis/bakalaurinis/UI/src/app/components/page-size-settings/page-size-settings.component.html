@@ -1,17 +1,14 @@
 <mat-card>
   <form>
-    <div>
-      <mat-form-field>
-        <mat-label>Select page size</mat-label>
-        <mat-select placeholder="Page size" [(ngModel)]="updatePageSizeSetting.itemsPerPage" name="pageSizeSetting">
-          <mat-option [value]="5">5</mat-option>
-          <mat-option [value]="10">10</mat-option>
-          <mat-option [value]="20">20</mat-option>
-          <mat-option [value]="50">50</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-    </div>
+    <mat-form-field>
+      <mat-label>Select page size</mat-label>
+      <mat-select placeholder="Page size" [(ngModel)]="updatePageSizeSetting.itemsPerPage" name="pageSizeSetting">
+        <mat-option [value]="5">5</mat-option>
+        <mat-option [value]="10">10</mat-option>
+        <mat-option [value]="20">20</mat-option>
+        <mat-option [value]="50">50</mat-option>
+      </mat-select>
+    </mat-form-field>
   </form>
 
   <button mat-raised-button color="primary" (click)="updatePageSize()">Update</button>

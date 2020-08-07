@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { SettingsService } from 'src/app/services/settings.service';
-import { AuthServiceService } from 'src/app/services/auth-service.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UpdatePageSizeSetting } from 'src/app/models/update-page-size-setting';
 import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-page-size-settings',
-  templateUrl: './page-size-settings.component.html',
-  styleUrls: ['./page-size-settings.component.css']
+  templateUrl: './page-size-settings.component.html'
 })
+
 export class PageSizeSettingsComponent implements OnInit {
   updatePageSizeSetting = new UpdatePageSizeSetting();
 
   constructor(
-    private authService: AuthServiceService,
+    private authenticationService: AuthenticationService,
     private settingsService: SettingsService,
     private alertService: AlertService
   ) { }
@@ -23,7 +23,7 @@ export class PageSizeSettingsComponent implements OnInit {
   }
 
   getPageSize() {
-    this.settingsService.getItemsPerPageSettings(this.authService.getUserId()).subscribe(
+    this.settingsService.getItemsPerPageSetting(this.authenticationService.getUserId()).subscribe(
       data => {
         this.updatePageSizeSetting.itemsPerPage = data.itemsPerPage;
       }
@@ -31,14 +31,13 @@ export class PageSizeSettingsComponent implements OnInit {
   }
 
   updatePageSize() {
-    this.updatePageSizeSetting.userId = this.authService.getUserId();
+    this.updatePageSizeSetting.userId = this.authenticationService.getUserId();
 
-    this.settingsService.updateItemsPerPageSettings(this.authService.getUserId(), this.updatePageSizeSetting).subscribe(
+    this.settingsService.updateItemsPerPageSetting(this.authenticationService.getUserId(), this.updatePageSizeSetting).subscribe(
       () => {
         this.alertService.showMessage('Page size was updated');
         this.getPageSize();
       }
-
     );
   }
 

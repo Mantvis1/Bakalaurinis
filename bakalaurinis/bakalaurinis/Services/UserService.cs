@@ -45,10 +45,13 @@ namespace bakalaurinis.Services
             var afterAuthDto = _mapper.Map<AfterAutenticationDto>(user);
 
             if (user == null)
+            {
                 return null;
+            }
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
@@ -58,6 +61,7 @@ namespace bakalaurinis.Services
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
+
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             afterAuthDto.Token = tokenHandler.WriteToken(token);

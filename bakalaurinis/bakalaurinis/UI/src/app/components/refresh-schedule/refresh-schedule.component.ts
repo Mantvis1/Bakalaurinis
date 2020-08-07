@@ -1,23 +1,23 @@
 import { Component } from '@angular/core';
 import { RefreshActivityService } from 'src/app/services/refresh-activity.service';
-import { AuthServiceService } from 'src/app/services/auth-service.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
-  selector: 'app-refresh-activities',
-  templateUrl: './refresh-activities.component.html',
-  styleUrls: ['./refresh-activities.component.css']
+  selector: 'app-refresh-schedule',
+  templateUrl: './refresh-schedule.component.html',
+  styleUrls: ['./refresh-schedule.component.css']
 })
-export class RefreshActivitiesComponent {
+export class RefreshScheduleComponent {
 
   constructor(
     private refreshActivitiesService: RefreshActivityService,
-    private authService: AuthServiceService,
+    private authenticationService: AuthenticationService,
     private alertService: AlertService
   ) { }
 
   refresh() {
-    this.refreshActivitiesService.refreshActivities(this.authService.getUserId()).subscribe(
+    this.refreshActivitiesService.refreshActivities(this.authenticationService.getUserId()).subscribe(
       () => {
         this.alertService.showMessage("Schedule was updated");
       });

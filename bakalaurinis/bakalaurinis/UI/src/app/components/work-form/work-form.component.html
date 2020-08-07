@@ -3,9 +3,10 @@
 
   <mat-dialog-content>
     <mat-card>
+
       <div>
         <mat-form-field>
-          <input matInput [(ngModel)]="data.activityFormData.title" name="title" placeholder="Title" required
+          <input matInput [(ngModel)]="data.workFormData.title" name="title" placeholder="Title" required
             #nameInput="ngModel" />
           <mat-error *ngIf="nameInput.invalid" class="error">
             Title cannot be empty.
@@ -15,8 +16,8 @@
 
       <div>
         <mat-form-field>
-          <textarea matInput [(ngModel)]="data.activityFormData.description" name="description"
-            placeholder="Description" required #descriptionInput="ngModel" cdkTextareaAutosize cdkAutosizeMinRows="1"
+          <textarea matInput [(ngModel)]="data.workFormData.description" name="description" placeholder="Description"
+            required #descriptionInput="ngModel" cdkTextareaAutosize cdkAutosizeMinRows="1"
             cdkAutosizeMaxRows="20"></textarea>
           <mat-error *ngIf="descriptionInput.invalid" class="error">
             Description cannot be empty.
@@ -26,7 +27,7 @@
 
       <div>
         <mat-form-field>
-          <input matInput [(ngModel)]="data.activityFormData.durationInMinutes" name="duration" placeholder="Duration"
+          <input matInput [(ngModel)]="data.workFormData.durationInMinutes" name="duration" placeholder="Duration"
             required #durationInput="ngModel" type="number" min="1" />
           <mat-error *ngIf=" durationInput.invalid" class="error">
             Duration cannot be empty.
@@ -37,7 +38,7 @@
       <div>
         <mat-form-field>
           <mat-label>Select priority</mat-label>
-          <mat-select placeholder="Priority" [(ngModel)]="data.activityFormData.activityPriority" name="priority">
+          <mat-select placeholder="Priority" [(ngModel)]="data.workFormData.workPriority" name="workPriority">
             <mat-option [value]="0">Low</mat-option>
             <mat-option [value]="1">Medium</mat-option>
             <mat-option [value]="2">High</mat-option>
@@ -45,9 +46,8 @@
         </mat-form-field>
       </div>
 
-
       <div>
-        <mat-checkbox name="participants" [(ngModel)]="data.activityFormData.willBeParticipant">
+        <mat-checkbox name="participants" [(ngModel)]="data.workFormData.willBeParticipant">
           Will be more participant
         </mat-checkbox>
       </div>
@@ -58,7 +58,7 @@
     <button mat-flat-button mat-button-base (click)="closeModal(null)" [mat-dialog-close]>Close</button>
     <button mat-flat-button color="primary"
       [disabled]="nameInput.invalid || descriptionInput.invalid || durationInput.invalid || durationInput.value <= 0"
-      (click)="closeModal(data.activityFormData)">
+      (click)="closeModal(data.workFormData)">
       {{ data.formConfirmationButtonName }}
     </button>
   </mat-dialog-actions>

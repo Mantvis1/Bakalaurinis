@@ -10,6 +10,7 @@ namespace bakalaurinis.Controllers
     public class UserInvitationsController : ControllerBase
     {
         private readonly IUserInvitationService _userInvitationService;
+
         public UserInvitationsController(IUserInvitationService userInvitationService)
         {
             _userInvitationService = userInvitationService;

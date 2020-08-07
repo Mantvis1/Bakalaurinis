@@ -40,7 +40,6 @@ namespace bakalaurinis.Services
             {
                 await scheduleGenerationService.Generate(user.Id);
             }
-
         }
     }
 }

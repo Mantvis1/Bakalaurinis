@@ -7,8 +7,8 @@ import { UrlService } from './url.service';
 @Injectable({
   providedIn: "root"
 })
-export class AuthServiceService {
-  private currentUserId: number;
+
+export class AuthenticationService {
 
   constructor(
     private http: HttpClient,
@@ -30,9 +30,7 @@ export class AuthServiceService {
   }
 
   getUserId() {
-    this.currentUserId = JSON.parse(localStorage.getItem("userId"));
-
-    return this.currentUserId;
+    return JSON.parse(localStorage.getItem("userId"));
   }
 
   isAuthenticated(): boolean {

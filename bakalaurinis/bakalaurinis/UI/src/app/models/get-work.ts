@@ -1,6 +1,6 @@
-import { NewActivity } from './new-activity';
+import { NewWork } from './new-work';
 
-export class GetActivities extends NewActivity {
+export class GetWork extends NewWork {
   id: number;
   startTime: Date;
   endTime: Date;
