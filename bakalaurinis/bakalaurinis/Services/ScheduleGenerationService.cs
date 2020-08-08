@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using bakalaurinis.Dtos.Work;
 using bakalaurinis.Infrastructure.Database.Models;
+using bakalaurinis.Services.Generation.Interfaces;
 
 namespace bakalaurinis.Services
 {
@@ -19,12 +20,14 @@ namespace bakalaurinis.Services
         private readonly IMapper _mapper;
         private readonly IUserSettingsRepository _userSettingsRepository;
         private readonly IMessageService _messageService;
+        private readonly IFactory _factory;
         public ScheduleGenerationService(
             IWorksRepository worksRepository,
             ITimeService timeService,
             IMapper mapper,
             IUserSettingsRepository userSettingsRepository,
-            IMessageService messageService
+            IMessageService messageService,
+            IFactory factory
             )
         {
             _worksRepository = worksRepository;
@@ -32,6 +35,7 @@ namespace bakalaurinis.Services
             _mapper = mapper;
             _userSettingsRepository = userSettingsRepository;
             _messageService = messageService;
+            _factory = factory;
         }
 
         public async Task<bool> Generate(int userId)
@@ -138,15 +142,18 @@ namespace bakalaurinis.Services
                 {
                     differenceBetweenDays = _timeService.GetDifferentBetweenTwoDatesInMinutes(_timeService.GetDateTime(time[0]), allActivities[i].StartTime.Value);
 
-                    result.Add(GetGeneratedFreeSpace(time, differenceBetweenDays));
+                    result.Add(_factory.GetGeneratedFreeSpace(time, differenceBetweenDays));
                 }
 
                 if (_timeService.GetDifferentBetweenTwoDatesInMinutes(allActivities[i].EndTime.Value, allActivities[i + 1].StartTime.Value) > 0 &&
                     allActivities[i].EndTime.Value.Day == allActivities[i + 1].StartTime.Value.Day)
                 {
-                    result.Add(new GeneratorFreeSpaceDto(
-                        allActivities[i].EndTime.Value,
-                        allActivities[i + 1].StartTime.Value,
+                    result.Add(_factory.GetGeneratedFreeSpace(
+                      new int[] 
+                      {
+                        _timeService.GetTimeInMinutes(allActivities[i].EndTime.Value),
+                        _timeService.GetTimeInMinutes(allActivities[i + 1].StartTime.Value)
+                      },
                         _timeService.GetDifferentBetweenTwoDatesInMinutes(allActivities[i].EndTime.Value, allActivities[i + 1].StartTime.Value))
                         );
                 }
@@ -157,14 +164,14 @@ namespace bakalaurinis.Services
 
                     if (differenceBetweenDays > 0)
                     {
-                        result.Add(GetGeneratedFreeSpace(time, differenceBetweenDays));
+                        result.Add(_factory.GetGeneratedFreeSpace(time, differenceBetweenDays));
                     }
 
                     differenceBetweenDays = _timeService.GetDifferentBetweenTwoDatesInMinutes(_timeService.GetDateTime(time[0] + 1440), allActivities[i + 1].StartTime.Value);
 
                     if (differenceBetweenDays > 0)
                     {
-                        result.Add(GetGeneratedFreeSpace(time, differenceBetweenDays));
+                        result.Add(_factory.GetGeneratedFreeSpace(time, differenceBetweenDays));
                     }
                 }
 
@@ -172,7 +179,7 @@ namespace bakalaurinis.Services
                 {
                     time = await MoveToNextDay(userId, 1 + allActivities[i].StartTime.Value.Day - _timeService.GetCurrentDay().Day);
 
-                    result.Add(GetGeneratedFreeSpace(time, time[1] - time[0]));
+                    result.Add(_factory.GetGeneratedFreeSpace(time, time[1] - time[0]));
                 }
 
             }
@@ -239,11 +246,6 @@ namespace bakalaurinis.Services
             }
 
             await Generate(userId);
-        }
-
-        private GeneratorFreeSpaceDto GetGeneratedFreeSpace(int [] time, int diferentBetweenTimes)
-        {
-            return new GeneratorFreeSpaceDto(_timeService.GetDateTime(time[0]), _timeService.GetDateTime(time[1]), diferentBetweenTimes);
         }
     }
 }

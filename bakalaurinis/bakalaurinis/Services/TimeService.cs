@@ -52,9 +52,12 @@ namespace bakalaurinis.Services
 
         public int GetDifferentBetweenTwoDatesInMinutes(DateTime firstDate, DateTime secondDate)
         {
-            var timeSpan = secondDate - firstDate;
+            return (int)(secondDate - firstDate).TotalMinutes;
+        }
 
-            return (int)timeSpan.TotalMinutes;
+        public int GetTimeInMinutes(DateTime dateTime)
+        {
+            return dateTime.Hour * _minutesInHour + dateTime.Minute;
         }
     }
 }

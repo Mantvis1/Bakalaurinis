@@ -29,11 +29,5 @@ namespace bakalaurinis.Infrastructure.Database.Models
         [DefaultValue(true)]
         public bool IsAuthor { get; set; }
         public ICollection<Invitation> Invitations { get; set; }
-
-
-        public Work Clone<Work>(Work work)
-        {
-            return work;
-        }
     }
 }

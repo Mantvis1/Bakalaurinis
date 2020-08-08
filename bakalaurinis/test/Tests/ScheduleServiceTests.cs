@@ -24,7 +24,7 @@ namespace test.Tests
             var mockTimeService = new Mock<ITimeService>().Object;
             var mockMessageService = new Mock<IMessageService>().Object;
 
-            var scheduleGenerationService = new ScheduleGenerationService(worksRepository, mockTimeService, mapper, userSettingsRepository, mockMessageService);
+            var scheduleGenerationService = new ScheduleGenerationService(worksRepository, mockTimeService, mapper, userSettingsRepository, mockMessageService,null);
             var userSettingsService = new UserSettingsService(mapper, userSettingsRepository, scheduleGenerationService);
             _scheduleService = new ScheduleService(worksRepository, mapper, userSettingsService);
         }

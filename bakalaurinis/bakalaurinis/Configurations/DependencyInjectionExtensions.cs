@@ -1,7 +1,11 @@
-﻿using bakalaurinis.Infrastructure.Database.Models;
+﻿using bakalaurinis.Helpers;
+using bakalaurinis.Helpers.Interfaces;
+using bakalaurinis.Infrastructure.Database.Models;
 using bakalaurinis.Infrastructure.Repositories;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Services;
+using bakalaurinis.Services.Generation;
+using bakalaurinis.Services.Generation.Interfaces;
 using bakalaurinis.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -38,7 +42,9 @@ namespace bakalaurinis.Configurations
                  .AddScoped<IMessageService, MessageService>()
                  .AddScoped<IInvitationService, InvitationService>()
                  .AddScoped<IUserInvitationService, UserInvitationService>()
-                 .AddScoped<IMessageFormationService, MessageFormationService>();
+                 .AddScoped<IMessageFormationService, MessageFormationService>()
+                 .AddScoped<IFactory, Factory>()
+                 .AddSingleton<IObjectCopier, ObjectCopier>();
         }
     }
 }

@@ -10,5 +10,6 @@ namespace bakalaurinis.Services.Interfaces
         int GetDifferentBetweenTwoDatesInMinutes(DateTime firstDate, DateTime secondDate);
         public int GetYearsToMinutes();
         public int GetMinutesInHour();
+        public int GetTimeInMinutes(DateTime dateTime);
     }
 }

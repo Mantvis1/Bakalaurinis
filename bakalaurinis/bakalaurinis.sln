@@ -7,12 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bakalaurinis", "bakalaurini
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "test", "test\test.csproj", "{8EAF2C54-3FB6-4563-A654-A32D32B21C5F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OtherFiles", "OtherFiles", "{841A0583-9DD7-431C-9E67-68CE64AC468D}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\BakalaurinisDoc\Bakalaurinis.mdzip = ..\..\BakalaurinisDoc\Bakalaurinis.mdzip
-		..\..\BakalaurinisDoc\Bakalaurinis.mdzip.bak = ..\..\BakalaurinisDoc\Bakalaurinis.mdzip.bak
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
