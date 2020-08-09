@@ -217,15 +217,7 @@ namespace bakalaurinis.Services
             }
         }
 
-        public async Task CreateWorkCopy(int workId, int userId)
-        {
-            var work = await _worksRepository.GetById(workId);
-
-            var newWork = work.DeepCopy();
-            newWork.UserId = userId;
-
-            await _worksRepository.Create(newWork);
-        }
+        
 
         public async Task RecalculateWorkTimeWhenUserChangesSettings(int userId)
         {

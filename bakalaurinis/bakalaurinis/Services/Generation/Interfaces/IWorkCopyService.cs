@@ -1,10 +1,11 @@
 ﻿using bakalaurinis.Infrastructure.Database.Models;
 using System;
+using System.Threading.Tasks;
 
 namespace bakalaurinis.Helpers.Interfaces
 {
-    public interface IObjectCopier
+    public interface IWorkCopyService
     {
-        public Work GetCopy(Work work);
+        Task CreateWorkCopy(int workId, int userId);
     }
 }

@@ -83,18 +83,5 @@ namespace test.Tests
 
             Assert.Equal(works.First().Title, worksAfterUpdate.First().Title);
         }
-
-        [Theory]
-        [InlineData(1, 1)]
-        public async void CreateWorkCopy(int userId, int workId)
-        {
-            var work = _context.Works.Find(workId);
-            await _scheduleGenerationService.CreateWorkCopy(userId, workId);
-
-            var newWork = _context.Works.LastOrDefault();
-
-            Assert.NotNull(newWork);
-            Assert.Equal(work.Title, newWork.Title);
-        }
     }
 }

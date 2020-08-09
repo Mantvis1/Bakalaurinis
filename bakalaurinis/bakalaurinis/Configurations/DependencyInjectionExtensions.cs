@@ -44,7 +44,7 @@ namespace bakalaurinis.Configurations
                  .AddScoped<IUserInvitationService, UserInvitationService>()
                  .AddScoped<IMessageFormationService, MessageFormationService>()
                  .AddScoped<IFactory, Factory>()
-                 .AddSingleton<IObjectCopier, ObjectCopier>();
+                 .AddSingleton<IWorkCopyService, WorkCopyService>();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using bakalaurinis.Dtos.Invitation;
+using bakalaurinis.Helpers.Interfaces;
 using bakalaurinis.Infrastructure.Database;
 using bakalaurinis.Infrastructure.Enums;
 using bakalaurinis.Infrastructure.Repositories;
@@ -32,10 +33,11 @@ namespace test.Tests
             var messageTemplateRepository = new MessageTemplateRepository(_context);
             var messageFormationService = new Mock<IMessageFormationService>();
             var mockScheduleGenerationService = new Mock<IScheduleGenerationService>().Object;
+            var mockWorkCopyService = new Mock<IWorkCopyService>().Object;
 
             var invitationRepository = new InvitationRepository(_context);
             _invitationService = new InvitationService(invitationRepository, mapper, userRepository,
-                mockMessageService.Object, messageTemplateRepository, messageFormationService.Object, mockScheduleGenerationService);
+                mockMessageService.Object, messageTemplateRepository, messageFormationService.Object, mockWorkCopyService);
         }
 
         [Fact]
