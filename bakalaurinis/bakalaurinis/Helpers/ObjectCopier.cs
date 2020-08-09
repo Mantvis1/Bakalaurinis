@@ -13,14 +13,7 @@ namespace bakalaurinis.Helpers
 
         public Work GetCopy(Work work)
         {
-            return new Work()
-            {
-                UserId = work.UserId,
-                Title = work.Title,
-                WorkPriority = work.WorkPriority,
-                Description = work.Description,
-                DurationInMinutes = work.DurationInMinutes
-            };
+            return work.DeepCopy();
         }
     }
 }

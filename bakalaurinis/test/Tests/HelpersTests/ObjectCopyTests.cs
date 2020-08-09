@@ -29,11 +29,10 @@ namespace test.Tests.HelpersTests
         public async void CheckIfCopyIsNotASameObject()
         {
             var work = (await _context.Works.ToArrayAsync()).FirstOrDefault();
+            var workCopy = work.DeepCopy();
+            workCopy.Id = 100000;
 
-            var workCopy = _objectCopier.GetCopy(work);
-            work.Id = 100000;
-
-            Assert.NotEqual(work.Id, workCopy.GetType().GetProperty("Id").GetValue(work));
+            Assert.NotEqual(work.Id, workCopy.Id);
 
         }
     }

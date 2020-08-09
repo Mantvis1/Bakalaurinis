@@ -221,14 +221,8 @@ namespace bakalaurinis.Services
         {
             var work = await _worksRepository.GetById(workId);
 
-            var newWork = new Work()
-            {
-                UserId = userId,
-                Title = work.Title,
-                WorkPriority = work.WorkPriority,
-                Description = work.Description,
-                DurationInMinutes = work.DurationInMinutes
-            };
+            var newWork = work.DeepCopy();
+            newWork.UserId = userId;
 
             await _worksRepository.Create(newWork);
         }
