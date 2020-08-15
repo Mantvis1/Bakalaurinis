@@ -8,9 +8,6 @@ namespace bakalaurinis.Services.Interfaces
         DateTime GetDateTime(int? minutes);
         DateTime AddMinutesToTime(DateTime dateTime, int minutes);
         int GetDifferentBetweenTwoDatesInMinutes(DateTime firstDate, DateTime secondDate);
-        public int GetYearsToMinutes();
-        public int GetMinutesInHour();
         public int GetTimeInMinutes(DateTime dateTime);
-        public int GetHoursPerDay();
     }
 }
