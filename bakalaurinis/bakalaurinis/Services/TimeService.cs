@@ -9,6 +9,7 @@ namespace bakalaurinis.Services
         private readonly int _yearsToMinutes;
         private readonly int _minutesInHour;
         private readonly int DayToMinutes = 1440;
+        private readonly int HoursPerDay = 24;
         public TimeService()
         {
             _minutesInHour = 60;
@@ -58,6 +59,11 @@ namespace bakalaurinis.Services
         public int GetTimeInMinutes(DateTime dateTime)
         {
             return dateTime.Hour * _minutesInHour + dateTime.Minute;
+        }
+
+        public int GetHoursPerDay()
+        {
+            return HoursPerDay;
         }
     }
 }

@@ -193,9 +193,9 @@ namespace bakalaurinis.Services
             var userSettings = await _userSettingsRepository.GetByUserId(userId);
 
             time[0] = userSettings.StartTime * _timeService.GetMinutesInHour() +
-                      dayCount * 24 * _timeService.GetMinutesInHour();
+                      dayCount *_timeService.GetHoursPerDay() * _timeService.GetMinutesInHour();
             time[1] = userSettings.EndTime * _timeService.GetMinutesInHour() +
-                      dayCount * 24 * _timeService.GetMinutesInHour();
+                      dayCount * _timeService.GetHoursPerDay() * _timeService.GetMinutesInHour();
 
             return time;
         }

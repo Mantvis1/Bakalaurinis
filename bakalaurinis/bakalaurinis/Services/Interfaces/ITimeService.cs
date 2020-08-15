@@ -11,5 +11,6 @@ namespace bakalaurinis.Services.Interfaces
         public int GetYearsToMinutes();
         public int GetMinutesInHour();
         public int GetTimeInMinutes(DateTime dateTime);
+        public int GetHoursPerDay();
     }
 }
