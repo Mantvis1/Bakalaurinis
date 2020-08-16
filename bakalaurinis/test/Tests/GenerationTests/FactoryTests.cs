@@ -23,7 +23,7 @@ namespace test.Tests.GenerationTests
         [Fact]
         public void GenerateObjectIsNotNull()
         {
-            Assert.NotNull(_factory.GetGeneratedFreeSpace(new int[] { 0, 0 }, 0));
+            Assert.NotNull(_factory.GetGeneratedFreeSpace(new Time(22, 33), 0));
         }
 
     }

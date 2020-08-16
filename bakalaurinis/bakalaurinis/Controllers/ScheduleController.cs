@@ -20,7 +20,6 @@ namespace bakalaurinis.Controllers
             _scheduleGenerationService = scheduleGenerationService;
         }
 
-
         [HttpGet("{userId}/{date}")]
         [Produces(typeof(GetScheduleDto))]
         public async Task<IActionResult> Get(int userId, DateTime date)

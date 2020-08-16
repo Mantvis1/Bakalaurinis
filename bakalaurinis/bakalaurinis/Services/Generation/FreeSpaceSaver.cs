@@ -18,11 +18,6 @@ namespace bakalaurinis.Services.Generation
             _freeSpaces.Add(item);
         }
 
-        public void Clear()
-        {
-            _freeSpaces.Clear();
-        }
-
         public List<GeneratorFreeSpaceDto> GetAll()
         {
             return _freeSpaces;

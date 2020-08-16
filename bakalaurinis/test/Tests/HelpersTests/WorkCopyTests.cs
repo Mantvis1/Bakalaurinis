@@ -28,6 +28,7 @@ namespace test.Tests.HelpersTests
         {
             var work = (await _context.Works.ToArrayAsync()).FirstOrDefault();
             var workCopy = work.DeepCopy();
+
             workCopy.Id = 100000;
 
             Assert.NotEqual(work.Id, workCopy.Id);

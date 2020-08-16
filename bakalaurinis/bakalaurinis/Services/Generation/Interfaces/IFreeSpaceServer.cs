@@ -7,6 +7,5 @@ namespace bakalaurinis.Services.Generation.Interfaces
     {
         public void Add(GeneratorFreeSpaceDto item);
         public List<GeneratorFreeSpaceDto> GetAll();
-        public void Clear();
     }
 }

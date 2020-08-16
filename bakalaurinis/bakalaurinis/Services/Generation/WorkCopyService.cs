@@ -1,7 +1,6 @@
 ﻿using bakalaurinis.Helpers.Interfaces;
 using bakalaurinis.Infrastructure.Database.Models;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
-using System;
 using System.Threading.Tasks;
 
 namespace bakalaurinis.Helpers
@@ -13,11 +12,6 @@ namespace bakalaurinis.Helpers
         public WorkCopyService(IWorksRepository worksRepository)
         {
             _worksRepository = worksRepository;
-        }
-
-        public Work GetCopy(Work work)
-        {
-            return work.DeepCopy();
         }
 
         public async Task CreateWorkCopy(int workId, int userId)

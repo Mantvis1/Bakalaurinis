@@ -29,7 +29,7 @@ namespace test.Tests
             var mapper = setUp.Mapper;
             var mockTimeService = new Mock<ITimeService>();
             mockTimeService.Setup(m => m.GetCurrentDay()).Returns(DateTime.MinValue);
-            mockTimeService.Setup(m => m.GetDifferentBetweenTwoDatesInMinutes(new DateTime(2020, 08, 06, 10, 0, 0), new DateTime(2020, 08, 06, 11, 40, 0))).Returns(50);
+            mockTimeService.Setup(m => m.GetDifferentBetweenTwoDatesInMinutes(DateTime.MinValue, DateTime.MaxValue)).Returns(50);
 
             var worksRepository = new WorksRepository(_context);
             var userSettingsRepository = new UserSettingsRepository(_context);
@@ -94,11 +94,7 @@ namespace test.Tests
         [Fact]
         public void AddFreeSpaceIfTimeIsCorrect()
         {
-            var first = new DateTime(2020, 08, 06, 10, 0, 0);
-            var second = new DateTime(2020, 08, 06, 11, 40, 0);
-            var time = new int[] { 0, 40 };
-
-            _scheduleGenerationService.AddFreeSpaceIfTimeIsCorrect(first, second, time);
+            _scheduleGenerationService.AddFreeSpaceIfTimeIsCorrect(DateTime.MinValue, DateTime.MaxValue, new Time(0, 40));
 
             Assert.NotEmpty(_freeSpaceSaver.GetAll());
         }

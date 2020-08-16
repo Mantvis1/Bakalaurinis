@@ -13,9 +13,9 @@ namespace bakalaurinis.Services.Generation
             _timeService = timeService;
         }
 
-        public GeneratorFreeSpaceDto GetGeneratedFreeSpace(int[] time, int diferentBetweenTimes)
+        public GeneratorFreeSpaceDto GetGeneratedFreeSpace(Time time, int diferentBetweenTimes)
         {
-            return new GeneratorFreeSpaceDto(_timeService.GetDateTime(time[0]), _timeService.GetDateTime(time[1]), diferentBetweenTimes);
+            return new GeneratorFreeSpaceDto(_timeService.GetDateTime(time.GetStart()), _timeService.GetDateTime(time.GetEnd()), diferentBetweenTimes);
         }
     }
 }

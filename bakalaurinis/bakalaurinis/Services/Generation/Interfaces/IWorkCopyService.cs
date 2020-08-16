@@ -1,6 +1,4 @@
-﻿using bakalaurinis.Infrastructure.Database.Models;
-using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace bakalaurinis.Helpers.Interfaces
 {
