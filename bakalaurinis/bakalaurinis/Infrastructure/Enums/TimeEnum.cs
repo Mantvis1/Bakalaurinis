@@ -4,6 +4,7 @@
     {
        SecondsInMinute = 60,
        MinutesInHour = 60,
-       HoursInDay = 24
+       HoursInDay = 24,
+       MinutesInDay = HoursInDay * MinutesInHour
     }
 }

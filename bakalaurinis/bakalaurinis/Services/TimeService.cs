@@ -8,9 +8,7 @@ namespace bakalaurinis.Services
     {
         public DateTime AddMinutesToTime(DateTime dateTime, int minutes)
         {
-            var date = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, 0).AddMinutes(minutes);
-
-            return date;
+            return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, 0).AddMinutes(minutes);
         }
 
         public DateTime GetCurrentDay()
@@ -18,16 +16,9 @@ namespace bakalaurinis.Services
             return DateTime.Today;
         }
 
-        public DateTime GetDateTime(int? minutes)
+        public DateTime GetDateTime(int minutes)
         {
-            var date = new DateTime(GetCurrentDay().Year, GetCurrentDay().Month, GetCurrentDay().Day);
-
-            if (minutes != null)
-            {
-                date = date.AddMinutes(minutes.Value);
-            }
-
-            return date;
+            return new DateTime(GetCurrentDay().Year, GetCurrentDay().Month, GetCurrentDay().Day).AddMinutes(minutes);
         }
 
         public int GetDifferentBetweenTwoDatesInMinutes(DateTime firstDate, DateTime secondDate)

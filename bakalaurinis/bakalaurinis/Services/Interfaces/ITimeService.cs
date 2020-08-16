@@ -5,7 +5,7 @@ namespace bakalaurinis.Services.Interfaces
     public interface ITimeService
     {
         DateTime GetCurrentDay();
-        DateTime GetDateTime(int? minutes);
+        DateTime GetDateTime(int minutes);
         DateTime AddMinutesToTime(DateTime dateTime, int minutes);
         int GetDifferentBetweenTwoDatesInMinutes(DateTime firstDate, DateTime secondDate);
         public int GetTimeInMinutes(DateTime dateTime);
