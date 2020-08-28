@@ -21,6 +21,8 @@ namespace bakalaurinis.Services
         private readonly IMessageService _messageService;
         private readonly IFactory _factory;
         private readonly IFreeSpaceSaver _freeSpaceSaver;
+        private int _currentDay;
+
         public ScheduleGenerationService(
             IWorksRepository worksRepository,
             ITimeService timeService,
@@ -38,6 +40,7 @@ namespace bakalaurinis.Services
             _messageService = messageService;
             _factory = factory;
             _freeSpaceSaver = freeSpaceSarver;
+            _currentDay = 0;
         }
 
         public async Task<bool> Generate(int userId)
@@ -53,8 +56,7 @@ namespace bakalaurinis.Services
 
         private async Task UpdateSchedule(int userId)
         {
-            var currentDay = 0;
-            var time = await MoveToNextDay(userId, currentDay);
+            var time = await MoveToNextDay(userId);
             var activitiesToUpdate = (await _worksRepository.FilterByUserIdAndStartTime(userId)).OrderByDescending(x => x.WorkPriority).ToList();
             var allActivities = (await _worksRepository.FilterByUserIdAndStartTimeIsNotNull(userId)).ToList();
 
@@ -92,10 +94,10 @@ namespace bakalaurinis.Services
                     var startTime = allActivities.Last().StartTime;
                     var endTime = allActivities.Last().EndTime;
 
-                    if (startTime != null && endTime != null)
+                    if (!CompareValues.IsNull(startTime.Value) && !CompareValues.IsNull(endTime.Value))
                     {
-                        currentDay = startTime.Value.Day - _timeService.GetCurrentDay().Day;
-                        time = await MoveToNextDay(userId, currentDay);
+                        _currentDay = startTime.Value.Day - _timeService.GetCurrentDay().Day;
+                        time = await MoveToNextDay(userId);
 
                         if (time.GetEnd() - _timeService.GetDifferentBetweenTwoDatesInMinutes(
                                 _timeService.GetCurrentDay(),
@@ -109,8 +111,8 @@ namespace bakalaurinis.Services
                         }
                         else
                         {
-                            currentDay += 1;
-                            time = await MoveToNextDay(userId, currentDay);
+                            _currentDay += 1;
+                            time = await MoveToNextDay(userId);
 
                             activity.StartTime = _timeService.GetDateTime(time.GetStart());
                             activity.EndTime =
@@ -126,12 +128,11 @@ namespace bakalaurinis.Services
 
         private async Task GetAllEmptySpaces(int userId)
         {
-            var currentDay = 0;
             var allActivities = (await _worksRepository.FilterByUserIdAndStartTimeIsNotNull(userId)).OrderBy(x => x.StartTime).ToList();
 
             for (var i = 0; i < allActivities.Count - 1; i++)
             {
-                var time = await MoveToNextDay(userId, currentDay);
+                var time = await MoveToNextDay(userId);
 
                 if (CompareValues.IsEqual(i, 0) && allActivities[i].StartTime.Value > _timeService.GetDateTime(time.GetStart()))
                 {
@@ -156,7 +157,8 @@ namespace bakalaurinis.Services
 
                 if (allActivities[i + 1].EndTime.Value.Day - allActivities[i].EndTime.Value.Day > 1)
                 {
-                    time = await MoveToNextDay(userId, 1 + allActivities[i].StartTime.Value.Day - _timeService.GetCurrentDay().Day);
+                    _currentDay = 1 + allActivities[i].StartTime.Value.Day - _timeService.GetCurrentDay().Day;
+                    time = await MoveToNextDay(userId);
 
                     _freeSpaceSaver.Add(_factory.GetGeneratedFreeSpace(time, time.GetEnd() - time.GetStart()));
                 }
@@ -173,12 +175,12 @@ namespace bakalaurinis.Services
             }
         }
 
-        private async Task<Time> MoveToNextDay(int userId, int dayCount)
+        private async Task<Time> MoveToNextDay(int userId)
         {
             var userSettings = await _userSettingsRepository.GetByUserId(userId);
             var time = new Time(
-                userSettings.StartTime * (int)TimeEnum.MinutesInHour + dayCount * (int)TimeEnum.HoursInDay * (int)TimeEnum.MinutesInHour,
-                userSettings.EndTime * (int)TimeEnum.MinutesInHour + dayCount * (int)TimeEnum.HoursInDay * (int)TimeEnum.MinutesInHour
+                userSettings.StartTime * (int)TimeEnum.MinutesInHour + _currentDay * (int)TimeEnum.HoursInDay * (int)TimeEnum.MinutesInHour,
+                userSettings.EndTime * (int)TimeEnum.MinutesInHour + _currentDay * (int)TimeEnum.HoursInDay * (int)TimeEnum.MinutesInHour
                 );
 
             return time;
