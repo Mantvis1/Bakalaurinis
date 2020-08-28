@@ -2,11 +2,11 @@
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Services.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using bakalaurinis.Dtos.Work;
 using bakalaurinis.Dtos.Schedule;
-using bakalaurinis.Infrastructure.Database.Models;
+using bakalaurinis.Infrastructure.Enums;
+using System.Linq;
 
 namespace bakalaurinis.Services
 {
@@ -15,6 +15,7 @@ namespace bakalaurinis.Services
         private readonly IWorksRepository _repository;
         private readonly IMapper _mapper;
         private readonly IUserSettingsService _userSettingsService;
+        private readonly int maxPersentageValue = 100;
 
         public ScheduleService(IWorksRepository repository, IMapper mapper, IUserSettingsService userSettingsService)
         {
@@ -29,7 +30,7 @@ namespace bakalaurinis.Services
             var worksDto = _mapper.Map<WorkDto[]>(works);
             var scheduleDto = new GetScheduleDto();
 
-            foreach(var work in worksDto)
+            foreach (var work in worksDto)
             {
                 scheduleDto.works.Add(work);
             }
@@ -45,16 +46,11 @@ namespace bakalaurinis.Services
         {
             var works = await _repository.FilterByUserIdAndTime(userId, date);
             var settings = await _userSettingsService.GetByUserId(userId);
-            var busynessInMinutes = 0;
-            
-            foreach(var work in works)
-            {
-                busynessInMinutes += work.DurationInMinutes;
-            }
+            var busynessInMinutes = works.Sum(work => work.DurationInMinutes);
 
-            busynessInMinutes = (busynessInMinutes *100 / 60)/ (settings.EndTime - settings.StartTime);
+            var percentageBusyness = busynessInMinutes * maxPersentageValue / (int)TimeEnum.MinutesInHour / (settings.EndTime - settings.StartTime);
 
-            return busynessInMinutes;
+            return percentageBusyness;
         }
     }
 }

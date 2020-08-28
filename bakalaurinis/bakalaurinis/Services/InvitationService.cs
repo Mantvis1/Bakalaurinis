@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using bakalaurinis.Dtos.Invitation;
+using bakalaurinis.Helpers.Interfaces;
 using bakalaurinis.Infrastructure.Database.Models;
 using bakalaurinis.Infrastructure.Enums;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
@@ -19,7 +20,7 @@ namespace bakalaurinis.Services
         private readonly IMessageService _messageService;
         private readonly IRepository<MessageTemplate> _messageTemplateRepository;
         private readonly IMessageFormationService _messageFormationService;
-        private readonly IScheduleGenerationService _scheduleGenerationService;
+        private readonly IWorkCopyService _workCopyService;
 
         public InvitationService(
             IInvitationRepository invitationRepository,
@@ -28,7 +29,7 @@ namespace bakalaurinis.Services
             IMessageService messageService,
             IRepository<MessageTemplate> messageTemplateRepository,
             IMessageFormationService messageFormationService,
-            IScheduleGenerationService scheduleGenerationService
+            IWorkCopyService workCopyService
             )
         {
             _invitationRepository = invitationRepository;
@@ -37,7 +38,7 @@ namespace bakalaurinis.Services
             _messageService = messageService;
             _messageTemplateRepository = messageTemplateRepository;
             _messageFormationService = messageFormationService;
-            _scheduleGenerationService = scheduleGenerationService;
+            _workCopyService = workCopyService;
         }
 
         public async Task<bool> Update(int invitationId, UpdateInvitationDto updateInvitationDto)
@@ -48,7 +49,7 @@ namespace bakalaurinis.Services
             {
                 await _messageService.Create(invitation.SenderId, invitation.WorkId, MessageTypeEnum.Accept);
                 await _messageService.Create(invitation.ReceiverId, invitation.WorkId, MessageTypeEnum.WasAccepted);
-                await _scheduleGenerationService.CreateWorkCopy(updateInvitationDto.WorkId, invitation.ReceiverId);
+                await _workCopyService.CreateWorkCopy(updateInvitationDto.WorkId, invitation.ReceiverId);
             }
             else if (updateInvitationDto.InvitationStatus == InvitationStatusEnum.Decline)
             {

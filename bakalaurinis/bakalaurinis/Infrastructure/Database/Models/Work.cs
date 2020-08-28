@@ -30,10 +30,16 @@ namespace bakalaurinis.Infrastructure.Database.Models
         public bool IsAuthor { get; set; }
         public ICollection<Invitation> Invitations { get; set; }
 
-
-        public Work Clone<Work>(Work work)
+        public Work DeepCopy()
         {
-            return work;
+            return new Work
+            {
+                UserId = UserId,
+                Title = Title,
+                WorkPriority = WorkPriority,
+                Description = Description,
+                DurationInMinutes = DurationInMinutes
+            };
         }
     }
 }

@@ -16,6 +16,7 @@ namespace bakalaurinis.Services
         private readonly IMessageRepository _messageRepository;
         private readonly IMapper _mapper;
         private readonly IMessageFormationService _messageFormationService;
+
         public MessageService(
             IRepository<MessageTemplate> messageTempalateRepository,
             IMessageRepository messageRepository,

@@ -9,6 +9,7 @@ namespace bakalaurinis.Controllers
     public class WorkRefreshController : ControllerBase
     {
         private readonly IScheduleGenerationService _scheduleGenerationService;
+
         public WorkRefreshController(IScheduleGenerationService scheduleGenerationService)
         {
             _scheduleGenerationService = scheduleGenerationService;

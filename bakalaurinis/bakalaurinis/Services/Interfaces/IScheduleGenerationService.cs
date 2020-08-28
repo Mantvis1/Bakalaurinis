@@ -8,7 +8,6 @@ namespace bakalaurinis.Services.Interfaces
     {
         Task<bool> Generate(int userId);
         Task CalculateActivitiesTime(int id, DateTime date, UpdateWorkDto updateActivitiesDto);
-        Task CreateWorkCopy(int workId, int userId);
         Task RecalculateWorkTimeWhenUserChangesSettings(int userId);
     }
 }

@@ -15,11 +15,11 @@ namespace bakalaurinis.Services
             _activitiesRepository = activitiesRepository;
         }
 
-        public async Task<string> GetFormattedText(string message, int userId, int activityId)
+        public async Task<string> GetFormattedText(string message, int userId, int workId)
         {
             if (message.Contains("[work]"))
             {
-                message = await AddActivityName(message, activityId);
+                message = await AddWorkName(message, workId);
             }
 
             if (message.Contains("[user]"))
@@ -35,7 +35,7 @@ namespace bakalaurinis.Services
             return message.Replace("[user]", (await _userRepository.GetById(userId)).Username);
         }
 
-        private async Task<string> AddActivityName(string message, int activityId)
+        private async Task<string> AddWorkName(string message, int activityId)
         {
             return message.Replace("[work]", (await _activitiesRepository.GetById(activityId)).Title);
         }

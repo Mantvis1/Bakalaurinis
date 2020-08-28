@@ -26,6 +26,7 @@ namespace bakalaurinis.Services
                 await GenerateSchedule(users, scheduleGenerationService);
 
             }
+
             await Task.CompletedTask;
         }
 
