@@ -24,7 +24,6 @@ namespace bakalaurinis.Services
                 var scheduleGenerationService = scope.ServiceProvider.GetService<IScheduleGenerationService>();
 
                 await GenerateSchedule(users, scheduleGenerationService);
-
             }
 
             await Task.CompletedTask;

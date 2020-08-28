@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using bakalaurinis.Dtos.Invitation;
+using bakalaurinis.Helpers;
 using bakalaurinis.Helpers.Interfaces;
 using bakalaurinis.Infrastructure.Database.Models;
 using bakalaurinis.Infrastructure.Enums;
@@ -83,7 +84,7 @@ namespace bakalaurinis.Services
         {
             var user = await _userRepository.GetByName(newInvitationDto.ReceiverName);
 
-            if (user == null)
+            if (CompareValues.IsNull(user))
             {
                 throw new ArgumentNullException();
             }

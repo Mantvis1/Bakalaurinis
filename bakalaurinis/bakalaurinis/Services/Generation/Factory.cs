@@ -17,5 +17,10 @@ namespace bakalaurinis.Services.Generation
         {
             return new GeneratorFreeSpaceDto(_timeService.GetDateTime(time.GetStart()), _timeService.GetDateTime(time.GetEnd()), diferentBetweenTimes);
         }
+
+        /*   public Time GetTime()
+           {
+               return Time()
+           }*/
     }
 }

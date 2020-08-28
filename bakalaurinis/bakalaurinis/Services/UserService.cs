@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using bakalaurinis.Configurations;
 using bakalaurinis.Dtos.User;
+using bakalaurinis.Helpers;
 using bakalaurinis.Infrastructure.Database.Models;
 using bakalaurinis.Infrastructure.Repositories.Interfaces;
 using bakalaurinis.Services.Interfaces;
@@ -44,7 +45,7 @@ namespace bakalaurinis.Services
             var user = await _userRepository.GetUserByNameAndPassword(authenticateDto);
             var afterAuthDto = _mapper.Map<AfterAutenticationDto>(user);
 
-            if (user == null)
+            if (CompareValues.IsNull(user))
             {
                 return null;
             }
@@ -72,12 +73,12 @@ namespace bakalaurinis.Services
 
         public async Task<int> Register(RegistrationDto registrationDto)
         {
-            if (registrationDto == null)
+            if (CompareValues.IsNull(registrationDto))
             {
                 throw new ArgumentNullException();
             }
 
-            if ((await _userRepository.GetByName(registrationDto.Username)) != null)
+            if (CompareValues.IsNull(await _userRepository.GetByName(registrationDto.Username)))
             {
                 throw new ValidationException("Username is taken");
             }
@@ -102,7 +103,7 @@ namespace bakalaurinis.Services
         {
             var user = await _userRepository.GetById(id);
 
-            if (user == null)
+            if (CompareValues.IsNull(user))
             {
                 throw new ArgumentNullException();
             }

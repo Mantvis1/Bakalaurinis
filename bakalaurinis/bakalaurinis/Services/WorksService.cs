@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using bakalaurinis.Dtos.Work;
+using bakalaurinis.Helpers;
 
 namespace bakalaurinis.Services
 {
@@ -43,7 +44,7 @@ namespace bakalaurinis.Services
         {
             var work = await _worksRepository.GetById(id);
 
-            if (work == null)
+            if (CompareValues.IsNull(work))
             {
                 return false;
             }
@@ -79,14 +80,14 @@ namespace bakalaurinis.Services
 
         public async Task<bool> Update(int id, NewWorkDto workDto)
         {
-            if (workDto == null)
+            if (CompareValues.IsNull(workDto))
             {
                 throw new ArgumentNullException(nameof(workDto));
             }
 
             var work = await _worksRepository.GetById(id);
 
-            if (work == null)
+            if (CompareValues.IsNull(work))
             {
                 throw new InvalidOperationException();
             }
