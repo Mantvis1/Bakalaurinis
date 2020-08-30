@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using bakalaurinis.Dtos.Work;
 using bakalaurinis.Dtos.Schedule;
+using bakalaurinis.Services.Generation.Interfaces;
 
 namespace bakalaurinis.Controllers
 {
@@ -12,12 +13,15 @@ namespace bakalaurinis.Controllers
     public class ScheduleController : ControllerBase
     {
         private readonly IScheduleService _scheduleService;
-        private readonly IScheduleGenerationService _scheduleGenerationService;
+        private readonly INewJobGenerationService _newJobGenerationService;
 
-        public ScheduleController(IScheduleService scheduleService, IScheduleGenerationService scheduleGenerationService)
+        public ScheduleController(
+            IScheduleService scheduleService,
+            INewJobGenerationService newJobGenerationService
+            )
         {
             _scheduleService = scheduleService;
-            _scheduleGenerationService = scheduleGenerationService;
+            _newJobGenerationService = newJobGenerationService;
         }
 
         [HttpGet("{userId}/{date}")]
@@ -37,7 +41,7 @@ namespace bakalaurinis.Controllers
         [HttpPut("{userId}/{date}")]
         public async Task<IActionResult> Post(int userId, DateTime date, UpdateWorkDto updateActivitiesDto)
         {
-            await _scheduleGenerationService.CalculateActivitiesTime(userId, date, updateActivitiesDto);
+            await _newJobGenerationService.CalculateActivitiesTime(userId, date, updateActivitiesDto);
 
             return Ok();
         }

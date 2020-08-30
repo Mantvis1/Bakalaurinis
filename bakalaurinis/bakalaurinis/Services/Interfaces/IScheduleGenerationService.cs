@@ -7,7 +7,6 @@ namespace bakalaurinis.Services.Interfaces
     public interface IScheduleGenerationService
     {
         Task<bool> Generate(int userId);
-        Task CalculateActivitiesTime(int id, DateTime date, UpdateWorkDto updateActivitiesDto);
         Task RecalculateWorkTimeWhenUserChangesSettings(int userId);
     }
 }

@@ -9,6 +9,7 @@ using bakalaurinis.Dtos.Work;
 using bakalaurinis.Services.Generation.Interfaces;
 using bakalaurinis.Helpers;
 using bakalaurinis.Services.Generation;
+using bakalaurinis.Infrastructure.Database.Models;
 
 namespace bakalaurinis.Services
 {
@@ -16,7 +17,6 @@ namespace bakalaurinis.Services
     {
         private readonly IWorksRepository _worksRepository;
         private readonly ITimeService _timeService;
-        private readonly IMapper _mapper;
         private readonly IUserSettingsRepository _userSettingsRepository;
         private readonly IMessageService _messageService;
         private readonly IFactory _factory;
@@ -26,7 +26,6 @@ namespace bakalaurinis.Services
         public ScheduleGenerationService(
             IWorksRepository worksRepository,
             ITimeService timeService,
-            IMapper mapper,
             IUserSettingsRepository userSettingsRepository,
             IMessageService messageService,
             IFactory factory,
@@ -35,12 +34,11 @@ namespace bakalaurinis.Services
         {
             _worksRepository = worksRepository;
             _timeService = timeService;
-            _mapper = mapper;
             _userSettingsRepository = userSettingsRepository;
             _messageService = messageService;
             _factory = factory;
             _freeSpaceSaver = freeSpaceSarver;
-            _time = new Time(0,0);
+            _time = new Time(0, 0);
 
         }
 
@@ -77,19 +75,7 @@ namespace bakalaurinis.Services
 
                 if (!isFound)
                 {
-                    await GetAllEmptySpaces(userId);
-
-                    foreach (var empty in _freeSpaceSaver.GetAll())
-                    {
-                        if (CompareValues.IsGreaterOrEqual(empty.Duration, activity.DurationInMinutes))
-                        {
-                            activity.StartTime = empty.Start;
-                            activity.EndTime = _timeService.AddMinutesToTime(activity.StartTime.Value, activity.DurationInMinutes);
-
-                            isFound = true;
-                            break;
-                        }
-                    }
+                    isFound = await IsPossibleToFindSpaceForAJob(userId, activity);
                 }
 
                 if (!isFound)
@@ -140,11 +126,11 @@ namespace bakalaurinis.Services
 
                 if (CompareValues.IsEqual(i, 0) && allActivities[i].StartTime.Value > _timeService.GetDateTime(_time.GetStart()))
                 {
-                    AddFreeSpaceIfTimeIsCorrect(_timeService.GetDateTime(_time.GetStart()), allActivities[i].StartTime.Value,_time);
+                    AddFreeSpaceIfTimeIsCorrect(_timeService.GetDateTime(_time.GetStart()), allActivities[i].StartTime.Value, _time);
                 }
 
                 if (_timeService.GetDifferentBetweenTwoDatesInMinutes(allActivities[i].EndTime.Value, allActivities[i + 1].StartTime.Value) > 0 &&
-                    CompareValues.IsEqual(allActivities[i].EndTime.Value.Day,allActivities[i + 1].StartTime.Value.Day))
+                    CompareValues.IsEqual(allActivities[i].EndTime.Value.Day, allActivities[i + 1].StartTime.Value.Day))
                 {
                     _time.Update(_timeService.GetTimeInMinutes(allActivities[i].EndTime.Value), _timeService.GetTimeInMinutes(allActivities[i + 1].StartTime.Value));
 
@@ -179,21 +165,22 @@ namespace bakalaurinis.Services
             }
         }
 
-        public async Task CalculateActivitiesTime(int id, DateTime date, UpdateWorkDto updateActivitiesDto)
+        private async Task<bool> IsPossibleToFindSpaceForAJob(int userId, Work work)
         {
-            var currentTime = _timeService.AddMinutesToTime(date, (await _userSettingsRepository.GetByUserId(id)).StartTime * (int)TimeEnum.MinutesInHour);
+            await GetAllEmptySpaces(userId);
 
-            foreach (var activityDto in updateActivitiesDto.Activities)
+            foreach (var empty in _freeSpaceSaver.GetAll())
             {
-                activityDto.StartTime = currentTime;
-                currentTime = _timeService.AddMinutesToTime(currentTime, activityDto.DurationInMinutes);
-                activityDto.EndTime = currentTime;
+                if (CompareValues.IsGreaterOrEqual(empty.Duration, work.DurationInMinutes))
+                {
+                    work.StartTime = empty.Start;
+                    work.EndTime = _timeService.AddMinutesToTime(work.StartTime.Value, work.DurationInMinutes);
 
-                var activity = await _worksRepository.GetById(activityDto.Id);
-                _mapper.Map(activityDto, activity);
-
-                await _worksRepository.Update(activity);
+                    return true;
+                }
             }
+
+            return false;
         }
 
         public async Task RecalculateWorkTimeWhenUserChangesSettings(int userId)

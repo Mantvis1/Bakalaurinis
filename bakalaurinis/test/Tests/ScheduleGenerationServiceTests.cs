@@ -38,7 +38,7 @@ namespace test.Tests
             _freeSpaceSaver = new FreeSpaceSaver();
             var factoryService = new Factory(mockTimeService.Object);
 
-            _scheduleGenerationService = new ScheduleGenerationService(worksRepository, mockTimeService.Object, mapper, userSettingsRepository, mockMessageService, factoryService, _freeSpaceSaver);
+            _scheduleGenerationService = new ScheduleGenerationService(worksRepository, mockTimeService.Object, userSettingsRepository, mockMessageService, factoryService, _freeSpaceSaver);
         }
 
 
@@ -58,37 +58,6 @@ namespace test.Tests
                 Assert.NotNull(work.StartTime);
                 Assert.NotNull(work.EndTime);
             }
-        }
-
-        [Theory]
-        [InlineData(1)]
-        public async void CalculateActivitiesTime(int userId)
-        {
-            var works = (await _worksService.GetByUserId(userId)).Where(x => x.StartTime == null ||
-                x.StartTime.Value.Day == DateTime.MinValue.Day).ToList();
-
-            var updateActivitiesDto = new UpdateWorkDto
-            {
-                Activities = new List<WorkDto>()
-            };
-
-            foreach (var work in works)
-            {
-                if (work.Id != 1)
-                {
-                    updateActivitiesDto.Activities.Add(work);
-                }
-            }
-
-            updateActivitiesDto.Activities.Add(works.First());
-
-            await _scheduleGenerationService.CalculateActivitiesTime(userId, DateTime.MinValue, updateActivitiesDto);
-
-            var worksAfterUpdate =
-                (await _worksService.GetByUserId(userId)).Where(x => x.StartTime == null ||
-                                                                     x.StartTime.Value.Day == DateTime.MinValue.Day).ToList();
-
-            Assert.Equal(works.First().Title, worksAfterUpdate.First().Title);
         }
 
         [Fact]
