@@ -1,15 +1,16 @@
-﻿using bakalaurinis.Infrastructure.Database.Models;
+﻿using bakalaurinis.Infrastructure.Database;
+using bakalaurinis.Infrastructure.Database.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace bakalaurinis.Infrastructure.Repositories.Interfaces
 {
-    public interface IRepository<TEntity> where TEntity : BaseEntity
+    public interface IRepository<TEntity> where TEntity : class
     {
-        Task<ICollection<TEntity>> GetAll();
-        Task<TEntity> GetById(int id);
-        Task<int> Create(TEntity entity);
-        Task<bool> Update(TEntity entity);
-        Task<bool> Delete(TEntity entity);
+        public Task<ICollection<TEntity>> GetAll();
+        public Task<TEntity> GetById(int id);
+        public Task<int> Create(TEntity entity);
+        public Task<bool> Update(TEntity entity);
+        public Task<bool> Delete(TEntity entity);
     }
 }

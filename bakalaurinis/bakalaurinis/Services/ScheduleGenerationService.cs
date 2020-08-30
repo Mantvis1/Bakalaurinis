@@ -21,7 +21,7 @@ namespace bakalaurinis.Services
         private readonly IMessageService _messageService;
         private readonly IFactory _factory;
         private readonly IFreeSpaceSaver _freeSpaceSaver;
-        private int _currentDay;
+        private Time _time;
 
         public ScheduleGenerationService(
             IWorksRepository worksRepository,
@@ -40,7 +40,8 @@ namespace bakalaurinis.Services
             _messageService = messageService;
             _factory = factory;
             _freeSpaceSaver = freeSpaceSarver;
-            _currentDay = 0;
+            _time = new Time(0,0);
+
         }
 
         public async Task<bool> Generate(int userId)
@@ -56,9 +57,11 @@ namespace bakalaurinis.Services
 
         private async Task UpdateSchedule(int userId)
         {
-            var time = await MoveToNextDay(userId);
+            var userSettings = await _userSettingsRepository.GetByUserId(userId);
             var activitiesToUpdate = (await _worksRepository.FilterByUserIdAndStartTime(userId)).OrderByDescending(x => x.WorkPriority).ToList();
             var allActivities = (await _worksRepository.FilterByUserIdAndStartTimeIsNotNull(userId)).ToList();
+
+            _time.MoveToNextDay(userSettings.StartTime, userSettings.EndTime);
 
             foreach (var activity in activitiesToUpdate)
             {
@@ -66,7 +69,7 @@ namespace bakalaurinis.Services
 
                 if (CompareValues.IsEqual(allActivities.Count, 0))
                 {
-                    activity.StartTime = _timeService.GetDateTime(time.GetStart());
+                    activity.StartTime = _timeService.GetDateTime(_time.GetStart());
                     activity.EndTime = _timeService.AddMinutesToTime(activity.StartTime.Value, activity.DurationInMinutes);
 
                     isFound = true;
@@ -96,10 +99,10 @@ namespace bakalaurinis.Services
 
                     if (!CompareValues.IsNull(startTime.Value) && !CompareValues.IsNull(endTime.Value))
                     {
-                        _currentDay = startTime.Value.Day - _timeService.GetCurrentDay().Day;
-                        time = await MoveToNextDay(userId);
+                        _time.Update(startTime.Value.Day - _timeService.GetCurrentDay().Day);
+                        _time.MoveToNextDay(userSettings.StartTime, userSettings.EndTime);
 
-                        if (time.GetEnd() - _timeService.GetDifferentBetweenTwoDatesInMinutes(
+                        if (_time.GetEnd() - _timeService.GetDifferentBetweenTwoDatesInMinutes(
                                 _timeService.GetCurrentDay(),
                                 _timeService.AddMinutesToTime(endTime.Value,
                                     activity.DurationInMinutes))
@@ -111,10 +114,10 @@ namespace bakalaurinis.Services
                         }
                         else
                         {
-                            _currentDay += 1;
-                            time = await MoveToNextDay(userId);
+                            _time.AddOneDayToCurrent();
+                            _time.MoveToNextDay(userSettings.StartTime, userSettings.EndTime);
 
-                            activity.StartTime = _timeService.GetDateTime(time.GetStart());
+                            activity.StartTime = _timeService.GetDateTime(_time.GetStart());
                             activity.EndTime =
                                 _timeService.AddMinutesToTime(activity.StartTime.Value, activity.DurationInMinutes);
                         }
@@ -129,38 +132,39 @@ namespace bakalaurinis.Services
         private async Task GetAllEmptySpaces(int userId)
         {
             var allActivities = (await _worksRepository.FilterByUserIdAndStartTimeIsNotNull(userId)).OrderBy(x => x.StartTime).ToList();
+            var userSettings = await _userSettingsRepository.GetByUserId(userId);
 
             for (var i = 0; i < allActivities.Count - 1; i++)
             {
-                var time = await MoveToNextDay(userId);
+                _time.MoveToNextDay(userSettings.StartTime, userSettings.EndTime);
 
-                if (CompareValues.IsEqual(i, 0) && allActivities[i].StartTime.Value > _timeService.GetDateTime(time.GetStart()))
+                if (CompareValues.IsEqual(i, 0) && allActivities[i].StartTime.Value > _timeService.GetDateTime(_time.GetStart()))
                 {
-                    AddFreeSpaceIfTimeIsCorrect(_timeService.GetDateTime(time.GetStart()), allActivities[i].StartTime.Value, time);
+                    AddFreeSpaceIfTimeIsCorrect(_timeService.GetDateTime(_time.GetStart()), allActivities[i].StartTime.Value,_time);
                 }
 
                 if (_timeService.GetDifferentBetweenTwoDatesInMinutes(allActivities[i].EndTime.Value, allActivities[i + 1].StartTime.Value) > 0 &&
-                    allActivities[i].EndTime.Value.Day == allActivities[i + 1].StartTime.Value.Day)
+                    CompareValues.IsEqual(allActivities[i].EndTime.Value.Day,allActivities[i + 1].StartTime.Value.Day))
                 {
-                    time.Update(_timeService.GetTimeInMinutes(allActivities[i].EndTime.Value), _timeService.GetTimeInMinutes(allActivities[i + 1].StartTime.Value));
+                    _time.Update(_timeService.GetTimeInMinutes(allActivities[i].EndTime.Value), _timeService.GetTimeInMinutes(allActivities[i + 1].StartTime.Value));
 
-                    _freeSpaceSaver.Add(_factory.GetGeneratedFreeSpace(time,
+                    _freeSpaceSaver.Add(_factory.GetGeneratedFreeSpace(_time,
                         _timeService.GetDifferentBetweenTwoDatesInMinutes(allActivities[i].EndTime.Value, allActivities[i + 1].StartTime.Value))
                         );
                 }
 
                 if (CompareValues.IsEqual(allActivities[i].EndTime.Value.Day + 1, allActivities[i + 1].EndTime.Value.Day))
                 {
-                    AddFreeSpaceIfTimeIsCorrect(allActivities[i].EndTime.Value, _timeService.GetDateTime(time.GetEnd()), time);
-                    AddFreeSpaceIfTimeIsCorrect(_timeService.GetDateTime(time.GetStart() + (int)TimeEnum.MinutesInDay), allActivities[i + 1].StartTime.Value, time);
+                    AddFreeSpaceIfTimeIsCorrect(allActivities[i].EndTime.Value, _timeService.GetDateTime(_time.GetEnd()), _time);
+                    AddFreeSpaceIfTimeIsCorrect(_timeService.GetDateTime(_time.GetStart() + (int)TimeEnum.MinutesInDay), allActivities[i + 1].StartTime.Value, _time);
                 }
 
-                if (allActivities[i + 1].EndTime.Value.Day - allActivities[i].EndTime.Value.Day > 1)
+                if (CompareValues.IsGreater(allActivities[i + 1].EndTime.Value.Day - allActivities[i].EndTime.Value.Day, 1))
                 {
-                    _currentDay = 1 + allActivities[i].StartTime.Value.Day - _timeService.GetCurrentDay().Day;
-                    time = await MoveToNextDay(userId);
+                    _time.UpdateCurrentDay(1 + allActivities[i].StartTime.Value.Day - _timeService.GetCurrentDay().Day);
+                    _time.MoveToNextDay(userSettings.StartTime, userSettings.EndTime);
 
-                    _freeSpaceSaver.Add(_factory.GetGeneratedFreeSpace(time, time.GetEnd() - time.GetStart()));
+                    _freeSpaceSaver.Add(_factory.GetGeneratedFreeSpace(_time, _time.GetEnd() - _time.GetStart()));
                 }
             }
         }
@@ -173,17 +177,6 @@ namespace bakalaurinis.Services
             {
                 _freeSpaceSaver.Add(_factory.GetGeneratedFreeSpace(time, differenceBetweenDays));
             }
-        }
-
-        private async Task<Time> MoveToNextDay(int userId)
-        {
-            var userSettings = await _userSettingsRepository.GetByUserId(userId);
-            var time = new Time(
-                userSettings.StartTime * (int)TimeEnum.MinutesInHour + _currentDay * (int)TimeEnum.HoursInDay * (int)TimeEnum.MinutesInHour,
-                userSettings.EndTime * (int)TimeEnum.MinutesInHour + _currentDay * (int)TimeEnum.HoursInDay * (int)TimeEnum.MinutesInHour
-                );
-
-            return time;
         }
 
         public async Task CalculateActivitiesTime(int id, DateTime date, UpdateWorkDto updateActivitiesDto)
