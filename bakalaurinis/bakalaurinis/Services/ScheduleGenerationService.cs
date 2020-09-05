@@ -21,7 +21,7 @@ namespace bakalaurinis.Services
         private readonly IMessageService _messageService;
         private readonly IFactory _factory;
         private readonly IFreeSpaceSaver _freeSpaceSaver;
-        private Time _time;
+        private readonly Time _time;
 
         public ScheduleGenerationService(
             IWorksRepository worksRepository,
@@ -38,7 +38,7 @@ namespace bakalaurinis.Services
             _messageService = messageService;
             _factory = factory;
             _freeSpaceSaver = freeSpaceSarver;
-            _time = new Time(0, 0);
+            _time = new Time();
 
         }
 
