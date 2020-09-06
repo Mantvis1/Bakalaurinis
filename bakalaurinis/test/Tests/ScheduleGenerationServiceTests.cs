@@ -56,12 +56,12 @@ namespace test.Tests
             }
         }
 
-        [Fact]
-        public void AddFreeSpaceIfTimeIsCorrect()
+       // [Fact]
+        /*public void AddFreeSpaceIfTimeIsCorrect()
         {
             _scheduleGenerationService.AddFreeSpaceIfTimeIsCorrect(DateTime.MinValue, DateTime.MaxValue, new Time());
 
             Assert.NotEmpty(_freeSpaceSaver.GetAll());
-        }
+        }*/
     }
 }
