@@ -1,22 +1,20 @@
 ﻿using bakalaurinis.Helpers;
 using bakalaurinis.Infrastructure.Enums;
-using bakalaurinis.Infrastructure.Repositories.Interfaces;
-using System.Threading.Tasks;
 
 namespace bakalaurinis.Services.Generation
 {
     public class Time
     {
-
         private int Start { get; set; }
         private int End { get; set; }
         private int CurrentDay { get; set; }
+        private readonly int defaultValue = 0;
 
-        public Time(int start, int end)
+        public Time()
         {
-            Start = start;
-            End = end;
-            CurrentDay = 0;
+            Start = defaultValue;
+            End = defaultValue;
+            CurrentDay = defaultValue;
         }
 
         public void Update(int? start = null, int? end = null)
